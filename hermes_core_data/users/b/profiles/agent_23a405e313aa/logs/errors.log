@@ -1,0 +1,358 @@
+2026-07-13 02:05:20,981 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:05:20,983 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-13 02:05:20,985 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-13 02:05:20,987 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:05:20,987 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:05:20,989 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:05:21,435 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 02:05:21,457 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 02:05:21,457 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:05:27,410 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-13 02:05:27,501 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-13 02:08:27,095 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:08:27,100 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-13 02:08:27,103 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-13 02:08:27,106 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:08:27,106 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:08:27,107 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:08:27,531 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 02:08:27,551 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 02:08:27,551 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:08:28,340 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-13 02:08:28,419 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-13 02:09:36,115 WARNING [20260713_020519_394304] agent.tool_executor: Tool memory returned error (60.04s): {"error": "Memory write denied by user. The change was not saved.", "success": false}
+2026-07-13 02:13:36,034 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:13:36,038 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-13 02:13:36,041 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-13 02:13:36,045 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:13:36,045 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:13:36,047 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:13:36,472 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 02:13:36,492 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 02:13:36,492 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:13:37,360 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-13 02:13:37,444 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-13 02:13:41,131 WARNING [20260713_020519_394304] agent.tool_executor: Tool skill_view returned error (0.02s): {"success": false, "error": "Skill 'hermes-agent' not found.", "available_skills": [], "hint": "Use skills_list to see all available skills"}
+2026-07-13 02:13:50,097 WARNING [20260713_020519_394304] agent.tool_executor: Tool terminal returned error (0.20s): {"output": "ls: cannot access '/root/.hermes/': No such file or directory", "exit_code": 2, "error": null}
+2026-07-13 02:13:57,467 WARNING [20260713_020519_394304] agent.tool_executor: Tool terminal returned error (0.19s): {"output": "/usr/local/bin/hermes\n/usr/bin/bash: line 3: ps: command not found", "exit_code": 1, "error": null, "exit_code_meaning": "No matches found (not an error)"}
+2026-07-13 02:16:20,977 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:16:20,981 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-13 02:16:20,985 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-13 02:16:20,987 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:16:20,987 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:16:20,989 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:16:21,401 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 02:16:21,421 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 02:16:21,421 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:16:22,193 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-13 02:16:22,279 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-13 02:17:50,400 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:17:50,405 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-13 02:17:50,408 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-13 02:17:50,412 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:17:50,412 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:17:50,413 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:17:50,921 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 02:17:50,945 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 02:17:50,945 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:17:51,832 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-13 02:17:51,919 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-13 02:21:49,131 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:21:49,137 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-13 02:21:49,141 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-13 02:21:49,144 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:21:49,144 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:21:49,146 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:21:49,564 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 02:21:49,585 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 02:21:49,585 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:21:50,394 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-13 02:21:50,498 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-13 02:22:39,598 WARNING [20260713_020519_394304] agent.tool_executor: Tool read_file returned error (0.07s): {"content": "", "total_lines": 0, "file_size": 0, "truncated": false, "is_binary": false, "is_image": false, "error": "File not found: /usr/local/lib/python3.11/site-packages/hermes_cli/cli.py", "simi
+2026-07-13 02:22:46,996 WARNING [20260713_020519_394304] agent.conversation_loop: API call failed (attempt 1/3) error_type=RateLimitError thread=Thread-4 (run_agent):129734964819648 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B summary=HTTP 429: Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.
+2026-07-13 02:22:46,996 WARNING [20260713_020519_394304] agent.conversation_loop: Retrying API call in 14.0s (attempt 1/3) thread=Thread-4 (run_agent):129734964819648 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B policy=default error=Error code: 429 - {'error': {'message': 'Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.', 'type': 'rate_limit_exceeded', 'param': None, 'code': 'rate_limit_exceeded'}}
+2026-07-13 02:24:38,735 WARNING [20260713_020519_394304] agent.tool_executor: Tool terminal returned error (60.24s): {"output": "", "exit_code": -1, "error": "BLOCKED: User denied this command. The user has NOT consented to this action. Do NOT retry this command, do NOT rephrase it, and do NOT attempt the same outco
+2026-07-13 02:25:15,632 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:25:15,636 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-13 02:25:15,640 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-13 02:25:15,643 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:25:15,643 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:25:15,643 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:28:18,771 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:28:18,776 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-13 02:28:18,779 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-13 02:28:18,782 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:28:18,782 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:28:18,785 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:28:19,220 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 02:28:19,242 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 02:28:19,242 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:28:20,082 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-13 02:28:20,168 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-13 02:29:18,394 WARNING [20260713_020519_394304] agent.tool_executor: Tool search_files returned error (0.04s): {"total_count": 0, "error": "Search failed: grep: Unmatched ( or \\("}
+2026-07-13 02:29:45,097 WARNING [20260713_020519_394304] agent.conversation_loop: API call failed (attempt 1/3) error_type=RateLimitError thread=Thread-4 (run_agent):126495846561472 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B summary=HTTP 429: Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.
+2026-07-13 02:29:45,097 WARNING [20260713_020519_394304] agent.conversation_loop: Retrying API call in 15.0s (attempt 1/3) thread=Thread-4 (run_agent):126495846561472 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B policy=default error=Error code: 429 - {'error': {'message': 'Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.', 'type': 'rate_limit_exceeded', 'param': None, 'code': 'rate_limit_exceeded'}}
+2026-07-13 02:30:38,775 WARNING [20260713_020519_394304] agent.conversation_loop: API call failed (attempt 1/3) error_type=RateLimitError thread=Thread-4 (run_agent):126495846561472 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B summary=HTTP 429: Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.
+2026-07-13 02:30:38,775 WARNING [20260713_020519_394304] agent.conversation_loop: Retrying API call in 22.0s (attempt 1/3) thread=Thread-4 (run_agent):126495846561472 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B policy=default error=Error code: 429 - {'error': {'message': 'Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.', 'type': 'rate_limit_exceeded', 'param': None, 'code': 'rate_limit_exceeded'}}
+2026-07-13 02:31:36,781 WARNING [20260713_020519_394304] agent.conversation_loop: API call failed (attempt 1/3) error_type=RateLimitError thread=Thread-4 (run_agent):126495846561472 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B summary=HTTP 429: Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.
+2026-07-13 02:31:36,781 WARNING [20260713_020519_394304] agent.conversation_loop: Retrying API call in 24.0s (attempt 1/3) thread=Thread-4 (run_agent):126495846561472 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B policy=default error=Error code: 429 - {'error': {'message': 'Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.', 'type': 'rate_limit_exceeded', 'param': None, 'code': 'rate_limit_exceeded'}}
+2026-07-13 02:33:20,602 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-13 02:42:23,512 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:42:23,515 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-13 02:42:23,517 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-13 02:42:23,519 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:42:23,519 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:42:23,521 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:42:23,956 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 02:42:23,978 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 02:42:23,978 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:42:24,778 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-13 02:42:24,869 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-13 02:52:26,076 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:52:26,080 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-13 02:52:26,084 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-13 02:52:26,086 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:52:26,086 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:52:26,087 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:52:26,493 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 02:52:26,513 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 02:52:26,513 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 02:52:27,315 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-13 02:52:27,405 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-13 02:52:42,828 WARNING [20260713_020519_394304] agent.tool_executor: Tool read_file returned error (0.05s): {"content": "", "total_lines": 0, "file_size": 0, "truncated": false, "is_binary": false, "is_image": false, "error": "File not found: /workspace/LMBackend/ChatController.cs"}
+2026-07-13 02:57:43,283 WARNING [20260713_020519_394304] agent.auxiliary_client: Auxiliary: marking openrouter unhealthy for 60s (payment / credit error). Subsequent auxiliary calls will skip it until 02:58:43.
+2026-07-13 02:57:43,347 WARNING [20260713_020519_394304] agent.auxiliary_client: Auxiliary Nous client unavailable: no Nous authentication found (run: hermes auth).
+2026-07-13 02:57:43,347 WARNING [20260713_020519_394304] agent.auxiliary_client: Auxiliary: marking nous unhealthy for 60s (payment / credit error). Subsequent auxiliary calls will skip it until 02:58:43.
+2026-07-13 03:02:43,748 WARNING [20260713_020519_394304] agent.context_compressor: Failed to generate context summary: Error code: 502 - {'error': {'message': 'Upstream request failed', 'type': 'invalid_request_error'}}. Further summary attempts paused for 60 seconds.
+2026-07-13 03:21:09,429 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:21:09,431 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-13 03:21:09,433 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-13 03:21:09,435 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:21:09,435 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:21:09,436 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:21:09,856 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 03:21:09,877 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 03:21:09,877 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:21:10,680 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-13 03:21:10,772 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-13 03:29:24,477 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:29:24,481 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-13 03:29:24,484 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-13 03:29:24,487 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:29:24,487 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:29:24,488 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:29:24,907 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 03:29:24,926 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 03:29:24,927 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:29:25,676 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-13 03:29:25,763 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-13 03:43:36,408 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:43:36,410 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-13 03:43:36,412 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-13 03:43:36,415 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:43:36,415 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:43:36,417 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:43:36,831 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 03:43:36,853 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 03:43:36,853 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:43:37,661 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-13 03:43:37,795 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-13 03:47:49,613 WARNING [20260713_020519_394304] agent.tool_executor: Tool patch returned error (0.01s): {"error": "Refusing to write to Hermes config file: /opt/data/profiles/agent_23a405e313aa/config.yaml\nAgent cannot modify security-sensitive configuration. Edit ~/.hermes/config.yaml directly or use 
+2026-07-13 03:47:59,406 WARNING [20260713_020519_394304] agent.tool_executor: Tool terminal returned error (0.63s): {"output": "usage: hermes config [-h] {show,edit,set,path,env-path,check,migrate} ...\nhermes config: error: argument config_command: invalid choice: 'memory.write_approval' (choose from 'show', 'edit
+2026-07-13 03:51:02,288 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:51:02,293 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-13 03:51:02,297 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-13 03:51:02,299 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:51:02,299 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:51:02,301 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:51:02,789 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 03:51:02,811 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 03:51:02,811 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:51:03,707 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-13 03:51:03,794 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-13 03:53:02,726 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:53:02,731 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-13 03:53:02,736 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-13 03:53:02,739 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:53:02,739 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:53:02,740 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:53:03,168 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 03:53:03,188 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 03:53:03,189 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:53:03,916 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-13 03:53:03,992 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-13 03:54:46,827 WARNING [20260713_020519_394304] agent.tool_executor: Tool terminal returned error (60.26s): {"output": "", "exit_code": -1, "error": "BLOCKED: User denied this command. The user has NOT consented to this action. Do NOT retry this command, do NOT rephrase it, and do NOT attempt the same outco
+2026-07-13 03:55:33,279 WARNING [20260713_020519_394304] agent.conversation_loop: API call failed (attempt 1/3) error_type=RateLimitError thread=Thread-4 (run_agent):128088793315008 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B summary=HTTP 429: Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.
+2026-07-13 03:55:33,279 WARNING [20260713_020519_394304] agent.conversation_loop: Retrying API call in 27.0s (attempt 1/3) thread=Thread-4 (run_agent):128088793315008 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B policy=default error=Error code: 429 - {'error': {'message': 'Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.', 'type': 'rate_limit_exceeded', 'param': None, 'code': 'rate_limit_exceeded'}}
+2026-07-13 03:56:44,666 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:56:44,669 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-13 03:56:44,673 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-13 03:56:44,676 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:56:44,676 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:56:44,676 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 03:56:45,088 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 03:56:45,110 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 03:56:45,110 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 05:31:25,235 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 05:31:25,238 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-13 05:31:25,240 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-13 05:31:25,242 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 05:31:25,242 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 05:31:25,244 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 05:31:25,674 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 05:31:25,700 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 05:31:25,700 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 05:31:26,417 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-13 05:31:26,498 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-13 05:32:28,907 WARNING [20260713_020519_394304] agent.tool_executor: Tool terminal returned error (0.31s): {"output": "", "exit_code": 2, "error": null}
+2026-07-13 05:32:29,803 WARNING [20260713_020519_394304] agent.conversation_loop: API call failed (attempt 1/3) error_type=RateLimitError thread=Thread-4 (run_agent):132988218537664 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B summary=HTTP 429: Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.
+2026-07-13 05:32:29,803 WARNING [20260713_020519_394304] agent.conversation_loop: Retrying API call in 31.0s (attempt 1/3) thread=Thread-4 (run_agent):132988218537664 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B policy=default error=Error code: 429 - {'error': {'message': 'Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.', 'type': 'rate_limit_exceeded', 'param': None, 'code': 'rate_limit_exceeded'}}
+2026-07-13 05:33:06,513 WARNING [20260713_020519_394304] agent.tool_executor: Tool terminal returned error (0.95s): {"output": "", "exit_code": 1, "error": null, "exit_code_meaning": "No matches found (not an error)"}
+2026-07-13 05:36:17,353 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 05:36:17,357 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-13 05:36:17,360 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-13 05:36:17,363 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 05:36:17,363 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 05:36:17,363 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 05:39:31,927 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 05:39:31,931 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-13 05:39:31,934 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-13 05:39:31,937 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 05:39:31,937 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 05:39:31,939 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 05:39:32,433 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 05:39:32,457 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 05:39:32,457 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 05:39:33,319 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-13 05:39:33,412 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-13 05:43:59,849 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 05:43:59,853 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-13 05:43:59,856 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-13 05:43:59,858 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 05:43:59,858 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 05:43:59,860 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 05:44:00,287 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 05:44:00,308 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 05:44:00,308 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 05:44:01,930 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-13 05:44:02,016 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-13 05:45:59,291 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 05:45:59,295 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-13 05:45:59,299 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-13 05:45:59,302 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 05:45:59,302 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 05:45:59,303 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 05:45:59,711 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 05:45:59,730 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-13 05:45:59,731 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-13 05:46:00,483 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-13 05:46:00,565 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-13 05:46:26,280 WARNING [20260713_020519_394304] agent.conversation_loop: API call failed (attempt 1/3) error_type=RateLimitError thread=Thread-4 (run_agent):131936475502272 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B summary=HTTP 429: Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.
+2026-07-13 05:46:26,281 WARNING [20260713_020519_394304] agent.conversation_loop: Retrying API call in 34.0s (attempt 1/3) thread=Thread-4 (run_agent):131936475502272 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B policy=default error=Error code: 429 - {'error': {'message': 'Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.', 'type': 'rate_limit_exceeded', 'param': None, 'code': 'rate_limit_exceeded'}}
+2026-07-13 05:47:22,775 WARNING [20260713_020519_394304] agent.conversation_loop: API call failed (attempt 1/3) error_type=RateLimitError thread=Thread-4 (run_agent):131936475502272 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B summary=HTTP 429: Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.
+2026-07-13 05:47:22,775 WARNING [20260713_020519_394304] agent.conversation_loop: Retrying API call in 38.0s (attempt 1/3) thread=Thread-4 (run_agent):131936475502272 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B policy=default error=Error code: 429 - {'error': {'message': 'Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.', 'type': 'rate_limit_exceeded', 'param': None, 'code': 'rate_limit_exceeded'}}
+2026-07-14 08:05:08,290 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-14 08:05:08,294 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-14 08:05:08,297 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-14 08:05:08,301 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-14 08:05:08,301 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-14 08:05:08,303 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-14 08:05:08,768 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-14 08:05:08,788 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-14 08:05:08,788 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-14 08:05:09,597 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-14 08:05:09,677 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-14 08:05:30,444 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-14 08:05:30,448 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-14 08:05:30,451 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-14 08:05:30,454 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-14 08:05:30,454 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-14 08:05:30,456 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-14 08:05:30,880 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-14 08:05:30,900 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-14 08:05:30,900 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-14 08:05:31,701 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-14 08:05:31,777 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-14 08:08:18,429 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-14 08:08:18,432 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-14 08:08:18,434 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-14 08:08:18,436 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-14 08:08:18,436 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-14 08:08:18,437 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-14 08:08:18,904 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-14 08:08:18,926 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-14 08:08:18,926 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-14 08:08:19,772 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-14 08:08:19,848 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-14 10:05:02,709 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-14 10:05:02,712 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-14 10:05:02,714 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-14 10:05:02,716 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-14 10:05:02,717 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-14 10:05:02,719 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-14 10:05:03,210 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-14 10:05:03,230 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-14 10:05:03,230 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-14 10:05:12,130 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-14 10:05:12,245 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-14 10:05:58,808 WARNING [20260714_080506_74ebfb] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIConnectionError thread=Thread-4 (run_agent):130432171984576 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-07-14 10:05:58,809 WARNING [20260714_080506_74ebfb] agent.conversation_loop: Retrying API call in 2.4110219720708965s (attempt 1/3) thread=Thread-4 (run_agent):130432171984576 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B policy=default error=Connection error.
+2026-07-14 10:06:22,553 WARNING [20260714_080506_74ebfb] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIConnectionError thread=Thread-4 (run_agent):130432171984576 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-07-14 10:06:22,553 WARNING [20260714_080506_74ebfb] agent.conversation_loop: Retrying API call in 5.159702863963081s (attempt 2/3) thread=Thread-4 (run_agent):130432171984576 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B policy=default error=Connection error.
+2026-07-14 10:06:42,906 WARNING [20260714_080506_74ebfb] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIConnectionError thread=Thread-4 (run_agent):130432171984576 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-07-14 10:06:51,043 WARNING [20260714_080506_74ebfb] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIConnectionError thread=Thread-4 (run_agent):130432171984576 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-07-14 10:06:51,044 WARNING [20260714_080506_74ebfb] agent.conversation_loop: Retrying API call in 2.665896545916864s (attempt 1/3) thread=Thread-4 (run_agent):130432171984576 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B policy=default error=Connection error.
+2026-07-14 10:06:54,511 WARNING [20260714_080506_74ebfb] agent.conversation_loop: API call failed (attempt 2/3) error_type=InternalServerError thread=Thread-4 (run_agent):130432171984576 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B summary=HTTP 502 — 502 Bad Gateway
+2026-07-14 10:06:54,511 WARNING [20260714_080506_74ebfb] agent.conversation_loop: Retrying API call in 4.577222282113714s (attempt 2/3) thread=Thread-4 (run_agent):130432171984576 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B policy=default error=<html>
+<head><title>502 Bad Gateway</title></head>
+<body>
+<center><h1>502 Bad Gateway</h1></center>
+<hr><center>nginx/1.27.4</center>
+</body>
+</html>
+2026-07-14 10:06:59,238 WARNING [20260714_080506_74ebfb] agent.conversation_loop: API call failed (attempt 3/3) error_type=InternalServerError thread=Thread-4 (run_agent):130432171984576 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B summary=HTTP 502 — 502 Bad Gateway
+2026-07-14 10:06:59,266 ERROR [20260714_080506_74ebfb] agent.conversation_loop: API call failed after 3 retries. HTTP 502 — 502 Bad Gateway | provider=custom model=Qwen/Qwen3.6-27B msgs=6 tokens=~3,235
+2026-07-15 02:38:41,973 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 02:38:41,976 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-15 02:38:41,979 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-15 02:38:41,981 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 02:38:41,981 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 02:38:41,983 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 02:38:42,426 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-15 02:38:42,447 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-15 02:38:42,447 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 02:38:43,806 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-15 02:38:43,893 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-15 02:38:59,033 WARNING [20260714_080506_74ebfb] agent.tool_executor: Tool read_file returned error (0.30s): {"content": "", "total_lines": 0, "file_size": 0, "truncated": false, "is_binary": false, "is_image": false, "error": "File not found: workspace/hermes-agent/main.py"}
+2026-07-15 02:38:59,056 WARNING [20260714_080506_74ebfb] agent.tool_executor: Tool read_file returned error (0.33s): {"content": "", "total_lines": 0, "file_size": 0, "truncated": false, "is_binary": false, "is_image": false, "error": "File not found: workspace/LMBackend/ChatController/LlmController.cs"}
+2026-07-15 02:38:59,078 WARNING [20260714_080506_74ebfb] agent.tool_executor: Tool read_file returned error (0.26s): {"content": "", "total_lines": 0, "file_size": 0, "truncated": false, "is_binary": false, "is_image": false, "error": "File not found: workspace/LMFrontend/src/stores/chat.js"}
+
+[Tool loop warning: sa
+2026-07-15 02:38:59,103 WARNING [20260714_080506_74ebfb] agent.tool_executor: Tool read_file returned error (0.28s): {"content": "", "total_lines": 0, "file_size": 0, "truncated": false, "is_binary": false, "is_image": false, "error": "File not found: workspace/hermes-agent/services.py"}
+
+[Tool loop warning: same_to
+2026-07-15 02:39:42,590 WARNING [20260714_080506_74ebfb] agent.tool_executor: Tool terminal returned error (4.79s): {"output": "/workspace/LMBackend/ChatControllers/LlmController.cs\n/workspace/LMFrontend/src/components/ChatRoom.vue\n/workspace/LMFrontend/src/components - 複製/ChatRoom.vue\n/workspace/LMFrontend/src/
+2026-07-15 02:43:52,426 WARNING [20260714_080506_74ebfb] agent.tool_executor: Tool terminal returned error (60.25s): {"output": "", "exit_code": -1, "error": "BLOCKED: User denied this command. The user has NOT consented to this action. Do NOT retry this command, do NOT rephrase it, and do NOT attempt the same outco
+2026-07-15 02:46:33,349 WARNING [20260714_080506_74ebfb] agent.conversation_loop: API call failed (attempt 1/3) error_type=RateLimitError thread=Thread-4 (run_agent):124690784704192 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B summary=HTTP 429: Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.
+2026-07-15 02:46:33,350 WARNING [20260714_080506_74ebfb] agent.conversation_loop: Retrying API call in 27.0s (attempt 1/3) thread=Thread-4 (run_agent):124690784704192 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B policy=default error=Error code: 429 - {'error': {'message': 'Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.', 'type': 'rate_limit_exceeded', 'param': None, 'code': 'rate_limit_exceeded'}}
+2026-07-15 02:48:59,337 WARNING [20260714_080506_74ebfb] agent.conversation_loop: API call failed (attempt 1/3) error_type=RateLimitError thread=Thread-4 (run_agent):124690784704192 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B summary=HTTP 429: Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.
+2026-07-15 02:48:59,338 WARNING [20260714_080506_74ebfb] agent.conversation_loop: Retrying API call in 1.0s (attempt 1/3) thread=Thread-4 (run_agent):124690784704192 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B policy=default error=Error code: 429 - {'error': {'message': 'Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.', 'type': 'rate_limit_exceeded', 'param': None, 'code': 'rate_limit_exceeded'}}
+2026-07-15 02:55:53,166 WARNING [20260714_080506_74ebfb] agent.conversation_loop: API call failed (attempt 1/3) error_type=RateLimitError thread=Thread-4 (run_agent):124690784704192 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B summary=HTTP 429: Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.
+2026-07-15 02:55:53,167 WARNING [20260714_080506_74ebfb] agent.conversation_loop: Retrying API call in 7.0s (attempt 1/3) thread=Thread-4 (run_agent):124690784704192 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B policy=default error=Error code: 429 - {'error': {'message': 'Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.', 'type': 'rate_limit_exceeded', 'param': None, 'code': 'rate_limit_exceeded'}}
+2026-07-15 02:56:35,445 WARNING [20260714_080506_74ebfb] agent.conversation_loop: API call failed (attempt 1/3) error_type=RateLimitError thread=Thread-4 (run_agent):124690784704192 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B summary=HTTP 429: Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.
+2026-07-15 02:56:35,445 WARNING [20260714_080506_74ebfb] agent.conversation_loop: Retrying API call in 25.0s (attempt 1/3) thread=Thread-4 (run_agent):124690784704192 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B policy=default error=Error code: 429 - {'error': {'message': 'Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.', 'type': 'rate_limit_exceeded', 'param': None, 'code': 'rate_limit_exceeded'}}
+2026-07-15 02:57:26,944 WARNING [20260714_080506_74ebfb] agent.conversation_loop: API call failed (attempt 1/3) error_type=RateLimitError thread=Thread-4 (run_agent):124690784704192 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B summary=HTTP 429: Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.
+2026-07-15 02:57:26,944 WARNING [20260714_080506_74ebfb] agent.conversation_loop: Retrying API call in 34.0s (attempt 1/3) thread=Thread-4 (run_agent):124690784704192 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B policy=default error=Error code: 429 - {'error': {'message': 'Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.', 'type': 'rate_limit_exceeded', 'param': None, 'code': 'rate_limit_exceeded'}}
+2026-07-15 02:59:13,367 WARNING [20260714_080506_74ebfb] agent.tool_executor: Tool terminal returned error (60.22s): {"output": "", "exit_code": -1, "error": "BLOCKED: User denied this command. The user has NOT consented to this action. Do NOT retry this command, do NOT rephrase it, and do NOT attempt the same outco
+2026-07-15 02:59:39,028 WARNING [20260714_080506_74ebfb] agent.conversation_loop: API call failed (attempt 1/3) error_type=RateLimitError thread=Thread-4 (run_agent):124690784704192 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B summary=HTTP 429: Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.
+2026-07-15 02:59:39,028 WARNING [20260714_080506_74ebfb] agent.conversation_loop: Retrying API call in 22.0s (attempt 1/3) thread=Thread-4 (run_agent):124690784704192 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B policy=default error=Error code: 429 - {'error': {'message': 'Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.', 'type': 'rate_limit_exceeded', 'param': None, 'code': 'rate_limit_exceeded'}}
+2026-07-15 03:02:31,453 WARNING [20260714_080506_74ebfb] agent.conversation_loop: API call failed (attempt 1/3) error_type=RateLimitError thread=Thread-4 (run_agent):124690784704192 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B summary=HTTP 429: Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.
+2026-07-15 03:02:31,454 WARNING [20260714_080506_74ebfb] agent.conversation_loop: Retrying API call in 29.0s (attempt 1/3) thread=Thread-4 (run_agent):124690784704192 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B policy=default error=Error code: 429 - {'error': {'message': 'Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.', 'type': 'rate_limit_exceeded', 'param': None, 'code': 'rate_limit_exceeded'}}
+2026-07-15 03:03:43,616 WARNING [20260714_080506_74ebfb] agent.conversation_loop: API call failed (attempt 1/3) error_type=RateLimitError thread=Thread-4 (run_agent):124690784704192 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B summary=HTTP 429: Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.
+2026-07-15 03:03:43,616 WARNING [20260714_080506_74ebfb] agent.conversation_loop: Retrying API call in 17.0s (attempt 1/3) thread=Thread-4 (run_agent):124690784704192 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B policy=default error=Error code: 429 - {'error': {'message': 'Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.', 'type': 'rate_limit_exceeded', 'param': None, 'code': 'rate_limit_exceeded'}}
+2026-07-15 03:15:21,677 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 03:15:21,679 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-15 03:15:21,681 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-15 03:15:21,684 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 03:15:21,684 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 03:15:21,684 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn

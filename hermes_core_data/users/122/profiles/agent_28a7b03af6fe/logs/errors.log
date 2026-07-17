@@ -1,0 +1,11 @@
+2026-07-15 03:31:56,422 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 03:31:56,425 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-15 03:31:56,428 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-15 03:31:56,430 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 03:31:56,430 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 03:31:56,431 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 03:31:56,903 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-15 03:31:56,929 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-15 03:31:56,930 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 03:31:58,146 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-15 03:31:58,228 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))

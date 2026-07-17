@@ -1,0 +1,1 @@
+Terminal backend is SSH but OpenSSH client is not installed on the sandbox. All terminal calls fail with 'SSH is not installed or not in PATH. Install OpenSSH client: apt install openssh-client'. This needs to be fixed before any remote command execution will work.

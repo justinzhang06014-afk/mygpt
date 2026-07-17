@@ -1,0 +1,2123 @@
+// 資料庫完整 CRUD 與 多聊天室(一對多) Google 聯網控制中心
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Text;
+using System.Text.Json;
+using System.Net;
+// using Microsoft.Data.SqlClient; // 如果有需要
+using Npgsql; // 💡 確保頂部有引入 PostgreSQL 的驅動套件
+// 💡 關鍵引用：引入您的 Models 檔案
+using LMBackend; // 🌟 拿掉 .Data，直接參照根目錄
+using LMBackend.Models; 
+using UglyToad.PdfPig; // 🚀 引入 PdfPig 核心解析套件
+
+using System.Text.Json.Serialization; // 🌟 確保這行有加，否則 [JsonPropertyName] 會報錯
+using System.Net.Http.Json;           // 🌟 確保這行有加，否則 PostAsJsonAsync 與 ReadFromJsonAsync 會報錯
+using LMBackend.Controllers;
+
+namespace LMBackend.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+public class ChatController : ControllerBase
+{
+    private readonly AppDbContext _context;
+    private readonly ILogger<ChatController> _logger;
+    private readonly IHttpClientFactory _httpClientFactory; 
+    public ChatController(AppDbContext context, ILogger<ChatController> logger, IHttpClientFactory httpClientFactory)
+    {
+        _context = context;
+        _logger = logger;
+        _httpClientFactory = httpClientFactory;
+    }
+
+    /// <summary>
+    /// 核心共用引擎：將「Google 搜尋 ＋ 欄位大小寫忽略防禦 ＋ 呼叫 Python AI」完全封裝
+    /// </summary>
+/// <summary>
+    /// 📄 穩健共用 RAG 引擎：完全保留您原本呼叫外層 Python app.py 的神聖邏輯，並注入連線池優化
+    /// </summary>
+    private async Task<(string Reply, string? SearchSources)> CallAIEngineAsync(string userMessage, bool isWebSearch, int roomId)
+    {
+        string? searchSourcesJson = null;
+        _logger.LogInformation("[RAG-Engine] 🚀 進入舊 RAG 處理流程...");
+
+        // 💡 升級：全面採用 _httpClientFactory，解決原有 new HttpClient() 的高併發 Socket 耗盡隱患
+        var pythonClient = _httpClientFactory.CreateClient();
+        pythonClient.Timeout = TimeSpan.FromMinutes(30); 
+
+        _logger.LogInformation("[RAG-Engine] [C# 診斷] 前端傳入的 roomId 參數值為: {RoomId}", roomId);
+
+        // 打包與原本一模一樣的 CamelCase Payload
+        var llmRequest = new 
+        { 
+            userMessage = userMessage,   
+            isWebSearch = isWebSearch,     
+            max_tokens = 512,
+            roomId = roomId,
+        };
+        
+        var serializeOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+        var jsonPayload = JsonSerializer.Serialize(llmRequest, serializeOptions);
+        var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+        _logger.LogInformation("[RAG-Engine] 📡 準備連結 Python LLM Server...");
+        
+        // 直轟專案外層 docker app.py 的端點
+        var llmResponse = await pythonClient.PostAsync("http://llm-service:8000/api/chat", content).ConfigureAwait(false);
+        
+        if (!llmResponse.IsSuccessStatusCode)
+        {
+            _logger.LogError("[RAG-Engine] ❌ Python LLM Server 回傳錯誤。狀態碼: {StatusCode}", llmResponse.StatusCode);
+            throw new Exception($"Python LLM Server 回傳錯誤或拒絕連線。狀態碼: {llmResponse.StatusCode}");
+        }
+        
+        var responseString = await llmResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+        using var doc = JsonDocument.Parse(responseString);
+        var rootElement = doc.RootElement;
+
+        string reply = "";
+        var replyProp = rootElement.GetProperty("reply");
+        
+        // 完美保留您對 Array 型態與 String 型態的雙向防禦
+        if (replyProp.ValueKind == JsonValueKind.Array && replyProp.GetArrayLength() > 0)
+        {
+            reply = replyProp.GetString() ?? "";
+        }
+        else
+        {
+            reply = replyProp.GetString() ?? "";
+        }
+
+        if (rootElement.TryGetProperty("searchSources", out var sourcesProp) && sourcesProp.ValueKind == JsonValueKind.String)
+        {
+            searchSourcesJson = sourcesProp.GetString();
+        }
+
+        _logger.LogInformation("[RAG-Engine] 🎉 Python LLM 處理完畢，順利交棒。");
+        
+        return (reply, searchSourcesJson);
+    }
+
+    // =========================================================================
+    // 此區塊為 聊天室(房間) 新增、刪除、查看 聊天室 以及 更新聊天室名稱
+    // =========================================================================
+    // =========================================================================
+    // 💡Room 查詢(R) 所有聊天室端點：【查】撈取過往「所有聊天室清單」（用於左側邊欄渲染）
+    // 前端：chat.js 函式：const switchRoomAction（查看使用者點選）
+    // =========================================================================
+        /// <summary>
+    /// 【重構】房間清單讀取 (支援多租戶隔離與舊資料平滑遷移)
+    /// GET /api/rooms?userId=aaa
+    /// </summary>
+    [HttpGet]
+    [Route("/api/rooms")]
+    public async Task<IActionResult> GetRooms([FromQuery] string? userId)
+    {
+        try
+        {
+            // 💡 安全防禦：如果前端沒有帶入任何租戶識別，直接回傳空清單，嚴防越權外洩
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                _logger.LogWarning("[多租戶防禦] GetRooms 請求未附帶有效的 userId，已阻斷並回傳空清單。");
+                return Ok(new List<ChatRoom>());
+            }
+
+            List<ChatRoom> rooms;
+
+            // 💡 核心平滑遷移：如果是原有的主要帳號 aaa
+            if (userId == "aaa")
+            {
+                // 不僅撈取指定為 aaa 的房間，還會連帶接管所有 user_id 為 null 或空字串的歷史舊對話
+                rooms = await _context.ChatRooms
+                    .Where(r => r.UserId == "aaa" || r.UserId == null || r.UserId == "")
+                    .OrderByDescending(r => r.CreatedAt)
+                    .ToListAsync();
+                
+                _logger.LogInformation("[數據平滑遷移] 成功為帳號 aaa 載入專屬對話及歷史相容舊數據。共計 {Count} 筆。", rooms.Count);
+            }
+            else
+            {
+                // 💡 全新隔離：新帳號 (如 bbb) 進來，只會精確對齊自己的 user_id，內容完全全新乾淨
+                rooms = await _context.ChatRooms
+                    .Where(r => r.UserId == userId)
+                    .OrderByDescending(r => r.CreatedAt)
+                    .ToListAsync();
+
+                _logger.LogInformation("[多租戶隔離] 成功為帳號 {UserId} 載入全新獨立的對話清單。共計 {Count} 筆。", userId, rooms.Count);
+            }
+
+            return Ok(rooms);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "[GetRooms 崩潰] 無法讀取聊天室清單。租戶: {UserId}", userId);
+            return StatusCode(500, $"無法讀取聊天室清單: {ex.Message}");
+        }
+    }
+
+    // =========================================================================
+    // 💡 Room 新增(C) 新增一個聊天室端點：【增】點擊「+ 新增對話」時建立一個全新空白聊天室
+    // 前端：chat.js 函式：const createNewRoomAction（新增一個空白的）
+    // =========================================================================
+        /// <summary>
+    /// 【重構】建立新房間 (擴充支援多租戶隔離)
+    /// POST /api/rooms
+    /// </summary>
+    [HttpPost]
+    [Route("/api/rooms")]
+    public async Task<IActionResult> CreateRoom([FromBody] ChatRoomCreateDto? request)
+    {
+        try
+        {
+            // 💡 安全防禦：如果前端沒傳 UserId，預設指派給老帳號 "aaa"，拒絕再次產生 NULL 幽靈資料
+            string activeUserId = (request == null || string.IsNullOrWhiteSpace(request.UserId)) ? "aaa" : request.UserId.Trim();
+
+            var newRoom = new ChatRoom
+            {
+                Title = (request == null || string.IsNullOrWhiteSpace(request.Title)) ? "新的聊天對話" : request.Title.Trim(),
+                CreatedAt = DateTime.UtcNow,
+                UserId = activeUserId, // 💡 精確將前端傳來的租戶身分寫入資料庫
+                AgentId = null         // 一般模式房間，AgentId 固定為 null
+            };
+
+            _context.ChatRooms.Add(newRoom);
+            await _context.SaveChangesAsync();
+
+            _logger.LogInformation("[多租戶建立] 租戶 [{UserId}] 成功建立了新房間，ID: {RoomId}, 名稱: {Title}", activeUserId, newRoom.Id, newRoom.Title);
+            
+            return Ok(newRoom);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "[CreateRoom 崩潰] 建立聊天室失敗");
+            return StatusCode(500, $"建立聊天室失敗: {ex.Message}");
+        }
+    }
+
+    // =========================================================================
+    // 💡 Room 刪除(D) 刪除一個聊天室端點：【刪】點擊「垃圾桶 刪除對話」時刪除一個舊有的聊天室
+    // 前端：chat.js 函式：const deleteRoomAction（新增一個空白的）
+    // =========================================================================
+        /// <summary>
+    /// 【重構】刪除房間 (加入多租戶權限防禦)
+    /// DELETE /api/rooms/{roomId}?userId=aaa
+    /// </summary>
+    [HttpDelete("/api/rooms/{roomId}")]
+    public async Task<IActionResult> DeleteRoom(int roomId, [FromQuery] string? userId)
+    {
+        try
+        {
+            // 💡 安全防禦：必須提供操作者的 userId 才能進行鑑權
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                return BadRequest("必須提供 userId 進行刪除鑑權");
+            }
+
+            var room = await _context.ChatRooms.FindAsync(roomId);
+            if (room == null) 
+            {
+                return NotFound(new { message = "找不到該聊天室" });
+            }
+
+            // 💡 多租戶權限校驗：
+            // 擁有權限的條件為：房間的 UserId 與 操作者一致
+            // 或者：操作者是 "aaa"，且該房間屬於歷史舊數據 (UserId 為 null 或空字串)
+            bool isOwner = room.UserId == userId || 
+                          (userId == "aaa" && (string.IsNullOrEmpty(room.UserId) || room.UserId == "aaa"));
+
+            if (!isOwner)
+            {
+                _logger.LogWarning("[越權警告] 用戶 [{UserId}] 企圖刪除不屬於他的房間 [{RoomId}]，已被系統阻斷！", userId, roomId);
+                return Forbid(); // 回傳 403 拒絕存取
+            }
+
+            _context.ChatRooms.Remove(room);
+            await _context.SaveChangesAsync();
+
+            _logger.LogInformation("[多租戶刪除] 租戶 [{UserId}] 已成功刪除房間 [{RoomId}]", userId, roomId);
+            return Ok(new { message = "聊天室已成功刪除" });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "[DeleteRoom 崩潰] 刪除聊天室失敗。房間ID: {RoomId}", roomId);
+            return StatusCode(500, $"刪除聊天室失敗: {ex.Message}");
+        }
+    }
+
+
+    // =========================================================================
+    // 💡 Room 更新(U) 更新一個聊天室端點名稱：【更】點擊「筆」時更新一個聊天室名稱
+    // 前端：chat.js 函式：const updateRoomTitleAction（修改指定聊天室名稱）
+    // =========================================================================
+        /// <summary>
+    /// 【重構】修改聊天室名稱 (加入多租戶權限防禦)
+    /// PUT /api/rooms/{roomId}?userId=aaa
+    /// </summary>
+    [HttpPut("/api/rooms/{roomId}")]
+    public async Task<IActionResult> UpdateRoomTitle(int roomId, [FromBody] RoomUpdateDto dto, [FromQuery] string? userId)
+    {
+        if (dto == null || string.IsNullOrWhiteSpace(dto.Title))
+        {
+            return BadRequest("聊天室名稱不能為空");
+        }
+        if (string.IsNullOrWhiteSpace(userId))
+        {
+            return BadRequest("必須提供 userId 進行修改鑑權");
+        }
+
+        try
+        {
+            var room = await _context.ChatRooms.FindAsync(roomId);
+            if (room == null) 
+            {
+                return NotFound(new { message = "找不到該聊天室" });
+            }
+
+            // 💡 多租戶權限校驗：
+            // 允許修改的條件：房間的 UserId 與操作者完全一致
+            // 或者是老帳號 "aaa" 正在操作欄位為 null/空字串 的歷史舊資料
+            bool isOwner = room.UserId == userId || 
+                          (userId == "aaa" && (string.IsNullOrEmpty(room.UserId) || room.UserId == "aaa"));
+
+            if (!isOwner)
+            {
+                _logger.LogWarning("[越權警告] 用戶 [{UserId}] 企圖修改不屬於他的房間 [{RoomId}] 名稱，已被系統阻斷！", userId, roomId);
+                return Forbid(); // 回傳 403 拒絕存取
+            }
+
+            room.Title = dto.Title.Trim();
+            await _context.SaveChangesAsync();
+
+            _logger.LogInformation("[多租戶修改] 租戶 [{UserId}] 成功更新房間 [{RoomId}] 名稱為: {Title}", userId, roomId, room.Title);
+            return Ok(new { id = room.Id, title = room.Title });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "[UpdateRoomTitle 崩潰] 修改聊天室名稱失敗。房間ID: {RoomId}", roomId);
+            return StatusCode(500, $"修改聊天室名稱失敗: {ex.Message}");
+        }
+    }
+
+
+    // 搭配的 DTO 類別
+    public class RoomUpdateDto
+    {
+        public string Title { get; set; } = string.Empty;
+        public string? UserId { get; set; } // 👈 新增多租戶承接屬性
+    }
+
+
+
+    // =========================================================================
+    // 💡 messages 查詢(R) 聊天內容端點：【查】點擊某一間聊天室時，精準撈出「該聊天室內部」的歷史對話
+    // 前端：chat.js 函式：const sendMessageAction（修改指定聊天室名稱）
+    // =========================================================================
+        /// <summary>
+    /// 【重構】查詢特定房間歷史紀錄 (加入多租戶安全防禦)
+    /// GET /api/rooms/{roomId}/messages?userId=aaa
+    /// </summary>
+    [HttpGet("/api/rooms/{roomId}/messages")]
+    public async Task<IActionResult> GetRoomMessages(int roomId, [FromQuery] string? userId)
+    {
+        if (string.IsNullOrWhiteSpace(userId))
+        {
+            return BadRequest("必須提供 userId 進行歷史紀錄讀取鑑權");
+        }
+
+        try
+        {
+            // 💡 安全防禦：先撈取房間的擁有者身分，進行身分驗證
+            var room = await _context.ChatRooms.FindAsync(roomId);
+            if (room == null)
+            {
+                return NotFound(new { message = "找不到該聊天室" });
+            }
+
+            // 💡 多租戶權限校驗：
+            // 允許檢視的條件：房間的 UserId 與操作者一致
+            // 或者是主要老帳號 "aaa" 正在檢視 null 或空字串的歷史舊對話
+            bool isOwner = room.UserId == userId || 
+                          (userId == "aaa" && (string.IsNullOrEmpty(room.UserId) || room.UserId == "aaa"));
+
+            if (!isOwner)
+            {
+                _logger.LogWarning("[越權警告] 用戶 [{UserId}] 企圖檢視不屬於他的房間 [{RoomId}] 的歷史對話，已被系統阻斷！", userId, roomId);
+                return Forbid(); // 回傳 403 拒絕存取
+            }
+
+            // 驗證通過，拉取與原本一模一樣的歷史訊息紀錄
+            var messages = await _context.Messages
+                .Where(m => m.ChatRoomId == roomId)
+                .OrderBy(m => m.Timestamp)
+                .ToListAsync();
+
+            _logger.LogInformation("[多租戶檢視] 租戶 [{UserId}] 成功讀取房間 [{RoomId}] 的歷史紀錄，共 {Count} 筆訊息。", userId, roomId, messages.Count);
+            return Ok(messages);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "[GetRoomMessages 崩潰] 讀取訊息紀錄失敗。房間ID: {RoomId}", roomId);
+            return StatusCode(500, $"讀取訊息紀錄失敗: {ex.Message}");
+        }
+    }
+
+
+    // ===================================================================================================================================
+    // 此區塊為 聊天訊息 使用者 傳送(輸入) 以及 刪除、查看、更新(重新詢問) 問題 
+    // ===================================================================================================================================
+
+
+    /// <summary>
+    /// 【增】接收使用者發問、呼叫共用 AI 引擎並存入指定聊天室
+    /// </summary>
+    // =========================================================================
+    // 💡 messages 新增(C) 使用者Prompt傳過來訊息的端點
+    // 前端：chat.js 函式：const sendMessageAction（使用者傳輸的訊息）
+    // LLM 端：app.py 函式：async def chat(request: ChatRequest)（往後交給LLM處理）
+    // 分流：Hermas-Agent輸入 與 普通LLM+RAG輸入做個區隔
+    // =========================================================================
+    /// <summary>
+    /// 【升級版】接收使用者發問、自動判定房間型態（純 RAG vs Hermes Agent）並動態路由分流
+    /// </summary>
+       /// <summary>
+    /// 【旗艦升級版】接收使用者發問、自動判定房間型態（純 RAG vs Hermes Agent）並動態路由分流
+    /// </summary>
+       /// <summary>
+    /// 【核心重構】發送聊天訊息 (雙軌道完美融合：Agent 串流與純 RAG，含多租戶隔離與精確對話追蹤)
+    /// POST /api/chat
+    /// </summary>
+    [HttpPost("/api/chat")]
+    public async Task SendMessage([FromBody] JsonElement rawJson) // 💡 回傳值為 Task，徹底繞過 MVC 內容協商
+    {
+        var response = HttpContext.Response;
+
+        // 💡 任務 a：方法一進入，立刻生成當次對話專屬的追蹤 UUID (D格式：xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)
+        string currentRequestUuid = Guid.NewGuid().ToString("D");
+
+        try
+        {
+            // 1. 從前端 JSON 中精準拔出所需的欄位
+            string message = rawJson.TryGetProperty("message", out var mProp) ? mProp.GetString() ?? "" : "";
+            bool isWebSearch = rawJson.TryGetProperty("isWebSearch", out var wProp) && wProp.GetBoolean(); 
+            
+            // 💡 升級：讀取前端傳入的目前使用者 ID，空值則防禦性對齊舊資料 "aaa"
+            string userId = rawJson.TryGetProperty("userId", out var uProp) ? uProp.GetString() ?? "aaa" : "aaa";
+
+            int chatRoomId = 0;
+            if (rawJson.TryGetProperty("roomId", out var rProp)) chatRoomId = rProp.GetInt32();
+            else if (rawJson.TryGetProperty("chatRoomId", out var crProp)) chatRoomId = crProp.GetInt32();
+
+            if (string.IsNullOrWhiteSpace(message))
+            {
+                response.StatusCode = 400;
+                response.ContentType = "text/plain; charset=utf-8";
+                await response.WriteAsync("訊息內容不能為空");
+                return;
+            }
+            if (chatRoomId <= 0)
+            {
+                response.StatusCode = 400;
+                response.ContentType = "text/plain; charset=utf-8";
+                await response.WriteAsync("未指定有效的聊天室 ID");
+                return;
+            }
+
+            // 💡 2. 多租戶權限防禦：直接查詢該房間，確認房間的歸屬權限是否對齊
+            var room = await _context.ChatRooms.FirstOrDefaultAsync(r => r.Id == chatRoomId);
+            if (room == null)
+            {
+                _logger.LogWarning("找不到指定的聊天室 ID: {ChatRoomId}", chatRoomId);
+                response.StatusCode = 404;
+                response.ContentType = "text/plain; charset=utf-8";
+                await response.WriteAsync("找不到指定的聊天室資訊");
+                return;
+            }
+
+            // 校驗邏輯：房間屬於當前用戶，或者是歷史舊數據 (null/空) 且當前用戶為 "aaa"
+            bool hasPermission = room.UserId == userId || 
+                                (userId == "aaa" && (string.IsNullOrEmpty(room.UserId) || room.UserId == "aaa"));
+
+            if (!hasPermission)
+            {
+                _logger.LogWarning("[越權警告] 用戶 [{UserId}] 企圖向不屬於他的房間 [{RoomId}] 發送對話，已被系統安全阻斷！", userId, chatRoomId);
+                response.StatusCode = 403;
+                response.ContentType = "text/plain; charset=utf-8";
+                await response.WriteAsync("安全性權限不足：您無權在此聊天室發送訊息。");
+                return;
+            }
+
+            // 同步拉出母表的 system_prompt 供後續軌道使用
+            string? systemPrompt = null;
+            if (!string.IsNullOrEmpty(room.AgentId))
+            {
+                systemPrompt = await _context.Agents
+                    .Where(a => a.AgentId == room.AgentId)
+                    .Select(a => a.SystemPrompt)
+                    .FirstOrDefaultAsync();
+            }
+
+            // 🤖 🤖 🤖 軌道 B：🤖 Agent 串流模式 🤖 🤖 🤖
+            if (!string.IsNullOrEmpty(room.AgentId))
+            {
+                _logger.LogInformation("房間 {RoomId} 已綁定 Agent [{AgentId}]，租戶 [{UserId}] 啟動 Hermes 記憶隔離高效能串流管線...", chatRoomId, room.AgentId, userId);
+                
+                response.StatusCode = 200;
+                response.ContentType = "text/event-stream";
+                response.Headers.CacheControl = "no-cache";
+                response.Headers.Connection = "keep-alive";
+                response.Headers.TryAdd("X-Accel-Buffering", "no"); // 防禦 Nginx 緩衝
+
+                var fullReplyBuilder = new StringBuilder();
+
+                // 呼叫流式傳輸引擎，傳入 CancellationToken 完美控制生命週期
+                await foreach (var token in CallAgentEngineStreamAsync(message, room.AgentId, chatRoomId, systemPrompt ?? "", HttpContext.RequestAborted))
+                {
+                    fullReplyBuilder.Append(token);
+
+                    // 依照標準 SSE 格式發送給前端
+                    var safeToken = token.Replace("\r", "").Replace("\n", "\\n");
+                    await response.WriteAsync($"data: {safeToken}\n\n");
+                    await response.Body.FlushAsync();
+                }
+
+                string finalReply = fullReplyBuilder.ToString();
+
+                // 💡 任務 b：串流結束後，後端進行記憶落盤，指派 RequestUuid 欄位精確對齊
+                var messageLog = new Message
+                {
+                    ChatRoomId = chatRoomId, 
+                    UserInput = message,
+                    Response = finalReply,
+                    SearchSources = null,
+                    Timestamp = DateTime.UtcNow,
+                    RequestUuid = currentRequestUuid // 👈 寫入當次請求 UUID
+                };
+
+                _context.Messages.Add(messageLog);
+                await _context.SaveChangesAsync();
+
+                // 💡 任務 c：發送最後一發特殊 SSE 封包，在 JSON Payload 中附加 requestUuid
+                var finalJson = JsonSerializer.Serialize(new { 
+                    id = messageLog.Id, 
+                    reply = finalReply, 
+                    searchSources = Array.Empty<object>(),
+                    requestUuid = currentRequestUuid // 👈 附帶供前端追蹤
+                });
+                
+                await response.WriteAsync($"event: final_result\ndata: {finalJson}\n\n");
+                await response.Body.FlushAsync();
+
+                return; // 直接 return 結束方法，不透過 MVC Result 機制，徹底根除 406
+            }
+            else
+            {
+                // 📄 📄 📄 📄 純 RAG 模式 📄 📄 📄 📄
+                _logger.LogInformation("房間 {RoomId} 為一般聊天室，租戶 [{UserId}] 啟動純 RAG 模式...", chatRoomId, userId);
+                
+                var aiResult = await CallAIEngineAsync(message, isWebSearch, chatRoomId);
+                
+                // 💡 任務 b：實例化 Message 記憶落盤，指派 RequestUuid 欄位精確對齊
+                var messageLog = new Message
+                {
+                    ChatRoomId = chatRoomId, 
+                    UserInput = message,
+                    Response = aiResult.Reply,
+                    SearchSources = aiResult.SearchSources,
+                    Timestamp = DateTime.UtcNow,
+                    RequestUuid = currentRequestUuid // 👈 寫入當次請求 UUID
+                };
+
+                _context.Messages.Add(messageLog);
+                await _context.SaveChangesAsync();
+
+                // 💡 任務 c：傳統模式也改用 WriteAsJsonAsync 直接輸出，並在 Payload 中附加 requestUuid，繞過 406
+                response.StatusCode = 200;
+                response.ContentType = "application/json";
+                await response.WriteAsJsonAsync(new { 
+                    id = messageLog.Id, 
+                    reply = aiResult.Reply, 
+                    searchSources = messageLog.SearchSources != null ? JsonSerializer.Deserialize<object>(messageLog.SearchSources) : Array.Empty<object>(),
+                    requestUuid = currentRequestUuid // 👈 附帶供前端追蹤
+                });
+                return;
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "處理發送訊息時發生系統內部錯誤。RequestUuid: {RequestUuid}", currentRequestUuid);
+            
+            // 異常處理也直接寫入 Response Body，嚴格防禦 406
+            if (!response.HasStarted)
+            {
+                response.StatusCode = 500;
+                response.ContentType = "text/plain; charset=utf-8";
+                await response.WriteAsync($"系統內部錯誤: {ex.Message}");
+            }
+        }
+    }
+
+
+
+    /// <summary>
+    /// 🚀 拓荒通訊命脈：改裝為基於 ResponseHeadersRead 的高效能流式傳輸中轉管線
+    /// </summary>
+        /// <summary>
+    /// 🚀 拓荒通訊命脈：改裝為基於 ResponseHeadersRead 的高效能流式傳輸中轉管線
+    /// 💡 移除 async 關鍵字與 Task 包裹，直接回傳串流迭代器，徹底解決 CS8411 編編錯誤！
+    /// </summary>
+        /// <summary>
+    /// 🚀 拓荒通訊命脈：改裝為基於 ResponseHeadersRead 的高效能流式傳輸中轉管線
+    /// 💡 使用官方標準的 async + yield return 寫法，徹底排除編編錯誤，絕對穩健！
+    /// </summary>
+    private async IAsyncEnumerable<string> CallAgentEngineStreamAsync(
+        string message, 
+        string agentId, 
+        int roomId, 
+        string systemPrompt,
+        [System.Runtime.CompilerServices.EnumeratorCancellation] System.Threading.CancellationToken cancellationToken = default)
+    {
+        // 直轟 docker-compose 對齊後的服務名稱 hermes-agent (8643 埠口)
+        string url = "http://hermes-agent-proxy:8643/api/agent/chat/stream"; 
+
+        var payload = new
+        {
+            agent_id = agentId,
+            room_id = roomId.ToString(),
+            system_prompt = systemPrompt,
+            message = message
+        };
+
+        var client = _httpClientFactory.CreateClient();
+        client.Timeout = TimeSpan.FromMinutes(30); // 確保大模型長文本推理不逾時
+
+        var jsonContent = new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
+
+        // 建立請求並手動設定為 POST
+        using var request = new HttpRequestMessage(HttpMethod.Post, url) { Content = jsonContent };
+
+        // 🌟 核心關鍵：使用 HttpCompletionOption.ResponseHeadersRead 
+        // 只要 Python 網關一回傳 Header，C# 立刻放行向下走，絕不在記憶體中緩衝整個 Body！
+        using var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            string errorDetail = await response.Content.ReadAsStringAsync(cancellationToken);
+            _logger.LogError("[C# 交通警察] ❌ Hermes 串流容器拒絕請求。狀態碼: {StatusCode}, 詳情: {Detail}", response.StatusCode, errorDetail);
+            throw new Exception($"Hermes 串流引擎錯誤 ({response.StatusCode}): {errorDetail}");
+        }
+
+        // 讀取底層網路流，來一個字元處理一個字元
+        using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
+        using var reader = new StreamReader(stream, Encoding.UTF8);
+
+        char[] buffer = new char[1024]; // 緩衝區大小
+        int bytesRead;
+
+        _logger.LogInformation("[C# 交通警察] 📡 Hermes 串流管線已成功建立，開始即時泵出 Token... Agent: {AgentId}, Room: {RoomId}", agentId, roomId);
+
+        // 使用標準的 yield return，讓 C# 狀態機自動幫我們處理 IAsyncEnumerable 的迭代細節
+        while ((bytesRead = await reader.ReadAsync(buffer, 0, buffer.Length)) > 0)
+        {
+            if (cancellationToken.IsCancellationRequested) break;
+            yield return new string(buffer, 0, bytesRead);
+        }
+        
+        _logger.LogInformation("[C# 交通警察] 🎉 Hermes 串流完全終止且回收完成。");
+    }
+
+    /// <summary>
+    /// 🚀 拓荒通訊命脈：將物理隔離金鑰打包，轟向 Docker 內部的 Hermes 引擎
+    /// </summary>
+    // private async Task<string> CallAgentEngineAsync(string message, string agentId, int roomId, string systemPrompt)
+    // {
+    //     // 💡 萬能終點：直轟我們在 docker-compose 內定義的全新獨立 hermes-agent 容器（8643埠）
+    //     string url = "http://hermes-agent:8643/api/agent/chat"; 
+
+    //     // 💡 交通警察極簡通訊協定：將大腦提示詞、物理隔離金鑰與房間 ID 一併打包送過去
+    //     // 讓 Python Hermes 中控在完全不連 PostgreSQL 的情況下，盲目收下參數並進行實體硬碟讀寫
+    //     var payload = new
+    //     {
+    //         agent_id = agentId,
+    //         room_id = roomId.ToString(),
+    //         system_prompt = systemPrompt,
+    //         message = message
+    //     };
+
+    //     var jsonContent = new StringContent(
+    //         JsonSerializer.Serialize(payload),
+    //         Encoding.UTF8,
+    //         "application/json"
+    //     );
+
+    //     var client = _httpClientFactory.CreateClient();
+    //     client.Timeout = TimeSpan.FromMinutes(30); // 給予大模型足夠的推理思考緩衝時間
+        
+    //     try
+    //     {
+    //         _logger.LogInformation("[C# 交通警察] 📡 正在將專家請求轉發給 Hermes 中控... Agent: {AgentId}, Room: {RoomId}", agentId, roomId);
+    //         var response = await client.PostAsync(url, jsonContent);
+            
+    //         if (!response.IsSuccessStatusCode)
+    //         {
+    //             string errorDetail = await response.Content.ReadAsStringAsync();
+    //             _logger.LogError("[C# 交通警察] ❌ Hermes 中控容器拒絕請求。狀態碼: {StatusCode}, 詳情: {Detail}", response.StatusCode, errorDetail);
+    //             throw new Exception($"Hermes 中控引擎錯誤 ({response.StatusCode}): {errorDetail}");
+    //         }
+
+    //         string jsonResult = await response.Content.ReadAsStringAsync();
+    //         using var doc = JsonDocument.Parse(jsonResult);
+            
+    //         // 💡 精準解析 Python Hermes 中控回傳的極簡規格 {"reply": "..."}
+    //         if (doc.RootElement.TryGetProperty("reply", out var replyProp))
+    //         {
+    //             _logger.LogInformation("[C# 交通警察] 🎉 Hermes 中控成功完成記憶沉澱與模型推理，已安全回收回覆！");
+    //             return replyProp.GetString() ?? "助理未能產生有效回覆。";
+    //         }
+            
+    //         return jsonResult;
+    //     }
+    //     catch (HttpRequestException ex)
+    //     {
+    //         _logger.LogError(ex, "[C# 交通警察] 🚨 連線至 Hermes 中控服務失敗。請檢查 8643 埠口是否成功通電。");
+    //         throw new Exception($"無法連線至 Hermes 記憶隔離網關。內部訊息: {ex.Message}");
+    //     }
+    // }
+
+
+
+    public class AIResult
+    {
+        public string Reply { get; set; } = string.Empty;
+        public string? SearchSources { get; set; }
+    }
+    /// <summary>
+    /// 【改】修改舊問題、調用共用 AI 引擎並更新覆蓋 PostgreSQL 欄位
+    /// </summary>
+    // =========================================================================
+    // 💡 messages 修改(U) 修改使用者已經有的訊息 並重新詢問
+    // 前端：chat.js 函式：const updateMessage（使用者修改的訊息）
+    // LLM 端：app.py 函式：async def chat(request: ChatRequest)（將修改過的往後交給LLM處理）
+    // =========================================================================
+        /// <summary>
+    /// 【重構】修改訊息內容 (加入多租戶安全防禦與越權阻斷)
+    /// PUT /api/messages/{id}?userId=aaa
+    /// </summary>
+    [HttpPut]
+    [Route("/api/messages/{id}")]
+    public async Task<IActionResult> UpdateMessage(int id, [FromBody] ChatRequest request, [FromQuery] string? userId)
+    {
+        if (request == null || string.IsNullOrWhiteSpace(request.Message))
+        {
+            return BadRequest("修改內容不能為空");
+        }
+        if (string.IsNullOrWhiteSpace(userId))
+        {
+            return BadRequest("必須提供 userId 進行修改紀錄鑑權");
+        }
+
+        try
+        {
+            // 💡 1. 先把該訊息撈出來
+            var existingMessage = await _context.Messages.FindAsync(id);
+            if (existingMessage == null)
+            {
+                return NotFound(new { message = "找不到此訊息，無法修改。" });
+            }
+
+            // 💡 2. 安全驗證：向母表 chat_rooms 借用 user_id 欄位進行交叉校驗，防橫向越權
+            var room = await _context.ChatRooms.FindAsync(existingMessage.ChatRoomId);
+            if (room == null)
+            {
+                return NotFound(new { message = "該訊息所屬的聊天室已不存在，無法修改。" });
+            }
+
+            // 校驗擁有權：必須是當前用戶，或是老帳號 "aaa" 操作歷史空數據
+            bool isOwner = room.UserId == userId || 
+                          (userId == "aaa" && (string.IsNullOrEmpty(room.UserId) || room.UserId == "aaa"));
+
+            if (!isOwner)
+            {
+                _logger.LogWarning("[越權警告] 用戶 [{UserId}] 企圖修改/重算不屬於他的訊息記錄 [{MessageId}]，已被系統安全阻斷！", userId, id);
+                return Forbid(); // 回傳 403 拒絕存取
+            }
+
+            // 💡 3. 驗證通過，重新呼叫 Python 共用 AI 引擎重新計算回答
+            var aiResult = await CallAIEngineAsync(request.Message, request.IsWebSearch, request.RoomId);
+
+            // 更新歷史紀錄落盤
+            existingMessage.UserInput = request.Message.Trim();
+            existingMessage.Response = aiResult.Reply;
+            existingMessage.SearchSources = aiResult.SearchSources; 
+            existingMessage.Timestamp = DateTime.UtcNow;
+
+            await _context.SaveChangesAsync();
+
+            _logger.LogInformation("[多租戶重算] 租戶 [{UserId}] 成功更新並重算訊息紀錄 [{MessageId}]", userId, id);
+
+            return Ok(new { 
+                id = existingMessage.Id, 
+                reply = aiResult.Reply, 
+                searchSources = aiResult.SearchSources != null ? JsonSerializer.Deserialize<object>(aiResult.SearchSources) : null 
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "[UpdateMessage 崩潰] 修改訊息失敗。訊息ID: {MessageId}", id);
+            return StatusCode(500, $"修改訊息失敗: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// 【刪】收回聊天紀錄
+    /// </summary>
+    // =========================================================================
+    // 💡 messages 刪除(D) 收回使用者訊息
+    // 前端：chat.js 函式：const deleteMessage（刪除使用者訊息）
+    // =========================================================================
+    [HttpDelete]
+    [Route("/api/messages/{id}")]
+    public async Task<IActionResult> DeleteMessage(int id)
+    {
+        try
+        {
+            var message = await _context.Messages.FindAsync(id);
+            if (message == null) 
+            {
+                return NotFound(new { message = "找不到此訊息，無法收回。" });
+            }
+
+            _context.Messages.Remove(message);
+            await _context.SaveChangesAsync();
+            return Ok(new { message = "訊息已成功收回" });
+        }
+        catch (Exception ex) 
+        { 
+            return StatusCode(500, $"收回訊息失敗: {ex.Message}"); 
+        }
+    }
+
+    // ===================================================================================================================================
+    // 此區塊為 RAG 新增、刪除、查看 文件
+    // ===================================================================================================================================
+
+    // =========================================================================
+    // 🚀 新增RAG端點：【增】POST /api/rooms/{roomId}/upload - 接收拉入的檔案並推入 RAG
+    // 前端：chat.js 函式：const fetchCurrentRoomFilesAction（接收 RAG 由前端來的文件）
+    // LLM RAG端：app.py 函式：async def rag_upload_document (推送給python進行RAG Chunk切分)
+    // =========================================================================
+    [HttpPost("/api/rooms/{roomId}/upload")]
+    public async Task<IActionResult> UploadDocumentForRag(int roomId, IFormFile file, [FromQuery] string? userId)
+    {
+        // 1. 安全防禦：檢查檔案是否有效
+        if (file == null || file.Length == 0)
+        {
+            return BadRequest("上傳的檔案無效或內容為空");
+        }
+        if (string.IsNullOrWhiteSpace(userId))
+        {
+            return BadRequest("必須提供 userId 進行知識庫上傳鑑權");
+        }
+
+        // 💡 2. 多租戶權限交叉校驗：先確認該聊天室是否存在，以及操作者是否有權存取
+        var room = await _context.ChatRooms.FirstOrDefaultAsync(r => r.Id == roomId);
+        if (room == null)
+        {
+            return NotFound(new { message = "找不到指定的聊天室，無法綁定知識庫" });
+        }
+
+        // 校驗邏輯：房間屬於當前用戶，或者是歷史舊數據 (null/空) 且當前用戶為 "aaa"
+        bool hasPermission = room.UserId == userId || 
+                            (userId == "aaa" && (string.IsNullOrEmpty(room.UserId) || room.UserId == "aaa"));
+
+        if (!hasPermission)
+        {
+            _logger.LogWarning("[越權警告] 用戶 [{UserId}] 企圖將文件上傳至不屬於他的房間 [{RoomId}] 的知識庫，已被系統安全阻斷！", userId, roomId);
+            return Forbid(); // 回傳 403 拒絕存取
+        }
+
+        // 3. 放寬限制：允許 .txt, .md 以及全新的開源解析 .pdf
+        var extension = Path.GetExtension(file.FileName).ToLower();
+        var allowedExtensions = new[] { ".txt", ".md", ".pdf" };
+
+        if (!allowedExtensions.Contains(extension))
+        {
+            return BadRequest("目前知識庫僅支援純文字檔案 (.txt)、Markdown (.md) 以及文件檔案 (.pdf)");
+        }
+
+        try
+        {
+            // 4. 根據副檔名分流：讀取檔案內部的純文字大字串
+            string fileContent = string.Empty;
+
+            if (extension == ".pdf")
+            {
+                // 🚀 使用 PdfPig 在記憶體內逐頁將 PDF 實體文字摳出來
+                using (var stream = file.OpenReadStream())
+                using (var pdfDocument = PdfDocument.Open(stream))
+                {
+                    var sb = new StringBuilder();
+                    foreach (var page in pdfDocument.GetPages())
+                    {
+                        // 為每一頁加上頁碼標記，這能讓 Python 切片時保留頁碼上下文，極度有利於 RAG 溯源
+                        sb.AppendLine($"--- Page {page.Number} ---");
+                        sb.AppendLine(page.Text);
+                    }
+                    fileContent = sb.ToString();
+                }
+            }
+            else
+            {
+                // 原有的 .txt 與 .md 讀取邏輯保持不變
+                using (var reader = new StreamReader(file.OpenReadStream(), Encoding.UTF8))
+                {
+                    fileContent = await reader.ReadToEndAsync();
+                }
+            }
+
+            // 安全防禦：避免塞入空字串導致 Python 的 ai_client.embeddings 崩潰
+            if (string.IsNullOrWhiteSpace(fileContent))
+            {
+                return BadRequest("檔案內容解析失敗或內容為空（若為 PDF，請檢查是否為全圖片構成的掃描件）。");
+            }
+
+            // 5. 跨容器通訊：完全對齊您的 app.py Payload 欄位規格 (roomId, fileName, fileContent)
+            var pythonClient = _httpClientFactory.CreateClient();
+            pythonClient.Timeout = TimeSpan.FromMinutes(30); // 給予充足的轉向量緩衝時間
+
+            var ragPayload = new
+            {
+                roomId = roomId.ToString(),
+                fileName = file.FileName,
+                fileContent = fileContent // 這裡已完美熔接了 PDF 的大字串
+            };
+
+            var jsonPayload = JsonSerializer.Serialize(ragPayload, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+            var httpContent = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+            _logger.LogInformation("[C# RAG-FORWARD] 正在將檔案 {FileName} 轉發給 Python 向量化中... 租戶: {UserId}", file.FileName, userId);
+            
+            // 精準對齊您的容器域名與 Python /api/rag/upload 路由
+            var pythonResponse = await pythonClient.PostAsync("http://llm-service:8000/api/rag/upload", httpContent);
+            
+            if (!pythonResponse.IsSuccessStatusCode)
+            {
+                var errBody = await pythonResponse.Content.ReadAsStringAsync();
+                throw new Exception($"Python RAG 服務端回傳錯誤: {errBody}");
+            }
+
+            // 6. 💡 終極防禦：維持您的高容錯原生 SQL 寫入（全小寫 document_files 結構）
+            string sql = @"
+                INSERT INTO document_files (room_id, file_name, file_path, file_size, uploaded_at) 
+                VALUES ({0}, {1}, {2}, {3}, {4})";
+                
+            await _context.Database.ExecuteSqlRawAsync(sql, 
+                roomId, 
+                file.FileName, 
+                "Docker_Volume_Chroma_Indexed", 
+                file.Length, 
+                DateTime.UtcNow
+            );
+
+            // 7. 讀取 Python 回傳的切片統計資訊並回傳前端 Vue 3
+            var responseString = await pythonResponse.Content.ReadAsStringAsync();
+            using var doc = JsonDocument.Parse(responseString);
+            int chunksCount = doc.RootElement.GetProperty("chunksCount").GetInt32();
+
+            _logger.LogInformation("[C# RAG-FORWARD] ✅ 檔案 {FileName} 已成功透過原生 SQL 入庫！租戶: {UserId}, 切片數: {ChunksCount}", file.FileName, userId, chunksCount);
+            return Ok(new
+            {
+                message = "知識庫文件已成功上傳並完成向量化切片",
+                fileName = file.FileName,
+                chunksCount = chunksCount
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "[❌ C# RAG-UPLOAD 內部崩潰]");
+            return StatusCode(500, $"後端 RAG 處理失敗: {ex.Message}");
+        }
+    }
+    
+    // =========================================================================
+    // 🚀 新增端點：【查】GET /api/rooms/{roomId}/files - 獲取該房間已綁定的文件標籤清單
+    // =========================================================================
+    // =========================================================================
+    // 🚀 修正版：改用 FromSqlRaw 進行原生 SQL 查詢，100% 免疫 EF Core 內存結構衝突！
+    // =========================================================================
+    [HttpGet("/api/rooms/{roomId}/files")]
+    public async Task<IActionResult> GetRoomUploadedFiles(int roomId, [FromQuery] string? userId)
+    {
+        if (string.IsNullOrWhiteSpace(userId))
+        {
+            return BadRequest("必須提供 userId 進行文件清單讀取鑑權");
+        }
+
+        var fileList = new List<object>();
+        
+        try
+        {
+            // 💡 1. 多租戶權限交叉校驗：先向母表 chat_rooms 確認操作者是否有權存取此房間
+            var room = await _context.ChatRooms.FirstOrDefaultAsync(r => r.Id == roomId);
+            if (room == null)
+            {
+                return NotFound(new { message = "找不到該聊天室" });
+            }
+
+            // 校驗擁有權：必須是當前使用者，或者是歷史舊數據 (null/空) 且當前使用者為 "aaa"
+            bool hasPermission = room.UserId == userId || 
+                                (userId == "aaa" && (string.IsNullOrEmpty(room.UserId) || room.UserId == "aaa"));
+
+            if (!hasPermission)
+            {
+                _logger.LogWarning("[越權警告] 用戶 [{UserId}] 企圖檢視不屬於他的房間 [{RoomId}] 的知識庫文件標籤，已被系統安全阻斷！", userId, roomId);
+                return Forbid(); // 回傳 403 拒絕存取
+            }
+
+            // 💡 2. 驗證通過，直接向 DbContext 借用最底層、最真實的資料庫連線字串
+            var connString = _context.Database.GetConnectionString();
+            
+            // 💡 3. 使用 NpgsqlConnection 建立純粹的 ADO.NET 資料庫通道
+            using (var conn = new NpgsqlConnection(connString))
+            {
+                await conn.OpenAsync();
+                
+                // 執行最純粹的全小寫 SQL 指令
+                string sql = "SELECT id, room_id, file_name, file_size FROM document_files WHERE room_id = @roomId ORDER BY uploaded_at ASC";
+                
+                using (var cmd = new NpgsqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@roomId", roomId);
+                    
+                    using (var reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            // 手動一筆一筆拔出欄位，精準組裝成前端需要的小寫 DTO 格式
+                            fileList.Add(new {
+                                id = reader.GetInt32(0),
+                                roomId = reader.GetInt32(1),
+                                fileName = reader.GetString(2),
+                                fileSize = reader.GetInt64(3)
+                            });
+                        }
+                    }
+                }
+            }
+
+            _logger.LogInformation("[C# RAG-FETCH] 租戶 [{UserId}] 成功為房間 {RoomId} 撈出 {Count} 個知識庫標籤。", userId, roomId, fileList.Count);
+            return Ok(fileList);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "[❌ GetRoomUploadedFiles 終極崩潰]: 房間ID: {RoomId}", roomId);
+            return StatusCode(500, $"撈取文件標籤清單失敗: {ex.Message}");
+        }
+    }
+
+    // =========================================================================
+    // 🚀 補齊 RAG CRUD [D]：【刪】DELETE /api/rooms/{roomId}/files - 同步擦除知識庫
+    // 前端：chat.js 函式：const deleteRoomFileAction（刪除既有的 RAG 知識庫）
+    // LLM RAG端：app.py 函式：async def rag_delete_document (推送給python進行RAG 刪除處理)
+    // =========================================================================
+    [HttpDelete("/api/rooms/{roomId}/files")]
+    public async Task<IActionResult> DeleteDocumentForRag(int roomId, [FromQuery] string fileName, [FromQuery] string? userId)
+    {
+        if (string.IsNullOrWhiteSpace(fileName))
+        {
+            return BadRequest("未指定要刪除的檔案名稱。");
+        }
+        if (string.IsNullOrWhiteSpace(userId))
+        {
+            return BadRequest("必須提供 userId 進行知識庫刪除鑑權");
+        }
+
+        try
+        {
+            // 💡 1. 多租戶權限交叉校驗：先向母表 chat_rooms 確認操作者是否有權存取此房間
+            var room = await _context.ChatRooms.FirstOrDefaultAsync(r => r.Id == roomId);
+            if (room == null)
+            {
+                return NotFound(new { message = "找不到指定的聊天室資訊" });
+            }
+
+            // 校驗擁有權：必須是當前使用者，或者是歷史舊數據 (null/空) 且當前使用者為 "aaa"
+            bool hasPermission = room.UserId == userId || 
+                                (userId == "aaa" && (string.IsNullOrEmpty(room.UserId) || room.UserId == "aaa"));
+
+            if (!hasPermission)
+            {
+                _logger.LogWarning("[越權警告] 用戶 [{UserId}] 企圖刪除不屬於他的房間 [{RoomId}] 的知識庫文件 [{FileName}]，已被系統安全阻斷！", userId, roomId, fileName);
+                return Forbid(); // 回傳 403 拒絕存取
+            }
+
+            _logger.LogWarning("[C# RAG-DELETE] 租戶 [{UserId}] 準備刪除房間 {RoomId} 的文件: {FileName}", userId, roomId, fileName);
+
+            // 💡 2. 驗證通過，跨容器通訊：通知 Python 抹除向量 (使用 _httpClientFactory 注入)
+            var pythonClient = _httpClientFactory.CreateClient();
+            pythonClient.Timeout = TimeSpan.FromSeconds(30);
+
+            // 確保檔案名稱有進行 URL 編碼，防止特殊字元或副檔名點號造成路徑解析出錯
+            var encodedFileName = Uri.EscapeDataString(fileName);
+            var pythonUrl = $"http://llm-service:8000/api/rag/delete?room_id={roomId}&file_name={encodedFileName}";
+
+            var pythonResponse = await pythonClient.DeleteAsync(pythonUrl);
+            
+            if (!pythonResponse.IsSuccessStatusCode)
+            {
+                var errBody = await pythonResponse.Content.ReadAsStringAsync();
+                throw new Exception($"Python 向量刪除失敗: {errBody}");
+            }
+
+            // 💡 3. 終極防禦：改用 ExecuteSqlRawAsync，直接對 SQL 資料庫高容錯刪除紀錄
+            // 延續全小寫的資料表結構設計
+            string sql = "DELETE FROM document_files WHERE room_id = {0} AND file_name = {1}";
+            int affectedRows = await _context.Database.ExecuteSqlRawAsync(sql, roomId, fileName);
+
+            _logger.LogInformation("[C# RAG-DELETE] ✅ 文件 {FileName} 已成功從 SQL 庫與 ChromaDB 同步抹除！租戶: {UserId}, 受影響列數: {AffectedRows}", fileName, userId, affectedRows);
+            
+            return Ok(new
+            {
+                message = "該文件的向量索引與資料庫紀錄已成功同步抹除！",
+                fileName = fileName,
+                room_id = roomId
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "[❌ C# RAG-DELETE 內部崩潰]: 檔案: {FileName}, 房間: {RoomId}", fileName, roomId);
+            return StatusCode(500, $"後端刪除 RAG 知識失敗: {ex.Message}");
+        }
+    }
+
+
+    // ===================================================================================================================================
+    // 🛠️ 任務 1：【後端 API 拓荒】動態 Agent 大腦管理端點 (全面統一 EF Core 10)
+    // ===================================================================================================================================
+
+    /// <summary>
+    /// 【讀取】
+    /// 🌐 【對外 API】大廳拉取所有自訂 AI 專家卡片
+    /// 網址：GET /api/agents
+    /// </summary>
+    [HttpGet("/api/agents")]
+    public async Task<IActionResult> GetAgents([FromQuery] string? userId)
+    {
+        try
+        {
+            // 💡 安全防禦：如果完全不提供租戶識別，直接阻斷並回傳空清單，嚴防大腦清單外洩
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                _logger.LogWarning("[多租戶防禦] GetAgents 請求未附帶有效的 userId，已阻斷並回傳空清單。");
+                return Ok(new List<object>());
+            }
+
+            // 💡 核心平滑遷移與多租戶過濾：
+            // 如果操作者是 "aaa"：可看見 aaa 自建的、歷史舊資料 (null/空)、以及系統公用 Agent (system)
+            // 如果操作者是新用戶 (如 bbb)：只能看到自己建立的，以及系統公用 Agent (system)
+            var agentsQuery = _context.Agents.AsQueryable();
+
+            if (userId == "aaa")
+            {
+                agentsQuery = agentsQuery.Where(a => a.UserId == "aaa" || a.UserId == null || a.UserId == "" || a.UserId == "system");
+            }
+            else
+            {
+                agentsQuery = agentsQuery.Where(a => a.UserId == userId || a.UserId == "system");
+            }
+
+            var agents = await agentsQuery
+                .OrderByDescending(a => a.CreatedAt)
+                .Select(a => new
+                {
+                    id = a.Id,
+                    agent_id = a.AgentId,
+                    name = a.Name,
+                    system_prompt = a.SystemPrompt,
+                    created_at = a.CreatedAt,
+                    user_id = a.UserId // 回傳以便前端 Vue 辨識是否為私有或系統公用
+                })
+                .ToListAsync();
+
+            _logger.LogInformation("[多租戶大廳] 成功為租戶 [{UserId}] 載入專屬 AI 專家大廳清單，共計 {Count} 筆。", userId, agents.Count);
+            return Ok(agents);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "使用 EF Core 拉取大廳 Agent 清單失敗。租戶: {UserId}", userId);
+            return StatusCode(500, $"大廳讀取錯誤: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// 【新增】
+    /// ✨ 【對外 API】捏造全新的 AI 大腦助理 (寫入 agents 母表)
+    /// 網址：POST /api/agents
+    /// </summary>
+        [HttpPost("/api/agents")]
+    public async Task<IActionResult> CreateAgent([FromBody] CreateAgentRequestDto? request)
+    {
+        if (request == null || string.IsNullOrWhiteSpace(request.Name)) 
+            return BadRequest("專家名稱不能為空");
+
+        try
+        {
+            // 💡 多租戶防禦：解析操作者租戶身分，未指定則防禦性對齊老帳號 "aaa"
+            string targetUserId = string.IsNullOrWhiteSpace(request.UserId) ? "aaa" : request.UserId.Trim();
+
+            string generatedAgentId = $"agent_{Guid.NewGuid().ToString("n").Substring(0, 12)}";
+            string finalName = request.Name.Trim();
+            string finalPrompt = string.IsNullOrWhiteSpace(request.SystemPrompt)
+                ? $"你是一位專業的{finalName}。請盡可能提供精準、客觀且具備深度的分析。"
+                : request.SystemPrompt.Trim();
+
+            // 🌟 EF Core 物件實例化：綁定專屬的 UserId
+            var newAgent = new Agent
+            {
+                AgentId = generatedAgentId,
+                Name = finalName,
+                SystemPrompt = finalPrompt,
+                CreatedAt = DateTime.UtcNow,
+                UserId = targetUserId // 💡 關鍵重構：精確寫入多租戶欄位
+            };
+
+            _context.Agents.Add(newAgent);
+            await _context.SaveChangesAsync(); // 自動生成安全 INSERT 並返回自增主鍵 ID
+
+            _logger.LogInformation("[多租戶大腦] 租戶 [{UserId}] 成功捏造了專屬 Agent [{AgentId}], 名稱: {Name}", targetUserId, generatedAgentId, finalName);
+
+            return Ok(new
+            {
+                id = newAgent.Id, 
+                agent_id = newAgent.AgentId,
+                name = newAgent.Name,
+                system_prompt = newAgent.SystemPrompt,
+                created_at = newAgent.CreatedAt,
+                user_id = newAgent.UserId,
+                message = "大功告成！全新的專屬 Agent 大腦已透過 EF Core 實寫成功！"
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "使用 EF Core 捏造 Agent 大腦失敗");
+            return StatusCode(500, $"大腦捏造失敗: {ex.Message}");
+        }
+    }
+
+    
+    // ===================================================================================================================================
+    // 此區塊為 Hermas-Agent 
+    // ===================================================================================================================================
+
+    // =========================================================================
+    // 串聯已經設計好的docker hermas-Agent內容
+    // docker串聯地方："http://hermes-agent:8643/api/v1/chat"
+    // =========================================================================
+    
+    /// <summary>
+    /// 【對外 API】提供前端發送對話訊息給 Agent 的端點
+    /// 網址：POST /api/agent/rooms
+    /// 💡 升級說明：新增支援接收 agent_id，讓子房間能精準綁定特定的專家大腦，做到記憶分流！
+    /// </summary>
+    [HttpPost("/api/agent/rooms")] 
+    public async Task<IActionResult> CreateAgentRoom([FromBody] ChatRoomCreateDto? request)
+    {
+        if (request == null) return BadRequest("請求不能為空");
+
+        try
+        {
+            // 💡 多租戶防禦：解析操作者租戶身分，未指定則防禦性對齊老帳號 "aaa"
+            string targetUserId = string.IsNullOrWhiteSpace(request.UserId) ? "aaa" : request.UserId.Trim();
+
+            string finalTitle = request.Title ?? "專屬助理";
+            if (request.RoomType == "Agent" && !finalTitle.Contains("[Agent]"))
+            {
+                finalTitle += " [Agent]"; 
+            }
+
+            string roomTypeField = "hermes_agent";
+            string? cleanedAgentId = string.IsNullOrWhiteSpace(request.AgentId) ? null : request.AgentId.Trim();
+
+            // 💡 跨租戶盜用防禦校驗：如果前端指定了 AgentId，必須確認此 Agent 屬於當前使用者
+            if (!string.IsNullOrEmpty(cleanedAgentId))
+            {
+                var agentExists = await _context.Agents
+                    .AnyAsync(a => a.AgentId == cleanedAgentId && 
+                                  (a.UserId == targetUserId || 
+                                   a.UserId == "system" || 
+                                   (targetUserId == "aaa" && (string.IsNullOrEmpty(a.UserId) || a.UserId == "aaa"))));
+
+                if (!agentExists)
+                {
+                    _logger.LogWarning("[越權警告] 租戶 [{UserId}] 企圖綁定或盜用不屬於他的 Agent 大腦 [{AgentId}]，已被系統安全阻斷！", targetUserId, cleanedAgentId);
+                    return BadRequest(new { message = $"綁定失敗：找不到屬於您的指定代理身分身分識別。" });
+                }
+            }
+
+            // 🌟 EF Core 寫法：完美熔接多租戶 user_id 欄位
+            var newRoom = new ChatRoom
+            {
+                Title = finalTitle,
+                RoomType = roomTypeField,
+                AgentId = cleanedAgentId,
+                CreatedAt = DateTime.UtcNow,
+                UserId = targetUserId // 💡 關鍵重構：精確寫入多租戶欄位
+            };
+
+            _context.ChatRooms.Add(newRoom);
+            await _context.SaveChangesAsync(); // 自動返回剛產生的自增 Serial ID
+
+            _logger.LogInformation("[多租戶助理房間] 租戶 [{UserId}] 成功建立了 Agent 專屬對話房間 [ID: {RoomId}]，成功掛載外鍵 Agent: {AgentId}", targetUserId, newRoom.Id, cleanedAgentId);
+
+            return Ok(new { 
+                id = newRoom.Id, 
+                title = newRoom.Title,
+                room_type = newRoom.RoomType,
+                agent_id = newRoom.AgentId, 
+                created_at = newRoom.CreatedAt,
+                user_id = newRoom.UserId,
+                message = "大功告成！Agent 房間已透過 EF Core 成功建立，多租戶與大腦外鍵完美綁定！"
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "[CreateAgentRoom 崩潰] 建立 Agent 房間發生內部錯誤。");
+            return StatusCode(500, $"後端寫入錯誤: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// 🗑️ 【全新新增】一鍵抄家：從資料庫實體抹除 Agent，並通知 Hermes 銷毀實體硬碟記憶
+    /// 網址：DELETE /api/agents/{agentId}
+    /// </summary>
+    [HttpDelete("/api/agents/{agentId}")]
+    public async Task<IActionResult> DeleteAgent(string agentId, [FromQuery] string? userId)
+    {
+        if (string.IsNullOrWhiteSpace(agentId)) return BadRequest("未指定有效的專家識別碼");
+        if (string.IsNullOrWhiteSpace(userId)) return BadRequest("必須提供 userId 進行大腦銷毀鑑權");
+
+        try
+        {
+            _logger.LogWarning("[C# 交通警察] 🚨 租戶 [{UserId}] 發起專家 [{AgentId}] 的全系統除名與抄家作業...", userId, agentId);
+
+            // 1. 🌟 EF Core 寫法：撈出實體 Agent 母體
+            var targetAgent = await _context.Agents.FirstOrDefaultAsync(a => a.AgentId == agentId);
+            if (targetAgent == null)
+            {
+                return NotFound("找不到指定的 AI 專家紀錄");
+            }
+
+            // 💡 2. 多租戶權限校驗：
+            // 允許銷毀的條件：Agent 的 UserId 與操作者完全一致
+            // 或者是老帳號 "aaa" 正在操作欄位為 null/空字串 的歷史舊大腦
+            bool isOwner = targetAgent.UserId == userId || 
+                          (userId == "aaa" && (string.IsNullOrEmpty(targetAgent.UserId) || targetAgent.UserId == "aaa"));
+
+            if (!isOwner)
+            {
+                _logger.LogWarning("[越權警告] 用戶 [{UserId}] 企圖銷毀不屬於他的 Agent 大腦 [{AgentId}]，已被系統安全阻斷！", userId, agentId);
+                return Forbid(); // 回傳 403 拒絕存取
+            }
+
+            // 3. 🌟 級聯與關聯刪除：抹除母體與其關聯的對話房間
+            _context.Agents.Remove(targetAgent);
+            await _context.SaveChangesAsync();
+
+            _context.ChatRooms.RemoveRange(_context.ChatRooms.Where(r => r.AgentId == agentId));
+            await _context.SaveChangesAsync();
+
+            // 4. 📡 橫向聯動：通知 8643 埠的 Hermes 容器進行實體硬碟總日記的大掃除
+            string hermesUrl = $"http://hermes-agent:8643/api/agent/{agentId}";
+            var client = _httpClientFactory.CreateClient();
+            client.Timeout = TimeSpan.FromSeconds(30);
+
+            try
+            {
+                var response = await client.DeleteAsync(hermesUrl);
+                if (!response.IsSuccessStatusCode)
+                {
+                    _logger.LogError("[C# 交通警察] ❌ 資料庫已刪，但 Hermes 物理抄家失敗。狀態碼: {StatusCode}", response.StatusCode);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "[C# 交通警察] ⚠️ 無法連線至 Hermes 執行硬碟掃除，可能容器未通電，跳過物理步驟。");
+            }
+
+            _logger.LogInformation("[多租戶銷毀] 租戶 [{UserId}] 已成功讓專家大腦 [{AgentId}] 灰飛煙滅。", userId, agentId);
+            return Ok(new { message = "大功告成！該專家大腦、子聊天室以及硬碟實體記憶已全數灰飛煙滅！" });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "刪除 Agent 發生內部錯誤。AgentId: {AgentId}", agentId);
+            return StatusCode(500, $"大腦銷毀失敗: {ex.Message}");
+        }
+    }
+    // ===================================================================================================================================
+    // DTO 定義區塊
+    // ===================================================================================================================================
+
+    public class ChatRoomCreateDto
+    {
+        [JsonPropertyName("title")]
+        public string? Title { get; set; }
+
+        [JsonPropertyName("room_type")]
+        public string? RoomType { get; set; }
+
+        // 💡 升級：承接前端傳過來的當前專家隔離識別碼 (若為 null 則代表是一般 RAG 舊房間)
+        [JsonPropertyName("agent_id")]
+        public string? AgentId { get; set; }
+
+        public string? UserId { get; set; } // 👈 新增多租戶承接屬性
+    }
+
+    public class CreateAgentRequestDto
+    {
+        [JsonPropertyName("name")]
+        public string Name { get; set; } = string.Empty;
+
+        [JsonPropertyName("system_prompt")]
+        public string? SystemPrompt { get; set; }
+
+        public string? UserId { get; set; } // 👈 新增多租戶承接屬性
+    }
+
+
+
+        // =====================================================================
+    // 🧠 底下是記憶部份
+    // =====================================================================
+
+    // =====================================================================
+    // 🧠 雙軌制記憶體與用戶畫像（Memory/User）通用增刪改查網關對接
+    // =====================================================================
+
+    /// <summary>
+    /// 0. 拉取全平台可用 Agent 清單 (供前端 Vue 渲染繼承下拉選單)
+    /// GET: api/Chat/agent/available-list
+    /// </summary>
+   [HttpGet("agent/available-list")]
+    public async Task<IActionResult> GetAvailableAgentsList([FromQuery] string? userId)
+    {
+        // 💡 安全防禦：如果完全不提供租戶識別，直接阻斷，嚴防清單外洩
+        if (string.IsNullOrWhiteSpace(userId))
+        {
+            return BadRequest(new { error = "必須提供 userId 進行可用清單讀取" });
+        }
+
+        try
+        {
+            var client = _httpClientFactory.CreateClient("PythonAgentService");
+            
+            // 🎯 將租戶識別作為 Query 參數向下傳遞給 Python 網關，確保跨容器多租戶對齊
+            string pythonUrl = $"http://lm_hermes_agent:8643/api/agents/available-list?user_id={Uri.EscapeDataString(userId)}";
+            var response = await client.GetAsync(pythonUrl);
+            
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorMsg = await response.Content.ReadAsStringAsync();
+                _logger.LogError("無法取得可用 Agent 清單: {ErrorMsg}, 租戶: {UserId}", errorMsg, userId);
+                return StatusCode((int)response.StatusCode, new { error = errorMsg });
+            }
+
+            var result = await response.Content.ReadFromJsonAsync<JsonElement>();
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "拉取可用 Agent 清單時發生異常。租戶: {UserId}", userId);
+            return StatusCode(500, new { error = $"網關通訊失敗: {ex.Message}" });
+        }
+    }
+
+    /// <summary>
+    /// 1. 逆向注入解封印網關 (前端 Vue 彈窗同意/拒絕後由 chat.js 呼叫)
+    /// POST: api/Chat/agent/approve-write
+    /// </summary>
+    [HttpPost("agent/approve-write")]
+    public async Task<IActionResult> ApproveWrite([FromBody] JsonElement payload)
+    {
+        try
+        {
+            // 💡 1. 解析前端傳進來的 Payload 核心變數
+            dynamic data = JsonSerializer.Deserialize<dynamic>(payload.GetRawText());
+            
+            string? rawRoomId = data.roomId ?? data.room_id;
+            bool approve = data.approve;
+            string userId = data.userId ?? "aaa"; // 若前端漏傳，防禦性對齊舊資料 "aaa"
+
+            if (string.IsNullOrWhiteSpace(rawRoomId) || !int.TryParse(rawRoomId, out int roomId))
+            {
+                return BadRequest(new { error = "未指定有效的聊天室識別碼 (roomId)" });
+            }
+
+            // 💡 2. 安全交叉驗證：向母表 chat_rooms 確認操作者是否有權控制此房間的解封印
+            var room = await _context.ChatRooms.FirstOrDefaultAsync(r => r.Id == roomId);
+            if (room == null)
+            {
+                return NotFound(new { error = "找不到指定的聊天室，審查請求失敗。" });
+            }
+
+            // 驗證擁有權：必須是當前用戶，或者是歷史舊數據 (null/空) 且當前用戶為 "aaa"
+            bool hasPermission = room.UserId == userId || 
+                                (userId == "aaa" && (string.IsNullOrEmpty(room.UserId) || room.UserId == "aaa"));
+
+            if (!hasPermission)
+            {
+                _logger.LogWarning("[越權警告] 用戶 [{UserId}] 企圖對不屬於他的房間 [{RoomId}] 執行解封印審查，已被系統安全阻斷！", userId, roomId);
+                return Forbid(); // 回傳 403 拒絕存取
+            }
+
+            // 💡 3. 驗證通過，重新包裝符合 Python 蛇形命名（Snake Case）的匿名物件並向下透傳
+            var client = _httpClientFactory.CreateClient("PythonAgentService");
+            string pythonUrl = "http://lm_hermes_agent:8643/api/agent/approve-write";
+            
+            var pythonPayload = new
+            {
+                room_id = roomId.ToString(),
+                approve = approve,
+                user_id = userId // 將租戶識別同步透傳給 Python 層
+            };
+            
+            var response = await client.PostAsJsonAsync(pythonUrl, pythonPayload);
+            
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorMsg = await response.Content.ReadAsStringAsync();
+                _logger.LogError("Python 審查解封印失敗: {ErrorMsg}, 房間: {RoomId}, 租戶: {UserId}", errorMsg, roomId, userId);
+                return StatusCode((int)response.StatusCode, new { error = errorMsg });
+            }
+
+            var result = await response.Content.ReadFromJsonAsync<JsonElement>();
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "轉發審查解封印請求時發生異常");
+            return StatusCode(500, new { error = $"網關轉發失敗: {ex.Message}" });
+        }
+    }
+
+    /// <summary>
+    /// 2. 雙軌讀取大禮包 (由網址決定讀 memory 還是 user)
+    /// GET: api/Chat/agent/{agentId}/memories/{fileType}
+    /// </summary>
+    [HttpGet("agent/{agentId}/memories/{fileType}")]
+    public async Task<IActionResult> GetAgentMemories([FromRoute] string agentId, [FromRoute] string fileType, [FromQuery] string? userId)
+    {
+        if (string.IsNullOrWhiteSpace(userId))
+        {
+            return BadRequest(new { error = "必須提供 userId 進行記憶讀取鑑權" });
+        }
+
+        var lowerType = fileType.ToLower();
+        if (lowerType != "memory" && lowerType != "user")
+        {
+            return BadRequest(new { error = "fileType 路由參數必須為 'memory' 或 'user'" });
+        }
+
+        try
+        {
+            // 💡 1. 多租戶權限驗證：確認大腦是否屬於該使用者 (相容舊數據 aaa)
+            var agent = await _context.Agents.FirstOrDefaultAsync(a => a.AgentId == agentId);
+            if (agent == null)
+            {
+                return NotFound(new { error = "找不到指定的 AI 專家大腦" });
+            }
+
+            bool hasPermission = agent.UserId == userId || 
+                                (userId == "aaa" && (string.IsNullOrEmpty(agent.UserId) || agent.UserId == "aaa")) ||
+                                agent.UserId == "system"; // 系統公用開放讀取
+
+            if (!hasPermission)
+            {
+                _logger.LogWarning("[越權警告] 用戶 [{UserId}] 企圖讀取不屬於他的 Agent [{AgentId}] 的記憶大禮包，已被系統安全阻斷！", userId, agentId);
+                return Forbid(); // 回傳 403 拒絕存取
+            }
+
+            // 💡 2. 驗證通過，轉發請求給 Python 網關
+            var client = _httpClientFactory.CreateClient("PythonAgentService");
+            string pythonUrl = $"http://lm_hermes_agent:8643/api/agent/{agentId}/memories/{lowerType}?user_id={Uri.EscapeDataString(userId)}";
+            var response = await client.GetAsync(pythonUrl);
+            
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogError("無法取得 Agent {AgentId} 的 {LowerType} 大禮包。租戶: {UserId}", agentId, lowerType, userId);
+                return StatusCode((int)response.StatusCode, new { error = $"無法取得 {lowerType} 記憶大禮包" });
+            }
+
+            var memories = await response.Content.ReadFromJsonAsync<JsonElement>();
+            return Ok(memories);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "讀取 Agent {AgentId} 的 {LowerType} 記憶時發生異常。租戶: {UserId}", agentId, lowerType, userId);
+            return StatusCode(500, new { error = $"網關通訊異常: {ex.Message}" });
+        }
+    }
+
+    /// <summary>
+    /// 3. 手動點擊刪除特定記憶卡片 (支援動態雙軌刪除 🗑️)
+    /// DELETE: api/Chat/agent/{agentId}/memories/{fileType}/{factId}
+    /// </summary>
+    [HttpDelete("agent/{agentId}/memories/{fileType}/{factId}")]
+    public async Task<IActionResult> DeleteAgentMemory([FromRoute] string agentId, [FromRoute] string fileType, [FromRoute] string factId, [FromQuery] string? userId)
+    {
+        if (string.IsNullOrWhiteSpace(userId))
+        {
+            return BadRequest(new { error = "必須提供 userId 進行記憶刪除鑑權" });
+        }
+
+        var lowerType = fileType.ToLower();
+        if (lowerType != "memory" && lowerType != "user")
+        {
+            return BadRequest(new { error = "fileType 路由參數必須為 'memory' 或 'user'" });
+        }
+
+        try
+        {
+            // 💡 1. 多租戶權限驗證：確認大腦是否屬於該使用者，防止惡意刪除他人記憶
+            var agent = await _context.Agents.FirstOrDefaultAsync(a => a.AgentId == agentId);
+            if (agent == null)
+            {
+                return NotFound(new { error = "找不到指定的 AI 專家大腦" });
+            }
+
+            bool hasPermission = agent.UserId == userId || 
+                                (userId == "aaa" && (string.IsNullOrEmpty(agent.UserId) || agent.UserId == "aaa"));
+
+            if (!hasPermission)
+            {
+                _logger.LogWarning("[越權警告] 用戶 [{UserId}] 企圖刪除不屬於他的 Agent [{AgentId}] 的記憶片段，已被系統安全阻斷！", userId, agentId);
+                return Forbid(); 
+            }
+
+            // 💡 2. 驗證通過，跨容器刪除
+            var client = _httpClientFactory.CreateClient("PythonAgentService");
+            string pythonUrl = $"http://lm_hermes_agent:8643/api/agent/{agentId}/memories/{lowerType}/{factId}?user_id={Uri.EscapeDataString(userId)}";
+            var response = await client.DeleteAsync(pythonUrl);
+            
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogError("刪除 Agent {AgentId} 的 {LowerType} 片斷 {FactId} 失敗。租戶: {UserId}", agentId, lowerType, factId, userId);
+                return StatusCode((int)response.StatusCode, new { error = "刪除資料失敗或該紀錄不存在" });
+            }
+
+            var updatedMemories = await response.Content.ReadFromJsonAsync<JsonElement>();
+            return Ok(updatedMemories);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "刪除 Agent {AgentId} 的 {LowerType} 記憶時發生異常。租戶: {UserId}", agentId, lowerType, userId);
+            return StatusCode(500, new { error = $"網關刪除異步操作失敗: {ex.Message}" });
+        }
+    }
+
+    /// <summary>
+    /// 4. 批次大量匯入與強制灌輸 (由前端 Payload 的 file_type 決定軌道)
+    /// POST: api/Chat/agent/{agentId}/memories/import
+    /// </summary>
+    [HttpPost("agent/{agentId}/memories/import")]
+    public async Task<IActionResult> ImportAgentMemories([FromRoute] string agentId, [FromBody] JsonElement payload, [FromQuery] string? userId)
+    {
+        if (string.IsNullOrWhiteSpace(userId))
+        {
+            return BadRequest(new { error = "必須提供 userId 進行記憶匯入鑑權" });
+        }
+
+        try
+        {
+            // 💡 1. 多租戶權限驗證：確認大腦是否屬於該使用者
+            var agent = await _context.Agents.FirstOrDefaultAsync(a => a.AgentId == agentId);
+            if (agent == null)
+            {
+                return NotFound(new { error = "找不到指定的 AI 專家大腦" });
+            }
+
+            bool hasPermission = agent.UserId == userId || 
+                                (userId == "aaa" && (string.IsNullOrEmpty(agent.UserId) || agent.UserId == "aaa"));
+
+            if (!hasPermission)
+            {
+                _logger.LogWarning("[越權警告] 用戶 [{UserId}] 企圖批次匯入記憶至不屬於他的 Agent [{AgentId}]，已被系統安全阻斷！", userId, agentId);
+                return Forbid();
+            }
+
+            // 💡 2. 驗證通過，傳給 Python 端執行
+            var client = _httpClientFactory.CreateClient("PythonAgentService");
+            string pythonUrl = $"http://lm_hermes_agent:8643/api/agent/{agentId}/memories/import?user_id={Uri.EscapeDataString(userId)}";
+            var response = await client.PostAsJsonAsync(pythonUrl, payload);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorMsg = await response.Content.ReadAsStringAsync();
+                _logger.LogError("Agent {AgentId} 批次匯入失敗: {ErrorMsg}。租戶: {UserId}", agentId, errorMsg, userId);
+                return StatusCode((int)response.StatusCode, new { error = "批次匯入記憶失敗" });
+            }
+
+            var updatedMemories = await response.Content.ReadFromJsonAsync<JsonElement>();
+            return Ok(updatedMemories);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Agent {AgentId} 匯入記憶時發生異常。租戶: {UserId}", agentId, userId);
+            return StatusCode(500, new { error = $"網關匯入操作失敗: {ex.Message}" });
+        }
+    }
+
+    /// <summary>
+    /// 5. 真．細胞分裂：一鍵繼承快照、脫鉤各自發展
+    /// POST: api/Chat/agent/{agentId}/inherit-fork
+    /// </summary>
+    [HttpPost("agent/{agentId}/inherit-fork")]
+    public async Task<IActionResult> InheritForkAgent([FromRoute] string agentId, [FromBody] JsonElement payload)
+    {
+        try
+        {
+            // 從傳入的 JSON 提取可能的使用者身分 (若前端沒帶則防禦性對齊 aaa)
+            string userId = "aaa";
+            if (payload.TryGetProperty("userId", out var uProp))
+            {
+                userId = uProp.GetString() ?? "aaa";
+            }
+
+            // 💡 多租戶權限驗證：確認被繼承的來源大腦是否屬於該使用者，或者是系統公用 Agent
+            var sourceAgent = await _context.Agents.FirstOrDefaultAsync(a => a.AgentId == agentId);
+            if (sourceAgent == null)
+            {
+                return NotFound(new { error = "找不到指定的來源 AI 專家大腦，分裂繼承失敗。" });
+            }
+
+            bool hasPermission = sourceAgent.UserId == userId || 
+                                sourceAgent.UserId == "system" ||
+                                (userId == "aaa" && (string.IsNullOrEmpty(sourceAgent.UserId) || sourceAgent.UserId == "aaa"));
+
+            if (!hasPermission)
+            {
+                _logger.LogWarning("[越權警告] 用戶 [{UserId}] 企圖對不屬於他的 Agent 來源 [{SourceId}] 執行細胞分裂，已被系統安全阻斷！", userId, agentId);
+                return Forbid();
+            }
+
+            // 💡 2. 驗證通過，轉發給 Python 容器進行實體快照硬碟脫鉤複製
+            var client = _httpClientFactory.CreateClient("PythonAgentService");
+            string pythonUrl = $"http://lm_hermes_agent:8643/api/agent/{agentId}/inherit-fork?user_id={Uri.EscapeDataString(userId)}";
+            var response = await client.PostAsJsonAsync(pythonUrl, payload);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorMsg = await response.Content.ReadAsStringAsync();
+                _logger.LogError("Agent {AgentId} 快照複製繼承失敗: {ErrorMsg}。租戶: {UserId}", agentId, errorMsg, userId);
+                return StatusCode((int)response.StatusCode, new { error = errorMsg });
+            }
+
+            _logger.LogInformation("[多租戶細胞分裂] 租戶 [{UserId}] 成功對大腦 [{SourceId}] 執行快照繼承脫鉤作業。", userId, agentId);
+            var result = await response.Content.ReadFromJsonAsync<JsonElement>();
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Agent {AgentId} 執行細胞分裂繼承時發生異常", agentId);
+            return StatusCode(500, new { error = $"網關跨體複製失敗: {ex.Message}" });
+        }
+    }
+
+
+    // =====================================================================
+    // 🧬 真．複製新 Agent／匯出匯入／安全掃描 (全部走 hermes 原生指令)
+    // =====================================================================
+
+    public class CloneAgentRequestDto
+    {
+        public string? Name { get; set; }
+        public string? SystemPrompt { get; set; }
+        public string? SourceAgentId { get; set; }
+        public string? UserId { get; set; } // 👈 新增多租戶承接屬性
+    }
+
+    /// <summary>
+    /// 6. 真．複製：寫入 Agent DB 記錄後呼叫 Python 端 hermes profile create --clone-from，
+    /// 失敗時回滾剛寫入的 DB 記錄，絕不假裝成功。
+    /// POST: api/Chat/agent/clone
+    /// </summary>
+        /// <summary>
+    /// 【重構】細胞分裂：複製 Agent 大腦 (加入多租戶安全防禦與越權複製阻斷)
+    /// POST /api/Chat/agent/clone
+    /// </summary>
+    [HttpPost("agent/clone")]
+    public async Task<IActionResult> CloneAgent([FromBody] CloneAgentRequestDto? request)
+    {
+        if (request == null || string.IsNullOrWhiteSpace(request.Name) || string.IsNullOrWhiteSpace(request.SourceAgentId))
+        {
+            return BadRequest(new { error = "新 Agent 名稱與來源 Agent 不能為空" });
+        }
+
+        // 💡 多租戶防禦：解析操作者租戶身分，未指定則防禦性對齊老帳號 "aaa"
+        string targetUserId = string.IsNullOrWhiteSpace(request.UserId) ? "aaa" : request.UserId.Trim();
+
+        // 💡 跨租戶非法克隆防禦：驗證來源 Agent 是否屬於當前用戶、歷史舊數據(null)或系統公用
+        var sourceAgentExists = await _context.Agents
+            .AnyAsync(a => a.AgentId == request.SourceAgentId.Trim() && 
+                          (a.UserId == targetUserId || 
+                           a.UserId == "system" || 
+                           (targetUserId == "aaa" && (string.IsNullOrEmpty(a.UserId) || a.UserId == "aaa"))));
+
+        if (!sourceAgentExists)
+        {
+            _logger.LogWarning("[越權警告] 租戶 [{UserId}] 企圖非法複製不屬於他的 Agent 來源 [{SourceId}]，已被系統安全阻斷！", targetUserId, request.SourceAgentId);
+            return StatusCode(403, new { error = "權限不足：找不到可供您複製的指定來源代理。" });
+        }
+
+        string generatedAgentId = $"agent_{Guid.NewGuid().ToString("n").Substring(0, 12)}";
+        string finalName = request.Name.Trim();
+        string finalPrompt = string.IsNullOrWhiteSpace(request.SystemPrompt)
+            ? $"你是一位專業的{finalName}。請盡可能提供精準、客觀且具備深度的分析。"
+            : request.SystemPrompt.Trim();
+
+        var newAgent = new Agent
+        {
+            AgentId = generatedAgentId,
+            Name = finalName,
+            SystemPrompt = finalPrompt,
+            CreatedAt = DateTime.UtcNow,
+            UserId = targetUserId // 💡 關鍵重構：新克隆出的大腦打上專屬租戶標籤
+        };
+
+        _context.Agents.Add(newAgent);
+        await _context.SaveChangesAsync();
+
+        try
+        {
+            var client = _httpClientFactory.CreateClient("PythonAgentService");
+            string pythonUrl = $"http://lm_hermes_agent:8643/api/agent/{generatedAgentId}/clone-from/{request.SourceAgentId.Trim()}";
+            var response = await client.PostAsJsonAsync(pythonUrl, new { system_prompt = finalPrompt });
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorMsg = await response.Content.ReadAsStringAsync();
+                _logger.LogError($"真複製失敗，回滾 DB 記錄 {generatedAgentId}: {errorMsg}");
+                
+                // 發生容器操作異常，觸發事務回滾刪除已存入之紀錄
+                _context.Agents.Remove(newAgent);
+                await _context.SaveChangesAsync();
+                return StatusCode((int)response.StatusCode, new { error = errorMsg });
+            }
+
+            _logger.LogInformation("[多租戶克隆] 租戶 [{UserId}] 成功透過克隆歷史來源 [{SourceId}] 捏造了專屬 Agent [{AgentId}]", targetUserId, request.SourceAgentId, generatedAgentId);
+
+            return Ok(new
+            {
+                id = newAgent.Id,
+                agent_id = newAgent.AgentId,
+                name = newAgent.Name,
+                system_prompt = newAgent.SystemPrompt,
+                created_at = newAgent.CreatedAt,
+                user_id = newAgent.UserId,
+                message = "🧬 複製成功！新的 Agent 已透過 hermes 原生指令繼承來源的記憶與技能。"
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"複製 Agent 時發生異常，回滾 DB 記錄 {generatedAgentId}");
+            _context.Agents.Remove(newAgent);
+            await _context.SaveChangesAsync();
+            return StatusCode(500, new { error = $"複製失敗: {ex.Message}" });
+        }
+    }
+
+
+    /// <summary>
+    /// 7. 匯出 Agent：hermes 原生 tar.gz／轉封裝 zip／Skill 標準 markdown 三選一
+    /// GET: api/Chat/agent/{agentId}/export?format=hermes|zip|skill
+    /// </summary>
+    [HttpGet("agent/{agentId}/export")]
+    public async Task<IActionResult> ExportAgent([FromRoute] string agentId, [FromQuery] string format = "hermes")
+    {
+        try
+        {
+            var client = _httpClientFactory.CreateClient("PythonAgentService");
+            client.Timeout = TimeSpan.FromMinutes(5);
+            string pythonUrl = $"http://lm_hermes_agent:8643/api/agent/{agentId}/export?format={Uri.EscapeDataString(format)}";
+            var response = await client.GetAsync(pythonUrl);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorMsg = await response.Content.ReadAsStringAsync();
+                _logger.LogError($"Agent {agentId} 匯出失敗: {errorMsg}");
+                return StatusCode((int)response.StatusCode, new { error = errorMsg });
+            }
+
+            var bytes = await response.Content.ReadAsByteArrayAsync();
+            var contentType = response.Content.Headers.ContentType?.ToString() ?? "application/octet-stream";
+            var fileName = (response.Content.Headers.ContentDisposition?.FileNameStar
+                ?? response.Content.Headers.ContentDisposition?.FileName
+                ?? $"{agentId}_export").Trim('"');
+            return File(bytes, contentType, fileName);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Agent {agentId} 匯出時發生異常");
+            return StatusCode(500, new { error = $"網關匯出失敗: {ex.Message}" });
+        }
+    }
+
+    /// <summary>
+    /// 8. 匯入技能：轉發上傳的 SKILL.md 給 Python，由 hermes skills install 安裝
+    /// POST: api/Chat/agent/{agentId}/skills/import
+    /// </summary>
+        /// <summary>
+    /// 【重構】匯入技能檔案至指定 Agent (加入多租戶安全防禦與越權匯入阻斷)
+    /// POST /api/Chat/agent/{agentId}/skills/import?userId=aaa
+    /// </summary>
+    [HttpPost("agent/{agentId}/skills/import")]
+    public async Task<IActionResult> ImportSkillToAgent([FromRoute] string agentId, [FromForm] string name, IFormFile file, [FromQuery] string? userId)
+    {
+        if (file == null || file.Length == 0)
+            return BadRequest(new { error = "上傳的技能檔案無效或內容為空" });
+        if (string.IsNullOrWhiteSpace(name))
+            return BadRequest(new { error = "技能名稱不能為空" });
+        if (string.IsNullOrWhiteSpace(userId))
+            return BadRequest(new { error = "必須提供 userId 進行技能匯入鑑權" });
+
+        try
+        {
+            // 💡 1. 多租戶權限交叉校驗：確認大腦是否屬於該使用者 (相容舊數據 aaa)
+            var agent = await _context.Agents.FirstOrDefaultAsync(a => a.AgentId == agentId);
+            if (agent == null)
+            {
+                return NotFound(new { error = "找不到指定的 AI 專家大腦" });
+            }
+
+            bool hasPermission = agent.UserId == userId || 
+                                (userId == "aaa" && (string.IsNullOrEmpty(agent.UserId) || agent.UserId == "aaa"));
+
+            if (!hasPermission)
+            {
+                _logger.LogWarning("[越權警告] 用戶 [{UserId}] 企圖向不屬於他的 Agent [{AgentId}] 匯入自訂技能，已被系統安全阻斷！", userId, agentId);
+                return Forbid(); // 回傳 403 拒絕存取
+            }
+
+            // 💡 2. 驗證通過，利用 Multipart 進行跨容器檔案轉發
+            var client = _httpClientFactory.CreateClient("PythonAgentService");
+            // 🎯 將租戶識別作為 Query 參數向下傳遞給 Python 網關
+            string pythonUrl = $"http://lm_hermes_agent:8643/api/agent/{agentId}/skills/import?user_id={Uri.EscapeDataString(userId)}";
+
+            using var multipartContent = new MultipartFormDataContent();
+            using var fileStream = file.OpenReadStream();
+            using var streamContent = new StreamContent(fileStream);
+            multipartContent.Add(new StringContent(name), "name");
+            multipartContent.Add(streamContent, "file", file.FileName);
+
+            var response = await client.PostAsync(pythonUrl, multipartContent);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorMsg = await response.Content.ReadAsStringAsync();
+                _logger.LogError("Agent {AgentId} 匯入技能失敗: {ErrorMsg}。租戶: {UserId}", agentId, errorMsg, userId);
+                return StatusCode((int)response.StatusCode, new { error = errorMsg });
+            }
+
+            var result = await response.Content.ReadFromJsonAsync<JsonElement>();
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Agent {AgentId} 匯入技能時發生異常。租戶: {UserId}", agentId, userId);
+            return StatusCode(500, new { error = $"網關匯入技能失敗: {ex.Message}" });
+        }
+    }
+
+
+    /// <summary>
+    /// 9. 安全掃描：hermes security audit (OSV.dev 供應鏈漏洞掃描)
+    /// GET: api/Chat/agent/{agentId}/security-audit
+    /// </summary>
+     [HttpGet("agent/{agentId}/security-audit")]
+    public async Task<IActionResult> RunSecurityAudit([FromRoute] string agentId, [FromQuery] string? userId)
+    {
+        if (string.IsNullOrWhiteSpace(userId))
+        {
+            return BadRequest(new { error = "必須提供 userId 進行安全審計鑑權" });
+        }
+
+        try
+        {
+            // 💡 1. 多租戶權限交叉校驗
+            var agent = await _context.Agents.FirstOrDefaultAsync(a => a.AgentId == agentId);
+            if (agent == null)
+            {
+                return NotFound(new { error = "找不到指定的 AI 專家大腦" });
+            }
+
+            bool hasPermission = agent.UserId == userId || 
+                                (userId == "aaa" && (string.IsNullOrEmpty(agent.UserId) || agent.UserId == "aaa"));
+
+            if (!hasPermission)
+            {
+                _logger.LogWarning("[越權警告] 用戶 [{UserId}] 企圖對不屬於他的 Agent [{AgentId}] 發起安全掃描，已被系統安全阻斷！", userId, agentId);
+                return Forbid();
+            }
+
+            // 💡 2. 驗證通過，向 Python 網關要求執行高密級審計流程
+            var client = _httpClientFactory.CreateClient("PythonAgentService");
+            client.Timeout = TimeSpan.FromSeconds(90); // 完美保留您對大模型掃描所給予的寬裕超時時間
+            
+            string pythonUrl = $"http://lm_hermes_agent:8643/api/agent/{agentId}/security-audit?user_id={Uri.EscapeDataString(userId)}";
+            var response = await client.GetAsync(pythonUrl);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorMsg = await response.Content.ReadAsStringAsync();
+                _logger.LogError("Agent {AgentId} 安全掃描失敗: {ErrorMsg}。租戶: {UserId}", agentId, errorMsg, userId);
+                return StatusCode((int)response.StatusCode, new { error = errorMsg });
+            }
+
+            var result = await response.Content.ReadFromJsonAsync<JsonElement>();
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Agent {AgentId} 安全掃描時發生異常。租戶: {UserId}", agentId, userId);
+            return StatusCode(500, new { error = $"網關安全掃描失敗: {ex.Message}" });
+        }
+    }
+
+    public class SkillInstallRequestDto
+    {
+        public string Identifier { get; set; } = string.Empty;
+        public string? Name { get; set; }
+        public string? UserId { get; set; } // 👈 新增多租戶承接屬性
+    }
+
+
+    /// <summary>
+    /// 10. Skill 商城搜尋：hermes skills search --json(官方 8 萬 8 千多個技能市集)
+    /// GET: api/Chat/agent/{agentId}/skills/search
+    /// </summary>
+    [HttpGet("agent/{agentId}/skills/search")]
+    public async Task<IActionResult> SearchSkillsHub([FromRoute] string agentId, [FromQuery] string query, [FromQuery] string source = "all", [FromQuery] int limit = 24, [FromQuery] string? userId = "aaa")
+    {
+        if (string.IsNullOrWhiteSpace(userId))
+        {
+            return BadRequest(new { error = "必須提供 userId 進行商城搜尋過濾" });
+        }
+
+        try
+        {
+            // 💡 1. 多租戶權限交叉校驗：先確認此大腦可由當前用戶操作
+            var agent = await _context.Agents.FirstOrDefaultAsync(a => a.AgentId == agentId);
+            if (agent == null)
+            {
+                return NotFound(new { error = "找不到指定的 AI 專家大腦" });
+            }
+
+            bool hasPermission = agent.UserId == userId || 
+                                (userId == "aaa" && (string.IsNullOrEmpty(agent.UserId) || agent.UserId == "aaa")) ||
+                                agent.UserId == "system";
+
+            if (!hasPermission)
+            {
+                _logger.LogWarning("[越權警告] 用戶 [{UserId}] 企圖調用不屬於他的 Agent [{AgentId}] 來檢索技能商城，已被系統阻斷！", userId, agentId);
+                return Forbid();
+            }
+
+            // 💡 2. 驗證通過，轉發請求
+            var client = _httpClientFactory.CreateClient("PythonAgentService");
+            client.Timeout = TimeSpan.FromSeconds(30);
+            
+            // 將租戶身分、搜尋詞、來源與數量限制完美熔接到絕對路徑中
+            string pythonUrl = $"http://lm_hermes_agent:8643/api/agent/{agentId}/skills/search" +
+                               $"?query={Uri.EscapeDataString(query)}" +
+                               $"&source={Uri.EscapeDataString(source)}" +
+                               $"&limit={limit}" +
+                               $"&user_id={Uri.EscapeDataString(userId)}";
+                               
+            var response = await client.GetAsync(pythonUrl);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorMsg = await response.Content.ReadAsStringAsync();
+                _logger.LogError("Skill 商城搜尋失敗: {ErrorMsg}。租戶: {UserId}", errorMsg, userId);
+                return StatusCode((int)response.StatusCode, new { error = errorMsg });
+            }
+
+            var result = await response.Content.ReadFromJsonAsync<JsonElement>();
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Skill 商城搜尋時發生異常。租戶: {UserId}", userId);
+            return StatusCode(500, new { error = $"網關搜尋失敗: {ex.Message}" });
+        }
+    }
+
+    /// <summary>
+    /// 11. Skill 商城安裝：hermes skills install <identifier>
+    /// POST: api/Chat/agent/{agentId}/skills/install-from-hub
+    /// </summary>
+    [HttpPost("agent/{agentId}/skills/install-from-hub")]
+    public async Task<IActionResult> InstallSkillFromHub([FromRoute] string agentId, [FromBody] SkillInstallRequestDto? request)
+    {
+        if (request == null || string.IsNullOrWhiteSpace(request.Identifier))
+            return BadRequest(new { error = "Skill identifier 不能為空" });
+
+        // 💡 多租戶防禦：解析操作者租戶身分，未指定則防禦性對齊老帳號 "aaa"
+        string targetUserId = string.IsNullOrWhiteSpace(request.UserId) ? "aaa" : request.UserId.Trim();
+
+        try
+        {
+            // 💡 1. 多租戶權限交叉校驗：驗證被操作的目標大腦歸屬
+            var agent = await _context.Agents.FirstOrDefaultAsync(a => a.AgentId == agentId);
+            if (agent == null)
+            {
+                return NotFound(new { error = "找不到指定的 AI 專家大腦，安裝外掛技能失敗。" });
+            }
+
+            bool hasPermission = agent.UserId == targetUserId || 
+                                (targetUserId == "aaa" && (string.IsNullOrEmpty(agent.UserId) || agent.UserId == "aaa"));
+
+            if (!hasPermission)
+            {
+                _logger.LogWarning("[越權警告] 用戶 [{UserId}] 企圖為不屬於他的 Agent [{AgentId}] 安裝商城外掛，已被系統安全阻斷！", targetUserId, agentId);
+                return Forbid();
+            }
+
+            // 💡 2. 驗證通過，跨容器發送安裝指令
+            var client = _httpClientFactory.CreateClient("PythonAgentService");
+            client.Timeout = TimeSpan.FromSeconds(60); // 完美保留您針對雲端下載與安裝所設定的 60 秒緩衝
+            
+            string pythonUrl = $"http://lm_hermes_agent:8643/api/agent/{agentId}/skills/install-from-hub";
+            
+            // 重新包裝 Payload，並同步透傳租戶身分供 Python 物理層目錄切換使用
+            var pythonPayload = new 
+            { 
+                identifier = request.Identifier, 
+                name = request.Name,
+                user_id = targetUserId 
+            };
+            
+            var response = await client.PostAsJsonAsync(pythonUrl, pythonPayload);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorMsg = await response.Content.ReadAsStringAsync();
+                _logger.LogError("Skill 安裝失敗: {ErrorMsg}。租戶: {UserId}", errorMsg, targetUserId);
+                return StatusCode((int)response.StatusCode, new { error = errorMsg });
+            }
+
+            _logger.LogInformation("[多租戶外掛安裝] 租戶 [{UserId}] 成功為大腦 [{AgentId}] 掛載雲端技能: {Identifier}", targetUserId, agentId, request.Identifier);
+            var result = await response.Content.ReadFromJsonAsync<JsonElement>();
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Skill 安裝時發生異常。租戶: {UserId}", targetUserId);
+            return StatusCode(500, new { error = $"網關安裝失敗: {ex.Message}" });
+        }
+    }
+
+}
+
+
+
+

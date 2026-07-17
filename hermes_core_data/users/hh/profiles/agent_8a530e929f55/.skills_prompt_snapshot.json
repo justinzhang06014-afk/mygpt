@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "manifest": {
+    "backend/fastapi-sqlite-api/SKILL.md": [
+      1784085352845577700,
+      2658
+    ],
+    "frontend/canvas-game-frontend/SKILL.md": [
+      1784086323312286900,
+      4346
+    ]
+  },
+  "skills": [
+    {
+      "skill_name": "fastapi-sqlite-api",
+      "category": "backend",
+      "frontmatter_name": "fastapi-sqlite-api",
+      "description": "Scaffolding, implementing, and verifying REST APIs with F...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "canvas-game-frontend",
+      "category": "frontend",
+      "frontmatter_name": "canvas-game-frontend",
+      "description": "Building self-contained HTML5 Canvas game frontends with ...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    }
+  ],
+  "category_descriptions": {}
+}

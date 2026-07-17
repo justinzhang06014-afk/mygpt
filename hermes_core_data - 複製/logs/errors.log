@@ -1,0 +1,3 @@
+2026-07-07 05:54:57,558 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=130 parent_name=s6-supervise loadavg_1m=0.05 parent_cmdline='s6-supervise gateway-default'
+2026-07-07 05:54:57,594 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=130 parent_name=s6-supervise loadavg_1m=0.05 parent_cmdline='s6-supervise gateway-default'
+2026-07-07 05:54:57,602 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=130 parent_name=s6-supervise loadavg_1m=0.05 parent_cmdline='s6-supervise gateway-default'

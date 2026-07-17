@@ -1,0 +1,1 @@
+User prefers Python, likes to clarify requirements step-by-step before coding, values testing before finalizing. Currently researching SSH.

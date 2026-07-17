@@ -1,0 +1,769 @@
+2026-06-24 02:55:51.693977654  ┌─────────────────────────────────────────────────────────┐
+2026-06-24 02:55:51.694022178  │           ⚕ Hermes Gateway Starting...                 │
+2026-06-24 02:55:51.694024746  ├─────────────────────────────────────────────────────────┤
+2026-06-24 02:55:51.694031934  │  Messaging platforms + cron scheduler                    │
+2026-06-24 02:55:51.694033246  │  Press Ctrl+C to stop                                   │
+2026-06-24 02:55:51.694034731  └─────────────────────────────────────────────────────────┘
+2026-06-24 02:55:51.694038393  
+2026-06-24 02:59:36.649884736  ┌─────────────────────────────────────────────────────────┐
+2026-06-24 02:59:36.649923198  │           ⚕ Hermes Gateway Starting...                 │
+2026-06-24 02:59:36.649925047  ├─────────────────────────────────────────────────────────┤
+2026-06-24 02:59:36.649931039  │  Messaging platforms + cron scheduler                    │
+2026-06-24 02:59:36.649932121  │  Press Ctrl+C to stop                                   │
+2026-06-24 02:59:36.649933325  └─────────────────────────────────────────────────────────┘
+2026-06-24 02:59:36.649936328  
+2026-06-24 03:01:21.274901414  ┌─────────────────────────────────────────────────────────┐
+2026-06-24 03:01:21.274937074  │           ⚕ Hermes Gateway Starting...                 │
+2026-06-24 03:01:21.274938888  ├─────────────────────────────────────────────────────────┤
+2026-06-24 03:01:21.274944286  │  Messaging platforms + cron scheduler                    │
+2026-06-24 03:01:21.274945377  │  Press Ctrl+C to stop                                   │
+2026-06-24 03:01:21.274946600  └─────────────────────────────────────────────────────────┘
+2026-06-24 03:01:21.274965613  
+2026-06-24 03:03:08.678843495  ┌─────────────────────────────────────────────────────────┐
+2026-06-24 03:03:08.678884087  │           ⚕ Hermes Gateway Starting...                 │
+2026-06-24 03:03:08.678885979  ├─────────────────────────────────────────────────────────┤
+2026-06-24 03:03:08.678892199  │  Messaging platforms + cron scheduler                    │
+2026-06-24 03:03:08.678893492  │  Press Ctrl+C to stop                                   │
+2026-06-24 03:03:08.678894918  └─────────────────────────────────────────────────────────┘
+2026-06-24 03:03:08.678898186  
+2026-06-24 03:08:18.528712469  🔁 Transient APIConnectionError on custom — rebuilt client, waiting 6s before one last primary attempt.
+2026-06-24 03:08:51.746246025  🔁 Transient APIConnectionError on custom — rebuilt client, waiting 6s before one last primary attempt.
+2026-06-24 03:09:04.345054924  🔁 Transient APIConnectionError on custom — rebuilt client, waiting 6s before one last primary attempt.
+2026-06-24 03:09:17.762414961  🔁 Transient APIConnectionError on custom — rebuilt client, waiting 6s before one last primary attempt.
+2026-06-24 03:09:17.910873706  🔁 Transient APIConnectionError on custom — rebuilt client, waiting 6s before one last primary attempt.
+2026-06-24 03:10:20.578827500  🔁 Transient APIConnectionError on custom — rebuilt client, waiting 6s before one last primary attempt.
+2026-06-24 03:11:26.079007066  🔁 Transient APIConnectionError on custom — rebuilt client, waiting 6s before one last primary attempt.
+2026-06-24 03:11:42.056739444  ⚠️  API call failed (attempt 1/3): APITimeoutError
+2026-06-24 03:11:42.056742596     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:11:42.056743406     🌐 Endpoint: https://phison.com
+2026-06-24 03:11:42.056744088     📝 Error: Request timed out.
+2026-06-24 03:11:42.056744901     ⏱️  Elapsed: 63.75s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:11:42.056745546  ⏳ Retrying in 2.6s (attempt 1/3)...
+2026-06-24 03:11:42.056746253  ⚠️  API call failed (attempt 2/3): APITimeoutError
+2026-06-24 03:11:42.056746910     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:11:42.056747563     🌐 Endpoint: https://phison.com
+2026-06-24 03:11:42.056748185     📝 Error: Request timed out.
+2026-06-24 03:11:42.056748872     ⏱️  Elapsed: 129.96s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:11:42.056977442  ⏳ Retrying in 4.9s (attempt 2/3)...
+2026-06-24 03:11:42.056979506  ⚠️  API call failed (attempt 3/3): APIConnectionError
+2026-06-24 03:11:42.056980331     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:11:42.056981028     🌐 Endpoint: https://phison.com
+2026-06-24 03:11:42.056981730     📝 Error: Connection error.
+2026-06-24 03:11:42.056982579     ⏱️  Elapsed: 198.36s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:11:42.056983267  ⚠️  API call failed (attempt 1/3): APIConnectionError
+2026-06-24 03:11:42.056983910     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:11:42.056984524     🌐 Endpoint: https://phison.com
+2026-06-24 03:11:42.056985125     📝 Error: Connection error.
+2026-06-24 03:11:42.056985829     ⏱️  Elapsed: 267.78s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:11:42.056986503  ⏳ Retrying in 2.2s (attempt 1/3)...
+2026-06-24 03:11:42.056987193  ⚠️  API call failed (attempt 2/3): APIConnectionError
+2026-06-24 03:11:42.056987823     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:11:42.056990264     🌐 Endpoint: https://phison.com
+2026-06-24 03:11:42.056990871     📝 Error: Connection error.
+2026-06-24 03:11:42.056991579     ⏱️  Elapsed: 333.58s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:11:42.057013510  ⏳ Retrying in 4.9s (attempt 2/3)...
+2026-06-24 03:11:42.057014789  ⚠️  API call failed (attempt 3/3): APIConnectionError
+2026-06-24 03:11:42.057015853     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:11:42.057016853     🌐 Endpoint: https://phison.com
+2026-06-24 03:11:42.057039944     📝 Error: Connection error.
+2026-06-24 03:11:42.057041342     ⏱️  Elapsed: 401.90s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:11:42.057042533  ❌ API failed after 3 retries — Connection error.
+2026-06-24 03:11:42.057043619     💀 Final error: Connection error.
+2026-06-24 03:11:42.099741713  🧾 Request debug dump written to: /opt/data/sessions/request_dump_api-2ff921dcc0577caa_20260624_031142_058778.json
+2026-06-24 03:12:15.237444013  ⚠️  API call failed (attempt 1/3): APITimeoutError
+2026-06-24 03:12:15.237448519     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:12:15.237449272     🌐 Endpoint: https://phison.com
+2026-06-24 03:12:15.237449962     📝 Error: Request timed out.
+2026-06-24 03:12:15.237450734     ⏱️  Elapsed: 63.35s  Context: 2 msgs, ~3,940 tokens
+2026-06-24 03:12:15.237451371  ⏳ Retrying in 2.1s (attempt 1/3)...
+2026-06-24 03:12:15.237452095  ⚠️  API call failed (attempt 2/3): APIConnectionError
+2026-06-24 03:12:15.237452761     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:12:15.237453405     🌐 Endpoint: https://phison.com
+2026-06-24 03:12:15.237454029     📝 Error: Connection error.
+2026-06-24 03:12:15.237454729     ⏱️  Elapsed: 128.92s  Context: 2 msgs, ~3,940 tokens
+2026-06-24 03:12:15.237455356  ⏳ Retrying in 4.3s (attempt 2/3)...
+2026-06-24 03:12:15.237456090  ⚠️  API call failed (attempt 3/3): APIConnectionError
+2026-06-24 03:12:15.237874893     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:12:15.237877499     🌐 Endpoint: https://phison.com
+2026-06-24 03:12:15.237878261     📝 Error: Connection error.
+2026-06-24 03:12:15.237879040     ⏱️  Elapsed: 196.67s  Context: 2 msgs, ~3,940 tokens
+2026-06-24 03:12:15.237879718  ⚠️  API call failed (attempt 1/3): APIConnectionError
+2026-06-24 03:12:15.237880402     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:12:15.237881064     🌐 Endpoint: https://phison.com
+2026-06-24 03:12:15.237881662     📝 Error: Connection error.
+2026-06-24 03:12:15.237882371     ⏱️  Elapsed: 266.03s  Context: 2 msgs, ~3,940 tokens
+2026-06-24 03:12:15.237883016  ⏳ Retrying in 2.2s (attempt 1/3)...
+2026-06-24 03:12:15.237883725  ⚠️  API call failed (attempt 2/3): APIConnectionError
+2026-06-24 03:12:15.237884391     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:12:15.237884996     🌐 Endpoint: https://phison.com
+2026-06-24 03:12:15.237885581     📝 Error: Connection error.
+2026-06-24 03:12:15.237886304     ⏱️  Elapsed: 331.77s  Context: 2 msgs, ~3,940 tokens
+2026-06-24 03:12:15.237886941  ⏳ Retrying in 4.8s (attempt 2/3)...
+2026-06-24 03:12:15.237887634  ⚠️  API call failed (attempt 3/3): APIConnectionError
+2026-06-24 03:12:15.237888296     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:12:15.237888915     🌐 Endpoint: https://phison.com
+2026-06-24 03:12:15.237889483     📝 Error: Connection error.
+2026-06-24 03:12:15.237890218     ⏱️  Elapsed: 400.17s  Context: 2 msgs, ~3,940 tokens
+2026-06-24 03:12:15.237890911  ❌ API failed after 3 retries — Connection error.
+2026-06-24 03:12:15.237891556     💀 Final error: Connection error.
+2026-06-24 03:12:15.289925962  🧾 Request debug dump written to: /opt/data/sessions/request_dump_api-fe2a0e402e6ea9f0_20260624_031215_239964.json
+2026-06-24 03:12:28.019140983  ⚠️  API call failed (attempt 1/3): APITimeoutError
+2026-06-24 03:12:28.019149875     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:12:28.019154209     🌐 Endpoint: https://phison.com
+2026-06-24 03:12:28.019158068     📝 Error: Request timed out.
+2026-06-24 03:12:28.019162478     ⏱️  Elapsed: 63.43s  Context: 2 msgs, ~3,940 tokens
+2026-06-24 03:12:28.019166036  ⏳ Retrying in 2.9s (attempt 1/3)...
+2026-06-24 03:12:28.019169990  ⚠️  API call failed (attempt 2/3): APIConnectionError
+2026-06-24 03:12:28.019173943     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:12:28.019177657     🌐 Endpoint: https://phison.com
+2026-06-24 03:12:28.019181223     📝 Error: Connection error.
+2026-06-24 03:12:28.019185353     ⏱️  Elapsed: 129.83s  Context: 2 msgs, ~3,940 tokens
+2026-06-24 03:12:28.019188902  ⏳ Retrying in 5.2s (attempt 2/3)...
+2026-06-24 03:12:28.019192974  ⚠️  API call failed (attempt 3/3): APIConnectionError
+2026-06-24 03:12:28.019196794     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:12:28.019200390     🌐 Endpoint: https://phison.com
+2026-06-24 03:12:28.019203949     📝 Error: Connection error.
+2026-06-24 03:12:28.019208087     ⏱️  Elapsed: 198.43s  Context: 2 msgs, ~3,940 tokens
+2026-06-24 03:12:28.019212075  ⚠️  API call failed (attempt 1/3): APIConnectionError
+2026-06-24 03:12:28.019215912     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:12:28.019219409     🌐 Endpoint: https://phison.com
+2026-06-24 03:12:28.019222951     📝 Error: Connection error.
+2026-06-24 03:12:28.019227100     ⏱️  Elapsed: 267.83s  Context: 2 msgs, ~3,940 tokens
+2026-06-24 03:12:28.019230529  ⏳ Retrying in 2.5s (attempt 1/3)...
+2026-06-24 03:12:28.019237040  ⚠️  API call failed (attempt 2/3): APIConnectionError
+2026-06-24 03:12:28.019242615     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:12:28.019247876     🌐 Endpoint: https://phison.com
+2026-06-24 03:12:28.019321155     📝 Error: Connection error.
+2026-06-24 03:12:28.019328398     ⏱️  Elapsed: 333.80s  Context: 2 msgs, ~3,940 tokens
+2026-06-24 03:12:28.019406663  ⏳ Retrying in 4.9s (attempt 2/3)...
+2026-06-24 03:12:28.019411610  ⚠️  API call failed (attempt 3/3): APIConnectionError
+2026-06-24 03:12:28.019418788     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:12:28.019424534     🌐 Endpoint: https://phison.com
+2026-06-24 03:12:28.019430377     📝 Error: Connection error.
+2026-06-24 03:12:28.019436562     ⏱️  Elapsed: 402.11s  Context: 2 msgs, ~3,940 tokens
+2026-06-24 03:12:28.019524900  ❌ API failed after 3 retries — Connection error.
+2026-06-24 03:12:28.019531364     💀 Final error: Connection error.
+2026-06-24 03:12:28.064874604  🧾 Request debug dump written to: /opt/data/sessions/request_dump_api-fe2a0e402e6ea9f0_20260624_031228_021963.json
+2026-06-24 03:12:40.700255858  ⚠️  API call failed (attempt 1/3): APITimeoutError
+2026-06-24 03:12:40.700258995     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:12:40.700259757     🌐 Endpoint: https://phison.com
+2026-06-24 03:12:40.700260438     📝 Error: Request timed out.
+2026-06-24 03:12:40.700261218     ⏱️  Elapsed: 63.36s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:12:40.700261822  ⏳ Retrying in 2.1s (attempt 1/3)...
+2026-06-24 03:12:40.700262492  ⚠️  API call failed (attempt 2/3): APIConnectionError
+2026-06-24 03:12:40.700263151     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:12:40.700263758     🌐 Endpoint: https://phison.com
+2026-06-24 03:12:40.700264353     📝 Error: Connection error.
+2026-06-24 03:12:40.700265048     ⏱️  Elapsed: 128.93s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:12:40.700765783  ⏳ Retrying in 5.4s (attempt 2/3)...
+2026-06-24 03:12:40.700768020  ⚠️  API call failed (attempt 3/3): APIConnectionError
+2026-06-24 03:12:40.700768846     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:12:40.700769549     🌐 Endpoint: https://phison.com
+2026-06-24 03:12:40.700770225     📝 Error: Connection error.
+2026-06-24 03:12:40.700770950     ⏱️  Elapsed: 197.91s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:12:40.700771633  ⚠️  API call failed (attempt 1/3): APIConnectionError
+2026-06-24 03:12:40.700772313     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:12:40.700786984     🌐 Endpoint: https://phison.com
+2026-06-24 03:12:40.700787901     📝 Error: Connection error.
+2026-06-24 03:12:40.700788689     ⏱️  Elapsed: 267.25s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:12:40.700789351  ⏳ Retrying in 2.2s (attempt 1/3)...
+2026-06-24 03:12:40.700790037  ⚠️  API call failed (attempt 2/3): APIConnectionError
+2026-06-24 03:12:40.700790668     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:12:40.700791453     🌐 Endpoint: https://phison.com
+2026-06-24 03:12:40.700792296     📝 Error: Connection error.
+2026-06-24 03:12:40.700793406     ⏱️  Elapsed: 332.76s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:12:40.700794301  ⏳ Retrying in 4.5s (attempt 2/3)...
+2026-06-24 03:12:40.700795428  ⚠️  API call failed (attempt 3/3): APIConnectionError
+2026-06-24 03:12:40.700796444     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:12:40.700797287     🌐 Endpoint: https://phison.com
+2026-06-24 03:12:40.700798170     📝 Error: Connection error.
+2026-06-24 03:12:40.700799163     ⏱️  Elapsed: 400.71s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:12:40.700800341  ❌ API failed after 3 retries — Connection error.
+2026-06-24 03:12:40.700801234     💀 Final error: Connection error.
+2026-06-24 03:12:40.742659237  🧾 Request debug dump written to: /opt/data/sessions/request_dump_api-2ff921dcc0577caa_20260624_031240_702800.json
+2026-06-24 03:12:41.916367941  ⚠️  API call failed (attempt 1/3): APITimeoutError
+2026-06-24 03:12:41.916651156     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:12:41.916653517     🌐 Endpoint: https://phison.com
+2026-06-24 03:12:41.916654443     📝 Error: Request timed out.
+2026-06-24 03:12:41.916655507     ⏱️  Elapsed: 63.32s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:12:41.916656408  ⏳ Retrying in 2.7s (attempt 1/3)...
+2026-06-24 03:12:41.916657343  ⚠️  API call failed (attempt 2/3): APIConnectionError
+2026-06-24 03:12:41.916658247     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:12:41.916659065     🌐 Endpoint: https://phison.com
+2026-06-24 03:12:41.916659878     📝 Error: Connection error.
+2026-06-24 03:12:41.916660867     ⏱️  Elapsed: 129.51s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:12:41.916661766  ⏳ Retrying in 5.0s (attempt 2/3)...
+2026-06-24 03:12:41.916662748  ⚠️  API call failed (attempt 3/3): APIConnectionError
+2026-06-24 03:12:41.916663767     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:12:41.916664695     🌐 Endpoint: https://phison.com
+2026-06-24 03:12:41.916665774     📝 Error: Connection error.
+2026-06-24 03:12:41.916666917     ⏱️  Elapsed: 198.08s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:12:41.916667924  ⚠️  API call failed (attempt 1/3): APIConnectionError
+2026-06-24 03:12:41.916668836     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:12:41.916669658     🌐 Endpoint: https://phison.com
+2026-06-24 03:12:41.916670518     📝 Error: Connection error.
+2026-06-24 03:12:41.916671592     ⏱️  Elapsed: 267.39s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:12:41.916672585  ⏳ Retrying in 2.7s (attempt 1/3)...
+2026-06-24 03:12:41.916673722  ⚠️  API call failed (attempt 2/3): APIConnectionError
+2026-06-24 03:12:41.916674681     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:12:41.916675679     🌐 Endpoint: https://phison.com
+2026-06-24 03:12:41.916676563     📝 Error: Connection error.
+2026-06-24 03:12:41.916677530     ⏱️  Elapsed: 333.49s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:12:41.916678320  ⏳ Retrying in 5.3s (attempt 2/3)...
+2026-06-24 03:12:41.916679320  ⚠️  API call failed (attempt 3/3): APIConnectionError
+2026-06-24 03:12:41.916680145     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:12:41.916680930     🌐 Endpoint: https://phison.com
+2026-06-24 03:12:41.916681744     📝 Error: Connection error.
+2026-06-24 03:12:41.916682793     ⏱️  Elapsed: 402.24s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:12:41.916683693  ❌ API failed after 3 retries — Connection error.
+2026-06-24 03:12:41.916684549     💀 Final error: Connection error.
+2026-06-24 03:12:41.959144550  🧾 Request debug dump written to: /opt/data/sessions/request_dump_api-2ff921dcc0577caa_20260624_031241_918776.json
+2026-06-24 03:13:45.217974744  ⚠️  API call failed (attempt 1/3): APIConnectionError
+2026-06-24 03:13:45.217977770     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:13:45.217978544     🌐 Endpoint: https://phison.com
+2026-06-24 03:13:45.217979196     📝 Error: Connection error.
+2026-06-24 03:13:45.217979910     ⏱️  Elapsed: 63.33s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:13:45.217980870  ⏳ Retrying in 2.0s (attempt 1/3)...
+2026-06-24 03:13:45.217981999  ⚠️  API call failed (attempt 2/3): APIConnectionError
+2026-06-24 03:13:45.217982988     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:13:45.217983919     🌐 Endpoint: https://phison.com
+2026-06-24 03:13:45.217984847     📝 Error: Connection error.
+2026-06-24 03:13:45.217985904     ⏱️  Elapsed: 128.92s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:13:45.217986813  ⏳ Retrying in 4.5s (attempt 2/3)...
+2026-06-24 03:13:45.217987882  ⚠️  API call failed (attempt 3/3): APIConnectionError
+2026-06-24 03:13:45.217988873     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:13:45.217989729     🌐 Endpoint: https://phison.com
+2026-06-24 03:13:45.217990770     📝 Error: Connection error.
+2026-06-24 03:13:45.217991671     ⏱️  Elapsed: 196.90s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:13:45.217992673  ⚠️  API call failed (attempt 1/3): APIConnectionError
+2026-06-24 03:13:45.217993661     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:13:45.217994545     🌐 Endpoint: https://phison.com
+2026-06-24 03:13:45.217995464     📝 Error: Connection error.
+2026-06-24 03:13:45.218259813     ⏱️  Elapsed: 266.25s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:13:45.218262035  ⏳ Retrying in 2.6s (attempt 1/3)...
+2026-06-24 03:13:45.218262912  ⚠️  API call failed (attempt 2/3): APIConnectionError
+2026-06-24 03:13:45.218263664     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:13:45.218264331     🌐 Endpoint: https://phison.com
+2026-06-24 03:13:45.218264969     📝 Error: Connection error.
+2026-06-24 03:13:45.218265682     ⏱️  Elapsed: 332.39s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:13:45.218266315  ⏳ Retrying in 5.8s (attempt 2/3)...
+2026-06-24 03:13:45.218266989  ⚠️  API call failed (attempt 3/3): APIConnectionError
+2026-06-24 03:13:45.218267656     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:13:45.218268613     🌐 Endpoint: https://phison.com
+2026-06-24 03:13:45.218269576     📝 Error: Connection error.
+2026-06-24 03:13:45.218270717     ⏱️  Elapsed: 401.55s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:13:45.218271649  ❌ API failed after 3 retries — Connection error.
+2026-06-24 03:13:45.218272523     💀 Final error: Connection error.
+2026-06-24 03:13:45.268716450  🧾 Request debug dump written to: /opt/data/sessions/request_dump_api-2ff921dcc0577caa_20260624_031345_220240.json
+2026-06-24 03:14:49.565402115  ⚠️  API call failed (attempt 1/3): APIConnectionError
+2026-06-24 03:14:49.565406191     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:14:49.565406935     🌐 Endpoint: https://phison.com
+2026-06-24 03:14:49.565407630     📝 Error: Connection error.
+2026-06-24 03:14:49.565408386     ⏱️  Elapsed: 63.33s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:14:49.565409044  ⏳ Retrying in 2.6s (attempt 1/3)...
+2026-06-24 03:14:49.565719668  ⚠️  API call failed (attempt 2/3): APIConnectionError
+2026-06-24 03:14:49.565721956     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:14:49.565723058     🌐 Endpoint: https://phison.com
+2026-06-24 03:14:49.565724175     📝 Error: Connection error.
+2026-06-24 03:14:49.565725343     ⏱️  Elapsed: 129.33s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:14:49.565726219  ⏳ Retrying in 5.5s (attempt 2/3)...
+2026-06-24 03:14:49.565727154  ⚠️  API call failed (attempt 3/3): APIConnectionError
+2026-06-24 03:14:49.565728082     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:14:49.565729025     🌐 Endpoint: https://phison.com
+2026-06-24 03:14:49.565729849     📝 Error: Connection error.
+2026-06-24 03:14:49.565730953     ⏱️  Elapsed: 198.28s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:14:49.565732000  ⚠️  API call failed (attempt 1/3): APIConnectionError
+2026-06-24 03:14:49.565733241     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:14:49.565734176     🌐 Endpoint: https://phison.com
+2026-06-24 03:14:49.565735178     📝 Error: Connection error.
+2026-06-24 03:14:49.565736242     ⏱️  Elapsed: 267.67s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:14:49.565737209  ⏳ Retrying in 2.5s (attempt 1/3)...
+2026-06-24 03:14:49.565738369  ⚠️  API call failed (attempt 2/3): APIConnectionError
+2026-06-24 03:14:49.565739551     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:14:49.565740507     🌐 Endpoint: https://phison.com
+2026-06-24 03:14:49.565741397     📝 Error: Connection error.
+2026-06-24 03:14:49.565754130     ⏱️  Elapsed: 333.62s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:14:49.565755009  ⏳ Retrying in 4.7s (attempt 2/3)...
+2026-06-24 03:14:49.565756072  ⚠️  API call failed (attempt 3/3): APIConnectionError
+2026-06-24 03:14:49.565756997     🔌 Provider: custom  Model: Qwen/Qwen3.6-27B
+2026-06-24 03:14:49.565757930     🌐 Endpoint: https://phison.com
+2026-06-24 03:14:49.565758784     📝 Error: Connection error.
+2026-06-24 03:14:49.565759808     ⏱️  Elapsed: 401.78s  Context: 2 msgs, ~3,937 tokens
+2026-06-24 03:14:49.565760968  ❌ API failed after 3 retries — Connection error.
+2026-06-24 03:14:49.565761860     💀 Final error: Connection error.
+2026-06-24 03:14:49.605409884  🧾 Request debug dump written to: /opt/data/sessions/request_dump_api-2ff921dcc0577caa_20260624_031449_568757.json
+2026-06-24 03:16:42.443156267  ┌─────────────────────────────────────────────────────────┐
+2026-06-24 03:16:42.443206046  │           ⚕ Hermes Gateway Starting...                 │
+2026-06-24 03:16:42.443207947  ├─────────────────────────────────────────────────────────┤
+2026-06-24 03:16:42.443215584  │  Messaging platforms + cron scheduler                    │
+2026-06-24 03:16:42.443216791  │  Press Ctrl+C to stop                                   │
+2026-06-24 03:16:42.443218271  └─────────────────────────────────────────────────────────┘
+2026-06-24 03:16:42.443221489  
+2026-06-24 03:20:44.765301767  ┌─────────────────────────────────────────────────────────┐
+2026-06-24 03:20:44.765402960  │           ⚕ Hermes Gateway Starting...                 │
+2026-06-24 03:20:44.765413201  ├─────────────────────────────────────────────────────────┤
+2026-06-24 03:20:44.765439884  │  Messaging platforms + cron scheduler                    │
+2026-06-24 03:20:44.765446438  │  Press Ctrl+C to stop                                   │
+2026-06-24 03:20:44.765453517  └─────────────────────────────────────────────────────────┘
+2026-06-24 03:20:44.765469933  
+2026-06-24 03:22:49.267295198  ┌─────────────────────────────────────────────────────────┐
+2026-06-24 03:22:49.267329209  │           ⚕ Hermes Gateway Starting...                 │
+2026-06-24 03:22:49.267331010  ├─────────────────────────────────────────────────────────┤
+2026-06-24 03:22:49.267336712  │  Messaging platforms + cron scheduler                    │
+2026-06-24 03:22:49.267337887  │  Press Ctrl+C to stop                                   │
+2026-06-24 03:22:49.267339118  └─────────────────────────────────────────────────────────┘
+2026-06-24 03:22:49.267342242  
+2026-06-24 03:23:23.830708747  ⚠️  API call failed (attempt 1/3): APIStatusError [HTTP 302]
+2026-06-24 03:23:23.830711588     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:23:23.830712348     🌐 Endpoint: https://huggingface.co
+2026-06-24 03:23:23.830713050     📝 Error: HTTP 302: Error code: 302
+2026-06-24 03:23:23.830713783     ⏱️  Elapsed: 0.76s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:23:23.830714409  ⏳ Retrying in 2.9s (attempt 1/3)...
+2026-06-24 03:23:23.831039210  ⚠️  API call failed (attempt 2/3): APIStatusError [HTTP 302]
+2026-06-24 03:23:23.831041006     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:23:23.831041679     🌐 Endpoint: https://huggingface.co
+2026-06-24 03:23:23.831042285     📝 Error: HTTP 302: Error code: 302
+2026-06-24 03:23:23.831042951     ⏱️  Elapsed: 4.10s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:23:23.831043533  ⏳ Retrying in 4.8s (attempt 2/3)...
+2026-06-24 03:23:23.831044235  ⚠️  API call failed (attempt 3/3): APIStatusError [HTTP 302]
+2026-06-24 03:23:23.831044938     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:23:23.831045567     🌐 Endpoint: https://huggingface.co
+2026-06-24 03:23:23.831046101     📝 Error: HTTP 302: Error code: 302
+2026-06-24 03:23:23.831046774     ⏱️  Elapsed: 10.34s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:23:23.831047464  ❌ API failed after 3 retries — HTTP 302: Error code: 302
+2026-06-24 03:23:23.831048098     💀 Final error: HTTP 302: Error code: 302
+2026-06-24 03:23:23.872882097  🧾 Request debug dump written to: /opt/data/sessions/request_dump_api-2ff921dcc0577caa_20260624_032323_833137.json
+2026-06-24 03:23:36.969461105  ⚠️  API call failed (attempt 1/3): APIStatusError [HTTP 302]
+2026-06-24 03:23:36.969464077     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:23:36.969464841     🌐 Endpoint: https://huggingface.co
+2026-06-24 03:23:36.969465486     📝 Error: HTTP 302: Error code: 302
+2026-06-24 03:23:36.969466175     ⏱️  Elapsed: 0.36s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:23:36.969466818  ⏳ Retrying in 2.2s (attempt 1/3)...
+2026-06-24 03:23:36.969467557  ⚠️  API call failed (attempt 2/3): APIStatusError [HTTP 302]
+2026-06-24 03:23:36.969468262     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:23:36.969468879     🌐 Endpoint: https://huggingface.co
+2026-06-24 03:23:36.969469474     📝 Error: HTTP 302: Error code: 302
+2026-06-24 03:23:36.969470143     ⏱️  Elapsed: 2.93s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:23:36.969470725  ⏳ Retrying in 4.9s (attempt 2/3)...
+2026-06-24 03:23:36.969471410  ⚠️  API call failed (attempt 3/3): APIStatusError [HTTP 302]
+2026-06-24 03:23:36.969472126     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:23:36.969472742     🌐 Endpoint: https://huggingface.co
+2026-06-24 03:23:36.969492284     📝 Error: HTTP 302: Error code: 302
+2026-06-24 03:23:36.969493084     ⏱️  Elapsed: 8.30s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:23:36.969494020  ❌ API failed after 3 retries — HTTP 302: Error code: 302
+2026-06-24 03:23:36.969494835     💀 Final error: HTTP 302: Error code: 302
+2026-06-24 03:23:37.013159692  🧾 Request debug dump written to: /opt/data/sessions/request_dump_api-2ff921dcc0577caa_20260624_032336_971580.json
+2026-06-24 03:23:51.077723299  ⚠️  API call failed (attempt 1/3): APIStatusError [HTTP 302]
+2026-06-24 03:23:51.077726083     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:23:51.078046212     🌐 Endpoint: https://huggingface.co
+2026-06-24 03:23:51.078048217     📝 Error: HTTP 302: Error code: 302
+2026-06-24 03:23:51.078049078     ⏱️  Elapsed: 0.38s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:23:51.078049782  ⏳ Retrying in 2.8s (attempt 1/3)...
+2026-06-24 03:23:51.078050532  ⚠️  API call failed (attempt 2/3): APIStatusError [HTTP 302]
+2026-06-24 03:23:51.078051257     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:23:51.078051930     🌐 Endpoint: https://huggingface.co
+2026-06-24 03:23:51.078052592     📝 Error: HTTP 302: Error code: 302
+2026-06-24 03:23:51.078053252     ⏱️  Elapsed: 3.78s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:23:51.078053890  ⏳ Retrying in 4.8s (attempt 2/3)...
+2026-06-24 03:23:51.078054641  ⚠️  API call failed (attempt 3/3): APIStatusError [HTTP 302]
+2026-06-24 03:23:51.078055365     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:23:51.078055978     🌐 Endpoint: https://huggingface.co
+2026-06-24 03:23:51.078056608     📝 Error: HTTP 302: Error code: 302
+2026-06-24 03:23:51.078057296     ⏱️  Elapsed: 8.98s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:23:51.078058027  ❌ API failed after 3 retries — HTTP 302: Error code: 302
+2026-06-24 03:23:51.078058698     💀 Final error: HTTP 302: Error code: 302
+2026-06-24 03:23:51.123062901  🧾 Request debug dump written to: /opt/data/sessions/request_dump_api-2ff921dcc0577caa_20260624_032351_079695.json
+2026-06-24 03:24:05.194557610  ⚠️  API call failed (attempt 1/3): APIStatusError [HTTP 302]
+2026-06-24 03:24:05.194560850     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:24:05.194561691     🌐 Endpoint: https://huggingface.co
+2026-06-24 03:24:05.194562390     📝 Error: HTTP 302: Error code: 302
+2026-06-24 03:24:05.194563095     ⏱️  Elapsed: 0.38s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:24:05.194563722  ⏳ Retrying in 2.3s (attempt 1/3)...
+2026-06-24 03:24:05.194564473  ⚠️  API call failed (attempt 2/3): APIStatusError [HTTP 302]
+2026-06-24 03:24:05.194896769     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:24:05.194898612     🌐 Endpoint: https://huggingface.co
+2026-06-24 03:24:05.194899437     📝 Error: HTTP 302: Error code: 302
+2026-06-24 03:24:05.194900188     ⏱️  Elapsed: 3.18s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:24:05.194900842  ⏳ Retrying in 5.5s (attempt 2/3)...
+2026-06-24 03:24:05.194901642  ⚠️  API call failed (attempt 3/3): APIStatusError [HTTP 302]
+2026-06-24 03:24:05.194902403     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:24:05.194903058     🌐 Endpoint: https://huggingface.co
+2026-06-24 03:24:05.194903729     📝 Error: HTTP 302: Error code: 302
+2026-06-24 03:24:05.194904401     ⏱️  Elapsed: 9.14s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:24:05.194905143  ❌ API failed after 3 retries — HTTP 302: Error code: 302
+2026-06-24 03:24:05.194905871     💀 Final error: HTTP 302: Error code: 302
+2026-06-24 03:24:05.246932632  🧾 Request debug dump written to: /opt/data/sessions/request_dump_api-2ff921dcc0577caa_20260624_032405_196610.json
+2026-06-24 03:24:34.829380220  ┌─────────────────────────────────────────────────────────┐
+2026-06-24 03:24:34.829415668  │           ⚕ Hermes Gateway Starting...                 │
+2026-06-24 03:24:34.829417515  ├─────────────────────────────────────────────────────────┤
+2026-06-24 03:24:34.829423299  │  Messaging platforms + cron scheduler                    │
+2026-06-24 03:24:34.829440364  │  Press Ctrl+C to stop                                   │
+2026-06-24 03:24:34.829441702  └─────────────────────────────────────────────────────────┘
+2026-06-24 03:24:34.829444939  
+2026-06-24 03:25:11.522323567  ⚠️  API call failed (attempt 1/3): APIStatusError [HTTP 302]
+2026-06-24 03:25:11.522327317     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:25:11.522328052     🌐 Endpoint: https://huggingface.co
+2026-06-24 03:25:11.522328717     📝 Error: HTTP 302: Error code: 302
+2026-06-24 03:25:11.522329406     ⏱️  Elapsed: 0.75s  Context: 2 msgs, ~3,942 tokens
+2026-06-24 03:25:11.522575208  ⏳ Retrying in 2.3s (attempt 1/3)...
+2026-06-24 03:25:11.522577359  ⚠️  API call failed (attempt 2/3): APIStatusError [HTTP 302]
+2026-06-24 03:25:11.522578185     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:25:11.522578862     🌐 Endpoint: https://huggingface.co
+2026-06-24 03:25:11.522579503     📝 Error: HTTP 302: Error code: 302
+2026-06-24 03:25:11.522580202     ⏱️  Elapsed: 3.79s  Context: 2 msgs, ~3,942 tokens
+2026-06-24 03:25:11.522580853  ⏳ Retrying in 4.9s (attempt 2/3)...
+2026-06-24 03:25:11.522581589  ⚠️  API call failed (attempt 3/3): APIStatusError [HTTP 302]
+2026-06-24 03:25:11.522582307     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:25:11.522582975     🌐 Endpoint: https://huggingface.co
+2026-06-24 03:25:11.522583593     📝 Error: HTTP 302: Error code: 302
+2026-06-24 03:25:11.522584261     ⏱️  Elapsed: 9.19s  Context: 2 msgs, ~3,942 tokens
+2026-06-24 03:25:11.522584939  ❌ API failed after 3 retries — HTTP 302: Error code: 302
+2026-06-24 03:25:11.522586889     💀 Final error: HTTP 302: Error code: 302
+2026-06-24 03:25:11.569185235  🧾 Request debug dump written to: /opt/data/sessions/request_dump_api-fe2a0e402e6ea9f0_20260624_032511_524436.json
+2026-06-24 03:25:12.709492818  ⚠️  API call failed (attempt 1/3): APIStatusError [HTTP 302]
+2026-06-24 03:25:12.709496615     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:25:12.709497337     🌐 Endpoint: https://huggingface.co
+2026-06-24 03:25:12.709498016     📝 Error: HTTP 302: Error code: 302
+2026-06-24 03:25:12.709498735     ⏱️  Elapsed: 0.62s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:25:12.709499378  ⏳ Retrying in 2.6s (attempt 1/3)...
+2026-06-24 03:25:12.709500204  ⚠️  API call failed (attempt 2/3): APIStatusError [HTTP 302]
+2026-06-24 03:25:12.709500927     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:25:12.709501569     🌐 Endpoint: https://huggingface.co
+2026-06-24 03:25:12.709710389     📝 Error: HTTP 302: Error code: 302
+2026-06-24 03:25:12.709712435     ⏱️  Elapsed: 3.62s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:25:12.709713181  ⏳ Retrying in 5.4s (attempt 2/3)...
+2026-06-24 03:25:12.709713948  ⚠️  API call failed (attempt 3/3): APIStatusError [HTTP 302]
+2026-06-24 03:25:12.709714692     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:25:12.709715312     🌐 Endpoint: https://huggingface.co
+2026-06-24 03:25:12.709715963     📝 Error: HTTP 302: Error code: 302
+2026-06-24 03:25:12.709716692     ⏱️  Elapsed: 9.59s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:25:12.709717378  ❌ API failed after 3 retries — HTTP 302: Error code: 302
+2026-06-24 03:25:12.709718005     💀 Final error: HTTP 302: Error code: 302
+2026-06-24 03:25:12.750778460  🧾 Request debug dump written to: /opt/data/sessions/request_dump_api-2ff921dcc0577caa_20260624_032512_711438.json
+2026-06-24 03:25:26.999311669  ⚠️  API call failed (attempt 1/3): APIStatusError [HTTP 302]
+2026-06-24 03:25:26.999315632     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:25:26.999316392     🌐 Endpoint: https://huggingface.co
+2026-06-24 03:25:26.999317078     📝 Error: HTTP 302: Error code: 302
+2026-06-24 03:25:26.999317806     ⏱️  Elapsed: 0.37s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:25:26.999318504  ⏳ Retrying in 2.5s (attempt 1/3)...
+2026-06-24 03:25:26.999319267  ⚠️  API call failed (attempt 2/3): APIStatusError [HTTP 302]
+2026-06-24 03:25:26.999752427     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:25:26.999754612     🌐 Endpoint: https://huggingface.co
+2026-06-24 03:25:26.999755376     📝 Error: HTTP 302: Error code: 302
+2026-06-24 03:25:26.999756070     ⏱️  Elapsed: 3.72s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:25:26.999756715  ⏳ Retrying in 5.0s (attempt 2/3)...
+2026-06-24 03:25:26.999757461  ⚠️  API call failed (attempt 3/3): APIStatusError [HTTP 302]
+2026-06-24 03:25:26.999758176     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:25:26.999758792     🌐 Endpoint: https://huggingface.co
+2026-06-24 03:25:26.999759429     📝 Error: HTTP 302: Error code: 302
+2026-06-24 03:25:26.999760068     ⏱️  Elapsed: 9.28s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:25:26.999760760  ❌ API failed after 3 retries — HTTP 302: Error code: 302
+2026-06-24 03:25:26.999761423     💀 Final error: HTTP 302: Error code: 302
+2026-06-24 03:25:27.038607180  🧾 Request debug dump written to: /opt/data/sessions/request_dump_api-2ff921dcc0577caa_20260624_032527_001424.json
+2026-06-24 03:25:56.619643019  ┌─────────────────────────────────────────────────────────┐
+2026-06-24 03:25:56.619677465  │           ⚕ Hermes Gateway Starting...                 │
+2026-06-24 03:25:56.619679371  ├─────────────────────────────────────────────────────────┤
+2026-06-24 03:25:56.619685344  │  Messaging platforms + cron scheduler                    │
+2026-06-24 03:25:56.619686489  │  Press Ctrl+C to stop                                   │
+2026-06-24 03:25:56.619687719  └─────────────────────────────────────────────────────────┘
+2026-06-24 03:25:56.619691055  
+2026-06-24 03:26:28.449843976  ⚠️  API call failed (attempt 1/3): NotFoundError [HTTP 404]
+2026-06-24 03:26:28.449847075     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:26:28.449847825     🌐 Endpoint: https://huggingface.co/v1
+2026-06-24 03:26:28.449848470     📝 Error: HTTP 404 — Error
+2026-06-24 03:26:28.449849123     📋 Details: <!DOCTYPE html>
+2026-06-24 03:26:28.449849653  <html lang="en">
+2026-06-24 03:26:28.449850175  <head>
+2026-06-24 03:26:28.449850790  <meta charset="utf-8">
+2026-06-24 03:26:28.449851398  <title>Error</title>
+2026-06-24 03:26:28.449851883  </head>
+2026-06-24 03:26:28.449852396  <body>
+2026-06-24 03:26:28.449853053  <pre>Cannot POST /v1/chat/completions</pre>
+2026-06-24 03:26:28.449853560  </body>
+2026-06-24 03:26:28.449854035  </html>
+2026-06-24 03:26:28.450196168     ⏱️  Elapsed: 0.94s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:26:28.450197884  ⏳ Retrying in 2.9s (attempt 1/3)...
+2026-06-24 03:26:28.450198751  ⚠️  API call failed (attempt 2/3): NotFoundError [HTTP 404]
+2026-06-24 03:26:28.450199495     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:26:28.450200157     🌐 Endpoint: https://huggingface.co/v1
+2026-06-24 03:26:28.450200778     📝 Error: HTTP 404 — Error
+2026-06-24 03:26:28.450201350     📋 Details: <!DOCTYPE html>
+2026-06-24 03:26:28.450201881  <html lang="en">
+2026-06-24 03:26:28.450202387  <head>
+2026-06-24 03:26:28.450202984  <meta charset="utf-8">
+2026-06-24 03:26:28.450203549  <title>Error</title>
+2026-06-24 03:26:28.450204037  </head>
+2026-06-24 03:26:28.450204543  <body>
+2026-06-24 03:26:28.450205193  <pre>Cannot POST /v1/chat/completions</pre>
+2026-06-24 03:26:28.450205691  </body>
+2026-06-24 03:26:28.450206178  </html>
+2026-06-24 03:26:28.450206845     ⏱️  Elapsed: 4.47s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:26:28.450208322  ⏳ Retrying in 5.2s (attempt 2/3)...
+2026-06-24 03:26:28.450209013  ⚠️  API call failed (attempt 3/3): NotFoundError [HTTP 404]
+2026-06-24 03:26:28.450238429     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:26:28.450239181     🌐 Endpoint: https://huggingface.co/v1
+2026-06-24 03:26:28.450239867     📝 Error: HTTP 404 — Error
+2026-06-24 03:26:28.450240455     📋 Details: <!DOCTYPE html>
+2026-06-24 03:26:28.450240977  <html lang="en">
+2026-06-24 03:26:28.450241477  <head>
+2026-06-24 03:26:28.450242152  <meta charset="utf-8">
+2026-06-24 03:26:28.450242755  <title>Error</title>
+2026-06-24 03:26:28.450243214  </head>
+2026-06-24 03:26:28.450243711  <body>
+2026-06-24 03:26:28.450244363  <pre>Cannot POST /v1/chat/completions</pre>
+2026-06-24 03:26:28.450254040  </body>
+2026-06-24 03:26:28.450254587  </html>
+2026-06-24 03:26:28.450255267     ⏱️  Elapsed: 10.24s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:26:28.450263891  ❌ API failed after 3 retries — HTTP 404 — Error
+2026-06-24 03:26:28.450264679     💀 Final error: HTTP 404 — Error
+2026-06-24 03:26:28.493508673  🧾 Request debug dump written to: /opt/data/sessions/request_dump_api-2ff921dcc0577caa_20260624_032628_452103.json
+2026-06-24 03:26:28.634097309  ⚠️  API call failed (attempt 1/3): NotFoundError [HTTP 404]
+2026-06-24 03:26:28.634100780     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:26:28.634101549     🌐 Endpoint: https://huggingface.co/v1
+2026-06-24 03:26:28.634102224     📝 Error: HTTP 404 — Error
+2026-06-24 03:26:28.634102890     📋 Details: <!DOCTYPE html>
+2026-06-24 03:26:28.634103463  <html lang="en">
+2026-06-24 03:26:28.634103990  <head>
+2026-06-24 03:26:28.634104608  <meta charset="utf-8">
+2026-06-24 03:26:28.634105233  <title>Error</title>
+2026-06-24 03:26:28.634105711  </head>
+2026-06-24 03:26:28.634106214  <body>
+2026-06-24 03:26:28.634106881  <pre>Cannot POST /v1/chat/completions</pre>
+2026-06-24 03:26:28.634107381  </body>
+2026-06-24 03:26:28.634107899  </html>
+2026-06-24 03:26:28.634301154     ⏱️  Elapsed: 0.98s  Context: 2 msgs, ~3,942 tokens
+2026-06-24 03:26:28.634303307  ⏳ Retrying in 2.8s (attempt 1/3)...
+2026-06-24 03:26:28.634304213  ⚠️  API call failed (attempt 2/3): NotFoundError [HTTP 404]
+2026-06-24 03:26:28.634304964     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:26:28.634305640     🌐 Endpoint: https://huggingface.co/v1
+2026-06-24 03:26:28.634306257     📝 Error: HTTP 404 — Error
+2026-06-24 03:26:28.634306845     📋 Details: <!DOCTYPE html>
+2026-06-24 03:26:28.634307362  <html lang="en">
+2026-06-24 03:26:28.634307864  <head>
+2026-06-24 03:26:28.634308447  <meta charset="utf-8">
+2026-06-24 03:26:28.634308997  <title>Error</title>
+2026-06-24 03:26:28.634309491  </head>
+2026-06-24 03:26:28.634310001  <body>
+2026-06-24 03:26:28.634310666  <pre>Cannot POST /v1/chat/completions</pre>
+2026-06-24 03:26:28.634311164  </body>
+2026-06-24 03:26:28.634311662  </html>
+2026-06-24 03:26:28.634312325     ⏱️  Elapsed: 4.33s  Context: 2 msgs, ~3,942 tokens
+2026-06-24 03:26:28.634312890  ⏳ Retrying in 5.5s (attempt 2/3)...
+2026-06-24 03:26:28.634313602  ⚠️  API call failed (attempt 3/3): NotFoundError [HTTP 404]
+2026-06-24 03:26:28.634314261     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:26:28.634314876     🌐 Endpoint: https://huggingface.co/v1
+2026-06-24 03:26:28.634315456     📝 Error: HTTP 404 — Error
+2026-06-24 03:26:28.634316020     📋 Details: <!DOCTYPE html>
+2026-06-24 03:26:28.634316510  <html lang="en">
+2026-06-24 03:26:28.634316982  <head>
+2026-06-24 03:26:28.634317561  <meta charset="utf-8">
+2026-06-24 03:26:28.634318106  <title>Error</title>
+2026-06-24 03:26:28.634318551  </head>
+2026-06-24 03:26:28.634319043  <body>
+2026-06-24 03:26:28.634319677  <pre>Cannot POST /v1/chat/completions</pre>
+2026-06-24 03:26:28.634320154  </body>
+2026-06-24 03:26:28.634320634  </html>
+2026-06-24 03:26:28.634321291     ⏱️  Elapsed: 10.46s  Context: 2 msgs, ~3,942 tokens
+2026-06-24 03:26:28.634321926  ❌ API failed after 3 retries — HTTP 404 — Error
+2026-06-24 03:26:28.634322528     💀 Final error: HTTP 404 — Error
+2026-06-24 03:26:28.674373610  🧾 Request debug dump written to: /opt/data/sessions/request_dump_api-fe2a0e402e6ea9f0_20260624_032628_635653.json
+2026-06-24 03:26:43.262217438  ⚠️  API call failed (attempt 1/3): NotFoundError [HTTP 404]
+2026-06-24 03:26:43.262222222     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:26:43.262223745     🌐 Endpoint: https://huggingface.co/v1
+2026-06-24 03:26:43.262225070     📝 Error: HTTP 404 — Error
+2026-06-24 03:26:43.262226412     📋 Details: <!DOCTYPE html>
+2026-06-24 03:26:43.262227481  <html lang="en">
+2026-06-24 03:26:43.262228534  <head>
+2026-06-24 03:26:43.262229716  <meta charset="utf-8">
+2026-06-24 03:26:43.262230886  <title>Error</title>
+2026-06-24 03:26:43.262231831  </head>
+2026-06-24 03:26:43.262232832  <body>
+2026-06-24 03:26:43.262234141  <pre>Cannot POST /v1/chat/completions</pre>
+2026-06-24 03:26:43.262235121  </body>
+2026-06-24 03:26:43.262236099  </html>
+2026-06-24 03:26:43.262237430     ⏱️  Elapsed: 0.56s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:26:43.262238659  ⏳ Retrying in 3.0s (attempt 1/3)...
+2026-06-24 03:26:43.262240113  ⚠️  API call failed (attempt 2/3): NotFoundError [HTTP 404]
+2026-06-24 03:26:43.262241418     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:26:43.262242657     🌐 Endpoint: https://huggingface.co/v1
+2026-06-24 03:26:43.262243821     📝 Error: HTTP 404 — Error
+2026-06-24 03:26:43.262244971     📋 Details: <!DOCTYPE html>
+2026-06-24 03:26:43.262246015  <html lang="en">
+2026-06-24 03:26:43.262246963  <head>
+2026-06-24 03:26:43.262248095  <meta charset="utf-8">
+2026-06-24 03:26:43.262249208  <title>Error</title>
+2026-06-24 03:26:43.262250102  </head>
+2026-06-24 03:26:43.262251097  <body>
+2026-06-24 03:26:43.262252371  <pre>Cannot POST /v1/chat/completions</pre>
+2026-06-24 03:26:43.262253267  </body>
+2026-06-24 03:26:43.262254208  </html>
+2026-06-24 03:26:43.262255543     ⏱️  Elapsed: 4.19s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:26:43.262256724  ⏳ Retrying in 5.1s (attempt 2/3)...
+2026-06-24 03:26:43.262258093  ⚠️  API call failed (attempt 3/3): NotFoundError [HTTP 404]
+2026-06-24 03:26:43.262259381     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:26:43.262260564     🌐 Endpoint: https://huggingface.co/v1
+2026-06-24 03:26:43.262261719     📝 Error: HTTP 404 — Error
+2026-06-24 03:26:43.262264722     📋 Details: <!DOCTYPE html>
+2026-06-24 03:26:43.262265702  <html lang="en">
+2026-06-24 03:26:43.262266660  <head>
+2026-06-24 03:26:43.262326129  <meta charset="utf-8">
+2026-06-24 03:26:43.262327556  <title>Error</title>
+2026-06-24 03:26:43.262328529  </head>
+2026-06-24 03:26:43.262329556  <body>
+2026-06-24 03:26:43.262330879  <pre>Cannot POST /v1/chat/completions</pre>
+2026-06-24 03:26:43.262337901  </body>
+2026-06-24 03:26:43.262339020  </html>
+2026-06-24 03:26:43.262340729     ⏱️  Elapsed: 9.94s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:26:43.262342005  ❌ API failed after 3 retries — HTTP 404 — Error
+2026-06-24 03:26:43.262343214     💀 Final error: HTTP 404 — Error
+2026-06-24 03:26:43.306123455  🧾 Request debug dump written to: /opt/data/sessions/request_dump_api-2ff921dcc0577caa_20260624_032643_264627.json
+2026-06-24 03:26:57.537712483  ⚠️  API call failed (attempt 1/3): NotFoundError [HTTP 404]
+2026-06-24 03:26:57.537715332     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:26:57.537716098     🌐 Endpoint: https://huggingface.co/v1
+2026-06-24 03:26:57.537716730     📝 Error: HTTP 404 — Error
+2026-06-24 03:26:57.537717371     📋 Details: <!DOCTYPE html>
+2026-06-24 03:26:57.537717913  <html lang="en">
+2026-06-24 03:26:57.537718443  <head>
+2026-06-24 03:26:57.537719065  <meta charset="utf-8">
+2026-06-24 03:26:57.537719671  <title>Error</title>
+2026-06-24 03:26:57.537720153  </head>
+2026-06-24 03:26:57.537720682  <body>
+2026-06-24 03:26:57.537721356  <pre>Cannot POST /v1/chat/completions</pre>
+2026-06-24 03:26:57.537721856  </body>
+2026-06-24 03:26:57.537722353  </html>
+2026-06-24 03:26:57.537723034     ⏱️  Elapsed: 0.53s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:26:57.537723647  ⏳ Retrying in 2.8s (attempt 1/3)...
+2026-06-24 03:26:57.537724362  ⚠️  API call failed (attempt 2/3): NotFoundError [HTTP 404]
+2026-06-24 03:26:57.537725031     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:26:57.537725659     🌐 Endpoint: https://huggingface.co/v1
+2026-06-24 03:26:57.537726225     📝 Error: HTTP 404 — Error
+2026-06-24 03:26:57.537726814     📋 Details: <!DOCTYPE html>
+2026-06-24 03:26:57.537727317  <html lang="en">
+2026-06-24 03:26:57.537727810  <head>
+2026-06-24 03:26:57.537728379  <meta charset="utf-8">
+2026-06-24 03:26:57.537728940  <title>Error</title>
+2026-06-24 03:26:57.537729378  </head>
+2026-06-24 03:26:57.537729885  <body>
+2026-06-24 03:26:57.537730529  <pre>Cannot POST /v1/chat/completions</pre>
+2026-06-24 03:26:57.537730994  </body>
+2026-06-24 03:26:57.537731472  </html>
+2026-06-24 03:26:57.537732142     ⏱️  Elapsed: 4.06s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:26:57.537732726  ⏳ Retrying in 4.6s (attempt 2/3)...
+2026-06-24 03:26:57.537733416  ⚠️  API call failed (attempt 3/3): NotFoundError [HTTP 404]
+2026-06-24 03:26:57.537734043     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:26:57.537734645     🌐 Endpoint: https://huggingface.co/v1
+2026-06-24 03:26:57.537735194     📝 Error: HTTP 404 — Error
+2026-06-24 03:26:57.537735768     📋 Details: <!DOCTYPE html>
+2026-06-24 03:26:57.537736249  <html lang="en">
+2026-06-24 03:26:57.537736716  <head>
+2026-06-24 03:26:57.537750768  <meta charset="utf-8">
+2026-06-24 03:26:57.537751331  <title>Error</title>
+2026-06-24 03:26:57.537751778  </head>
+2026-06-24 03:26:57.537752270  <body>
+2026-06-24 03:26:57.537752908  <pre>Cannot POST /v1/chat/completions</pre>
+2026-06-24 03:26:57.537753365  </body>
+2026-06-24 03:26:57.537753838  </html>
+2026-06-24 03:26:57.538124699     ⏱️  Elapsed: 9.62s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:26:57.538126900  ❌ API failed after 3 retries — HTTP 404 — Error
+2026-06-24 03:26:57.538127882     💀 Final error: HTTP 404 — Error
+2026-06-24 03:26:57.578530991  🧾 Request debug dump written to: /opt/data/sessions/request_dump_api-2ff921dcc0577caa_20260624_032657_540651.json
+2026-06-24 03:27:11.539556004  ⚠️  API call failed (attempt 1/3): NotFoundError [HTTP 404]
+2026-06-24 03:27:11.539559238     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:27:11.539560017     🌐 Endpoint: https://huggingface.co/v1
+2026-06-24 03:27:11.539560655     📝 Error: HTTP 404 — Error
+2026-06-24 03:27:11.539561308     📋 Details: <!DOCTYPE html>
+2026-06-24 03:27:11.539561841  <html lang="en">
+2026-06-24 03:27:11.539562382  <head>
+2026-06-24 03:27:11.539563313  <meta charset="utf-8">
+2026-06-24 03:27:11.539563879  <title>Error</title>
+2026-06-24 03:27:11.539564356  </head>
+2026-06-24 03:27:11.539564863  <body>
+2026-06-24 03:27:11.539565509  <pre>Cannot POST /v1/chat/completions</pre>
+2026-06-24 03:27:11.539566017  </body>
+2026-06-24 03:27:11.539566495  </html>
+2026-06-24 03:27:11.539567183     ⏱️  Elapsed: 0.56s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:27:11.539774298  ⏳ Retrying in 2.5s (attempt 1/3)...
+2026-06-24 03:27:11.539777241  ⚠️  API call failed (attempt 2/3): NotFoundError [HTTP 404]
+2026-06-24 03:27:11.539778124     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:27:11.539778857     🌐 Endpoint: https://huggingface.co/v1
+2026-06-24 03:27:11.539779460     📝 Error: HTTP 404 — Error
+2026-06-24 03:27:11.539780053     📋 Details: <!DOCTYPE html>
+2026-06-24 03:27:11.539780594  <html lang="en">
+2026-06-24 03:27:11.539781084  <head>
+2026-06-24 03:27:11.539781641  <meta charset="utf-8">
+2026-06-24 03:27:11.539782200  <title>Error</title>
+2026-06-24 03:27:11.539782720  </head>
+2026-06-24 03:27:11.539783217  <body>
+2026-06-24 03:27:11.539783865  <pre>Cannot POST /v1/chat/completions</pre>
+2026-06-24 03:27:11.539784391  </body>
+2026-06-24 03:27:11.539784872  </html>
+2026-06-24 03:27:11.539785541     ⏱️  Elapsed: 3.75s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:27:11.539786196  ⏳ Retrying in 4.7s (attempt 2/3)...
+2026-06-24 03:27:11.539786853  ⚠️  API call failed (attempt 3/3): NotFoundError [HTTP 404]
+2026-06-24 03:27:11.539787522     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:27:11.539788252     🌐 Endpoint: https://huggingface.co/v1
+2026-06-24 03:27:11.539788840     📝 Error: HTTP 404 — Error
+2026-06-24 03:27:11.539789391     📋 Details: <!DOCTYPE html>
+2026-06-24 03:27:11.539789873  <html lang="en">
+2026-06-24 03:27:11.539790360  <head>
+2026-06-24 03:27:11.539790914  <meta charset="utf-8">
+2026-06-24 03:27:11.539791451  <title>Error</title>
+2026-06-24 03:27:11.539791936  </head>
+2026-06-24 03:27:11.539792443  <body>
+2026-06-24 03:27:11.539793094  <pre>Cannot POST /v1/chat/completions</pre>
+2026-06-24 03:27:11.539793577  </body>
+2026-06-24 03:27:11.539794057  </html>
+2026-06-24 03:27:11.539794724     ⏱️  Elapsed: 9.08s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:27:11.539795388  ❌ API failed after 3 retries — HTTP 404 — Error
+2026-06-24 03:27:11.539795954     💀 Final error: HTTP 404 — Error
+2026-06-24 03:27:11.581984738  🧾 Request debug dump written to: /opt/data/sessions/request_dump_api-2ff921dcc0577caa_20260624_032711_541727.json
+2026-06-24 03:27:26.545497139  ⚠️  API call failed (attempt 1/3): NotFoundError [HTTP 404]
+2026-06-24 03:27:26.545499836     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:27:26.545500603     🌐 Endpoint: https://huggingface.co/v1
+2026-06-24 03:27:26.545501302     📝 Error: HTTP 404 — Error
+2026-06-24 03:27:26.545501997     📋 Details: <!DOCTYPE html>
+2026-06-24 03:27:26.545502588  <html lang="en">
+2026-06-24 03:27:26.545503156  <head>
+2026-06-24 03:27:26.545503779  <meta charset="utf-8">
+2026-06-24 03:27:26.545504397  <title>Error</title>
+2026-06-24 03:27:26.545504905  </head>
+2026-06-24 03:27:26.545505454  <body>
+2026-06-24 03:27:26.545506092  <pre>Cannot POST /v1/chat/completions</pre>
+2026-06-24 03:27:26.545506619  </body>
+2026-06-24 03:27:26.545507128  </html>
+2026-06-24 03:27:26.545770109     ⏱️  Elapsed: 1.28s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:27:26.545771906  ⏳ Retrying in 2.8s (attempt 1/3)...
+2026-06-24 03:27:26.545772788  ⚠️  API call failed (attempt 2/3): NotFoundError [HTTP 404]
+2026-06-24 03:27:26.545773542     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:27:26.545774212     🌐 Endpoint: https://huggingface.co/v1
+2026-06-24 03:27:26.545774822     📝 Error: HTTP 404 — Error
+2026-06-24 03:27:26.545775407     📋 Details: <!DOCTYPE html>
+2026-06-24 03:27:26.545775927  <html lang="en">
+2026-06-24 03:27:26.545776441  <head>
+2026-06-24 03:27:26.545777025  <meta charset="utf-8">
+2026-06-24 03:27:26.545777578  <title>Error</title>
+2026-06-24 03:27:26.545778074  </head>
+2026-06-24 03:27:26.545778583  <body>
+2026-06-24 03:27:26.545779230  <pre>Cannot POST /v1/chat/completions</pre>
+2026-06-24 03:27:26.545779738  </body>
+2026-06-24 03:27:26.545780240  </html>
+2026-06-24 03:27:26.545780909     ⏱️  Elapsed: 4.83s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:27:26.545781480  ⏳ Retrying in 4.4s (attempt 2/3)...
+2026-06-24 03:27:26.545782170  ⚠️  API call failed (attempt 3/3): NotFoundError [HTTP 404]
+2026-06-24 03:27:26.545782826     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:27:26.545783425     🌐 Endpoint: https://huggingface.co/v1
+2026-06-24 03:27:26.545783999     📝 Error: HTTP 404 — Error
+2026-06-24 03:27:26.545784559     📋 Details: <!DOCTYPE html>
+2026-06-24 03:27:26.545785084  <html lang="en">
+2026-06-24 03:27:26.545785565  <head>
+2026-06-24 03:27:26.545786153  <meta charset="utf-8">
+2026-06-24 03:27:26.545786685  <title>Error</title>
+2026-06-24 03:27:26.545787143  </head>
+2026-06-24 03:27:26.545787636  <body>
+2026-06-24 03:27:26.545788240  <pre>Cannot POST /v1/chat/completions</pre>
+2026-06-24 03:27:26.545788703  </body>
+2026-06-24 03:27:26.545789176  </html>
+2026-06-24 03:27:26.545789821     ⏱️  Elapsed: 9.82s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:27:26.545790452  ❌ API failed after 3 retries — HTTP 404 — Error
+2026-06-24 03:27:26.545791035     💀 Final error: HTTP 404 — Error
+2026-06-24 03:27:26.584560097  🧾 Request debug dump written to: /opt/data/sessions/request_dump_api-2ff921dcc0577caa_20260624_032726_547315.json

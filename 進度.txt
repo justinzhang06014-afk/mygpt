@@ -1,0 +1,14 @@
+1. hermes純文字對話 hermes自己內部skill工具安裝 memory跟user寫入 寫一隻docker監控的數值 並回報
+2. 設計MCP功能 目前先用標準MCP格式 然後讓Hermes自己去載
+2. 設計MCP功能 固定班底 在載入前讓hermes先把需要的寫入config.yaml裡面 
+(所以要思考兩個點 1. hermes在CLI模式下 如何實現 讓他先載入，以及api的部分)
+(2. hermes 在載入時 如何分辨user agent如何準確的匯入到對應位置 不再全域變數底下)
+(3. hermes 如何給使用者推薦他需要的)
+3. 如何把我現在的 SKILL 匯出功能 整合AINEXS
+4. APPROVEL 調用
+
+2026/07/15 測試用帳號
+555
+333
+666
+423

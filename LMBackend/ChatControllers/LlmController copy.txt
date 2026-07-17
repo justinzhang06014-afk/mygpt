@@ -1,0 +1,880 @@
+// 資料庫完整 CRUD 與 多聊天室(一對多) Google 聯網控制中心
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Text;
+using System.Text.Json;
+using System.Net;
+// using Microsoft.Data.SqlClient; // 如果有需要
+using Npgsql; // 💡 確保頂部有引入 PostgreSQL 的驅動套件
+// 💡 關鍵引用：引入您的 Models 檔案
+using LMBackend; // 🌟 拿掉 .Data，直接參照根目錄
+using LMBackend.Models; 
+using UglyToad.PdfPig; // 🚀 引入 PdfPig 核心解析套件
+
+using System.Text.Json.Serialization; // 🌟 確保這行有加，否則 [JsonPropertyName] 會報錯
+using System.Net.Http.Json;           // 🌟 確保這行有加，否則 PostAsJsonAsync 與 ReadFromJsonAsync 會報錯
+using LMBackend.Controllers;
+
+namespace LMBackend.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+public class ChatController : ControllerBase
+{
+    private readonly AppDbContext _context;
+    private readonly ILogger<ChatController> _logger;
+    public ChatController(AppDbContext context, ILogger<ChatController> logger)
+    {
+        _context = context;
+        _logger = logger;
+    }
+
+    /// <summary>
+    /// 核心共用引擎：將「Google 搜尋 ＋ 欄位大小寫忽略防禦 ＋ 呼叫 Python AI」完全封裝
+    /// </summary>
+    private async Task<(string Reply, string? SearchSources)> CallAIEngineAsync(string userMessage, bool isWebSearch,int roomId)
+    {
+        string? searchSourcesJson = null;
+        Console.WriteLine("尚未進入");
+
+        // =========================================================================
+        // 💡 🛡️ 雙向完全隔離呼叫 Python LLM Server
+        // =========================================================================
+        // =========================================================================
+        // 💡 🛡️ 發送訊息給App.py 
+        //  發送函式：async def chat(request: ChatRequest) 
+        //  發送路由：@app.post("/api/chat") 
+        //  發送格式：json
+        // =========================================================================
+        using var pythonClient = new HttpClient();
+        pythonClient.Timeout = TimeSpan.FromMinutes(5); 
+        //前端傳送哪個房間訊息 在渲染給app.py
+        string currentRoomId = Request.Query["roomId"].ToString() ?? "1"; 
+
+        Console.WriteLine($"[C# 診斷] 前端傳入的 roomId 參數值為: {roomId}");
+        // =========================================================================
+        // 確認聊天室：roomId
+        // 聯網功能：isWebSearch
+        // 最大回復token數量：max_tokens
+        // 使用者聊天訊息：userMessage (使用者提問)
+        // =========================================================================
+        var llmRequest = new 
+        { 
+            userMessage = userMessage,   
+            isWebSearch = isWebSearch,     
+            max_tokens = 512,
+            roomId = roomId,
+        };
+        
+        var serializeOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+        var jsonPayload = JsonSerializer.Serialize(llmRequest, serializeOptions);
+        var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+        Console.WriteLine("準備連結");
+        
+        // =========================================================================
+        //  傳接專案外層 docker app.py 所設立的 http://llm-service:8000/api/chat 傳送內容包成json 並以 content 發送
+        // =========================================================================
+        var llmResponse = await pythonClient.PostAsync("http://llm-service:8000/api/chat", content).ConfigureAwait(false);
+        
+        if (!llmResponse.IsSuccessStatusCode)
+        {
+            throw new Exception($"Python LLM Server 回傳錯誤或拒絕連線。狀態碼: {llmResponse.StatusCode}");
+        }
+        
+        // =========================================================================
+        //  接收端 由app.py async def chat(request: ChatRequest)  return回來的訊息
+        //  "reply": ai_reply, 回傳資訊
+        //  "searchSources": search_sources_json # 👈 這裡繼續帶入您前面 SerpAPI 產出的聯網來源     
+        // =========================================================================
+        var responseString = await llmResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+        using var doc = JsonDocument.Parse(responseString);
+        var rootElement = doc.RootElement;
+
+        string reply = "";
+        var replyProp = rootElement.GetProperty("reply");
+        
+        if (replyProp.ValueKind == JsonValueKind.Array && replyProp.GetArrayLength() > 0)
+        {
+            reply = replyProp.GetString() ?? "";
+        }
+        else
+        {
+            reply = replyProp.GetString() ?? "";
+        }
+
+        if (rootElement.TryGetProperty("searchSources", out var sourcesProp) && sourcesProp.ValueKind == JsonValueKind.String)
+        {
+            searchSourcesJson = sourcesProp.GetString();
+        }
+
+        Console.WriteLine("到這裡都沒問題");
+        return (reply, searchSourcesJson);
+    }
+
+    // =========================================================================
+    // 此區塊為 聊天室(房間) 新增、刪除、查看 聊天室 以及 更新聊天室名稱
+    // =========================================================================
+    // =========================================================================
+    // 💡Room 查詢(R) 所有聊天室端點：【查】撈取過往「所有聊天室清單」（用於左側邊欄渲染）
+    // 前端：chat.js 函式：const switchRoomAction（查看使用者點選）
+    // =========================================================================
+    [HttpGet]
+    [Route("/api/rooms")]
+    public async Task<IActionResult> GetRooms()
+    {
+        try
+        {
+            var rooms = await _context.ChatRooms.OrderByDescending(r => r.CreatedAt).ToListAsync();
+            return Ok(rooms);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"無法讀取聊天室清單: {ex.Message}");
+        }
+    }
+
+    // =========================================================================
+    // 💡 Room 新增(C) 新增一個聊天室端點：【增】點擊「+ 新增對話」時建立一個全新空白聊天室
+    // 前端：chat.js 函式：const createNewRoomAction（新增一個空白的）
+    // =========================================================================
+    [HttpPost]
+    [Route("/api/rooms")]
+    public async Task<IActionResult> CreateRoom([FromBody] ChatRoomCreateDto? request)
+    {
+        try
+        {
+            var newRoom = new ChatRoom
+            {
+                Title = (request == null || string.IsNullOrWhiteSpace(request.Title)) ? "新的聊天對話" : request.Title,
+                CreatedAt = DateTime.UtcNow
+            };
+            _context.ChatRooms.Add(newRoom);
+            await _context.SaveChangesAsync();
+            return Ok(newRoom);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"建立聊天室失敗: {ex.Message}");
+        }
+    }
+    // =========================================================================
+    // 💡 Room 刪除(D) 刪除一個聊天室端點：【刪】點擊「垃圾桶 刪除對話」時刪除一個舊有的聊天室
+    // 前端：chat.js 函式：const deleteRoomAction（新增一個空白的）
+    // =========================================================================
+    [HttpDelete("/api/rooms/{roomId}")] // 👈 這裡必須是 HttpDelete，且前面要有斜線 /
+    public async Task<IActionResult> DeleteRoom(int roomId)
+    {
+        try
+        {
+            var room = await _context.ChatRooms.FindAsync(roomId);
+            if (room == null) return NotFound(new { message = "找不到該聊天室" });
+
+            _context.ChatRooms.Remove(room);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "聊天室已成功刪除" });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"刪除聊天室失敗: {ex.Message}");
+        }
+    }
+
+    // =========================================================================
+    // 💡 Room 更新(U) 更新一個聊天室端點名稱：【更】點擊「筆」時更新一個聊天室名稱
+    // 前端：chat.js 函式：const updateRoomTitleAction（修改指定聊天室名稱）
+    // =========================================================================
+    [HttpPut("/api/rooms/{roomId}")] // 👈 加上前導斜線 / 進行絕對路由強制定位
+    public async Task<IActionResult> UpdateRoomTitle(int roomId, [FromBody] RoomUpdateDto dto)
+    {
+        if (dto == null || string.IsNullOrWhiteSpace(dto.Title))
+        {
+            return BadRequest("聊天室名稱不能為空");
+        }
+
+        try
+        {
+            var room = await _context.ChatRooms.FindAsync(roomId);
+            if (room == null) return NotFound(new { message = "找不到該聊天室" });
+
+            room.Title = dto.Title;
+            await _context.SaveChangesAsync();
+
+            return Ok(new { id = room.Id, title = room.Title });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"修改聊天室名稱失敗: {ex.Message}");
+        }
+    }
+
+    // 搭配的 DTO 類別
+    public class RoomUpdateDto
+    {
+        public string Title { get; set; } = string.Empty;
+    }
+
+
+
+    // =========================================================================
+    // 💡 messages 查詢(R) 聊天內容端點：【查】點擊某一間聊天室時，精準撈出「該聊天室內部」的歷史對話
+    // 前端：chat.js 函式：const sendMessageAction（修改指定聊天室名稱）
+    // =========================================================================
+    [HttpGet]
+    [Route("/api/rooms/{roomId}/messages")]
+    public async Task<IActionResult> GetRoomMessages(int roomId)
+    {
+        try
+        {
+            var roomExists = await _context.ChatRooms.AnyAsync(r => r.Id == roomId);
+            if (!roomExists)
+            {
+                return NotFound(new { message = "找不到指定的聊天室。" });
+            }
+
+            // 💡 精準過濾：只抓出屬於特定 ChatRoomId 的子對話紀錄
+            var dbMessages = await _context.Messages
+                .Where(m => m.ChatRoomId == roomId)
+                .OrderBy(m => m.Timestamp)
+                .ToListAsync();
+
+            var history = new List<object>();
+            
+            foreach (var msg in dbMessages)
+            {
+                var sourcesObj = !string.IsNullOrEmpty(msg.SearchSources) 
+                    ? JsonSerializer.Deserialize<object>(msg.SearchSources) 
+                    : null;
+
+                history.Add(new { Id = msg.Id, Role = "user", Content = msg.UserInput });
+                history.Add(new { Id = msg.Id, Role = "assistant", Content = msg.Response, SearchSources = sourcesObj });
+            }
+            return Ok(history);
+        }
+        catch (Exception ex) 
+        { 
+            return StatusCode(500, $"無法讀取歷史紀錄: {ex.Message}"); 
+        }
+    }
+
+    // ===================================================================================================================================
+    // 此區塊為 聊天訊息 使用者 傳送(輸入) 以及 刪除、查看、更新(重新詢問) 問題 
+    // ===================================================================================================================================
+
+
+    /// <summary>
+    /// 【增】接收使用者發問、呼叫共用 AI 引擎並存入指定聊天室
+    /// </summary>
+    // =========================================================================
+    // 💡 messages 新增(C) 使用者Prompt傳過來訊息的端點
+    // 前端：chat.js 函式：const sendMessageAction（使用者傳輸的訊息）
+    // LLM 端：app.py 函式：async def chat(request: ChatRequest)（往後交給LLM處理）
+    // 分流：Hermas-Agent輸入 與 普通LLM+RAG輸入做個區隔
+    // =========================================================================
+    /// <summary>
+    /// 【升級版】接收使用者發問、自動判定房間型態（純 RAG vs Hermes Agent）並動態路由分流
+    /// </summary>
+    [HttpPost("/api/chat")] 
+    public async Task<IActionResult> SendMessage([FromBody] JsonElement rawJson) 
+    {
+        try
+        {
+            // 💡 1. 從前端 JSON 中精準拔出所需的欄位
+            string message = rawJson.TryGetProperty("message", out var mProp) ? mProp.GetString() ?? "" : "";
+            bool isWebSearch = rawJson.TryGetProperty("isWebSearch", out var wProp) && wProp.GetBoolean(); 
+            
+            // 精準拔出前端點選的聊天室 ID
+            int chatRoomId = 0;
+            if (rawJson.TryGetProperty("roomId", out var rProp)) chatRoomId = rProp.GetInt32();
+            else if (rawJson.TryGetProperty("chatRoomId", out var crProp)) chatRoomId = crProp.GetInt32();
+
+            // 基本防呆防禦
+            if (string.IsNullOrWhiteSpace(message)) return BadRequest("訊息內容不能為空");
+            if (chatRoomId <= 0) return BadRequest("未指定有效的聊天室 ID");
+
+            // =========================================================================
+            // 🌟 關鍵突破點：使用羅 SQL / ADO.NET 查詢該房間的型態，實現動態中樞分流
+            // 假設你在資料庫的房間資料表（例如 chat_rooms）新增了一個 room_type 欄位
+            // =========================================================================
+            // =========================================================================
+            // 🌟 修正黃色底線：加入完美的空值防禦與精準類型轉換
+            // =========================================================================
+            string roomType = "default"; // 預設為純 RAG 房
+            
+            var connection = _context.Database.GetDbConnection();
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = "SELECT room_type FROM chat_rooms WHERE id = @roomId";
+                
+                var param = command.CreateParameter();
+                param.ParameterName = "@roomId";
+                param.Value = chatRoomId;
+                command.Parameters.Add(param);
+
+                // 💡 修正點 1：先確保 connection 本身不為空才進行操作
+                if (connection.State != System.Data.ConnectionState.Open)
+                {
+                    await connection.OpenAsync();
+                }
+
+                var dbResult = await command.ExecuteScalarAsync();
+                if (dbResult != null && dbResult != DBNull.Value)
+                {
+                    roomType = dbResult.ToString() ?? "default";
+                }
+            }
+
+            // 宣告用於儲存最終 AI 回覆與來源的變數
+            string finalReply = string.Empty;
+            string? finalSources = null;
+
+            // =========================================================================
+            // 🚀 核心智慧分流路徑
+            // =========================================================================
+            if (roomType == "hermes_agent")
+            {
+                // 🤖 助理模式：呼叫 8642 埠號的 Hermes Agent 記憶引擎
+                finalReply = await CallAgentEngineAsync(message, chatRoomId);
+                finalSources = null; // Agent 模式下直接由助理提取長期記憶與思考，不直接回傳 RAG 來源
+            }
+            else
+            {
+                // 📄 純 RAG 模式：完美調用你原本穩健的共用 AI 引擎
+                var aiResult = await CallAIEngineAsync(message, isWebSearch, chatRoomId);
+                finalReply = aiResult.Reply;
+                finalSources = aiResult.SearchSources;
+            }
+
+            // 💡 3. 完美寫入資料庫，並成功綁定 ChatRoomId 母子關係（對原有的紀錄表完全相容）
+            var messageLog = new Message
+            {
+                ChatRoomId = chatRoomId, 
+                UserInput = message,
+                Response = finalReply,
+                SearchSources = finalSources,
+                Timestamp = DateTime.UtcNow
+            };
+
+            _context.Messages.Add(messageLog);
+            await _context.SaveChangesAsync();
+
+            // 💡 4. 完美回傳給前端（格式與原本完全一致，前端 Vue 完全不需修改接收邏輯）
+            return Ok(new { 
+                id = messageLog.Id, 
+                reply = finalReply, 
+                searchSources = finalSources != null ? JsonSerializer.Deserialize<object>(finalSources) : Array.Empty<object>()
+            });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"系統內部錯誤: {ex.Message}");
+        }
+    }
+    /// <summary>
+    /// 【改】修改舊問題、調用共用 AI 引擎並更新覆蓋 PostgreSQL 欄位
+    /// </summary>
+    // =========================================================================
+    // 💡 messages 修改(U) 修改使用者已經有的訊息 並重新詢問
+    // 前端：chat.js 函式：const updateMessage（使用者修改的訊息）
+    // LLM 端：app.py 函式：async def chat(request: ChatRequest)（將修改過的往後交給LLM處理）
+    // =========================================================================
+    [HttpPut]
+    [Route("/api/messages/{id}")]
+    public async Task<IActionResult> UpdateMessage(int id, [FromBody] ChatRequest request)
+    {
+        if (request == null || string.IsNullOrWhiteSpace(request.Message))
+        {
+            return BadRequest("修改內容不能為空");
+        }
+
+        try
+        {
+            var existingMessage = await _context.Messages.FindAsync(id);
+            if (existingMessage == null)
+            {
+                return NotFound(new { message = "找不到此訊息，無法修改。" });
+            }
+
+            var aiResult = await CallAIEngineAsync(request.Message, request.IsWebSearch,request.RoomId);
+
+            existingMessage.UserInput = request.Message;
+            existingMessage.Response = aiResult.Reply;
+            existingMessage.SearchSources = aiResult.SearchSources; 
+            existingMessage.Timestamp = DateTime.UtcNow;
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new { 
+                id = existingMessage.Id, 
+                reply = aiResult.Reply, 
+                searchSources = aiResult.SearchSources != null ? JsonSerializer.Deserialize<object>(aiResult.SearchSources) : null 
+            });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"修改訊息失敗: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// 【刪】收回聊天紀錄
+    /// </summary>
+    // =========================================================================
+    // 💡 messages 刪除(D) 收回使用者訊息
+    // 前端：chat.js 函式：const deleteMessage（刪除使用者訊息）
+    // =========================================================================
+    [HttpDelete]
+    [Route("/api/messages/{id}")]
+    public async Task<IActionResult> DeleteMessage(int id)
+    {
+        try
+        {
+            var message = await _context.Messages.FindAsync(id);
+            if (message == null) 
+            {
+                return NotFound(new { message = "找不到此訊息，無法收回。" });
+            }
+
+            _context.Messages.Remove(message);
+            await _context.SaveChangesAsync();
+            return Ok(new { message = "訊息已成功收回" });
+        }
+        catch (Exception ex) 
+        { 
+            return StatusCode(500, $"收回訊息失敗: {ex.Message}"); 
+        }
+    }
+
+    // ===================================================================================================================================
+    // 此區塊為 RAG 新增、刪除、查看 文件
+    // ===================================================================================================================================
+
+    // =========================================================================
+    // 🚀 新增RAG端點：【增】POST /api/rooms/{roomId}/upload - 接收拉入的檔案並推入 RAG
+    // 前端：chat.js 函式：const fetchCurrentRoomFilesAction（接收 RAG 由前端來的文件）
+    // LLM RAG端：app.py 函式：async def rag_upload_document (推送給python進行RAG Chunk切分)
+    // =========================================================================
+    [HttpPost("/api/rooms/{roomId}/upload")]
+    public async Task<IActionResult> UploadDocumentForRag(int roomId, IFormFile file)
+    {
+        // 1. 安全防禦：檢查聊天室是否存在，以及檔案是否有效
+        if (file == null || file.Length == 0)
+        {
+            return BadRequest("上傳的檔案無效或內容為空");
+        }
+
+        // 這裡維持您原本的 _context EF 語法
+        var roomExists = await _context.ChatRooms.AnyAsync(r => r.Id == roomId);
+        if (!roomExists)
+        {
+            return NotFound(new { message = "找不到指定的聊天室，無法綁定知識庫" });
+        }
+
+        // 2. 放寬限制：允許 .txt, .md 以及全新的開源解析 .pdf
+        var extension = Path.GetExtension(file.FileName).ToLower();
+        var allowedExtensions = new[] { ".txt", ".md", ".pdf" };
+
+        if (!allowedExtensions.Contains(extension))
+        {
+            return BadRequest("目前知識庫僅支援純文字檔案 (.txt)、Markdown (.md) 以及文件檔案 (.pdf)");
+        }
+
+        try
+        {
+            // 3. 根據副檔名分流：讀取檔案內部的純文字大字串
+            string fileContent = string.Empty;
+
+            if (extension == ".pdf")
+            {
+                // 🚀 使用 PdfPig 在記憶體內逐頁將 PDF 實體文字摳出來
+                using (var stream = file.OpenReadStream())
+                using (var pdfDocument = PdfDocument.Open(stream))
+                {
+                    var sb = new StringBuilder();
+                    foreach (var page in pdfDocument.GetPages())
+                    {
+                        // 為每一頁加上頁碼標記，這能讓 Python 切片時保留頁碼上下文，極度有利於 RAG 溯源
+                        sb.AppendLine($"--- Page {page.Number} ---");
+                        sb.AppendLine(page.Text);
+                    }
+                    fileContent = sb.ToString();
+                }
+            }
+            else
+            {
+                // 原有的 .txt 與 .md 讀取邏輯保持不變
+                using (var reader = new StreamReader(file.OpenReadStream(), Encoding.UTF8))
+                {
+                    fileContent = await reader.ReadToEndAsync();
+                }
+            }
+
+            // 安全防禦：避免塞入空字串導致 Python 的 ai_client.embeddings 崩潰
+            if (string.IsNullOrWhiteSpace(fileContent))
+            {
+                return BadRequest("檔案內容解析失敗或內容為空（若為 PDF，請檢查是否為全圖片構成的掃描件）。");
+            }
+            // =========================================================================
+            // 💡 🛡️ 發送訊息給App.py 
+            //  發送函式：async def rag_upload_document(req: RagUploadRequest):
+            //  發送路由：@app.post("/api/rag/upload")
+            //  發送格式：json
+            // =========================================================================
+            // 4. 跨容器通訊：完全對齊您的 app.py Payload 欄位規格 (roomId, fileName, fileContent)
+            using var pythonClient = new HttpClient();
+            pythonClient.Timeout = TimeSpan.FromMinutes(5); // 給予充足的轉向量緩衝時間
+            // =========================================================================
+            // class RagUploadRequest(BaseModel):
+            //      roomId: str
+            //      fileName: Optional[str] = "unknown_file"
+            //      fileContent: str
+            // =========================================================================
+            var ragPayload = new
+            {
+                roomId = roomId.ToString(),
+                fileName = file.FileName,
+                fileContent = fileContent // 這裡已完美熔接了 PDF 的大字串
+            };
+
+            var jsonPayload = JsonSerializer.Serialize(ragPayload, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+            var httpContent = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+            Console.WriteLine($"[C# RAG-FORWARD] 正在將檔案 {file.FileName} 轉發給 Python 向量化中...");
+            // 精準對齊您的容器域名與 Python /api/rag/upload 路由
+            var pythonResponse = await pythonClient.PostAsync("http://llm-service:8000/api/rag/upload", httpContent);
+            
+            if (!pythonResponse.IsSuccessStatusCode)
+            {
+                var errBody = await pythonResponse.Content.ReadAsStringAsync();
+                throw new Exception($"Python RAG 服務端回傳錯誤: {errBody}");
+            }
+
+             // 5. 💡 終極防禦：維持您的高容錯原生 SQL 寫入（全小寫 document_files 結構）
+             string sql = @"
+                INSERT INTO document_files (room_id, file_name, file_path, file_size, uploaded_at) 
+                VALUES ({0}, {1}, {2}, {3}, {4})";
+                
+            await _context.Database.ExecuteSqlRawAsync(sql, 
+                roomId, 
+                file.FileName, 
+                "Docker_Volume_Chroma_Indexed", 
+                file.Length, 
+                DateTime.UtcNow
+            );
+
+            // 6. 讀取 Python 回傳的切片統計資訊並回傳前端 Vue 3
+            var responseString = await pythonResponse.Content.ReadAsStringAsync();
+            using var doc = JsonDocument.Parse(responseString);
+            int chunksCount = doc.RootElement.GetProperty("chunksCount").GetInt32();
+
+            Console.WriteLine($"[C# RAG-FORWARD] ✅ 檔案 {file.FileName} 已成功透過原生 SQL 入庫！切片數: {chunksCount}");
+            return Ok(new
+            {
+                message = "知識庫文件已成功上傳並完成向量化切片",
+                fileName = file.FileName,
+                chunksCount = chunksCount
+            });
+
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[❌ C# RAG-UPLOAD 內部崩潰]: {ex.Message}");
+            return StatusCode(500, $"後端 RAG 處理失敗: {ex.Message}");
+        }
+    }
+    
+    // =========================================================================
+    // 🚀 新增端點：【查】GET /api/rooms/{roomId}/files - 獲取該房間已綁定的文件標籤清單
+    // =========================================================================
+    // =========================================================================
+    // 🚀 修正版：改用 FromSqlRaw 進行原生 SQL 查詢，100% 免疫 EF Core 內存結構衝突！
+    // =========================================================================
+    [HttpGet("/api/rooms/{roomId}/files")]
+    public async Task<IActionResult> GetRoomUploadedFiles(int roomId)
+    {
+        var fileList = new List<object>();
+        
+        try
+        {
+            // 1. 直接向 DbContext 借用最底層、最真實的資料庫連線字串
+            var connString = _context.Database.GetConnectionString();
+            
+            // 2. 使用 NpgsqlConnection 建立純粹的 ADO.NET 資料庫通道
+            using (var conn = new NpgsqlConnection(connString))
+            {
+                await conn.OpenAsync();
+                
+                // 3. 執行最純粹的全小寫 SQL 指令
+                string sql = "SELECT id, room_id, file_name, file_size FROM document_files WHERE room_id = @roomId ORDER BY uploaded_at ASC";
+                
+                using (var cmd = new NpgsqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@roomId", roomId);
+                    
+                    using (var reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            // 4. 手動一筆一筆拔出欄位，精準組裝成前端需要的小寫 DTO 格式
+                            fileList.Add(new {
+                                id = reader.GetInt32(0),
+                                roomId = reader.GetInt32(1),
+                                fileName = reader.GetString(2),
+                                fileSize = reader.GetInt64(3)
+                            });
+                        }
+                    }
+                }
+            }
+
+            Console.WriteLine($"[C# RAG-FETCH] 成功為房間 {roomId} 撈出 {fileList.Count} 個知識庫標籤。");
+            return Ok(fileList);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[❌ GetRoomUploadedFiles 終極崩潰]: {ex.Message}");
+            return StatusCode(500, $"撈取文件標籤清單失敗: {ex.Message}");
+        }
+    }
+
+
+    // =========================================================================
+    // 🚀 補齊 RAG CRUD [D]：【刪】DELETE /api/rooms/{roomId}/files - 同步擦除知識庫
+    // 前端：chat.js 函式：const deleteRoomFileAction（刪除既有的 RAG 知識庫）
+    // LLM RAG端：app.py 函式：async def rag_delete_document (推送給python進行RAG 刪除處理)
+    // =========================================================================
+    [HttpDelete("/api/rooms/{roomId}/files")]
+    public async Task<IActionResult> DeleteDocumentForRag(int roomId, [FromQuery] string fileName)
+    {
+        if (string.IsNullOrWhiteSpace(fileName))
+        {
+            return BadRequest("未指定要刪除的檔案名稱。");
+        }
+
+        try
+        {
+            Console.WriteLine($"[C# RAG-DELETE] 準備刪除房間 {roomId} 的文件: {fileName}");
+
+            // 1. 跨容器通訊：通知 Python 抹除向量 (URL 帶入 Query String，符合 Python 端接收規範)
+            using var pythonClient = new HttpClient();
+            pythonClient.Timeout = TimeSpan.FromSeconds(30);
+
+            // 確保檔案名稱有進行 URL 編碼，防止特殊字元或副檔名點號造成路徑解析出錯
+            var encodedFileName = Uri.EscapeDataString(fileName);
+            var pythonUrl = $"http://llm-service:8000/api/rag/delete?room_id={roomId}&file_name={encodedFileName}";
+
+            var pythonResponse = await pythonClient.DeleteAsync(pythonUrl);
+            
+            if (!pythonResponse.IsSuccessStatusCode)
+            {
+                var errBody = await pythonResponse.Content.ReadAsStringAsync();
+                throw new Exception($"Python 向量刪除失敗: {errBody}");
+            }
+
+            // 2. 💡 終極防禦：改用 ExecuteSqlRawAsync，直接對 SQL 資料庫高容錯刪除紀錄
+            // 延續全小寫的資料表結構設計
+            string sql = "DELETE FROM document_files WHERE room_id = {0} AND file_name = {1}";
+            int affectedRows = await _context.Database.ExecuteSqlRawAsync(sql, roomId, fileName);
+
+            Console.WriteLine($"[C# RAG-DELETE] ✅ 文件 {fileName} 已成功從 SQL 庫與 ChromaDB 同步抹除！受影響列數: {affectedRows}");
+            
+            return Ok(new
+            {
+                message = "該文件的向量索引與資料庫紀錄已成功同步抹除！",
+                fileName = fileName,
+                room_id = roomId
+            });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[❌ C# RAG-DELETE 內部崩潰]: {ex.Message}");
+            return StatusCode(500, $"後端刪除 RAG 知識失敗: {ex.Message}");
+        }
+    }
+
+
+
+    // ===================================================================================================================================
+    // 🛠️ 任務 1：【後端 API 拓荒】動態 Agent 大腦管理端點 (全面統一 EF Core 10)
+    // ===================================================================================================================================
+
+    /// <summary>
+    /// 【讀取】
+    /// 🌐 【對外 API】大廳拉取所有自訂 AI 專家卡片
+    /// 網址：GET /api/agents
+    /// </summary>
+    [HttpGet("/api/agents")]
+    public async Task<IActionResult> GetAgents()
+    {
+        try
+        {
+            // 🌟 EF Core 寫法：極度優雅，一行 LINQ 搞定
+            var agents = await _context.Agents
+                .OrderByDescending(a => a.CreatedAt)
+                .Select(a => new
+                {
+                    id = a.Id,
+                    agent_id = a.AgentId,
+                    name = a.Name,
+                    system_prompt = a.SystemPrompt,
+                    created_at = a.CreatedAt
+                })
+                .ToListAsync();
+
+            return Ok(agents);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "使用 EF Core 拉取大廳 Agent 清單失敗");
+            return StatusCode(500, $"大廳讀取錯誤: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// 【新增】
+    /// ✨ 【對外 API】捏造全新的 AI 大腦助理 (寫入 agents 母表)
+    /// 網址：POST /api/agents
+    /// </summary>
+    [HttpPost("/api/agents")]
+    public async Task<IActionResult> CreateAgent([FromBody] CreateAgentRequestDto? request)
+    {
+        if (request == null || string.IsNullOrWhiteSpace(request.Name)) 
+            return BadRequest("專家名稱不能為空");
+
+        try
+        {
+            string generatedAgentId = $"agent_{Guid.NewGuid().ToString("n").Substring(0, 12)}";
+            string finalName = request.Name.Trim();
+            string finalPrompt = string.IsNullOrWhiteSpace(request.SystemPrompt)
+                ? $"你是一位專業的{finalName}。請盡可能提供精準、客觀且具備深度的分析。"
+                : request.SystemPrompt.Trim();
+
+            // 🌟 EF Core 寫法：直接實體化 C# 物件
+            var newAgent = new Agent
+            {
+                AgentId = generatedAgentId,
+                Name = finalName,
+                SystemPrompt = finalPrompt,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            // 🌟 告訴 EF 追蹤這個新物件，並實寫入庫
+            _context.Agents.Add(newAgent);
+            await _context.SaveChangesAsync(); // 這裡會自動生成 INSERT SQL 並安全返回自增 ID
+
+            return Ok(new
+            {
+                id = newAgent.Id, // EF Core 儲存成功後，會自動把資料庫產生的 ID 填回這個欄位！
+                agent_id = newAgent.AgentId,
+                name = newAgent.Name,
+                system_prompt = newAgent.SystemPrompt,
+                created_at = newAgent.CreatedAt,
+                message = "大功告成！全新的 Agent 大腦已透過 EF Core 實寫成功！"
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "使用 EF Core 捏造 Agent 大腦失敗");
+            return StatusCode(500, $"大腦捏造失敗: {ex.Message}");
+        }
+    }
+
+    
+    // ===================================================================================================================================
+    // 此區塊為 Hermas-Agent 
+    // ===================================================================================================================================
+
+    // =========================================================================
+    // 串聯已經設計好的docker hermas-Agent內容
+    // docker串聯地方："http://hermes-agent:8642/api/v1/chat"
+    // =========================================================================
+    
+    /// <summary>
+    /// 【對外 API】提供前端發送對話訊息給 Agent 的端點
+    /// 網址：POST /api/agent/rooms
+    /// 💡 升級說明：新增支援接收 agent_id，讓子房間能精準綁定特定的專家大腦，做到記憶分流！
+    /// </summary>
+    [HttpPost("/api/agent/rooms")] 
+    public async Task<IActionResult> CreateAgentRoom([FromBody] ChatRoomCreateDto? request)
+    {
+        if (request == null) return BadRequest("請求不能為空");
+
+        try
+        {
+            string finalTitle = request.Title ?? "專屬助理";
+            if (request.RoomType == "Agent" && !finalTitle.Contains("[Agent]"))
+            {
+                finalTitle += " [Agent]"; 
+            }
+
+            string roomTypeField = "hermes_agent";
+
+            // 🌟 EF Core 寫法：告別純手寫 SQL 參數綁定！
+            var newRoom = new ChatRoom
+            {
+                Title = finalTitle,
+                RoomType = roomTypeField,
+                // 如果前端傳 null，C# 的 null 會被 EF Core 完美翻譯成 PostgreSQL 的 DB Null，天然向下相容
+                AgentId = string.IsNullOrWhiteSpace(request.AgentId) ? null : request.AgentId.Trim(),
+                CreatedAt = DateTime.UtcNow
+            };
+
+            // 🌟 塞入 DbContext 並存檔
+            _context.ChatRooms.Add(newRoom);
+            await _context.SaveChangesAsync(); // 自動返回剛產生的 Serial ID
+
+            return Ok(new { 
+                id = newRoom.Id, // EF Core 會把資料庫自增的 id 自動灌回 newRoom.Id
+                title = newRoom.Title,
+                room_type = newRoom.RoomType,
+                agent_id = newRoom.AgentId, 
+                created_at = newRoom.CreatedAt,
+                message = "大功告成！Agent 房間已透過 EF Core 成功建立，外鍵完美綁定！"
+            });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"後端寫入錯誤: {ex.Message}");
+        }
+    }
+
+    private async Task<string> CallAgentEngineAsync(string userMessage, int roomId)
+    {
+        await Task.Delay(10); 
+        return $"[Agent 引擎模擬回應] 房間 {roomId} 處理訊息: {userMessage}";
+    }
+
+
+    // ===================================================================================================================================
+    // DTO 定義區塊
+    // ===================================================================================================================================
+
+    public class ChatRoomCreateDto
+    {
+        [JsonPropertyName("title")]
+        public string? Title { get; set; }
+
+        [JsonPropertyName("room_type")]
+        public string? RoomType { get; set; }
+
+        // 💡 升級：承接前端傳過來的當前專家隔離識別碼 (若為 null 則代表是一般 RAG 舊房間)
+        [JsonPropertyName("agent_id")]
+        public string? AgentId { get; set; }
+    }
+
+    public class CreateAgentRequestDto
+    {
+        [JsonPropertyName("name")]
+        public string Name { get; set; } = string.Empty;
+
+        [JsonPropertyName("system_prompt")]
+        public string? SystemPrompt { get; set; }
+    }
+
+
+}
+
+
+
+

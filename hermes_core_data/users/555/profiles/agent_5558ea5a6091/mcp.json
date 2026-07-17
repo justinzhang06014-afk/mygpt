@@ -1,0 +1,114 @@
+{
+  "servers": {
+    "websearch": {
+      "displayName": "網頁搜尋",
+      "description": "讓 Agent 可以搜尋網路上的即時資訊。",
+      "kind": "url",
+      "transport": "streamable-http",
+      "url": "http://ainexus.phison.com:5155/api/v1/Agent/mcp/4/MTIwOTA6MTc4NDEwOTEwNA.5BiSODXCP7FwaMac9Es4foYw7aaK5pE1aC5qeEoDWuU",
+      "credentialFields": [],
+      "selection": null,
+      "credentialsConfigured": {}
+    },
+    "email": {
+      "displayName": "Email 收發",
+      "description": "讓 Agent 可以幫忙收發電子郵件，需要填入使用者自己的信箱帳密。",
+      "kind": "url",
+      "transport": "sse",
+      "url": "http://ainexus.phison.com:5155/api/v1/Agent/mcp/12/MTIwOTA6MTc4NDEwOTEwNA.5BiSODXCP7FwaMac9Es4foYw7aaK5pE1aC5qeEoDWuU",
+      "credentialFields": [
+        {
+          "key": "USER",
+          "label": "帳號",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "PASSWORD",
+          "label": "密碼",
+          "type": "password",
+          "required": true
+        }
+      ],
+      "selection": null,
+      "credentialsConfigured": {}
+    },
+    "image-generator": {
+      "displayName": "圖片生成",
+      "description": "讓 Agent 可以產生圖片。",
+      "kind": "url",
+      "transport": "streamable-http",
+      "url": "http://ainexus.phison.com:5155/api/v1/Agent/mcp/254/MTIwOTA6MTc4NDEwOTEwNA.5BiSODXCP7FwaMac9Es4foYw7aaK5pE1aC5qeEoDWuU",
+      "credentialFields": [],
+      "selection": null,
+      "credentialsConfigured": {}
+    },
+    "everything-to-md-converter": {
+      "displayName": "萬用轉 Markdown",
+      "description": "把各種格式的檔案轉成 Markdown。",
+      "kind": "url",
+      "transport": "streamable-http",
+      "url": "http://ainexus.phison.com:5155/api/v1/Agent/mcp/2295/MTIwOTA6MTc4NDEwOTEwNA.5BiSODXCP7FwaMac9Es4foYw7aaK5pE1aC5qeEoDWuU",
+      "credentialFields": [],
+      "selection": null,
+      "credentialsConfigured": {}
+    },
+    "call_tree_mcp": {
+      "displayName": "Call Tree 分析",
+      "description": "程式碼呼叫關係分析工具。",
+      "kind": "url",
+      "transport": "streamable-http",
+      "url": "http://ainexus.phison.com:5155/api/v1/Agent/mcp/2835/MTIwOTA6MTc4NDEwOTEwNA.5BiSODXCP7FwaMac9Es4foYw7aaK5pE1aC5qeEoDWuU",
+      "credentialFields": [],
+      "selection": null,
+      "credentialsConfigured": {}
+    },
+    "co-gitlab-mcp": {
+      "displayName": "GitLab（Co）",
+      "description": "存取公司 GitLab 專案資料。",
+      "kind": "url",
+      "transport": "streamable-http",
+      "url": "http://ainexus.phison.com:5155/api/v1/Agent/mcp/3949/MTIwOTA6MTc4NDEwOTEwNA.5BiSODXCP7FwaMac9Es4foYw7aaK5pE1aC5qeEoDWuU",
+      "credentialFields": [],
+      "selection": null,
+      "credentialsConfigured": {}
+    },
+    "fw-git2-gitlab-mcp": {
+      "displayName": "GitLab（FW）",
+      "description": "存取韌體組 GitLab 專案資料。",
+      "kind": "url",
+      "transport": "streamable-http",
+      "url": "http://ainexus.phison.com:5155/api/v1/Agent/mcp/3973/MTIwOTA6MTc4NDEwOTEwNA.5BiSODXCP7FwaMac9Es4foYw7aaK5pE1aC5qeEoDWuU",
+      "credentialFields": [],
+      "selection": null,
+      "credentialsConfigured": {}
+    },
+    "_test_everything": {
+      "displayName": "【測試用】MCP 官方參考伺服器",
+      "description": "Model Context Protocol 官方維護的公開測試伺服器，不需要任何憑證，用來驗證母版→agent mcp.json→config.yaml→hermes 真的連得上的完整流程。驗證完成後可以從母版移除。",
+      "kind": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-everything"
+      ],
+      "credentialFields": [],
+      "selection": null,
+      "credentialsConfigured": {}
+    },
+    "sequential-thinking": {
+      "displayName": "【測試用】循序思考工具",
+      "description": "Model Context Protocol 官方維護的另一個公開伺服器，用來驗證管理員之後新增母版項目，既有 agent 會不會自動看到——這筆是後來才加的，測試用完可以刪。",
+      "kind": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
+      "credentialFields": [],
+      "selection": null,
+      "credentialsConfigured": {}
+    }
+  },
+  "updated_at": "2026-07-16T05:47:51Z"
+}

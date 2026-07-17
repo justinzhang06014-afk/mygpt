@@ -1,0 +1,26 @@
+approvals:
+  mode: manual
+memory:
+  memory_enabled: true
+  provider: ''
+  user_profile_enabled: true
+  write_approval: false
+model:
+  default: anthropic/claude-haiku-4-5-20251001
+  provider: anthropic
+skills:
+  write_approval: false
+terminal:
+  backend: local
+  cwd: /workspace
+  persistent_shell: true
+  timeout: 180
+tools:
+  enabled:
+  - file_read
+  - file_write
+  - file_edit
+  - patch_code_file
+  - view_code_item
+  - grep_search
+  - bash

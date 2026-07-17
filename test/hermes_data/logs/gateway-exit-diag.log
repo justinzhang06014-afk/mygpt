@@ -1,0 +1,73 @@
+{"ts": "2026-06-24T02:20:05.561629+00:00", "tag": "gateway.start", "pid": 137, "python": "3.13.5", "platform": "linux", "replace": true, "argv": ["/opt/hermes/.venv/bin/hermes", "gateway", "run", "--replace"], "stdin_is_tty": false, "absorb_windows_console_controls": false}
+{"ts": "2026-06-24T02:27:29.305696+00:00", "tag": "asyncio.run.returned", "pid": 137, "python": "3.13.5", "platform": "linux", "success": false}
+{"ts": "2026-06-24T02:27:29.307362+00:00", "tag": "gateway.exit_nonzero", "pid": 137, "python": "3.13.5", "platform": "linux"}
+{"ts": "2026-06-24T02:27:29.311749+00:00", "tag": "atexit.hook", "pid": 137, "python": "3.13.5", "platform": "linux", "sys_exc": "(None, None, None)"}
+{"ts": "2026-06-24T02:27:45.139012+00:00", "tag": "gateway.start", "pid": 123, "python": "3.13.5", "platform": "linux", "replace": true, "argv": ["/opt/hermes/.venv/bin/hermes", "gateway", "run", "--replace"], "stdin_is_tty": false, "absorb_windows_console_controls": false}
+{"ts": "2026-06-24T02:29:00.001751+00:00", "tag": "asyncio.run.returned", "pid": 123, "python": "3.13.5", "platform": "linux", "success": false}
+{"ts": "2026-06-24T02:29:00.003440+00:00", "tag": "gateway.exit_nonzero", "pid": 123, "python": "3.13.5", "platform": "linux"}
+{"ts": "2026-06-24T02:29:00.013097+00:00", "tag": "atexit.hook", "pid": 123, "python": "3.13.5", "platform": "linux", "sys_exc": "(None, None, None)"}
+{"ts": "2026-06-24T02:29:16.619020+00:00", "tag": "gateway.start", "pid": 123, "python": "3.13.5", "platform": "linux", "replace": true, "argv": ["/opt/hermes/.venv/bin/hermes", "gateway", "run", "--replace"], "stdin_is_tty": false, "absorb_windows_console_controls": false}
+{"ts": "2026-06-24T02:30:33.043825+00:00", "tag": "asyncio.run.returned", "pid": 123, "python": "3.13.5", "platform": "linux", "success": false}
+{"ts": "2026-06-24T02:30:33.045454+00:00", "tag": "gateway.exit_nonzero", "pid": 123, "python": "3.13.5", "platform": "linux"}
+{"ts": "2026-06-24T02:30:33.050726+00:00", "tag": "atexit.hook", "pid": 123, "python": "3.13.5", "platform": "linux", "sys_exc": "(None, None, None)"}
+{"ts": "2026-06-24T02:35:55.113013+00:00", "tag": "gateway.start", "pid": 123, "python": "3.13.5", "platform": "linux", "replace": true, "argv": ["/opt/hermes/.venv/bin/hermes", "gateway", "run", "--replace"], "stdin_is_tty": false, "absorb_windows_console_controls": false}
+{"ts": "2026-06-24T02:48:36.121606+00:00", "tag": "asyncio.run.returned", "pid": 123, "python": "3.13.5", "platform": "linux", "success": false}
+{"ts": "2026-06-24T02:48:36.121740+00:00", "tag": "gateway.exit_nonzero", "pid": 123, "python": "3.13.5", "platform": "linux"}
+{"ts": "2026-06-24T02:48:36.127803+00:00", "tag": "atexit.hook", "pid": 123, "python": "3.13.5", "platform": "linux", "sys_exc": "(None, None, None)"}
+{"ts": "2026-06-24T02:48:51.511658+00:00", "tag": "gateway.start", "pid": 123, "python": "3.13.5", "platform": "linux", "replace": true, "argv": ["/opt/hermes/.venv/bin/hermes", "gateway", "run", "--replace"], "stdin_is_tty": false, "absorb_windows_console_controls": false}
+{"ts": "2026-06-24T02:49:43.701398+00:00", "tag": "asyncio.run.returned", "pid": 123, "python": "3.13.5", "platform": "linux", "success": false}
+{"ts": "2026-06-24T02:49:43.703170+00:00", "tag": "gateway.exit_nonzero", "pid": 123, "python": "3.13.5", "platform": "linux"}
+{"ts": "2026-06-24T02:49:43.708001+00:00", "tag": "atexit.hook", "pid": 123, "python": "3.13.5", "platform": "linux", "sys_exc": "(None, None, None)"}
+{"ts": "2026-06-24T02:49:58.011053+00:00", "tag": "gateway.start", "pid": 124, "python": "3.13.5", "platform": "linux", "replace": true, "argv": ["/opt/hermes/.venv/bin/hermes", "gateway", "run", "--replace"], "stdin_is_tty": false, "absorb_windows_console_controls": false}
+{"ts": "2026-06-24T02:50:16.183416+00:00", "tag": "asyncio.run.returned", "pid": 124, "python": "3.13.5", "platform": "linux", "success": false}
+{"ts": "2026-06-24T02:50:16.185413+00:00", "tag": "gateway.exit_nonzero", "pid": 124, "python": "3.13.5", "platform": "linux"}
+{"ts": "2026-06-24T02:50:16.189752+00:00", "tag": "atexit.hook", "pid": 124, "python": "3.13.5", "platform": "linux", "sys_exc": "(None, None, None)"}
+{"ts": "2026-06-24T02:50:34.942293+00:00", "tag": "gateway.start", "pid": 124, "python": "3.13.5", "platform": "linux", "replace": true, "argv": ["/opt/hermes/.venv/bin/hermes", "gateway", "run", "--replace"], "stdin_is_tty": false, "absorb_windows_console_controls": false}
+{"ts": "2026-06-24T02:54:11.324300+00:00", "tag": "asyncio.run.returned", "pid": 124, "python": "3.13.5", "platform": "linux", "success": false}
+{"ts": "2026-06-24T02:54:11.325880+00:00", "tag": "gateway.exit_nonzero", "pid": 124, "python": "3.13.5", "platform": "linux"}
+{"ts": "2026-06-24T02:54:11.330818+00:00", "tag": "atexit.hook", "pid": 124, "python": "3.13.5", "platform": "linux", "sys_exc": "(None, None, None)"}
+{"ts": "2026-06-24T02:54:25.919604+00:00", "tag": "gateway.start", "pid": 125, "python": "3.13.5", "platform": "linux", "replace": true, "argv": ["/opt/hermes/.venv/bin/hermes", "gateway", "run", "--replace"], "stdin_is_tty": false, "absorb_windows_console_controls": false}
+{"ts": "2026-06-24T02:55:51.694526+00:00", "tag": "gateway.start", "pid": 130, "python": "3.13.5", "platform": "linux", "replace": true, "argv": ["/opt/hermes/.venv/bin/hermes", "gateway", "run", "--replace"], "stdin_is_tty": false, "absorb_windows_console_controls": false}
+{"ts": "2026-06-24T02:59:36.650645+00:00", "tag": "gateway.start", "pid": 128, "python": "3.13.5", "platform": "linux", "replace": true, "argv": ["/opt/hermes/.venv/bin/hermes", "gateway", "run", "--replace"], "stdin_is_tty": false, "absorb_windows_console_controls": false}
+{"ts": "2026-06-24T03:01:06.876191+00:00", "tag": "asyncio.run.returned", "pid": 128, "python": "3.13.5", "platform": "linux", "success": false}
+{"ts": "2026-06-24T03:01:06.878100+00:00", "tag": "gateway.exit_nonzero", "pid": 128, "python": "3.13.5", "platform": "linux"}
+{"ts": "2026-06-24T03:01:06.884534+00:00", "tag": "atexit.hook", "pid": 128, "python": "3.13.5", "platform": "linux", "sys_exc": "(None, None, None)"}
+{"ts": "2026-06-24T03:01:21.275438+00:00", "tag": "gateway.start", "pid": 125, "python": "3.13.5", "platform": "linux", "replace": true, "argv": ["/opt/hermes/.venv/bin/hermes", "gateway", "run", "--replace"], "stdin_is_tty": false, "absorb_windows_console_controls": false}
+{"ts": "2026-06-24T03:03:08.679255+00:00", "tag": "gateway.start", "pid": 127, "python": "3.13.5", "platform": "linux", "replace": true, "argv": ["/opt/hermes/.venv/bin/hermes", "gateway", "run", "--replace"], "stdin_is_tty": false, "absorb_windows_console_controls": false}
+{"ts": "2026-06-24T03:16:04.586537+00:00", "tag": "asyncio.run.returned", "pid": 127, "python": "3.13.5", "platform": "linux", "success": false}
+{"ts": "2026-06-24T03:16:04.588310+00:00", "tag": "gateway.exit_nonzero", "pid": 127, "python": "3.13.5", "platform": "linux"}
+{"ts": "2026-06-24T03:16:04.594133+00:00", "tag": "atexit.hook", "pid": 127, "python": "3.13.5", "platform": "linux", "sys_exc": "(None, None, None)"}
+{"ts": "2026-06-24T03:16:42.443660+00:00", "tag": "gateway.start", "pid": 125, "python": "3.13.5", "platform": "linux", "replace": true, "argv": ["/opt/hermes/.venv/bin/hermes", "gateway", "run", "--replace"], "stdin_is_tty": false, "absorb_windows_console_controls": false}
+{"ts": "2026-06-24T03:20:44.765711+00:00", "tag": "gateway.start", "pid": 128, "python": "3.13.5", "platform": "linux", "replace": true, "argv": ["/opt/hermes/.venv/bin/hermes", "gateway", "run", "--replace"], "stdin_is_tty": false, "absorb_windows_console_controls": false}
+{"ts": "2026-06-24T03:22:49.267699+00:00", "tag": "gateway.start", "pid": 129, "python": "3.13.5", "platform": "linux", "replace": true, "argv": ["/opt/hermes/.venv/bin/hermes", "gateway", "run", "--replace"], "stdin_is_tty": false, "absorb_windows_console_controls": false}
+{"ts": "2026-06-24T03:24:34.830349+00:00", "tag": "gateway.start", "pid": 128, "python": "3.13.5", "platform": "linux", "replace": true, "argv": ["/opt/hermes/.venv/bin/hermes", "gateway", "run", "--replace"], "stdin_is_tty": false, "absorb_windows_console_controls": false}
+{"ts": "2026-06-24T03:25:28.054086+00:00", "tag": "asyncio.run.returned", "pid": 128, "python": "3.13.5", "platform": "linux", "success": false}
+{"ts": "2026-06-24T03:25:28.056151+00:00", "tag": "gateway.exit_nonzero", "pid": 128, "python": "3.13.5", "platform": "linux"}
+{"ts": "2026-06-24T03:25:28.103165+00:00", "tag": "atexit.hook", "pid": 128, "python": "3.13.5", "platform": "linux", "sys_exc": "(None, None, None)"}
+{"ts": "2026-06-24T03:25:56.620068+00:00", "tag": "gateway.start", "pid": 126, "python": "3.13.5", "platform": "linux", "replace": true, "argv": ["/opt/hermes/.venv/bin/hermes", "gateway", "run", "--replace"], "stdin_is_tty": false, "absorb_windows_console_controls": false}
+{"ts": "2026-06-24T03:31:35.525229+00:00", "tag": "gateway.start", "pid": 131, "python": "3.13.5", "platform": "linux", "replace": true, "argv": ["/opt/hermes/.venv/bin/hermes", "gateway", "run", "--replace"], "stdin_is_tty": false, "absorb_windows_console_controls": false}
+{"ts": "2026-06-24T03:32:08.942891+00:00", "tag": "asyncio.run.returned", "pid": 131, "python": "3.13.5", "platform": "linux", "success": false}
+{"ts": "2026-06-24T03:32:08.945443+00:00", "tag": "gateway.exit_nonzero", "pid": 131, "python": "3.13.5", "platform": "linux"}
+{"ts": "2026-06-24T03:32:08.951786+00:00", "tag": "atexit.hook", "pid": 131, "python": "3.13.5", "platform": "linux", "sys_exc": "(None, None, None)"}
+{"ts": "2026-06-24T03:35:38.186951+00:00", "tag": "gateway.start", "pid": 125, "python": "3.13.5", "platform": "linux", "replace": true, "argv": ["/opt/hermes/.venv/bin/hermes", "gateway", "run", "--replace"], "stdin_is_tty": false, "absorb_windows_console_controls": false}
+{"ts": "2026-06-24T03:43:26.757369+00:00", "tag": "gateway.start", "pid": 128, "python": "3.13.5", "platform": "linux", "replace": true, "argv": ["/opt/hermes/.venv/bin/hermes", "gateway", "run", "--replace"], "stdin_is_tty": false, "absorb_windows_console_controls": false}
+{"ts": "2026-06-24T03:45:25.137316+00:00", "tag": "gateway.start", "pid": 128, "python": "3.13.5", "platform": "linux", "replace": true, "argv": ["/opt/hermes/.venv/bin/hermes", "gateway", "run", "--replace"], "stdin_is_tty": false, "absorb_windows_console_controls": false}
+{"ts": "2026-06-24T03:48:20.124388+00:00", "tag": "asyncio.run.returned", "pid": 128, "python": "3.13.5", "platform": "linux", "success": false}
+{"ts": "2026-06-24T03:48:20.127074+00:00", "tag": "gateway.exit_nonzero", "pid": 128, "python": "3.13.5", "platform": "linux"}
+{"ts": "2026-06-24T03:48:20.708020+00:00", "tag": "atexit.hook", "pid": 128, "python": "3.13.5", "platform": "linux", "sys_exc": "(None, None, None)"}
+{"ts": "2026-06-24T03:49:22.927282+00:00", "tag": "gateway.start", "pid": 127, "python": "3.13.5", "platform": "linux", "replace": true, "argv": ["/opt/hermes/.venv/bin/hermes", "gateway", "run", "--replace"], "stdin_is_tty": false, "absorb_windows_console_controls": false}
+{"ts": "2026-06-24T04:58:53.763843+00:00", "tag": "asyncio.run.returned", "pid": 127, "python": "3.13.5", "platform": "linux", "success": false}
+{"ts": "2026-06-24T04:58:53.770184+00:00", "tag": "gateway.exit_nonzero", "pid": 127, "python": "3.13.5", "platform": "linux"}
+{"ts": "2026-06-24T04:58:53.970768+00:00", "tag": "atexit.hook", "pid": 127, "python": "3.13.5", "platform": "linux", "sys_exc": "(None, None, None)"}
+{"ts": "2026-06-24T07:48:35.690880+00:00", "tag": "gateway.start", "pid": 127, "python": "3.13.5", "platform": "linux", "replace": true, "argv": ["/opt/hermes/.venv/bin/hermes", "gateway", "run", "--replace"], "stdin_is_tty": false, "absorb_windows_console_controls": false}
+{"ts": "2026-06-24T07:49:31.355544+00:00", "tag": "asyncio.run.returned", "pid": 127, "python": "3.13.5", "platform": "linux", "success": false}
+{"ts": "2026-06-24T07:49:31.358225+00:00", "tag": "gateway.exit_nonzero", "pid": 127, "python": "3.13.5", "platform": "linux"}
+{"ts": "2026-06-24T07:49:31.798441+00:00", "tag": "atexit.hook", "pid": 127, "python": "3.13.5", "platform": "linux", "sys_exc": "(None, None, None)"}
+{"ts": "2026-06-24T07:49:56.396805+00:00", "tag": "gateway.start", "pid": 125, "python": "3.13.5", "platform": "linux", "replace": true, "argv": ["/opt/hermes/.venv/bin/hermes", "gateway", "run", "--replace"], "stdin_is_tty": false, "absorb_windows_console_controls": false}
+{"ts": "2026-06-24T07:50:50.945359+00:00", "tag": "asyncio.run.returned", "pid": 125, "python": "3.13.5", "platform": "linux", "success": false}
+{"ts": "2026-06-24T07:50:50.946981+00:00", "tag": "gateway.exit_nonzero", "pid": 125, "python": "3.13.5", "platform": "linux"}
+{"ts": "2026-06-24T07:50:51.690546+00:00", "tag": "atexit.hook", "pid": 125, "python": "3.13.5", "platform": "linux", "sys_exc": "(None, None, None)"}
+{"ts": "2026-06-24T07:51:06.459370+00:00", "tag": "gateway.start", "pid": 127, "python": "3.13.5", "platform": "linux", "replace": true, "argv": ["/opt/hermes/.venv/bin/hermes", "gateway", "run", "--replace"], "stdin_is_tty": false, "absorb_windows_console_controls": false}
+{"ts": "2026-06-24T07:51:53.419514+00:00", "tag": "asyncio.run.returned", "pid": 127, "python": "3.13.5", "platform": "linux", "success": false}
+{"ts": "2026-06-24T07:51:53.421542+00:00", "tag": "gateway.exit_nonzero", "pid": 127, "python": "3.13.5", "platform": "linux"}
+{"ts": "2026-06-24T07:51:53.424528+00:00", "tag": "atexit.hook", "pid": 127, "python": "3.13.5", "platform": "linux", "sys_exc": "(None, None, None)"}

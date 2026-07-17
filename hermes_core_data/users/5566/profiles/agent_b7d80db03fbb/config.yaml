@@ -1,0 +1,38 @@
+approvals:
+  enabled: true
+  extra_dangerous_patterns:
+  - description: "\u7981\u6B62 AI \u63A5\u89F8\u4EFB\u4F55\u5305\u542B\u751F\u7522\
+      \u74B0\u5883\u95DC\u9375\u5B57\u7684\u547D\u540D\u6216\u6307\u4EE4"
+    pattern: \b(prod-db|production)\b
+  - description: "\u7981\u6B62 AI \u672A\u7D93\u5BE9\u6279\u76F4\u63A5\u63A8\u9001\
+      \u5230 main \u5206\u652F"
+    pattern: git push origin main
+  mode: manual
+  timeout: 60
+  yolo: false
+memory:
+  memory_enabled: true
+  provider: ''
+  user_profile_enabled: true
+  write_approval: false
+model:
+  api_key: AINX-F78D2FCD53915EE37BD0871392FFBFFAF648C53C388950FC6A1F2ED8C534B249
+  base_url: https://ainexus.phison.com/api/external/v1
+  default: Qwen/Qwen3.6-27B
+  provider: custom
+skill:
+  write_approval: true
+terminal:
+  backend: local
+  cwd: /workspace
+  persistent_shell: true
+  timeout: 180
+tools:
+  enabled:
+  - file_read
+  - file_write
+  - file_edit
+  - patch_code_file
+  - view_code_item
+  - grep_search
+  - bash

@@ -1,0 +1,1 @@
+Hermes config: SSH backend (user: justin_zhang, host: 127.0.0.1, port: 22, auth: password), model: Qwen/Qwen3.6-35B-A3B-FP8 via custom provider (ainexus.phison.com), workspace: /workspace, WSL environment

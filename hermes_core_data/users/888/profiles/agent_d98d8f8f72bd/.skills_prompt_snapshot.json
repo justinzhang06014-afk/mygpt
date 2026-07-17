@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "manifest": {
+    "networking/web-browsing/SKILL.md": [
+      1784191228671132700,
+      1489
+    ]
+  },
+  "skills": [
+    {
+      "skill_name": "web-browsing",
+      "category": "networking",
+      "frontmatter_name": "web-browsing",
+      "description": "Web browsing, fetching, searching, and file downloading c...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    }
+  ],
+  "category_descriptions": {}
+}

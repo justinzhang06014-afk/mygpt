@@ -1,0 +1,11 @@
+services:
+  network-tester:
+    image: python:3.11-slim
+    container_name: lm_network_tester
+    # 💡 終極一刀流：強制開啟 host 網路模式！
+    # 這會讓容器直接「借用」您 Windows 電腦目前那張絕對暢通的實體網卡，徹底繞過所有卡死的 Docker 內網 DNS 與虛擬路由！
+    network_mode: "host"
+    volumes:
+      - D:\mygpt\docker_test:/app
+    working_dir: /app
+    command: sh -c "pip install httpx && python test_serp.py"

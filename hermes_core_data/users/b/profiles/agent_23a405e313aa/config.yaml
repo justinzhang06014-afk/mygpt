@@ -1,0 +1,27 @@
+memory:
+  memory_enabled: true
+  provider: ''
+  user_profile_enabled: true
+  write_approval: true
+model:
+  api_key: AINX-F78D2FCD53915EE37BD0871392FFBFFAF648C53C388950FC6A1F2ED8C534B249
+  base_url: https://ainexus.phison.com/api/external/v1
+  default: Qwen/Qwen3.6-27B
+  provider: custom
+terminal:
+  backend: local
+  cwd: /workspace
+  persistent_shell: true
+  timeout: 180
+tools:
+  enabled:
+    - file_read
+    - file_write
+    - file_edit
+    - patch_code_file
+    - view_code_item
+    - grep_search
+    - bash
+onboarding:
+  seen:
+    tool_progress_prompt: true
