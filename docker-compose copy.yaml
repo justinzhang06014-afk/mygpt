@@ -1,0 +1,132 @@
+version: '3.8'
+
+services:
+  # 🗄️ 1. PostgreSQL 資料庫貨櫃
+  db:
+    image: postgres:latest
+    container_name: lm_postgres_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "123123"
+      POSTGRES_DB: ChatDB
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    restart: always
+
+  # 🤖 2. Python AI 服務貨櫃 (保留您原有的，不亂改)
+  llm-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: lm_llm_service
+    ports:
+      - "8000:8000"
+    environment:
+      - PHISON_API_KEY=AINX-F78D2FCD53915EE37BD0871392FFBFFAF648C53C388950FC6A1F2ED8C534B249
+    restart: always
+
+  # 🖥️ 3. C# 後端 API 服務 (LMBackend)
+  backend:
+    build:
+      context: ./LMBackend
+      dockerfile: backend.dockerfile
+    container_name: lm_csharp_backend
+    ports:
+      - "5165:5165"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5165
+      - ConnectionStrings__PostgreSQLConnection=Server=db;Port=5432;Database=ChatDB;User Id=postgres;Password=123123;
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    restart: always
+
+  # 🎨 4. Vue 前端網頁服務 (LMFrontend)
+  frontend:
+    build:
+      context: ./LMFrontend
+      dockerfile: frontend.dockerfile
+    container_name: lm_vue_frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    restart: always
+
+  # 🚀 5. ChromaDB 向量資料庫服務
+  chroma-db:
+    image: chromadb/chroma:latest
+    container_name: lm_chroma_db
+    ports:
+      - "8080:8000"
+    volumes:
+      - ./chroma_data:/chroma/chroma
+    environment:
+      - IS_PERSISTENT=TRUE
+      - ANONYMOUS_TELEMETRY=FALSE
+    restart: always
+
+  # 🧠 6. 您的反向代理中介 Agent 服務
+  hermes-agent:
+    build:
+      context: ./hermes-agent
+      dockerfile: Dockerfile
+    container_name: lm_hermes_agent
+    ports:
+      - "8643:8643"
+    volumes:
+      # 精準共享：掛載實體路徑，確保與下方 core 的 Profile 數據 100% 同步
+      - ./hermes_core_data:/opt/data
+    environment:
+      - LLM_BASE_URL=https://phison.com
+      - LLM_MODEL=Qwen/Qwen3.6-27B
+      - AINX_API_KEY=AINX-F78D2FCD53915EE37BD0871392FFBFFAF648C53C388950FC6A1F2ED8C534B249
+      - AINEXUS_TOKEN=AINX-F78D2FCD53915EE37BD0871392FFBFFAF648C53C388950FC6A1F2ED8C534B249
+      - OPENAI_API_KEY=AINX-F78D2FCD53915EE37BD0871392FFBFFAF648C53C388950FC6A1F2ED8C534B249
+      # 🌟 新增：讓 Agent 認得內網轉發核心所需的看門狗金鑰
+      - API_SERVER_KEY=my-local-test-token
+    depends_on:
+      - hermes-core  # 🌟 修正：此代理強烈依賴 core 核心，應等核心啟動後再連線
+    restart: always
+
+  # 🚀 7. 官方原生 Hermes Agent 核心 (隱蔽在 Docker 內網)
+  hermes-core:
+    image: nousresearch/hermes-agent:latest
+    container_name: independent_hermes_core
+    restart: always
+    environment:
+      
+
+      - CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+      - REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+      - SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+      - PYTHONHTTPSVERIFY=0
+
+      # 群聯大腦環境變數
+      - LLM_BASE_URL=https://ainexus.phison.com/api/external/v1
+      - LLM_MODEL=Qwen/Qwen3.6-27B
+      - AINX_API_KEY=AINX-F78D2FCD53915EE37BD0871392FFBFFAF648C53C388950FC6A1F2ED8C534B249
+      - AINEXUS_TOKEN=AINX-F78D2FCD53915EE37BD0871392FFBFFAF648C53C388950FC6A1F2ED8C534B249
+      - OPENAI_API_KEY=AINX-F78D2FCD53915EE37BD0871392FFBFFAF648C53C388950FC6A1F2ED8C534B249
+
+      # 啟用內網 API 通道
+      - API_SERVER_HOST=0.0.0.0
+      - API_SERVER_PORT=8642
+      - API_SERVER_KEY=my-local-test-token
+      - GATEWAY_ALLOW_ALL_USERS=true
+
+      # 🎯 關鍵新增 1：告訴 Core，全域的 Profiles 基礎路徑在哪裡
+      - HERMES_PROFILES_DIR=/opt/data/profiles
+      
+      # 🎯 關鍵新增 2：啟用記憶持久化，否則 Agent 重啟後記憶會消失
+      - HERMES_MEMORY_ENABLED=true
+      
+    volumes:
+      - ./hermes_core_data:/opt/data
+    command: gateway run
+
+volumes:
+  postgres_data:

@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "manifest": {
+    "web-tools/web-search/SKILL.md": [
+      1784180996719764500,
+      1031
+    ]
+  },
+  "skills": [
+    {
+      "skill_name": "web-search",
+      "category": "web-tools",
+      "frontmatter_name": "web-search",
+      "description": "联网搜索工具，提供網頁搜索、資訊查詢等功能",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    }
+  ],
+  "category_descriptions": {}
+}

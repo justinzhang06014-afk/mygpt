@@ -1,0 +1,168 @@
+你現在要接手一個進行中的專案，這是給你的完整背景說明。使用者用中文溝通，請全程用中文回覆。
+
+## 專案是什麼
+
+多租戶 AI Agent 平台，讓使用者建立自己的 AI 助理（agent），每個 agent 可以掛 MCP 工具、
+安裝技能（skill）、有自己的長期記憶。終極目標是「1000 人連進系統，hermes 幫忙處理各自
+機器上的專案」，底層跑的是官方 hermes CLI（Nous Research 的 hermes-agent 套件）。
+
+## 架構流程
+
+Vue(LMFrontend) → chat.js → C#(LlmController.cs) → hermes-agent-proxy(main.py, FastAPI)
+→ runtime_manager.py 建立每使用者專屬 Hermes Runtime 容器（複製 hermes-agent-proxy 自己
+這個 image，不是官方 hermes-core image）
+→ 該容器內用 hermes acp 跟真正的 hermes CLI 溝通（Agent Client Protocol，官方結構化事件
+協定，跟 VS Code/Zed/JetBrains 外掛同一套機制，不是猜測文字輸出）
+
+- 每個使用者：`hermes_core_data/users/<user_id>/`，裡面 `profiles/<agent_id>/` 是每個
+  agent 自己的資料夾（config.yaml、mcp.json、approvals.json、skills/、memories/、SOUL.md）。
+- agent 在 DB 建立當下只寫 Postgres，hermes 自己的 profile 目錄（config.yaml/SOUL.md）
+  要等第一次真的呼叫 `ensure_hermes_profile_exists()` 才會建立（第一次對話、或裝
+  MCP/技能時順便觸發）——這個時序差是好幾個 bug 的共同根因，見下面。
+
+## 關鍵檔案地圖
+
+| 檔案 | 用途 |
+|---|---|
+| `hermes-agent/main.py` | FastAPI 主程式，聊天串流、approve-write、MCP/Skill 商店端點、`/admin` 後台 |
+| `hermes-agent/acp_client.py` | ACP 協定整合核心，`run_acp_turn()` 是實際跟 `hermes acp` 溝通的地方 |
+| `hermes-agent/services.py` | `ensure_hermes_profile_exists()` 寫 config.yaml（model/memory/approvals/terminal/tools/skills/mcp_servers），也是「新 agent 缺 profile 目錄」問題的補救點 |
+| `hermes-agent/mcp_services.py` | MCP 母版讀寫、per-agent mcp.json 讀寫合併、憑證寫入 .env |
+| `hermes-agent/approval_settings.py` | 【新】per-agent 的 3 個 approval 開關（mode/memory/skills），存成 agent 自己的 approvals.json |
+| `hermes-agent/skills_catalog.py` + `skills_catalog.json` | 【新】管理員精選的技能起手式母版，跟 MCP 母版同一套模式但更簡單（skill 生不生效純靠 hermes 掃資料夾，不用寫回 config.yaml） |
+| `hermes-agent/skill_manager.py` | 一個寫好但**完全沒被呼叫、是死代碼**的私有 skill 商店系統，不要用它，也不用理它 |
+| `hermes-agent/mcp.json` | MCP 母版目錄 |
+| `LMBackend/ChatControllers/LlmController.cs` | C# 總控制器，所有 API 入口、多租戶路由 |
+| `LMFrontend/src/stores/chat.js` | 前端狀態管理，SSE 事件解析 |
+| `LMFrontend/src/components/ChatRoom.vue` | 核准彈窗、agent 大廳卡片、【新】建立 agent 彈窗（含 MCP/技能/approval 勾選） |
+| `LMFrontend/src/components/McpMarketplaceView.vue` | MCP 商店 UI |
+| `0717.txt` | 上一輪工作的完整日誌，包含所有 bug 根因分析跟修復細節，有疑問先查這份 |
+
+## 🔴 現在最急的事：git push 被 GitHub 擋下來，因為 commit 裡有真的 API 金鑰
+
+使用者執行 `git push origin main -f` 被 GitHub push protection 擋下：
+```
+remote: - GITHUB PUSH PROTECTION
+remote:   - Anthropic API Key
+remote:     commit: 6608d27a8e5ca55a9c4de274b85c184de1570f44
+remote:     path: claude api.txt:1
+```
+已經查證的現況：
+- 這個 repo 是**剛 git init 的，只有這一個 commit**（`git log` 只有一筆），且這個 commit
+  從沒被 GitHub 接受過（push 被整批拒絕），所以理論上還沒有真的外流到公開的 GitHub 上，
+  但金鑰本身已經在本機 git 歷史裡，且透過網路傳輸給 GitHub 掃描過。
+- 這個單一 commit 塞了 **3713 個檔案、59MB**，因為**完全沒有 `.gitignore`**，掃到
+  `myenv/`（Python 虛擬環境）、一堆 `xxx copy.py` / `123.txt` 之類的暫存檔、
+  `hermes_core_data - 複製` 這種備份資料夾都被一起加進去了。
+- 除了被 GitHub 標出來的 `claude api.txt`（Anthropic key）之外，**很可能還有其他沒被
+  掃到的真實密碼**沒清出來，至少已知：
+  - `hermes-agent/config.py:11` 的 `PHISON_LLM_KEY` 明碼預設值
+  - `docker-compose.yaml:27` 的 `PHISON_API_KEY`
+  - `docker-compose.yaml` 的 Postgres 密碼 `123123`
+  - `docker-compose.yaml:97` 的 `ADMIN_TOKEN=change-me-admin-token`（弱預設值本身也算風險）
+  - `.env` 檔案（使用者自己開著在 IDE 裡看）
+
+**還沒開始修**。建議的處理方向（沒有動手，等你跟使用者確認）：
+1. 先不要再用 `-f` 硬推。
+2. 因為只有一個 commit、且從沒被接受過，可以考慮：新增 `.gitignore`（排除 `myenv/`、
+   `*.env`、各種 `copy`/暫存檔、`hermes_core_data*`），把 `claude api.txt` 這類含密碼的
+   檔案從 tracking 移除，然後用 `git commit --amend` 重寫這唯一一個 commit（不是硬性
+   規則裡「禁止 amend」的情境，因為這個 commit 從沒被任何人拉過，等於是本機還沒發布
+   的草稿）——但動手前務必跟使用者確認，這是他的 repo 決策。
+3. 不管 git 端怎麼清，**這把已經進過 git 歷史的 Anthropic key，建議請使用者當作已外洩、
+   直接去 Anthropic Console 註銷重發一把新的**，比在 git 裡清乾淨更重要也更快。
+4. 清完之後再重新 push（可能還是需要 force，因為要覆蓋掉本機唯一的舊 commit，但這次
+   是正常的「本機 amend 後 push」，跟原本無差別內容硬推不一樣）。
+
+## 今天（0716-0717）修好的 bug（全部真實系統重現驗證過，細節見 0717.txt）
+
+1. resume_session 重播事件混進新回覆（acp_client.py，丟棄佇列裡的舊事件）
+2. USER.md/MEMORY.md 檔名大小寫（hermes 寫大寫，我們原本組小寫路徑，Windows 掛載巧合能動，
+   Linux 正式環境會壞）
+3. LlmController.cs 剩餘 4 處 `Forbid()` 崩潰點（改成 `StatusCode(403,...)`，這專案沒設
+   ASP.NET 認證機制，`Forbid()` 會直接丟未處理例外）
+4. approve-write 核准彈窗只剩拒絕鍵 + 點下去 500（兩個獨立 bug：C# 用 `JsonElement.GetString()`
+   讀數字型別的 room_id 直接炸；`chat.js` 的 `\n` 反轉義邏輯誤套用在結構化 JSON 事件上，
+   把合法跳脫序列變成真換行，JSON 解析失敗）
+5. 「複製」agent 失敗（來源 agent 建立後從沒聊過天，profile 目錄不存在，`--clone-from`
+   失敗；修法是先用來源真正的 system_prompt 補初始化再複製）
+6. 新建立的 agent 裝技能會 404（跟第 5 點同根因：`skills/import`、`skills/search`、
+   `skills/install-from-hub` 三個端點原本「目錄不存在就 404」，改成呼叫
+   `ensure_hermes_profile_exists()` 補初始化）
+
+## 今天新增的功能
+
+1. **Agent 的 approval 設定**：`approval_settings.py`，對照 hermes 原始碼
+   （`hermes_cli/config.py`）核對過的 3 個真實開關：`approvals.mode`
+   (manual/smart/off)、`memory.write_approval`、`skills.write_approval`。
+   `GET/POST /api/agent/{id}/approvals`。
+2. **建立 agent 彈窗大幅擴充**：原本只有名稱+系統提示詞，現在加了 MCP 勾選清單
+   （即時拉母版）、3 個 approval 開關、基礎技能勾選清單。送出時序：建立 agent →
+   套用 MCP → 套用 approvals → 套用技能。
+3. **Skill 精選清單 + 後台管理**：跟 MCP 同模式但更簡單（已查證 hermes 靠掃描
+   `skills/` 資料夾的 mtime/size manifest 判斷技能生效，不需要寫回 config.yaml，
+   所以不需要 per-agent 選配狀態檔）。`/admin` 頁面新增了 Skill 管理區塊。
+   已種子 3 筆**實測驗證過**的真實 identifier（不是編的）：
+   `official/finance/excel-author`、`official/research/gitnexus-explorer`、
+   `official/security/web-pentest`。
+4. **打開 `memory.nudge_interval`**：hermes 內建「每 N 輪對話自動提醒檢查記憶」的
+   機制，之前程式碼裡的註解誤判為「不存在的設定鍵」，已查證 `agent_init.py` 原始碼
+   證實是真的，且這個計數器就算我們每輪換一個全新 subprocess 也不會壞（hermes 會用
+   session resume 的歷史輪數重新算回去）。
+
+## 尚未解決、需要你/使用者決定的事（除了上面的 git secret 之外）
+
+1. **刪除 agent/room 的 500 錯誤**：根因是 `messages_room_id_fkey` /
+   `chat_rooms_agent_id_fkey` 兩個外鍵缺 `ON DELETE CASCADE`，且資料庫完全沒有
+   `__EFMigrationsHistory` 表（從沒透過 EF migration 建立過，migration 檔案是空的
+   保證）。已用真實 DELETE 請求重現、挖出完整 Postgres 例外堆疊確認。**使用者說先
+   不動，還沒修**。
+2. **SSH server + docker.sock 的安全風險**：`hermes-agent/Dockerfile` 現行版本裝了
+   完整 SSH server，root 密碼寫死 `hermespass`，且這個 image 會被複製給每一個使用者
+   的 Runtime 容器——1000 人規模代表 1000 個容器都開著同一把密碼的後門。
+   `hermes-agent-proxy` 又掛了 `/var/run/docker.sock`，對主機 Docker daemon 近乎
+   root 權限。跟使用者已經決定放棄的 SSH 回連方案矛盾，建議拿掉，**還沒動手**。
+3. **ADMIN_TOKEN 還是預設值** `change-me-admin-token`，還沒換。
+4. **容器沒有資源上限**（`runtime_manager.py` 建立子容器沒設 `mem_limit`/`cpus`），
+   1000 人規模前建議加上，否則單一使用者可能吃光主機資源影響其他人。
+5. **Agent 分享功能**（讓做好的 agent 可以分享給別人用，省重新訓練時間）：已確認
+   hermes 原生有 `hermes profile export/install/update` 支援 git URL 安裝。已有完整
+   前瞻性設計（含「只分享部分 MCP/skill」的情境設計），寫在 0717.txt 第七節，
+   **純設計沒動程式碼**，使用者確認方向後才開始做。
+
+## 測試方法論筆記（省 token/避雷用）
+
+- 使用者對 API 花費很敏感，測試訊息控制在 15 字以內。
+- Windows/git-bash 環境下，`curl -d "..."` inline 字串包中文字元常常編碼壞掉
+  （C# 端會報 `Cannot transcode invalid UTF-8 JSON text`），一律先寫進暫存 JSON
+  檔案再用 `--data-binary @file` 送出。
+- `docker exec` 搭配路徑參數（例如 `/app/xxx.py`）在 git-bash 下會被 MSYS 自動轉成
+  Windows 路徑而壞掉，指令前面加 `MSYS_NO_PATHCONV=1` 解決。
+- 每個 agent 的 Runtime 容器是無狀態的，資料全部在外部 volume（`/opt/data`），容器
+  被刪掉/重建不會掉資料，系統有 `/api/runtime/ensure` 自我修復端點會自動重建缺失的
+  容器——但**不代表可以隨便刪別人的容器**，任何刪除容器的操作都要先跟使用者確認，
+  這條是上一輪真的手滑刪過一次 `hermes-runtime-mm` 換來的教訓。
+- 改 `hermes-agent/*.py` 不用重 build image（`./hermes-agent:/app` 是即時掛載），
+  但要 `docker restart lm_hermes_agent` 以及對應的使用者 Runtime 容器才會重新載入
+  Python 程式碼（uvicorn 沒開 `--reload`）。這個掛載機制連使用者的 Runtime 子容器
+  也會複製到，所以只要重啟主 proxy + 該使用者的 runtime container 即可，不用重建 image。
+- 改 `LMBackend`（C#）或 `LMFrontend`（Vue）一定要 `docker compose build` 才會生效，
+  不是即時掛載。
+- 動手改任何程式碼前，先查 hermes 官方原始碼（容器內
+  `/usr/local/lib/python3.11/site-packages/hermes_cli/`、`agent/`）核對真實 schema，
+  不要憑印象猜 config.yaml 欄位——今天至少有兩次「以前猜錯」被抓出來
+  （nudge_interval、skill 需不需要寫回 config.yaml）。
+
+## 使用者的協作偏好
+
+- 交代任務用中文，全程中文回覆。
+- 非常重視「有沒有實測驗證過」，不要只憑推論就宣稱做完，能真的呼叫 API/查資料庫/看
+  log 就不要用猜的。
+- 大部分時候會先給方向、要你自己判斷細節動手做（不是每一步都要停下來問），但涉及
+  資料庫 schema 變更、刪除容器、force push 這類難以復原或影響共用狀態的操作，
+  一定要先確認再動手。
+- 重大功能會希望先看設計/方案再拍板，不要跳過設計直接開始寫一堆程式碼。
+
+---
+
+先跟使用者確認：現在最優先要處理的是不是上面那個 git secret 阻擋 push 的問題？

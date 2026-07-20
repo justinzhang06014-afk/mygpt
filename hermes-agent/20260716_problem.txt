@@ -1,0 +1,109 @@
+1. docker-compose的hermes專屬docker 你在修改成hermes acp版本的時候為什麼會刪除
+2. hermes acp模式下的問題
+SSH 連線測試結果：目前無法使用。
+兩個問題：
+SSH 金鑰不存在：/opt/data/id_rsa 這個身分金鑰檔案不存在。
+連線被拒絕：嘗試連線到 host.docker.internal port 22 時被拒絕（Connection refused）。
+這代表 SSH 後端設定有問題：
+目標主機 host.docker.internal 可能沒有在運行 SSH server（port 22 沒在聽）。
+或者金鑰檔案遺失/路徑不正確。
+你需要我幫你檢查或修復 SSH 後端設定嗎？例如確認 SSH server 是否在運行、金鑰位置是否正確等。
+因為這台電腦也不是我明天會測試的 所以可能要請你給我步驟釐清一下問題所在
+3. 啟動複製失敗 當我創立一個agent點選複製會失敗 沒有辦法創立一個全新的 我至少有對話過一次
+網站彈跳訊息如下
+index-CrMlGL09.js:52  POST http://localhost:5173/api/Chat/agent/clone?userId=888 404 (Not Found)
+(anonymous) @ index-CrMlGL09.js:52
+xhr @ index-CrMlGL09.js:52
+e3 @ index-CrMlGL09.js:54
+_request @ index-CrMlGL09.js:58
+request @ index-CrMlGL09.js:54
+(anonymous) @ index-CrMlGL09.js:58
+(anonymous) @ index-CrMlGL09.js:50
+ae @ index-CrMlGL09.js:61
+i @ index-CrMlGL09.js:1
+l @ index-CrMlGL09.js:125
+Nn @ index-CrMlGL09.js:1
+Pn @ index-CrMlGL09.js:1
+$i @ index-CrMlGL09.js:1
+handleClick @ index-CrMlGL09.js:19
+Nn @ index-CrMlGL09.js:1
+Pn @ index-CrMlGL09.js:1
+n @ index-CrMlGL09.js:1
+index-CrMlGL09.js:125 ❌ 後端複製執行失敗: AxiosError: Request failed with status code 404
+    at p4 (index-CrMlGL09.js:52:9876)
+    at XMLHttpRequest.g (index-CrMlGL09.js:52:15153)
+    at o3.request (index-CrMlGL09.js:54:2136)
+    at async Proxy.ae (index-CrMlGL09.js:61:6091)
+    at async l (index-CrMlGL09.js:125:14911)
+hermes-agent docker 訊息如下
+INFO:     172.18.0.3:50096 - "POST /api/runtime/ensure HTTP/1.1" 200 OK
+2026-07-16 08:36:38,065 - ERROR - [真Clone] 失敗: 來源 Agent 'agent_d98d8f8f72bd' 尚未初始化過(從未對話過),無法作為複製範本
+INFO:     172.18.0.3:32976 - "POST /api/agent/agent_8f48023b2594/clone-from/agent_d98d8f8f72bd HTTP/1.1" 404 Not Found
+
+4. 重複對話，hermes在每一次的對話都會先顯示上一次對話內容 才會顯示本次對話內容
+使用者：你好
+herms：你好！我是 Python 專家 Lily。有什麼可以幫你的嗎？
+使用者：ssh正常了嗎
+hermes：你好！我是 Python 專家 Lily。有什麼可以幫你的嗎？
+Let me check the SSH connection status by running a simple command.
+
+5.我想問我現在每個子agent 的mcp呼叫是存在哪裡 hermes怎麼讀取操作的 給我完整的詳細邏輯
+
+6. 當跳出【🚨 企業級人機協同安全審查】 只有拒絕按鈕為什麼? 其他按鈕呢
+7. 上述當跳出【🚨 企業級人機協同安全審查】需要使用者審查的時候我只能按下拒絕為什麼，以及當按下拒絕跳出底下錯誤：
+index-CrMlGL09.js:52  POST http://localhost:5173/api/Chat/agent/approve-write?userId=999 500 (Internal Server Error)
+(anonymous) @ index-CrMlGL09.js:52
+xhr @ index-CrMlGL09.js:52
+e3 @ index-CrMlGL09.js:54
+_request @ index-CrMlGL09.js:58
+request @ index-CrMlGL09.js:54
+(anonymous) @ index-CrMlGL09.js:58
+(anonymous) @ index-CrMlGL09.js:50
+te @ index-CrMlGL09.js:61
+i @ index-CrMlGL09.js:1
+se @ index-CrMlGL09.js:125
+j.value.options.length.W.onClick.f.<computed> @ index-CrMlGL09.js:125
+Nn @ index-CrMlGL09.js:1
+Pn @ index-CrMlGL09.js:1
+$i @ index-CrMlGL09.js:1
+handleClick @ index-CrMlGL09.js:19
+Nn @ index-CrMlGL09.js:1
+Pn @ index-CrMlGL09.js:1
+n @ index-CrMlGL09.js:1
+index-CrMlGL09.js:61 ❌ [Store] 逆向注入審查訊號失敗: AxiosError: Request failed with status code 500
+    at p4 (index-CrMlGL09.js:52:9876)
+    at XMLHttpRequest.g (index-CrMlGL09.js:52:15153)
+    at o3.request (index-CrMlGL09.js:54:2136)
+    at async Proxy.te (index-CrMlGL09.js:61:5166)
+    at async se (index-CrMlGL09.js:125:51174)
+te @ index-CrMlGL09.js:61
+await in te
+i @ index-CrMlGL09.js:1
+se @ index-CrMlGL09.js:125
+j.value.options.length.W.onClick.f.<computed> @ index-CrMlGL09.js:125
+Nn @ index-CrMlGL09.js:1
+Pn @ index-CrMlGL09.js:1
+$i @ index-CrMlGL09.js:1
+handleClick @ index-CrMlGL09.js:19
+Nn @ index-CrMlGL09.js:1
+Pn @ index-CrMlGL09.js:1
+n @ index-CrMlGL09.js:1
+index-CrMlGL09.js:125 送出審查決定失敗: AxiosError: Request failed with status code 500
+    at p4 (index-CrMlGL09.js:52:9876)
+    at XMLHttpRequest.g (index-CrMlGL09.js:52:15153)
+    at o3.request (index-CrMlGL09.js:54:2136)
+    at async Proxy.te (index-CrMlGL09.js:61:5166)
+    at async se (index-CrMlGL09.js:125:51174)
+
+docker上的資訊
+看起來修改被 ACP 客戶端攔截了。讓我換個方式，我直接在當前目錄下建立：
+
+
+2026-07-16 09:44:24,784 - WARNING - ⏳ [ACP 超時自癒] 房間 108 120.0秒未回應，預設選擇: deny
+
+2026-07-16 09:44:24,785 - INFO - 👤 [ACP 人機協同] 房間 108 使用者選擇了: Deny (deny)
+
+
+__ACP_TOOL__:{"tool_call_id": "tc-58d77a853e6b", "title": "write: /app/login.html", "kind": "edit", "status": null}
+
+2026-07-16 09:44:53,874 - WARNING - 🛡️ [ACP 核准攔截] 房間 108 觸發 request_permission，等待使用者選擇...

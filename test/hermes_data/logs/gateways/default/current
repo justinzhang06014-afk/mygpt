@@ -1,0 +1,292 @@
+2026-06-24 03:31:35.524227514  ┌─────────────────────────────────────────────────────────┐
+2026-06-24 03:31:35.524269394  │           ⚕ Hermes Gateway Starting...                 │
+2026-06-24 03:31:35.524272541  ├─────────────────────────────────────────────────────────┤
+2026-06-24 03:31:35.524281779  │  Messaging platforms + cron scheduler                    │
+2026-06-24 03:31:35.524283720  │  Press Ctrl+C to stop                                   │
+2026-06-24 03:31:35.524285958  └─────────────────────────────────────────────────────────┘
+2026-06-24 03:31:35.524291252  
+2026-06-24 03:31:57.783383471  ⚠️  API call failed (attempt 1/3): NotFoundError [HTTP 404]
+2026-06-24 03:31:57.783387749     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:31:57.783388597     🌐 Endpoint: https://huggingface.co/v1/chat/completions
+2026-06-24 03:31:57.783389258     📝 Error: HTTP 404 — Error
+2026-06-24 03:31:57.783658678     📋 Details: <!DOCTYPE html>
+2026-06-24 03:31:57.783660321  <html lang="en">
+2026-06-24 03:31:57.783660995  <head>
+2026-06-24 03:31:57.783661674  <meta charset="utf-8">
+2026-06-24 03:31:57.783662300  <title>Error</title>
+2026-06-24 03:31:57.783662840  </head>
+2026-06-24 03:31:57.783663353  <body>
+2026-06-24 03:31:57.783664087  <pre>Cannot POST /v1/chat/completions/chat/completions</pre>
+2026-06-24 03:31:57.783664620  </body>
+2026-06-24 03:31:57.783665149  </html>
+2026-06-24 03:31:57.783665838     ⏱️  Elapsed: 0.93s  Context: 2 msgs, ~3,942 tokens
+2026-06-24 03:31:57.783666520  ⏳ Retrying in 2.8s (attempt 1/3)...
+2026-06-24 03:31:57.783667205  ⚠️  API call failed (attempt 2/3): NotFoundError [HTTP 404]
+2026-06-24 03:31:57.783667879     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:31:57.783668574     🌐 Endpoint: https://huggingface.co/v1/chat/completions
+2026-06-24 03:31:57.783669181     📝 Error: HTTP 404 — Error
+2026-06-24 03:31:57.783669759     📋 Details: <!DOCTYPE html>
+2026-06-24 03:31:57.783671479  <html lang="en">
+2026-06-24 03:31:57.783672008  <head>
+2026-06-24 03:31:57.783672593  <meta charset="utf-8">
+2026-06-24 03:31:57.783673149  <title>Error</title>
+2026-06-24 03:31:57.783685092  </head>
+2026-06-24 03:31:57.783685692  <body>
+2026-06-24 03:31:57.783686440  <pre>Cannot POST /v1/chat/completions/chat/completions</pre>
+2026-06-24 03:31:57.783687020  </body>
+2026-06-24 03:31:57.783687520  </html>
+2026-06-24 03:31:57.783688200     ⏱️  Elapsed: 4.29s  Context: 2 msgs, ~3,942 tokens
+2026-06-24 03:31:57.783688814  ⏳ Retrying in 5.5s (attempt 2/3)...
+2026-06-24 03:31:57.783689553  ⚠️  API call failed (attempt 3/3): NotFoundError [HTTP 404]
+2026-06-24 03:31:57.783690547     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:31:57.783691264     🌐 Endpoint: https://huggingface.co/v1/chat/completions
+2026-06-24 03:31:57.783712170     📝 Error: HTTP 404 — Error
+2026-06-24 03:31:57.783712890     📋 Details: <!DOCTYPE html>
+2026-06-24 03:31:57.783713450  <html lang="en">
+2026-06-24 03:31:57.783713969  <head>
+2026-06-24 03:31:57.783714556  <meta charset="utf-8">
+2026-06-24 03:31:57.783715163  <title>Error</title>
+2026-06-24 03:31:57.783715691  </head>
+2026-06-24 03:31:57.783716199  <body>
+2026-06-24 03:31:57.783716916  <pre>Cannot POST /v1/chat/completions/chat/completions</pre>
+2026-06-24 03:31:57.783717368  </body>
+2026-06-24 03:31:57.783717867  </html>
+2026-06-24 03:31:57.783724953     ⏱️  Elapsed: 10.42s  Context: 2 msgs, ~3,942 tokens
+2026-06-24 03:31:57.783728464  ❌ API failed after 3 retries — HTTP 404 — Error
+2026-06-24 03:31:57.783729114     💀 Final error: HTTP 404 — Error
+2026-06-24 03:31:57.823388262  🧾 Request debug dump written to: /opt/data/sessions/request_dump_api-fe2a0e402e6ea9f0_20260624_033157_785884.json
+2026-06-24 03:32:05.367051976  ⚠️  API call failed (attempt 1/3): NotFoundError [HTTP 404]
+2026-06-24 03:32:05.367055253     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:32:05.367056154     🌐 Endpoint: https://huggingface.co/v1/chat/completions
+2026-06-24 03:32:05.367056826     📝 Error: HTTP 404 — Error
+2026-06-24 03:32:05.367057562     📋 Details: <!DOCTYPE html>
+2026-06-24 03:32:05.367058188  <html lang="en">
+2026-06-24 03:32:05.367058733  <head>
+2026-06-24 03:32:05.367059341  <meta charset="utf-8">
+2026-06-24 03:32:05.367059922  <title>Error</title>
+2026-06-24 03:32:05.367060482  </head>
+2026-06-24 03:32:05.367061026  <body>
+2026-06-24 03:32:05.367061724  <pre>Cannot POST /v1/chat/completions/chat/completions</pre>
+2026-06-24 03:32:05.367062275  </body>
+2026-06-24 03:32:05.367062786  </html>
+2026-06-24 03:32:05.367503363     ⏱️  Elapsed: 0.72s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:32:05.367505880  ⏳ Retrying in 2.2s (attempt 1/3)...
+2026-06-24 03:32:05.367506751  ⚠️  API call failed (attempt 2/3): NotFoundError [HTTP 404]
+2026-06-24 03:32:05.367507496     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:32:05.367508256     🌐 Endpoint: https://huggingface.co/v1/chat/completions
+2026-06-24 03:32:05.367508868     📝 Error: HTTP 404 — Error
+2026-06-24 03:32:05.367509461     📋 Details: <!DOCTYPE html>
+2026-06-24 03:32:05.367510008  <html lang="en">
+2026-06-24 03:32:05.367510519  <head>
+2026-06-24 03:32:05.367511113  <meta charset="utf-8">
+2026-06-24 03:32:05.367511684  <title>Error</title>
+2026-06-24 03:32:05.367512205  </head>
+2026-06-24 03:32:05.367512727  <body>
+2026-06-24 03:32:05.367513446  <pre>Cannot POST /v1/chat/completions/chat/completions</pre>
+2026-06-24 03:32:05.367513950  </body>
+2026-06-24 03:32:05.367514474  </html>
+2026-06-24 03:32:05.367515176     ⏱️  Elapsed: 4.25s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:32:05.367515809  ⏳ Retrying in 5.6s (attempt 2/3)...
+2026-06-24 03:32:05.367516518  ⚠️  API call failed (attempt 3/3): NotFoundError [HTTP 404]
+2026-06-24 03:32:05.367517199     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:32:05.367517896     🌐 Endpoint: https://huggingface.co/v1/chat/completions
+2026-06-24 03:32:05.367518461     📝 Error: HTTP 404 — Error
+2026-06-24 03:32:05.367519079     📋 Details: <!DOCTYPE html>
+2026-06-24 03:32:05.367519628  <html lang="en">
+2026-06-24 03:32:05.367520131  <head>
+2026-06-24 03:32:05.367520737  <meta charset="utf-8">
+2026-06-24 03:32:05.367521318  <title>Error</title>
+2026-06-24 03:32:05.367521819  </head>
+2026-06-24 03:32:05.367522322  <body>
+2026-06-24 03:32:05.367523036  <pre>Cannot POST /v1/chat/completions/chat/completions</pre>
+2026-06-24 03:32:05.367523553  </body>
+2026-06-24 03:32:05.367524068  </html>
+2026-06-24 03:32:05.367524748     ⏱️  Elapsed: 10.38s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:32:05.367525439  ❌ API failed after 3 retries — HTTP 404 — Error
+2026-06-24 03:32:05.367526068     💀 Final error: HTTP 404 — Error
+2026-06-24 03:32:05.407088428  🧾 Request debug dump written to: /opt/data/sessions/request_dump_api-2ff921dcc0577caa_20260624_033205_369079.json
+2026-06-24 03:35:38.186501924  ┌─────────────────────────────────────────────────────────┐
+2026-06-24 03:35:38.186554984  │           ⚕ Hermes Gateway Starting...                 │
+2026-06-24 03:35:38.186556895  ├─────────────────────────────────────────────────────────┤
+2026-06-24 03:35:38.186564401  │  Messaging platforms + cron scheduler                    │
+2026-06-24 03:35:38.186565511  │  Press Ctrl+C to stop                                   │
+2026-06-24 03:35:38.186566792  └─────────────────────────────────────────────────────────┘
+2026-06-24 03:35:38.186570149  
+2026-06-24 03:43:26.756864779  ┌─────────────────────────────────────────────────────────┐
+2026-06-24 03:43:26.756904253  │           ⚕ Hermes Gateway Starting...                 │
+2026-06-24 03:43:26.756906149  ├─────────────────────────────────────────────────────────┤
+2026-06-24 03:43:26.756912293  │  Messaging platforms + cron scheduler                    │
+2026-06-24 03:43:26.756913493  │  Press Ctrl+C to stop                                   │
+2026-06-24 03:43:26.756914781  └─────────────────────────────────────────────────────────┘
+2026-06-24 03:43:26.756917836  
+2026-06-24 03:43:47.840636129  🔁 Transient APIConnectionError on custom — rebuilt client, waiting 6s before one last primary attempt.
+2026-06-24 03:44:01.942774222  ⚠️  API call failed (attempt 1/3): APIConnectionError
+2026-06-24 03:44:01.942777096     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:44:01.942777936     🌐 Endpoint: https://api-inference.huggingface.co/v1
+2026-06-24 03:44:01.942778629     📝 Error: Connection error.
+2026-06-24 03:44:01.942779387     ⏱️  Elapsed: 0.46s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:44:01.942980132  ⏳ Retrying in 2.4s (attempt 1/3)...
+2026-06-24 03:44:01.942982026  ⚠️  API call failed (attempt 2/3): APIConnectionError
+2026-06-24 03:44:01.942982938     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:44:01.942983646     🌐 Endpoint: https://api-inference.huggingface.co/v1
+2026-06-24 03:44:01.942984312     📝 Error: Connection error.
+2026-06-24 03:44:01.942984996     ⏱️  Elapsed: 3.17s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:44:01.942985587  ⏳ Retrying in 4.0s (attempt 2/3)...
+2026-06-24 03:44:01.942986291  ⚠️  API call failed (attempt 3/3): APIConnectionError
+2026-06-24 03:44:01.942986976     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:44:01.942987651     🌐 Endpoint: https://api-inference.huggingface.co/v1
+2026-06-24 03:44:01.942988213     📝 Error: Connection error.
+2026-06-24 03:44:01.942988890     ⏱️  Elapsed: 7.49s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:44:01.942989556  ⚠️  API call failed (attempt 1/3): APIConnectionError
+2026-06-24 03:44:01.942991117     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:44:01.942991766     🌐 Endpoint: https://api-inference.huggingface.co/v1
+2026-06-24 03:44:01.943006521     📝 Error: Connection error.
+2026-06-24 03:44:01.943007357     ⏱️  Elapsed: 13.62s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:44:01.943008286  ⏳ Retrying in 2.1s (attempt 1/3)...
+2026-06-24 03:44:01.943009056  ⚠️  API call failed (attempt 2/3): APIConnectionError
+2026-06-24 03:44:01.943009750     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:44:01.943043176     🌐 Endpoint: https://api-inference.huggingface.co/v1
+2026-06-24 03:44:01.943044103     📝 Error: Connection error.
+2026-06-24 03:44:01.943044969     ⏱️  Elapsed: 15.92s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:44:01.943045719  ⏳ Retrying in 5.6s (attempt 2/3)...
+2026-06-24 03:44:01.943046358  ⚠️  API call failed (attempt 3/3): APIConnectionError
+2026-06-24 03:44:01.943065896     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:44:01.943066570     🌐 Endpoint: https://api-inference.huggingface.co/v1
+2026-06-24 03:44:01.943070691     📝 Error: Connection error.
+2026-06-24 03:44:01.943071441     ⏱️  Elapsed: 21.61s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:44:01.943073381  ❌ API failed after 3 retries — Connection error.
+2026-06-24 03:44:01.943074042     💀 Final error: Connection error.
+2026-06-24 03:44:01.987927113  🧾 Request debug dump written to: /opt/data/sessions/request_dump_api-2ff921dcc0577caa_20260624_034401_944528.json
+2026-06-24 03:44:14.896764476  🔁 Transient APIConnectionError on custom — rebuilt client, waiting 6s before one last primary attempt.
+2026-06-24 03:44:28.322074445  ⚠️  API call failed (attempt 1/3): APIConnectionError
+2026-06-24 03:44:28.322077675     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:44:28.322078534     🌐 Endpoint: https://api-inference.huggingface.co/v1
+2026-06-24 03:44:28.322079269     📝 Error: Connection error.
+2026-06-24 03:44:28.322080010     ⏱️  Elapsed: 0.09s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:44:28.322080673  ⏳ Retrying in 2.8s (attempt 1/3)...
+2026-06-24 03:44:28.322081403  ⚠️  API call failed (attempt 2/3): APIConnectionError
+2026-06-24 03:44:28.322082067     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:44:28.322280731     🌐 Endpoint: https://api-inference.huggingface.co/v1
+2026-06-24 03:44:28.322282607     📝 Error: Connection error.
+2026-06-24 03:44:28.322283445     ⏱️  Elapsed: 3.00s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:44:28.322284123  ⏳ Retrying in 5.1s (attempt 2/3)...
+2026-06-24 03:44:28.322284872  ⚠️  API call failed (attempt 3/3): APIConnectionError
+2026-06-24 03:44:28.322285598     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:44:28.322286258     🌐 Endpoint: https://api-inference.huggingface.co/v1
+2026-06-24 03:44:28.322286814     📝 Error: Connection error.
+2026-06-24 03:44:28.322287513     ⏱️  Elapsed: 8.31s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:44:28.322288216  ⚠️  API call failed (attempt 1/3): APIConnectionError
+2026-06-24 03:44:28.322288910     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:44:28.322289597     🌐 Endpoint: https://api-inference.huggingface.co/v1
+2026-06-24 03:44:28.322290155     📝 Error: Connection error.
+2026-06-24 03:44:28.322290848     ⏱️  Elapsed: 14.42s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:44:28.322291454  ⏳ Retrying in 2.3s (attempt 1/3)...
+2026-06-24 03:44:28.322292165  ⚠️  API call failed (attempt 2/3): APIConnectionError
+2026-06-24 03:44:28.322292842     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:44:28.322293553     🌐 Endpoint: https://api-inference.huggingface.co/v1
+2026-06-24 03:44:28.322294092     📝 Error: Connection error.
+2026-06-24 03:44:28.322294767     ⏱️  Elapsed: 16.91s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:44:28.322295373  ⏳ Retrying in 4.4s (attempt 2/3)...
+2026-06-24 03:44:28.322296095  ⚠️  API call failed (attempt 3/3): APIConnectionError
+2026-06-24 03:44:28.322296755     🔌 Provider: custom  Model: Qwen/Qwen2.5-7B-Instruct
+2026-06-24 03:44:28.322297416     🌐 Endpoint: https://api-inference.huggingface.co/v1
+2026-06-24 03:44:28.322297938     📝 Error: Connection error.
+2026-06-24 03:44:28.322298619     ⏱️  Elapsed: 21.74s  Context: 2 msgs, ~3,939 tokens
+2026-06-24 03:44:28.322299311  ❌ API failed after 3 retries — Connection error.
+2026-06-24 03:44:28.322299944     💀 Final error: Connection error.
+2026-06-24 03:44:28.360534936  🧾 Request debug dump written to: /opt/data/sessions/request_dump_api-2ff921dcc0577caa_20260624_034428_323794.json
+2026-06-24 03:45:25.136310819  ┌─────────────────────────────────────────────────────────┐
+2026-06-24 03:45:25.136345929  │           ⚕ Hermes Gateway Starting...                 │
+2026-06-24 03:45:25.136347852  ├─────────────────────────────────────────────────────────┤
+2026-06-24 03:45:25.136354250  │  Messaging platforms + cron scheduler                    │
+2026-06-24 03:45:25.136355348  │  Press Ctrl+C to stop                                   │
+2026-06-24 03:45:25.136356628  └─────────────────────────────────────────────────────────┘
+2026-06-24 03:45:25.136373278  
+2026-06-24 03:49:22.926775024  ┌─────────────────────────────────────────────────────────┐
+2026-06-24 03:49:22.926815452  │           ⚕ Hermes Gateway Starting...                 │
+2026-06-24 03:49:22.926817395  ├─────────────────────────────────────────────────────────┤
+2026-06-24 03:49:22.926823213  │  Messaging platforms + cron scheduler                    │
+2026-06-24 03:49:22.926824327  │  Press Ctrl+C to stop                                   │
+2026-06-24 03:49:22.926825578  └─────────────────────────────────────────────────────────┘
+2026-06-24 03:49:22.926828636  
+2026-06-24 07:48:35.690248586  ┌─────────────────────────────────────────────────────────┐
+2026-06-24 07:48:35.690285686  │           ⚕ Hermes Gateway Starting...                 │
+2026-06-24 07:48:35.690287522  ├─────────────────────────────────────────────────────────┤
+2026-06-24 07:48:35.690293359  │  Messaging platforms + cron scheduler                    │
+2026-06-24 07:48:35.690294499  │  Press Ctrl+C to stop                                   │
+2026-06-24 07:48:35.690295730  └─────────────────────────────────────────────────────────┘
+2026-06-24 07:48:35.690298846  
+2026-06-24 07:49:56.396274588  ┌─────────────────────────────────────────────────────────┐
+2026-06-24 07:49:56.396310656  │           ⚕ Hermes Gateway Starting...                 │
+2026-06-24 07:49:56.396312635  ├─────────────────────────────────────────────────────────┤
+2026-06-24 07:49:56.396316223  │  Messaging platforms + cron scheduler                    │
+2026-06-24 07:49:56.396317357  │  Press Ctrl+C to stop                                   │
+2026-06-24 07:49:56.396318612  └─────────────────────────────────────────────────────────┘
+2026-06-24 07:49:56.396321431  
+2026-06-24 07:50:39.287809379  ⚠️  API call failed (attempt 1/3): APIConnectionError
+2026-06-24 07:50:39.287812774     🔌 Provider: openrouter  Model: anthropic/claude-opus-4.6
+2026-06-24 07:50:39.287813565     🌐 Endpoint: https://openrouter.ai/api/v1
+2026-06-24 07:50:39.287814249     📝 Error: Connection error.
+2026-06-24 07:50:39.287814946     ⏱️  Elapsed: 0.37s  Context: 2 msgs, ~3,768 tokens
+2026-06-24 07:50:39.287815597  ⏳ Retrying in 2.9s (attempt 1/3)...
+2026-06-24 07:50:39.287816294  ⚠️  API call failed (attempt 2/3): APIConnectionError
+2026-06-24 07:50:39.287817015     🔌 Provider: openrouter  Model: anthropic/claude-opus-4.6
+2026-06-24 07:50:39.287817680     🌐 Endpoint: https://openrouter.ai/api/v1
+2026-06-24 07:50:39.287818331     📝 Error: Connection error.
+2026-06-24 07:50:39.287819027     ⏱️  Elapsed: 4.81s  Context: 2 msgs, ~3,768 tokens
+2026-06-24 07:50:39.287819630  ⏳ Retrying in 5.4s (attempt 2/3)...
+2026-06-24 07:50:39.287820306  ⚠️  API call failed (attempt 3/3): APIConnectionError
+2026-06-24 07:50:39.287822439     🔌 Provider: openrouter  Model: anthropic/claude-opus-4.6
+2026-06-24 07:50:39.287823113     🌐 Endpoint: https://openrouter.ai/api/v1
+2026-06-24 07:50:39.287843983     📝 Error: Connection error.
+2026-06-24 07:50:39.287844823     ⏱️  Elapsed: 12.14s  Context: 2 msgs, ~3,768 tokens
+2026-06-24 07:50:39.288219523  ❌ API failed after 3 retries — Connection error.
+2026-06-24 07:50:39.288222212     💀 Final error: Connection error.
+2026-06-24 07:50:39.325604679  🧾 Request debug dump written to: /opt/data/sessions/request_dump_api-fe2a0e402e6ea9f0_20260624_075039_290016.json
+2026-06-24 07:51:06.458841224  ┌─────────────────────────────────────────────────────────┐
+2026-06-24 07:51:06.458887000  │           ⚕ Hermes Gateway Starting...                 │
+2026-06-24 07:51:06.458889026  ├─────────────────────────────────────────────────────────┤
+2026-06-24 07:51:06.458895454  │  Messaging platforms + cron scheduler                    │
+2026-06-24 07:51:06.458896600  │  Press Ctrl+C to stop                                   │
+2026-06-24 07:51:06.458897887  └─────────────────────────────────────────────────────────┘
+2026-06-24 07:51:06.458900967  
+2026-06-24 07:51:37.790943620  ⚠️  API call failed (attempt 1/3): APIConnectionError
+2026-06-24 07:51:37.790947068     🔌 Provider: openrouter  Model: anthropic/claude-opus-4.6
+2026-06-24 07:51:37.790947936     🌐 Endpoint: https://openrouter.ai/api/v1
+2026-06-24 07:51:37.790948655     📝 Error: Connection error.
+2026-06-24 07:51:37.790949467     ⏱️  Elapsed: 0.35s  Context: 2 msgs, ~3,768 tokens
+2026-06-24 07:51:37.790950192  ⏳ Retrying in 2.4s (attempt 1/3)...
+2026-06-24 07:51:37.790951028  ⚠️  API call failed (attempt 2/3): APIConnectionError
+2026-06-24 07:51:37.791421821     🔌 Provider: openrouter  Model: anthropic/claude-opus-4.6
+2026-06-24 07:51:37.791424328     🌐 Endpoint: https://openrouter.ai/api/v1
+2026-06-24 07:51:37.791425109     📝 Error: Connection error.
+2026-06-24 07:51:37.791438565     ⏱️  Elapsed: 2.90s  Context: 2 msgs, ~3,768 tokens
+2026-06-24 07:51:37.791439469  ⏳ Retrying in 5.2s (attempt 2/3)...
+2026-06-24 07:51:37.791440261  ⚠️  API call failed (attempt 3/3): APIConnectionError
+2026-06-24 07:51:37.791441015     🔌 Provider: openrouter  Model: anthropic/claude-opus-4.6
+2026-06-24 07:51:37.791441716     🌐 Endpoint: https://openrouter.ai/api/v1
+2026-06-24 07:51:37.791442325     📝 Error: Connection error.
+2026-06-24 07:51:37.791443098     ⏱️  Elapsed: 8.44s  Context: 2 msgs, ~3,768 tokens
+2026-06-24 07:51:37.791443779  ❌ API failed after 3 retries — Connection error.
+2026-06-24 07:51:37.791444409     💀 Final error: Connection error.
+2026-06-24 07:51:37.837414339  🧾 Request debug dump written to: /opt/data/sessions/request_dump_api-fe2a0e402e6ea9f0_20260624_075137_793297.json
+2026-06-24 07:51:42.073908903  ⚠️  API call failed (attempt 1/3): APIConnectionError
+2026-06-24 07:51:42.073912884     🔌 Provider: openrouter  Model: anthropic/claude-opus-4.6
+2026-06-24 07:51:42.073913764     🌐 Endpoint: https://openrouter.ai/api/v1
+2026-06-24 07:51:42.073914530     📝 Error: Connection error.
+2026-06-24 07:51:42.073915303     ⏱️  Elapsed: 0.13s  Context: 2 msgs, ~3,765 tokens
+2026-06-24 07:51:42.073915980  ⏳ Retrying in 2.5s (attempt 1/3)...
+2026-06-24 07:51:42.073916710  ⚠️  API call failed (attempt 2/3): APIConnectionError
+2026-06-24 07:51:42.073917489     🔌 Provider: openrouter  Model: anthropic/claude-opus-4.6
+2026-06-24 07:51:42.073918202     🌐 Endpoint: https://openrouter.ai/api/v1
+2026-06-24 07:51:42.073918855     📝 Error: Connection error.
+2026-06-24 07:51:42.073919580     ⏱️  Elapsed: 2.87s  Context: 2 msgs, ~3,765 tokens
+2026-06-24 07:51:42.074233465  ⏳ Retrying in 4.5s (attempt 2/3)...
+2026-06-24 07:51:42.074236598  ⚠️  API call failed (attempt 3/3): APIConnectionError
+2026-06-24 07:51:42.074237981     🔌 Provider: openrouter  Model: anthropic/claude-opus-4.6
+2026-06-24 07:51:42.074239197     🌐 Endpoint: https://openrouter.ai/api/v1
+2026-06-24 07:51:42.074240238     📝 Error: Connection error.
+2026-06-24 07:51:42.074241471     ⏱️  Elapsed: 7.65s  Context: 2 msgs, ~3,765 tokens
+2026-06-24 07:51:42.074242555  ❌ API failed after 3 retries — Connection error.
+2026-06-24 07:51:42.074243792     💀 Final error: Connection error.
+2026-06-24 07:51:42.126028338  🧾 Request debug dump written to: /opt/data/sessions/request_dump_api-2ff921dcc0577caa_20260624_075142_076181.json

@@ -1,0 +1,578 @@
+2026-06-24 02:20:11,949 WARNING gateway.run: No user allowlists configured. All unauthorized users will be denied. Set GATEWAY_ALLOW_ALL_USERS=true in ~/.hermes/.env to allow open access, or configure platform allowlists (e.g., TELEGRAM_ALLOWED_USERS=your_id).
+2026-06-24 02:20:12,000 WARNING gateway.run: No messaging platforms enabled.
+2026-06-24 02:27:29,015 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=118 parent_name=s6-supervise loadavg_1m=0.22 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 02:27:29,295 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=118 parent_name=s6-supervise loadavg_1m=0.22 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 02:27:50,933 WARNING gateway.run: No user allowlists configured. All unauthorized users will be denied. Set GATEWAY_ALLOW_ALL_USERS=true in ~/.hermes/.env to allow open access, or configure platform allowlists (e.g., TELEGRAM_ALLOWED_USERS=your_id).
+2026-06-24 02:27:50,965 WARNING gateway.run: No messaging platforms enabled.
+2026-06-24 02:28:59,691 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=121 parent_name=s6-supervise loadavg_1m=0.14 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 02:28:59,988 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=121 parent_name=s6-supervise loadavg_1m=0.14 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 02:28:59,995 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=121 parent_name=s6-supervise loadavg_1m=0.14 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 02:29:22,440 WARNING gateway.run: No messaging platforms enabled.
+2026-06-24 02:30:32,737 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=121 parent_name=s6-supervise loadavg_1m=0.14 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 02:30:33,035 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=121 parent_name=s6-supervise loadavg_1m=0.14 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 02:36:00,763 WARNING gateway.run: No user allowlists configured. All unauthorized users will be denied. Set GATEWAY_ALLOW_ALL_USERS=true in ~/.hermes/.env to allow open access, or configure platform allowlists (e.g., TELEGRAM_ALLOWED_USERS=your_id).
+2026-06-24 02:36:00,795 WARNING gateway.run: No messaging platforms enabled.
+2026-06-24 02:48:35,749 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=121 parent_name=s6-supervise loadavg_1m=0.22 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 02:48:35,756 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=121 parent_name=s6-supervise loadavg_1m=0.22 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 02:48:36,111 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=121 parent_name=s6-supervise loadavg_1m=0.22 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 02:49:43,356 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=120 parent_name=s6-supervise loadavg_1m=0.24 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 02:49:43,364 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=120 parent_name=s6-supervise loadavg_1m=0.24 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 02:49:43,370 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=120 parent_name=s6-supervise loadavg_1m=0.24 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 02:50:15,860 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=121 parent_name=s6-supervise loadavg_1m=0.42 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 02:50:15,898 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=121 parent_name=s6-supervise loadavg_1m=0.42 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 02:50:55,502 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 02:50:56,736 WARNING agent.auxiliary_client: Auxiliary: marking openrouter unhealthy for 60s (payment / credit error). Subsequent auxiliary calls will skip it until 02:51:56.
+2026-06-24 02:50:56,778 WARNING agent.auxiliary_client: Auxiliary Nous client unavailable: no Nous authentication found (run: hermes auth).
+2026-06-24 02:50:56,780 WARNING agent.auxiliary_client: Auxiliary: marking nous unhealthy for 60s (payment / credit error). Subsequent auxiliary calls will skip it until 02:51:56.
+2026-06-24 02:50:56,890 WARNING agent.auxiliary_client: Auxiliary: marking openrouter unhealthy for 60s (payment / credit error). Subsequent auxiliary calls will skip it until 02:51:56.
+2026-06-24 02:50:56,925 WARNING agent.auxiliary_client: Auxiliary Nous client unavailable: no Nous authentication found (run: hermes auth).
+2026-06-24 02:50:56,926 WARNING agent.auxiliary_client: Auxiliary: marking nous unhealthy for 60s (payment / credit error). Subsequent auxiliary calls will skip it until 02:51:56.
+2026-06-24 02:50:57,678 WARNING agent.auxiliary_client: Auxiliary: marking openrouter unhealthy for 60s (payment / credit error). Subsequent auxiliary calls will skip it until 02:51:57.
+2026-06-24 02:50:57,714 WARNING agent.auxiliary_client: Auxiliary Nous client unavailable: no Nous authentication found (run: hermes auth).
+2026-06-24 02:50:57,715 WARNING agent.auxiliary_client: Auxiliary: marking nous unhealthy for 60s (payment / credit error). Subsequent auxiliary calls will skip it until 02:51:57.
+2026-06-24 02:50:57,825 WARNING agent.auxiliary_client: Auxiliary: marking openrouter unhealthy for 60s (payment / credit error). Subsequent auxiliary calls will skip it until 02:51:57.
+2026-06-24 02:50:57,858 WARNING agent.auxiliary_client: Auxiliary Nous client unavailable: no Nous authentication found (run: hermes auth).
+2026-06-24 02:50:57,859 WARNING agent.auxiliary_client: Auxiliary: marking nous unhealthy for 60s (payment / credit error). Subsequent auxiliary calls will skip it until 02:51:57.
+2026-06-24 02:50:58,035 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 02:50:58,173 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 02:51:00,912 WARNING [api-fc003278e1a009b2] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIConnectionError thread=asyncio_1:138312769595072 provider=openrouter base_url=https://openrouter.ai/api/v1 model=anthropic/claude-opus-4.6 summary=Connection error.
+2026-06-24 02:51:00,914 WARNING [api-fc003278e1a009b2] agent.conversation_loop: Retrying API call in 2.0611510308406835s (attempt 1/3) thread=asyncio_1:138312769595072 provider=openrouter base_url=https://openrouter.ai/api/v1 model=anthropic/claude-opus-4.6 error=Connection error.
+2026-06-24 02:51:03,261 WARNING [api-fc003278e1a009b2] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIConnectionError thread=asyncio_1:138312769595072 provider=openrouter base_url=https://openrouter.ai/api/v1 model=anthropic/claude-opus-4.6 summary=Connection error.
+2026-06-24 02:51:03,262 WARNING [api-fc003278e1a009b2] agent.conversation_loop: Retrying API call in 4.7513319447046s (attempt 2/3) thread=asyncio_1:138312769595072 provider=openrouter base_url=https://openrouter.ai/api/v1 model=anthropic/claude-opus-4.6 error=Connection error.
+2026-06-24 02:51:08,209 WARNING [api-fc003278e1a009b2] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIConnectionError thread=asyncio_1:138312769595072 provider=openrouter base_url=https://openrouter.ai/api/v1 model=anthropic/claude-opus-4.6 summary=Connection error.
+2026-06-24 02:51:08,211 ERROR [api-fc003278e1a009b2] agent.conversation_loop: API call failed after 3 retries. Connection error. | provider=openrouter model=anthropic/claude-opus-4.6 msgs=2 tokens=~3,753
+2026-06-24 02:54:11,204 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=121 parent_name=s6-supervise loadavg_1m=0.02 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 02:54:11,213 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=121 parent_name=s6-supervise loadavg_1m=0.02 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 02:54:11,220 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=121 parent_name=s6-supervise loadavg_1m=0.02 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 02:54:39,364 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 02:54:40,460 WARNING agent.auxiliary_client: Auxiliary: marking openrouter unhealthy for 60s (payment / credit error). Subsequent auxiliary calls will skip it until 02:55:40.
+2026-06-24 02:54:40,490 WARNING agent.auxiliary_client: Auxiliary Nous client unavailable: no Nous authentication found (run: hermes auth).
+2026-06-24 02:54:40,491 WARNING agent.auxiliary_client: Auxiliary: marking nous unhealthy for 60s (payment / credit error). Subsequent auxiliary calls will skip it until 02:55:40.
+2026-06-24 02:54:40,578 WARNING agent.auxiliary_client: Auxiliary: marking openrouter unhealthy for 60s (payment / credit error). Subsequent auxiliary calls will skip it until 02:55:40.
+2026-06-24 02:54:40,605 WARNING agent.auxiliary_client: Auxiliary Nous client unavailable: no Nous authentication found (run: hermes auth).
+2026-06-24 02:54:40,606 WARNING agent.auxiliary_client: Auxiliary: marking nous unhealthy for 60s (payment / credit error). Subsequent auxiliary calls will skip it until 02:55:40.
+2026-06-24 02:54:41,270 WARNING agent.auxiliary_client: Auxiliary: marking openrouter unhealthy for 60s (payment / credit error). Subsequent auxiliary calls will skip it until 02:55:41.
+2026-06-24 02:54:41,298 WARNING agent.auxiliary_client: Auxiliary Nous client unavailable: no Nous authentication found (run: hermes auth).
+2026-06-24 02:54:41,299 WARNING agent.auxiliary_client: Auxiliary: marking nous unhealthy for 60s (payment / credit error). Subsequent auxiliary calls will skip it until 02:55:41.
+2026-06-24 02:54:41,390 WARNING agent.auxiliary_client: Auxiliary: marking openrouter unhealthy for 60s (payment / credit error). Subsequent auxiliary calls will skip it until 02:55:41.
+2026-06-24 02:54:41,418 WARNING agent.auxiliary_client: Auxiliary Nous client unavailable: no Nous authentication found (run: hermes auth).
+2026-06-24 02:54:41,419 WARNING agent.auxiliary_client: Auxiliary: marking nous unhealthy for 60s (payment / credit error). Subsequent auxiliary calls will skip it until 02:55:41.
+2026-06-24 02:54:41,591 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 02:54:41,719 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 02:54:43,319 WARNING [api-a62fa2f5734b75f6] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIConnectionError thread=asyncio_0:139455873550016 provider=openrouter base_url=https://openrouter.ai/api/v1 model=anthropic/claude-opus-4.6 summary=Connection error.
+2026-06-24 02:54:43,321 WARNING [api-a62fa2f5734b75f6] agent.conversation_loop: Retrying API call in 2.251974171685271s (attempt 1/3) thread=asyncio_0:139455873550016 provider=openrouter base_url=https://openrouter.ai/api/v1 model=anthropic/claude-opus-4.6 error=Connection error.
+2026-06-24 02:54:45,866 WARNING [api-a62fa2f5734b75f6] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIConnectionError thread=asyncio_0:139455873550016 provider=openrouter base_url=https://openrouter.ai/api/v1 model=anthropic/claude-opus-4.6 summary=Connection error.
+2026-06-24 02:54:45,868 WARNING [api-a62fa2f5734b75f6] agent.conversation_loop: Retrying API call in 5.606303199001308s (attempt 2/3) thread=asyncio_0:139455873550016 provider=openrouter base_url=https://openrouter.ai/api/v1 model=anthropic/claude-opus-4.6 error=Connection error.
+2026-06-24 02:54:51,813 WARNING [api-a62fa2f5734b75f6] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIConnectionError thread=asyncio_0:139455873550016 provider=openrouter base_url=https://openrouter.ai/api/v1 model=anthropic/claude-opus-4.6 summary=Connection error.
+2026-06-24 02:54:51,814 ERROR [api-a62fa2f5734b75f6] agent.conversation_loop: API call failed after 3 retries. Connection error. | provider=openrouter model=anthropic/claude-opus-4.6 msgs=2 tokens=~3,765
+2026-06-24 02:56:16,114 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 02:58:47,692 WARNING [api-a62fa2f5734b75f6] agent.conversation_loop: API call failed (attempt 1/3) error_type=APITimeoutError thread=asyncio_1:133067035207360 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Request timed out.
+2026-06-24 02:58:47,695 WARNING [api-a62fa2f5734b75f6] agent.conversation_loop: Retrying API call in 2.9126389963849246s (attempt 1/3) thread=asyncio_1:133067035207360 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Request timed out.
+2026-06-24 02:59:19,234 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=128 parent_name=s6-supervise loadavg_1m=0.05 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 02:59:19,261 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=128 parent_name=s6-supervise loadavg_1m=0.05 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 02:59:19,267 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=128 parent_name=s6-supervise loadavg_1m=0.05 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 02:59:59,754 ERROR gateway.platforms.api_server: Error running agent for chat completions: Failed to initialize OpenAI client: REQUESTS_CA_BUNDLE points to a missing CA bundle: ""
+Repair: python -m pip install --force-reinstall certifi openai httpx
+If you configured a custom corporate CA bundle, fix or unset the broken CA bundle environment variable.
+Traceback (most recent call last):
+  File "/opt/hermes/agent/agent_init.py", line 909, in init_agent
+    verify_ca_bundle_with_fallback()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/hermes/agent/ssl_guard.py", line 94, in verify_ca_bundle_with_fallback
+    verify_ca_bundle()
+    ~~~~~~~~~~~~~~~~^^
+  File "/opt/hermes/agent/ssl_guard.py", line 76, in verify_ca_bundle
+    _validate_bundle_path(env_var, value)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/opt/hermes/agent/ssl_guard.py", line 48, in _validate_bundle_path
+    raise _ssl_err(f"{label} points to a missing CA bundle: {value}")
+agent.errors.SSLConfigurationError: REQUESTS_CA_BUNDLE points to a missing CA bundle: ""
+Repair: python -m pip install --force-reinstall certifi openai httpx
+If you configured a custom corporate CA bundle, fix or unset the broken CA bundle environment variable.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/hermes/gateway/platforms/api_server.py", line 1963, in _handle_chat_completions
+    result, usage = await _compute_completion()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hermes/gateway/platforms/api_server.py", line 1942, in _compute_completion
+    return await self._run_agent(
+           ^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/opt/hermes/gateway/platforms/api_server.py", line 3560, in _run_agent
+    return await loop.run_in_executor(None, _run)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/concurrent/futures/thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/opt/hermes/gateway/platforms/api_server.py", line 3528, in _run
+    agent = self._create_agent(
+        ephemeral_system_prompt=ephemeral_system_prompt,
+    ...<5 lines>...
+        gateway_session_key=gateway_session_key,
+    )
+  File "/opt/hermes/gateway/platforms/api_server.py", line 1052, in _create_agent
+    agent = AIAgent(
+        model=model,
+    ...<15 lines>...
+        gateway_session_key=gateway_session_key,
+    )
+  File "/opt/hermes/run_agent.py", line 418, in __init__
+    init_agent(
+    ~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<69 lines>...
+        pass_session_id=pass_session_id,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/opt/hermes/agent/agent_init.py", line 929, in init_agent
+    raise RuntimeError(f"Failed to initialize OpenAI client: {e}")
+RuntimeError: Failed to initialize OpenAI client: REQUESTS_CA_BUNDLE points to a missing CA bundle: ""
+Repair: python -m pip install --force-reinstall certifi openai httpx
+If you configured a custom corporate CA bundle, fix or unset the broken CA bundle environment variable.
+2026-06-24 03:01:06,770 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=126 parent_name=s6-supervise loadavg_1m=0.17 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 03:01:06,797 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=126 parent_name=s6-supervise loadavg_1m=0.17 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 03:01:44,300 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 03:02:16,748 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=122 parent_name=s6-supervise loadavg_1m=0.21 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 03:02:16,776 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=122 parent_name=s6-supervise loadavg_1m=0.21 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 03:03:32,313 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 03:06:03,896 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=APITimeoutError thread=asyncio_1:130764238747328 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Request timed out.
+2026-06-24 03:06:03,899 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.6006929422869964s (attempt 1/3) thread=asyncio_1:130764238747328 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Request timed out.
+2026-06-24 03:06:38,411 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed (attempt 1/3) error_type=APITimeoutError thread=asyncio_0:130764464064192 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Request timed out.
+2026-06-24 03:06:38,413 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: Retrying API call in 2.1190565651235937s (attempt 1/3) thread=asyncio_0:130764464064192 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Request timed out.
+2026-06-24 03:06:49,331 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed (attempt 1/3) error_type=APITimeoutError thread=asyncio_3:130764203087552 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Request timed out.
+2026-06-24 03:06:49,333 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: Retrying API call in 2.9120013681697254s (attempt 1/3) thread=asyncio_3:130764203087552 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Request timed out.
+2026-06-24 03:07:02,999 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=APITimeoutError thread=asyncio_4:130764184204992 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Request timed out.
+2026-06-24 03:07:03,001 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.704977996100705s (attempt 1/3) thread=asyncio_4:130764184204992 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Request timed out.
+2026-06-24 03:07:03,350 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=APITimeoutError thread=asyncio_2:130764211480256 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Request timed out.
+2026-06-24 03:07:03,353 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.1022625525896492s (attempt 1/3) thread=asyncio_2:130764211480256 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Request timed out.
+2026-06-24 03:07:10,114 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=APITimeoutError thread=asyncio_1:130764238747328 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Request timed out.
+2026-06-24 03:07:10,116 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 4.937928157343728s (attempt 2/3) thread=asyncio_1:130764238747328 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Request timed out.
+2026-06-24 03:07:43,978 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIConnectionError thread=asyncio_0:130764464064192 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:07:43,979 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: Retrying API call in 4.262021091928598s (attempt 2/3) thread=asyncio_0:130764464064192 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Connection error.
+2026-06-24 03:07:55,734 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIConnectionError thread=asyncio_3:130764203087552 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:07:55,735 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: Retrying API call in 5.204019055654188s (attempt 2/3) thread=asyncio_3:130764203087552 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Connection error.
+2026-06-24 03:08:06,995 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIConnectionError thread=asyncio_5:130763827701440 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:08:06,997 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.0226296806743043s (attempt 1/3) thread=asyncio_5:130763827701440 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Connection error.
+2026-06-24 03:08:08,918 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIConnectionError thread=asyncio_2:130764211480256 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:08:08,920 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 5.4188330088309895s (attempt 2/3) thread=asyncio_2:130764211480256 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Connection error.
+2026-06-24 03:08:09,182 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIConnectionError thread=asyncio_4:130764184204992 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:08:09,185 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 5.042866947349797s (attempt 2/3) thread=asyncio_4:130764184204992 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Connection error.
+2026-06-24 03:08:18,515 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIConnectionError thread=asyncio_1:130764238747328 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:08:51,735 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIConnectionError thread=asyncio_0:130764464064192 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:09:04,334 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIConnectionError thread=asyncio_3:130764203087552 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:09:11,117 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIConnectionError thread=asyncio_6:130763794130624 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:09:11,119 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.601275591103125s (attempt 1/3) thread=asyncio_6:130763794130624 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Connection error.
+2026-06-24 03:09:12,583 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIConnectionError thread=asyncio_5:130763827701440 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:09:12,584 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 4.4844780347979905s (attempt 2/3) thread=asyncio_5:130763827701440 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Connection error.
+2026-06-24 03:09:17,751 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIConnectionError thread=asyncio_4:130764184204992 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:09:17,900 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIConnectionError thread=asyncio_2:130764211480256 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:09:27,929 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIConnectionError thread=asyncio_1:130764238747328 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:09:27,932 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.2304208685208957s (attempt 1/3) thread=asyncio_1:130764238747328 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Connection error.
+2026-06-24 03:10:01,087 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIConnectionError thread=asyncio_0:130764464064192 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:10:01,089 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: Retrying API call in 2.206154419396316s (attempt 1/3) thread=asyncio_0:130764464064192 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Connection error.
+2026-06-24 03:10:13,733 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIConnectionError thread=asyncio_3:130764203087552 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:10:13,735 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: Retrying API call in 2.548308602619663s (attempt 1/3) thread=asyncio_3:130764203087552 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Connection error.
+2026-06-24 03:10:17,118 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIConnectionError thread=asyncio_6:130763794130624 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:10:17,120 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 5.477689379890198s (attempt 2/3) thread=asyncio_6:130763794130624 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Connection error.
+2026-06-24 03:10:20,568 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIConnectionError thread=asyncio_5:130763827701440 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:10:27,070 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIConnectionError thread=asyncio_4:130764184204992 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:10:27,072 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.719782047319243s (attempt 1/3) thread=asyncio_4:130764184204992 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Connection error.
+2026-06-24 03:10:27,234 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIConnectionError thread=asyncio_2:130764211480256 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:10:27,236 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.1560330687103826s (attempt 1/3) thread=asyncio_2:130764211480256 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Connection error.
+2026-06-24 03:10:33,731 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIConnectionError thread=asyncio_1:130764238747328 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:10:33,733 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 4.882405978635096s (attempt 2/3) thread=asyncio_1:130764238747328 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Connection error.
+2026-06-24 03:11:06,833 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIConnectionError thread=asyncio_0:130764464064192 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:11:06,835 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: Retrying API call in 4.844141692723148s (attempt 2/3) thread=asyncio_0:130764464064192 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Connection error.
+2026-06-24 03:11:19,701 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIConnectionError thread=asyncio_3:130764203087552 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:11:19,703 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: Retrying API call in 4.910062060274607s (attempt 2/3) thread=asyncio_3:130764203087552 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Connection error.
+2026-06-24 03:11:26,068 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIConnectionError thread=asyncio_6:130763794130624 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:11:29,915 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIConnectionError thread=asyncio_5:130763827701440 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:11:29,916 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.6079695797903324s (attempt 1/3) thread=asyncio_5:130763827701440 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Connection error.
+2026-06-24 03:11:32,751 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIConnectionError thread=asyncio_2:130764211480256 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:11:32,752 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 4.528461498909884s (attempt 2/3) thread=asyncio_2:130764211480256 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Connection error.
+2026-06-24 03:11:33,167 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIConnectionError thread=asyncio_4:130764184204992 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:11:33,169 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 5.309122481936468s (attempt 2/3) thread=asyncio_4:130764184204992 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Connection error.
+2026-06-24 03:11:42,055 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIConnectionError thread=asyncio_1:130764238747328 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:11:42,056 ERROR [api-2ff921dcc0577caa] agent.conversation_loop: API call failed after 3 retries. Connection error. | provider=custom model=Qwen/Qwen3.6-27B msgs=2 tokens=~3,937
+2026-06-24 03:12:15,235 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIConnectionError thread=asyncio_0:130764464064192 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:12:15,237 ERROR [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed after 3 retries. Connection error. | provider=custom model=Qwen/Qwen3.6-27B msgs=2 tokens=~3,940
+2026-06-24 03:12:28,017 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIConnectionError thread=asyncio_3:130764203087552 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:12:28,019 ERROR [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed after 3 retries. Connection error. | provider=custom model=Qwen/Qwen3.6-27B msgs=2 tokens=~3,940
+2026-06-24 03:12:35,450 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIConnectionError thread=asyncio_6:130763794130624 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:12:35,452 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.5455887927939216s (attempt 1/3) thread=asyncio_6:130763794130624 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Connection error.
+2026-06-24 03:12:36,050 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIConnectionError thread=asyncio_5:130763827701440 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:12:36,052 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 5.783322119687378s (attempt 2/3) thread=asyncio_5:130763827701440 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Connection error.
+2026-06-24 03:12:40,699 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIConnectionError thread=asyncio_2:130764211480256 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:12:40,700 ERROR [api-2ff921dcc0577caa] agent.conversation_loop: API call failed after 3 retries. Connection error. | provider=custom model=Qwen/Qwen3.6-27B msgs=2 tokens=~3,937
+2026-06-24 03:12:41,914 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIConnectionError thread=asyncio_4:130764184204992 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:12:41,916 ERROR [api-2ff921dcc0577caa] agent.conversation_loop: API call failed after 3 retries. Connection error. | provider=custom model=Qwen/Qwen3.6-27B msgs=2 tokens=~3,937
+2026-06-24 03:13:41,406 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIConnectionError thread=asyncio_6:130763794130624 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:13:41,408 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 4.731261378001675s (attempt 2/3) thread=asyncio_6:130763794130624 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Connection error.
+2026-06-24 03:13:45,216 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIConnectionError thread=asyncio_5:130763827701440 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:13:45,218 ERROR [api-2ff921dcc0577caa] agent.conversation_loop: API call failed after 3 retries. Connection error. | provider=custom model=Qwen/Qwen3.6-27B msgs=2 tokens=~3,937
+2026-06-24 03:14:49,563 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIConnectionError thread=asyncio_6:130763794130624 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:14:49,565 ERROR [api-2ff921dcc0577caa] agent.conversation_loop: API call failed after 3 retries. Connection error. | provider=custom model=Qwen/Qwen3.6-27B msgs=2 tokens=~3,937
+2026-06-24 03:16:04,464 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=125 parent_name=s6-supervise loadavg_1m=0.05 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 03:16:04,494 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=125 parent_name=s6-supervise loadavg_1m=0.05 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 03:16:04,500 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=125 parent_name=s6-supervise loadavg_1m=0.05 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 03:17:05,520 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 03:19:36,949 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIConnectionError thread=asyncio_1:139838453515968 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:19:36,950 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.064048732765416s (attempt 1/3) thread=asyncio_1:139838453515968 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Connection error.
+2026-06-24 03:19:56,849 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIConnectionError thread=asyncio_2:139838219089600 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B summary=Connection error.
+2026-06-24 03:19:56,850 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: Retrying API call in 2.9917125114697587s (attempt 1/3) thread=asyncio_2:139838219089600 provider=custom base_url=https://phison.com model=Qwen/Qwen3.6-27B error=Connection error.
+2026-06-24 03:20:20,943 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=122 parent_name=s6-supervise loadavg_1m=0.06 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 03:20:20,996 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=122 parent_name=s6-supervise loadavg_1m=0.06 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 03:20:21,005 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=122 parent_name=s6-supervise loadavg_1m=0.06 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 03:20:59,012 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 03:21:11,480 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=126 parent_name=s6-supervise loadavg_1m=0.67 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 03:21:11,528 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=126 parent_name=s6-supervise loadavg_1m=0.67 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 03:21:11,539 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=126 parent_name=s6-supervise loadavg_1m=0.67 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 03:23:11,393 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 03:23:14,250 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIStatusError thread=asyncio_1:138324899706560 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 302: Error code: 302
+2026-06-24 03:23:14,252 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.865757170208233s (attempt 1/3) thread=asyncio_1:138324899706560 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct error=Error code: 302
+2026-06-24 03:23:17,591 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIStatusError thread=asyncio_1:138324899706560 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 302: Error code: 302
+2026-06-24 03:23:17,593 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 4.778147539313419s (attempt 2/3) thread=asyncio_1:138324899706560 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct error=Error code: 302
+2026-06-24 03:23:23,829 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIStatusError thread=asyncio_1:138324899706560 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 302: Error code: 302
+2026-06-24 03:23:23,830 ERROR [api-2ff921dcc0577caa] agent.conversation_loop: API call failed after 3 retries. HTTP 302: Error code: 302 | provider=custom model=Qwen/Qwen2.5-7B-Instruct msgs=2 tokens=~3,939
+2026-06-24 03:23:29,025 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIStatusError thread=asyncio_1:138324899706560 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 302: Error code: 302
+2026-06-24 03:23:29,026 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.1638346659421757s (attempt 1/3) thread=asyncio_1:138324899706560 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct error=Error code: 302
+2026-06-24 03:23:31,596 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIStatusError thread=asyncio_1:138324899706560 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 302: Error code: 302
+2026-06-24 03:23:31,599 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 4.914551760466613s (attempt 2/3) thread=asyncio_1:138324899706560 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct error=Error code: 302
+2026-06-24 03:23:36,967 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIStatusError thread=asyncio_1:138324899706560 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 302: Error code: 302
+2026-06-24 03:23:36,969 ERROR [api-2ff921dcc0577caa] agent.conversation_loop: API call failed after 3 retries. HTTP 302: Error code: 302 | provider=custom model=Qwen/Qwen2.5-7B-Instruct msgs=2 tokens=~3,939
+2026-06-24 03:23:42,476 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIStatusError thread=asyncio_0:138324918589120 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 302: Error code: 302
+2026-06-24 03:23:42,478 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.816453710276282s (attempt 1/3) thread=asyncio_0:138324918589120 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct error=Error code: 302
+2026-06-24 03:23:45,873 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIStatusError thread=asyncio_0:138324918589120 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 302: Error code: 302
+2026-06-24 03:23:45,876 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 4.799646064186764s (attempt 2/3) thread=asyncio_0:138324918589120 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct error=Error code: 302
+2026-06-24 03:23:51,075 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIStatusError thread=asyncio_0:138324918589120 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 302: Error code: 302
+2026-06-24 03:23:51,077 ERROR [api-2ff921dcc0577caa] agent.conversation_loop: API call failed after 3 retries. HTTP 302: Error code: 302 | provider=custom model=Qwen/Qwen2.5-7B-Instruct msgs=2 tokens=~3,939
+2026-06-24 03:23:56,434 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIStatusError thread=asyncio_0:138324918589120 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 302: Error code: 302
+2026-06-24 03:23:56,436 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.333167325743838s (attempt 1/3) thread=asyncio_0:138324918589120 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct error=Error code: 302
+2026-06-24 03:23:59,230 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIStatusError thread=asyncio_0:138324918589120 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 302: Error code: 302
+2026-06-24 03:23:59,231 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 5.538897156059457s (attempt 2/3) thread=asyncio_0:138324918589120 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct error=Error code: 302
+2026-06-24 03:24:05,192 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIStatusError thread=asyncio_0:138324918589120 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 302: Error code: 302
+2026-06-24 03:24:05,194 ERROR [api-2ff921dcc0577caa] agent.conversation_loop: API call failed after 3 retries. HTTP 302: Error code: 302 | provider=custom model=Qwen/Qwen2.5-7B-Instruct msgs=2 tokens=~3,939
+2026-06-24 03:24:10,540 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIStatusError thread=asyncio_0:138324918589120 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 302: Error code: 302
+2026-06-24 03:24:10,542 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.8891793955972784s (attempt 1/3) thread=asyncio_0:138324918589120 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct error=Error code: 302
+2026-06-24 03:24:13,915 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIStatusError thread=asyncio_0:138324918589120 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 302: Error code: 302
+2026-06-24 03:24:13,917 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 5.936982060797024s (attempt 2/3) thread=asyncio_0:138324918589120 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct error=Error code: 302
+2026-06-24 03:24:19,228 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=126 parent_name=s6-supervise loadavg_1m=0.37 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 03:24:19,273 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=126 parent_name=s6-supervise loadavg_1m=0.37 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 03:24:19,283 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=126 parent_name=s6-supervise loadavg_1m=0.37 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 03:25:00,299 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 03:25:00,397 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 03:25:03,075 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIStatusError thread=asyncio_0:132000735168192 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 302: Error code: 302
+2026-06-24 03:25:03,077 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: Retrying API call in 2.299607746528264s (attempt 1/3) thread=asyncio_0:132000735168192 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct error=Error code: 302
+2026-06-24 03:25:03,742 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIStatusError thread=asyncio_1:132000644064960 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 302: Error code: 302
+2026-06-24 03:25:03,744 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.550730378313096s (attempt 1/3) thread=asyncio_1:132000644064960 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct error=Error code: 302
+2026-06-24 03:25:06,114 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIStatusError thread=asyncio_0:132000735168192 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 302: Error code: 302
+2026-06-24 03:25:06,116 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: Retrying API call in 4.931135328467668s (attempt 2/3) thread=asyncio_0:132000735168192 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct error=Error code: 302
+2026-06-24 03:25:06,736 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIStatusError thread=asyncio_1:132000644064960 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 302: Error code: 302
+2026-06-24 03:25:06,738 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 5.433971602548276s (attempt 2/3) thread=asyncio_1:132000644064960 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct error=Error code: 302
+2026-06-24 03:25:11,520 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIStatusError thread=asyncio_0:132000735168192 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 302: Error code: 302
+2026-06-24 03:25:11,522 ERROR [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed after 3 retries. HTTP 302: Error code: 302 | provider=custom model=Qwen/Qwen2.5-7B-Instruct msgs=2 tokens=~3,942
+2026-06-24 03:25:12,707 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIStatusError thread=asyncio_1:132000644064960 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 302: Error code: 302
+2026-06-24 03:25:12,709 ERROR [api-2ff921dcc0577caa] agent.conversation_loop: API call failed after 3 retries. HTTP 302: Error code: 302 | provider=custom model=Qwen/Qwen2.5-7B-Instruct msgs=2 tokens=~3,939
+2026-06-24 03:25:18,085 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIStatusError thread=asyncio_0:132000735168192 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 302: Error code: 302
+2026-06-24 03:25:18,087 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.473306578513886s (attempt 1/3) thread=asyncio_0:132000735168192 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct error=Error code: 302
+2026-06-24 03:25:21,438 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIStatusError thread=asyncio_0:132000735168192 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 302: Error code: 302
+2026-06-24 03:25:21,440 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 5.044566738019282s (attempt 2/3) thread=asyncio_0:132000735168192 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct error=Error code: 302
+2026-06-24 03:25:26,997 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIStatusError thread=asyncio_0:132000735168192 provider=custom base_url=https://huggingface.co model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 302: Error code: 302
+2026-06-24 03:25:26,999 ERROR [api-2ff921dcc0577caa] agent.conversation_loop: API call failed after 3 retries. HTTP 302: Error code: 302 | provider=custom model=Qwen/Qwen2.5-7B-Instruct msgs=2 tokens=~3,939
+2026-06-24 03:25:27,892 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=125 parent_name=s6-supervise loadavg_1m=0.34 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 03:25:27,933 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=125 parent_name=s6-supervise loadavg_1m=0.34 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 03:26:16,245 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 03:26:19,146 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=NotFoundError thread=asyncio_1:128167192819392 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 404 — Error
+2026-06-24 03:26:19,147 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed (attempt 1/3) error_type=NotFoundError thread=asyncio_0:128167417087680 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 404 — Error
+2026-06-24 03:26:19,149 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.9013107452809983s (attempt 1/3) thread=asyncio_1:128167192819392 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct error=<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Cannot POST /v1/chat/completions</pre>
+</body>
+</html>
+2026-06-24 03:26:19,150 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: Retrying API call in 2.7639747196608235s (attempt 1/3) thread=asyncio_0:128167417087680 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct error=<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Cannot POST /v1/chat/completions</pre>
+</body>
+</html>
+2026-06-24 03:26:22,506 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed (attempt 2/3) error_type=NotFoundError thread=asyncio_0:128167417087680 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 404 — Error
+2026-06-24 03:26:22,509 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: Retrying API call in 5.457348290432943s (attempt 2/3) thread=asyncio_0:128167417087680 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct error=<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Cannot POST /v1/chat/completions</pre>
+</body>
+</html>
+2026-06-24 03:26:22,675 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=NotFoundError thread=asyncio_1:128167192819392 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 404 — Error
+2026-06-24 03:26:22,677 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 5.19485647673342s (attempt 2/3) thread=asyncio_1:128167192819392 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct error=<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Cannot POST /v1/chat/completions</pre>
+</body>
+</html>
+2026-06-24 03:26:28,448 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 3/3) error_type=NotFoundError thread=asyncio_1:128167192819392 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 404 — Error
+2026-06-24 03:26:28,450 ERROR [api-2ff921dcc0577caa] agent.conversation_loop: API call failed after 3 retries. HTTP 404 — Error | provider=custom model=Qwen/Qwen2.5-7B-Instruct msgs=2 tokens=~3,939
+2026-06-24 03:26:28,632 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed (attempt 3/3) error_type=NotFoundError thread=asyncio_0:128167417087680 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 404 — Error
+2026-06-24 03:26:28,634 ERROR [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed after 3 retries. HTTP 404 — Error | provider=custom model=Qwen/Qwen2.5-7B-Instruct msgs=2 tokens=~3,942
+2026-06-24 03:26:33,872 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=NotFoundError thread=asyncio_1:128167192819392 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 404 — Error
+2026-06-24 03:26:33,873 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.9630442453264405s (attempt 1/3) thread=asyncio_1:128167192819392 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct error=<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Cannot POST /v1/chat/completions</pre>
+</body>
+</html>
+2026-06-24 03:26:37,504 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=NotFoundError thread=asyncio_1:128167192819392 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 404 — Error
+2026-06-24 03:26:37,505 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 5.054519885636659s (attempt 2/3) thread=asyncio_1:128167192819392 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct error=<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Cannot POST /v1/chat/completions</pre>
+</body>
+</html>
+2026-06-24 03:26:43,259 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 3/3) error_type=NotFoundError thread=asyncio_1:128167192819392 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 404 — Error
+2026-06-24 03:26:43,262 ERROR [api-2ff921dcc0577caa] agent.conversation_loop: API call failed after 3 retries. HTTP 404 — Error | provider=custom model=Qwen/Qwen2.5-7B-Instruct msgs=2 tokens=~3,939
+2026-06-24 03:26:48,445 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=NotFoundError thread=asyncio_2:128167145621184 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 404 — Error
+2026-06-24 03:26:48,447 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.84985948833589s (attempt 1/3) thread=asyncio_2:128167145621184 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct error=<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Cannot POST /v1/chat/completions</pre>
+</body>
+</html>
+2026-06-24 03:26:51,974 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=NotFoundError thread=asyncio_2:128167145621184 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 404 — Error
+2026-06-24 03:26:51,976 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 4.623151179261782s (attempt 2/3) thread=asyncio_2:128167145621184 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct error=<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Cannot POST /v1/chat/completions</pre>
+</body>
+</html>
+2026-06-24 03:26:57,535 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 3/3) error_type=NotFoundError thread=asyncio_2:128167145621184 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 404 — Error
+2026-06-24 03:26:57,537 ERROR [api-2ff921dcc0577caa] agent.conversation_loop: API call failed after 3 retries. HTTP 404 — Error | provider=custom model=Qwen/Qwen2.5-7B-Instruct msgs=2 tokens=~3,939
+2026-06-24 03:27:03,019 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=NotFoundError thread=asyncio_0:128167417087680 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 404 — Error
+2026-06-24 03:27:03,021 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.4718866437749694s (attempt 1/3) thread=asyncio_0:128167417087680 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct error=<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Cannot POST /v1/chat/completions</pre>
+</body>
+</html>
+2026-06-24 03:27:06,208 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=NotFoundError thread=asyncio_0:128167417087680 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 404 — Error
+2026-06-24 03:27:06,210 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 4.703462824330158s (attempt 2/3) thread=asyncio_0:128167417087680 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct error=<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Cannot POST /v1/chat/completions</pre>
+</body>
+</html>
+2026-06-24 03:27:11,538 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 3/3) error_type=NotFoundError thread=asyncio_0:128167417087680 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 404 — Error
+2026-06-24 03:27:11,539 ERROR [api-2ff921dcc0577caa] agent.conversation_loop: API call failed after 3 retries. HTTP 404 — Error | provider=custom model=Qwen/Qwen2.5-7B-Instruct msgs=2 tokens=~3,939
+2026-06-24 03:27:18,002 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=NotFoundError thread=asyncio_1:128167192819392 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 404 — Error
+2026-06-24 03:27:18,003 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.799329782326468s (attempt 1/3) thread=asyncio_1:128167192819392 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct error=<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Cannot POST /v1/chat/completions</pre>
+</body>
+</html>
+2026-06-24 03:27:21,559 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=NotFoundError thread=asyncio_1:128167192819392 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 404 — Error
+2026-06-24 03:27:21,561 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 4.376658783088331s (attempt 2/3) thread=asyncio_1:128167192819392 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct error=<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Cannot POST /v1/chat/completions</pre>
+</body>
+</html>
+2026-06-24 03:27:26,544 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 3/3) error_type=NotFoundError thread=asyncio_1:128167192819392 provider=custom base_url=https://huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 404 — Error
+2026-06-24 03:27:26,545 ERROR [api-2ff921dcc0577caa] agent.conversation_loop: API call failed after 3 retries. HTTP 404 — Error | provider=custom model=Qwen/Qwen2.5-7B-Instruct msgs=2 tokens=~3,939
+2026-06-24 03:31:45,590 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 03:31:48,295 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed (attempt 1/3) error_type=NotFoundError thread=asyncio_0:128429222139584 provider=custom base_url=https://huggingface.co/v1/chat/completions model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 404 — Error
+2026-06-24 03:31:48,296 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: Retrying API call in 2.801440746746303s (attempt 1/3) thread=asyncio_0:128429222139584 provider=custom base_url=https://huggingface.co/v1/chat/completions model=Qwen/Qwen2.5-7B-Instruct error=<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Cannot POST /v1/chat/completions/chat/completions</pre>
+</body>
+</html>
+2026-06-24 03:31:51,654 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed (attempt 2/3) error_type=NotFoundError thread=asyncio_0:128429222139584 provider=custom base_url=https://huggingface.co/v1/chat/completions model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 404 — Error
+2026-06-24 03:31:51,656 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: Retrying API call in 5.531416857477924s (attempt 2/3) thread=asyncio_0:128429222139584 provider=custom base_url=https://huggingface.co/v1/chat/completions model=Qwen/Qwen2.5-7B-Instruct error=<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Cannot POST /v1/chat/completions/chat/completions</pre>
+</body>
+</html>
+2026-06-24 03:31:55,699 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=NotFoundError thread=asyncio_2:128428968765120 provider=custom base_url=https://huggingface.co/v1/chat/completions model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 404 — Error
+2026-06-24 03:31:55,701 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.2383081180206723s (attempt 1/3) thread=asyncio_2:128428968765120 provider=custom base_url=https://huggingface.co/v1/chat/completions model=Qwen/Qwen2.5-7B-Instruct error=<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Cannot POST /v1/chat/completions/chat/completions</pre>
+</body>
+</html>
+2026-06-24 03:31:57,781 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed (attempt 3/3) error_type=NotFoundError thread=asyncio_0:128429222139584 provider=custom base_url=https://huggingface.co/v1/chat/completions model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 404 — Error
+2026-06-24 03:31:57,783 ERROR [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed after 3 retries. HTTP 404 — Error | provider=custom model=Qwen/Qwen2.5-7B-Instruct msgs=2 tokens=~3,942
+2026-06-24 03:31:59,231 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=NotFoundError thread=asyncio_2:128428968765120 provider=custom base_url=https://huggingface.co/v1/chat/completions model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 404 — Error
+2026-06-24 03:31:59,233 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 5.5569946791185085s (attempt 2/3) thread=asyncio_2:128428968765120 provider=custom base_url=https://huggingface.co/v1/chat/completions model=Qwen/Qwen2.5-7B-Instruct error=<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Cannot POST /v1/chat/completions/chat/completions</pre>
+</body>
+</html>
+2026-06-24 03:32:05,363 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 3/3) error_type=NotFoundError thread=asyncio_2:128428968765120 provider=custom base_url=https://huggingface.co/v1/chat/completions model=Qwen/Qwen2.5-7B-Instruct summary=HTTP 404 — Error
+2026-06-24 03:32:05,367 ERROR [api-2ff921dcc0577caa] agent.conversation_loop: API call failed after 3 retries. HTTP 404 — Error | provider=custom model=Qwen/Qwen2.5-7B-Instruct msgs=2 tokens=~3,939
+2026-06-24 03:32:08,806 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=128 parent_name=s6-supervise loadavg_1m=0.35 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 03:32:08,845 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=128 parent_name=s6-supervise loadavg_1m=0.35 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 03:35:52,558 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 03:35:54,287 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIConnectionError thread=asyncio_0:132585439098560 provider=custom base_url=https://api-inference.huggingface.co/v1/models/Qwen/Qwen2.5-7B-Instruct model=Qwen/Qwen2.5-7B-Instruct summary=Connection error.
+2026-06-24 03:35:54,289 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.1593095020566895s (attempt 1/3) thread=asyncio_0:132585439098560 provider=custom base_url=https://api-inference.huggingface.co/v1/models/Qwen/Qwen2.5-7B-Instruct model=Qwen/Qwen2.5-7B-Instruct error=Connection error.
+2026-06-24 03:35:56,572 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIConnectionError thread=asyncio_0:132585439098560 provider=custom base_url=https://api-inference.huggingface.co/v1/models/Qwen/Qwen2.5-7B-Instruct model=Qwen/Qwen2.5-7B-Instruct summary=Connection error.
+2026-06-24 03:35:56,573 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 4.7328498405135555s (attempt 2/3) thread=asyncio_0:132585439098560 provider=custom base_url=https://api-inference.huggingface.co/v1/models/Qwen/Qwen2.5-7B-Instruct model=Qwen/Qwen2.5-7B-Instruct error=Connection error.
+2026-06-24 03:36:01,018 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=122 parent_name=s6-supervise loadavg_1m=0.31 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 03:36:01,055 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=122 parent_name=s6-supervise loadavg_1m=0.31 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 03:36:01,063 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=122 parent_name=s6-supervise loadavg_1m=0.31 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 03:36:01,476 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIConnectionError thread=asyncio_0:132585439098560 provider=custom base_url=https://api-inference.huggingface.co/v1/models/Qwen/Qwen2.5-7B-Instruct model=Qwen/Qwen2.5-7B-Instruct summary=Connection error.
+2026-06-24 03:43:39,208 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 03:43:40,799 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIConnectionError thread=asyncio_0:124182715041472 provider=custom base_url=https://api-inference.huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=Connection error.
+2026-06-24 03:43:40,801 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.4269293529411327s (attempt 1/3) thread=asyncio_0:124182715041472 provider=custom base_url=https://api-inference.huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct error=Connection error.
+2026-06-24 03:43:43,507 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIConnectionError thread=asyncio_0:124182715041472 provider=custom base_url=https://api-inference.huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=Connection error.
+2026-06-24 03:43:43,508 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 4.01443156089108s (attempt 2/3) thread=asyncio_0:124182715041472 provider=custom base_url=https://api-inference.huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct error=Connection error.
+2026-06-24 03:43:47,828 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIConnectionError thread=asyncio_0:124182715041472 provider=custom base_url=https://api-inference.huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=Connection error.
+2026-06-24 03:43:53,952 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIConnectionError thread=asyncio_0:124182715041472 provider=custom base_url=https://api-inference.huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=Connection error.
+2026-06-24 03:43:53,953 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.1212796201916904s (attempt 1/3) thread=asyncio_0:124182715041472 provider=custom base_url=https://api-inference.huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct error=Connection error.
+2026-06-24 03:43:56,250 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIConnectionError thread=asyncio_0:124182715041472 provider=custom base_url=https://api-inference.huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=Connection error.
+2026-06-24 03:43:56,251 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 5.597427558512271s (attempt 2/3) thread=asyncio_0:124182715041472 provider=custom base_url=https://api-inference.huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct error=Connection error.
+2026-06-24 03:44:01,941 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIConnectionError thread=asyncio_0:124182715041472 provider=custom base_url=https://api-inference.huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=Connection error.
+2026-06-24 03:44:01,942 ERROR [api-2ff921dcc0577caa] agent.conversation_loop: API call failed after 3 retries. Connection error. | provider=custom model=Qwen/Qwen2.5-7B-Instruct msgs=2 tokens=~3,939
+2026-06-24 03:44:06,669 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIConnectionError thread=asyncio_2:124182461408960 provider=custom base_url=https://api-inference.huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=Connection error.
+2026-06-24 03:44:06,671 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.783859786040402s (attempt 1/3) thread=asyncio_2:124182461408960 provider=custom base_url=https://api-inference.huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct error=Connection error.
+2026-06-24 03:44:09,579 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIConnectionError thread=asyncio_2:124182461408960 provider=custom base_url=https://api-inference.huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=Connection error.
+2026-06-24 03:44:09,581 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 5.053693491846975s (attempt 2/3) thread=asyncio_2:124182461408960 provider=custom base_url=https://api-inference.huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct error=Connection error.
+2026-06-24 03:44:14,887 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIConnectionError thread=asyncio_2:124182461408960 provider=custom base_url=https://api-inference.huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=Connection error.
+2026-06-24 03:44:20,995 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIConnectionError thread=asyncio_2:124182461408960 provider=custom base_url=https://api-inference.huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=Connection error.
+2026-06-24 03:44:20,996 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.290674597240334s (attempt 1/3) thread=asyncio_2:124182461408960 provider=custom base_url=https://api-inference.huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct error=Connection error.
+2026-06-24 03:44:23,488 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIConnectionError thread=asyncio_2:124182461408960 provider=custom base_url=https://api-inference.huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=Connection error.
+2026-06-24 03:44:23,490 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 4.441174629691221s (attempt 2/3) thread=asyncio_2:124182461408960 provider=custom base_url=https://api-inference.huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct error=Connection error.
+2026-06-24 03:44:28,320 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIConnectionError thread=asyncio_2:124182461408960 provider=custom base_url=https://api-inference.huggingface.co/v1 model=Qwen/Qwen2.5-7B-Instruct summary=Connection error.
+2026-06-24 03:44:28,322 ERROR [api-2ff921dcc0577caa] agent.conversation_loop: API call failed after 3 retries. Connection error. | provider=custom model=Qwen/Qwen2.5-7B-Instruct msgs=2 tokens=~3,939
+2026-06-24 03:44:33,621 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 03:45:10,955 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=125 parent_name=s6-supervise loadavg_1m=0.10 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 03:45:10,988 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=125 parent_name=s6-supervise loadavg_1m=0.10 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 03:45:10,996 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=125 parent_name=s6-supervise loadavg_1m=0.10 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 03:45:43,320 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 03:45:43,476 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 03:48:20,005 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=126 parent_name=s6-supervise loadavg_1m=0.21 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 03:48:20,033 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=126 parent_name=s6-supervise loadavg_1m=0.21 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 03:49:35,704 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 03:49:35,741 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 04:58:53,214 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=124 parent_name=s6-supervise loadavg_1m=0.98 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 04:58:53,242 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=124 parent_name=s6-supervise loadavg_1m=0.98 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 04:58:53,301 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=124 parent_name=s6-supervise loadavg_1m=0.98 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 07:48:55,033 WARNING gateway.platforms.api_server: API server rejected invalid API key: remote='172.18.0.1' peer_ip='172.18.0.1' method='POST' path='/v1/chat/completions' user_agent='Mozilla/5.0 (Windows NT; Windows NT 10.0; zh-TW) WindowsPowerShell/5.1.26100.6899'
+2026-06-24 07:48:57,758 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 07:49:23,223 WARNING [api-2ff921dcc0577caa] agent.tool_executor: Tool execute_code returned error (0.04s): {"status": "error", "error": "⚠️ execute_code script execution. The script can spawn subprocesses or mutate files without passing through terminal command approval; approval is one-shot for this run..
+2026-06-24 07:49:31,180 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=124 parent_name=s6-supervise loadavg_1m=0.25 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 07:49:31,220 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=124 parent_name=s6-supervise loadavg_1m=0.25 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 07:50:21,253 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 07:50:26,155 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 07:50:26,454 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 07:50:26,842 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 07:50:27,515 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIConnectionError thread=asyncio_0:126684643333824 provider=openrouter base_url=https://openrouter.ai/api/v1 model=anthropic/claude-opus-4.6 summary=Connection error.
+2026-06-24 07:50:27,516 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: Retrying API call in 2.9345839754678904s (attempt 1/3) thread=asyncio_0:126684643333824 provider=openrouter base_url=https://openrouter.ai/api/v1 model=anthropic/claude-opus-4.6 error=Connection error.
+2026-06-24 07:50:31,954 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIConnectionError thread=asyncio_0:126684643333824 provider=openrouter base_url=https://openrouter.ai/api/v1 model=anthropic/claude-opus-4.6 summary=Connection error.
+2026-06-24 07:50:31,956 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: Retrying API call in 5.418320422585737s (attempt 2/3) thread=asyncio_0:126684643333824 provider=openrouter base_url=https://openrouter.ai/api/v1 model=anthropic/claude-opus-4.6 error=Connection error.
+2026-06-24 07:50:33,736 WARNING [api-2ff921dcc0577caa] agent.tool_executor: Tool execute_code returned error (0.03s): {"status": "error", "error": "⚠️ execute_code script execution. The script can spawn subprocesses or mutate files without passing through terminal command approval; approval is one-shot for this run..
+2026-06-24 07:50:39,285 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIConnectionError thread=asyncio_0:126684643333824 provider=openrouter base_url=https://openrouter.ai/api/v1 model=anthropic/claude-opus-4.6 summary=Connection error.
+2026-06-24 07:50:39,287 ERROR [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed after 3 retries. Connection error. | provider=openrouter model=anthropic/claude-opus-4.6 msgs=2 tokens=~3,768
+2026-06-24 07:50:50,833 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=122 parent_name=s6-supervise loadavg_1m=0.31 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 07:50:50,861 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=122 parent_name=s6-supervise loadavg_1m=0.31 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 07:51:25,999 WARNING agent.auxiliary_client: Auxiliary: marking openrouter unhealthy for 60s (payment / credit error). Subsequent auxiliary calls will skip it until 07:52:25.
+2026-06-24 07:51:26,035 WARNING agent.auxiliary_client: Auxiliary Nous client unavailable: no Nous authentication found (run: hermes auth).
+2026-06-24 07:51:26,036 WARNING agent.auxiliary_client: Auxiliary: marking nous unhealthy for 60s (payment / credit error). Subsequent auxiliary calls will skip it until 07:52:26.
+2026-06-24 07:51:26,129 WARNING agent.auxiliary_client: Auxiliary: marking openrouter unhealthy for 60s (payment / credit error). Subsequent auxiliary calls will skip it until 07:52:26.
+2026-06-24 07:51:26,159 WARNING agent.auxiliary_client: Auxiliary Nous client unavailable: no Nous authentication found (run: hermes auth).
+2026-06-24 07:51:26,160 WARNING agent.auxiliary_client: Auxiliary: marking nous unhealthy for 60s (payment / credit error). Subsequent auxiliary calls will skip it until 07:52:26.
+2026-06-24 07:51:26,720 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 07:51:26,731 WARNING agent.auxiliary_client: Auxiliary: marking openrouter unhealthy for 60s (payment / credit error). Subsequent auxiliary calls will skip it until 07:52:26.
+2026-06-24 07:51:26,758 WARNING agent.auxiliary_client: Auxiliary Nous client unavailable: no Nous authentication found (run: hermes auth).
+2026-06-24 07:51:26,759 WARNING agent.auxiliary_client: Auxiliary: marking nous unhealthy for 60s (payment / credit error). Subsequent auxiliary calls will skip it until 07:52:26.
+2026-06-24 07:51:26,845 WARNING agent.auxiliary_client: Auxiliary: marking openrouter unhealthy for 60s (payment / credit error). Subsequent auxiliary calls will skip it until 07:52:26.
+2026-06-24 07:51:26,874 WARNING agent.auxiliary_client: Auxiliary Nous client unavailable: no Nous authentication found (run: hermes auth).
+2026-06-24 07:51:26,875 WARNING agent.auxiliary_client: Auxiliary: marking nous unhealthy for 60s (payment / credit error). Subsequent auxiliary calls will skip it until 07:52:26.
+2026-06-24 07:51:27,086 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 07:51:28,227 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 07:51:29,694 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIConnectionError thread=asyncio_1:136521398744768 provider=openrouter base_url=https://openrouter.ai/api/v1 model=anthropic/claude-opus-4.6 summary=Connection error.
+2026-06-24 07:51:29,696 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: Retrying API call in 2.3552021714216735s (attempt 1/3) thread=asyncio_1:136521398744768 provider=openrouter base_url=https://openrouter.ai/api/v1 model=anthropic/claude-opus-4.6 error=Connection error.
+2026-06-24 07:51:32,251 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIConnectionError thread=asyncio_1:136521398744768 provider=openrouter base_url=https://openrouter.ai/api/v1 model=anthropic/claude-opus-4.6 summary=Connection error.
+2026-06-24 07:51:32,253 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: Retrying API call in 5.242480715075869s (attempt 2/3) thread=asyncio_1:136521398744768 provider=openrouter base_url=https://openrouter.ai/api/v1 model=anthropic/claude-opus-4.6 error=Connection error.
+2026-06-24 07:51:34,120 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1029)')))
+2026-06-24 07:51:34,551 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 1/3) error_type=APIConnectionError thread=asyncio_0:136521417627328 provider=openrouter base_url=https://openrouter.ai/api/v1 model=anthropic/claude-opus-4.6 summary=Connection error.
+2026-06-24 07:51:34,552 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 2.4665056855353322s (attempt 1/3) thread=asyncio_0:136521417627328 provider=openrouter base_url=https://openrouter.ai/api/v1 model=anthropic/claude-opus-4.6 error=Connection error.
+2026-06-24 07:51:37,296 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 2/3) error_type=APIConnectionError thread=asyncio_0:136521417627328 provider=openrouter base_url=https://openrouter.ai/api/v1 model=anthropic/claude-opus-4.6 summary=Connection error.
+2026-06-24 07:51:37,298 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: Retrying API call in 4.537593676512435s (attempt 2/3) thread=asyncio_0:136521417627328 provider=openrouter base_url=https://openrouter.ai/api/v1 model=anthropic/claude-opus-4.6 error=Connection error.
+2026-06-24 07:51:37,789 WARNING [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIConnectionError thread=asyncio_1:136521398744768 provider=openrouter base_url=https://openrouter.ai/api/v1 model=anthropic/claude-opus-4.6 summary=Connection error.
+2026-06-24 07:51:37,791 ERROR [api-fe2a0e402e6ea9f0] agent.conversation_loop: API call failed after 3 retries. Connection error. | provider=openrouter model=anthropic/claude-opus-4.6 msgs=2 tokens=~3,768
+2026-06-24 07:51:42,072 WARNING [api-2ff921dcc0577caa] agent.conversation_loop: API call failed (attempt 3/3) error_type=APIConnectionError thread=asyncio_0:136521417627328 provider=openrouter base_url=https://openrouter.ai/api/v1 model=anthropic/claude-opus-4.6 summary=Connection error.
+2026-06-24 07:51:42,074 ERROR [api-2ff921dcc0577caa] agent.conversation_loop: API call failed after 3 retries. Connection error. | provider=openrouter model=anthropic/claude-opus-4.6 msgs=2 tokens=~3,765
+2026-06-24 07:51:53,288 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=125 parent_name=s6-supervise loadavg_1m=0.49 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 07:51:53,321 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=125 parent_name=s6-supervise loadavg_1m=0.49 parent_cmdline='s6-supervise gateway-default'
+2026-06-24 07:51:53,329 WARNING gateway.run: Shutdown context: signal=SIGTERM under_systemd=no parent_pid=125 parent_name=s6-supervise loadavg_1m=0.49 parent_cmdline='s6-supervise gateway-default'

@@ -1,0 +1,7 @@
+2026-07-07 03:44:34,922 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-07 03:45:21,183 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-07 03:46:25,946 WARNING [20260707_034427_49e35a] agent.tool_executor: Tool memory returned error (60.03s): {"error": "Memory write denied by user. The change was not saved.", "success": false}
+2026-07-07 03:47:31,927 WARNING [20260707_034427_49e35a] agent.tool_executor: Tool memory returned error (60.04s): {"error": "Memory write denied by user. The change was not saved.", "success": false}
+2026-07-07 03:48:36,254 WARNING [20260707_034427_49e35a] agent.tool_executor: Tool memory returned error (60.03s): {"error": "Memory write denied by user. The change was not saved.", "success": false}
+
+[Tool loop warning: same_tool_failure_warning; count=3; memory has failed 3 times this turn. This looks like a lo

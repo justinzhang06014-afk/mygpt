@@ -1,0 +1,34 @@
+<!-- 0715 修正：重新設計 MessageBubble 結構與排版 -->
+<template>
+  <!-- 0715 修正：訊息列容器 -->
+  <div :class="['message-row flex w-full gap-4 group', msg.role === 'user' ? 'flex-row-reverse' : 'flex-row']">
+    <!-- 0715 修正：頭像 -->
+    <div :class="['avatar-box w-9 h-9 rounded-xl flex items-center justify-center text-base shadow-sm shrink-0 select-none transition-all duration-300', msg.role === 'user' ? 'bg-[#bbdefb]' : 'bg-gradient-to-br from-[#0ea5e9] to-[#1e3a8a] text-white border border-[#38bdf8]/30 font-mono text-[11px] font-bold tracking-tighter shadow-[0_0_12px_rgba(14,165,233,0.3)]']">
+      {{ msg.role === 'user' ? '👤' : '⚡' }}
+    </div>
+
+    <div :class="['flex flex-col max-w-[85%]', msg.role === 'user' ? 'items-end' : 'items-start']">
+      <!-- 0715 修正：編輯狀態卡片 -->
+      <div v-if="msg.role === 'user' && isEditing" class="edit-card w-72 sm:w-96 bg-white p-3 rounded-xl shadow-lg border border-[#e5e7eb] flex flex-col gap-3">
+        <el-input v-model="localText" type="textarea" :rows="2" resize="none" />
+        <div class="flex justify-between items-center">
+          <el-checkbox v-model="localSearch" size="small">🌐 聯網搜尋</el-checkbox>
+          <div class="flex gap-2">
+            <el-button size="small" @click="emit('cancel-edit')">取消</el-button>
+            <el-button size="small" type="primary" :loading="isLoading" @click="emit('submit-edit', { id: msg.id, text: localText, search: localSearch })">儲存送出</el-button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 0715 修正：正常訊息顯示 -->
+      <div v-else class="flex flex-col gap-2 w-full">
+        <!-- 0715 修正：Google 引用資料卡片 -->
+        <div v-if="msg.role === 'assistant' && msg.searchSources?.length > 0" class="w-full flex flex-col gap-1.5 mb-1">
+          <div class="text-xs text-[#0ea5e9] flex items-center gap-1 font-bold select-none tracking-wide">🔍 已參考 Google 即時資料：</div>
+          <div class="flex gap-2 overflow-x-auto pb-1 max-w-full scrollbar-thin">
+            <a v-for="(src, idx) in msg.searchSources" :key="idx" :href="src.link" target="_blank" class="flex-shrink-0 w-44 bg-white/60 hover:bg-[#e0f2fe] border border-[#bae6fd] p-2.5 rounded-xl text-left shadow-sm hover:shadow-md transition-all duration-200">
+              <h4 class="text-xs font-semibold text-[#0369a1] truncate">{{ src.title }}</h4>
+              <p class="text-[10px] text-[#0ea5e9] truncate mt-0.5">{{ src.snippet }}</p>
+            </a>
+          </div>
+        </div>

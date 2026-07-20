@@ -1,0 +1,37 @@
+=== shutdown diagnostic @ SIGTERM ===
+--- date ---
+2026-07-07T05:54:57Z
+--- ps auxf (top 60 by cpu) ---
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.0    452   112 ?        Ss   04:08   0:00 /package/admin/s6/command/s6-svscan -d4 -- /run/service
+root          18  0.0  0.0    232    80 ?        S    04:08   0:00 s6-supervise s6-linux-init-shutdownd
+root          21  0.0  0.0    224    76 ?        Ss   04:08   0:00  \_ /package/admin/s6-linux-init/command/s6-linux-init-shutdownd -d3 -c /run/s6/basedir -g 3000 -C -B
+--- pstree of self ---
+--- /proc/loadavg ---
+0.05 0.15 0.07 2/482 195
+--- recent dmesg (oom/killed) ---
+=== end ===
+=== shutdown diagnostic @ SIGTERM ===
+--- date ---
+2026-07-07T05:54:57Z
+--- ps auxf (top 60 by cpu) ---
+=== shutdown diagnostic @ SIGTERM ===
+S TTY      STAT START   TIME COMMAND
+root           1  0.0  0.0    452   112 ?        Ss   04:08   0:00 /package/admin/s6/command/s6-svscan -d4 -- /run/service
+root          18  0.0  0.0    232    80 ?        S    04:08   0:00 s6-supervise s6-linux-init-shutdownd
+root          21  0.0  0.0    224    76 ?        Ss   04:08   0:00  \_ /package/admin/s6-linux-init/command/s6-linux-init-shutdownd -d3 -c /run/s6/basedir -g 3000 -C -B
+--- date ---
+ self ---
+--- /proc/loadavg ---
+--- ps auxf (top 60 by cpu) ---
+0.05 0.15 0.07 2/486 210
+--- recent dmesg (oom/killed) ---
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.0    452   112 ?        Ss   04:08   0:00 /package/admin/s6/command/s6-svscan -d4 -- /run/service
+root          18  0.0  0.0    232    80 ?        S    04:08   0:00 s6-supervise s6-linux-init-shutdownd
+root          21  0.0  0.0    224    76 ?        Ss   04:08   0:00  \_ /package/admin/s6-linux-init/command/s6-linux-init-shutdownd -d3 -c /run/s6/basedir -g 3000 -C -B
+--- pstree of self ---
+--- /proc/loadavg ---
+0.05 0.15 0.07 1/483 215
+--- recent dmesg (oom/killed) ---
+=== end ===

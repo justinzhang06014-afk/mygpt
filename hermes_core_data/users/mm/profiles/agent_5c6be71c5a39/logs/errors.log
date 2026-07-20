@@ -1,0 +1,4 @@
+2026-07-16 16:23:52,772 WARNING tools.url_safety: Blocked request to private/internal address: lm_hermes_agent -> 172.18.0.6
+2026-07-16 16:23:52,772 WARNING tools.skills_hub: Blocked unsafe Skills Hub URL: http://lm_hermes_agent:8643/static/uploads/3017e693660b41c5acaa192a0d86e5d1/SKILL.md
+2026-07-16 16:23:52,773 WARNING tools.url_safety: Blocked request to private/internal address: lm_hermes_agent -> 172.18.0.6
+2026-07-16 16:23:52,773 WARNING tools.skills_hub: Blocked unsafe Skills Hub URL: http://lm_hermes_agent:8643/static/uploads/3017e693660b41c5acaa192a0d86e5d1/SKILL.md

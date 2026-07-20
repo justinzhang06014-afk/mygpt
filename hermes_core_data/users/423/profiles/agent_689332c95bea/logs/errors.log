@@ -1,0 +1,57 @@
+2026-07-15 07:02:13,450 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 07:02:13,452 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-15 07:02:13,454 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-15 07:02:13,457 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 07:02:13,457 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 07:02:13,459 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 07:02:13,922 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-15 07:02:13,946 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-15 07:02:13,946 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 07:02:21,909 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-15 07:02:22,004 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-15 07:57:15,652 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 07:57:15,656 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-15 07:57:15,659 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-15 07:57:15,662 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 07:57:15,662 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 07:57:15,664 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 07:57:16,157 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-15 07:57:16,178 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-15 07:57:16,178 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 07:57:18,094 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-15 07:57:18,177 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-15 08:05:54,949 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 08:05:54,953 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-15 08:05:54,956 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-15 08:05:54,960 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 08:05:54,960 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 08:05:54,962 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 08:05:55,481 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-15 08:05:55,505 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-15 08:05:55,505 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 08:05:56,452 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-15 08:05:56,547 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-15 08:06:31,811 WARNING [20260715_070211_41b9f9] tools.tirith_security: tirith spawn failed: [Errno 2] No such file or directory: 'tirith'
+2026-07-15 08:06:40,679 WARNING [20260715_070211_41b9f9] tools.tirith_security: tirith circuit breaker opened after 3 consecutive failures; disabling for the rest of the process
+2026-07-15 08:07:08,172 WARNING tools.mcp_tool: MCP server 'test-mcp' initial connection failed (attempt 1/3), retrying in 1s: MCP server 'test-mcp' requires HTTP transport but mcp.client.streamable_http is not available. Upgrade the mcp package to get HTTP support.
+2026-07-15 08:07:09,173 WARNING tools.mcp_tool: MCP server 'test-mcp' initial connection failed (attempt 2/3), retrying in 2s: MCP server 'test-mcp' requires HTTP transport but mcp.client.streamable_http is not available. Upgrade the mcp package to get HTTP support.
+2026-07-15 08:07:11,176 WARNING tools.mcp_tool: MCP server 'test-mcp' initial connection failed (attempt 3/3), retrying in 4s: MCP server 'test-mcp' requires HTTP transport but mcp.client.streamable_http is not available. Upgrade the mcp package to get HTTP support.
+2026-07-15 08:07:15,180 WARNING tools.mcp_tool: MCP server 'test-mcp' failed initial connection after 3 attempts, parking until a reconnect is requested: MCP server 'test-mcp' requires HTTP transport but mcp.client.streamable_http is not available. Upgrade the mcp package to get HTTP support.
+2026-07-15 08:07:23,539 WARNING [20260715_070211_41b9f9] agent.tool_executor: Tool terminal returned error (0.10s): {"output": "---\nno global config.yaml\n===", "exit_code": 1, "error": null}
+2026-07-15 08:07:35,157 WARNING [20260715_070211_41b9f9] agent.conversation_loop: API call failed (attempt 1/3) error_type=RateLimitError thread=Thread-4 (run_agent):132538485405376 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B summary=HTTP 429: Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.
+2026-07-15 08:07:35,158 WARNING [20260715_070211_41b9f9] agent.conversation_loop: Retrying API call in 25.0s (attempt 1/3) thread=Thread-4 (run_agent):132538485405376 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B policy=default error=Error code: 429 - {'error': {'message': 'Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.', 'type': 'rate_limit_exceeded', 'param': None, 'code': 'rate_limit_exceeded'}}
+2026-07-15 08:09:47,988 WARNING [20260715_070211_41b9f9] agent.tool_executor: Tool terminal returned error (60.09s): {"output": "", "exit_code": -1, "error": "BLOCKED: User denied this command. The user has NOT consented to this action. Do NOT retry this command, do NOT rephrase it, and do NOT attempt the same outco
+2026-07-15 08:20:19,949 WARNING [20260715_070211_41b9f9] agent.auxiliary_client: Auxiliary: marking openrouter unhealthy for 60s (payment / credit error). Subsequent auxiliary calls will skip it until 08:21:19.
+2026-07-15 08:20:20,006 WARNING [20260715_070211_41b9f9] agent.auxiliary_client: Auxiliary Nous client unavailable: no Nous authentication found (run: hermes auth).
+2026-07-15 08:20:20,006 WARNING [20260715_070211_41b9f9] agent.auxiliary_client: Auxiliary: marking nous unhealthy for 60s (payment / credit error). Subsequent auxiliary calls will skip it until 08:21:20.
+2026-07-15 08:25:17,605 WARNING [20260715_070211_41b9f9] agent.tool_executor: Tool terminal returned error (0.64s): {"output": "MCP Servers:\n\n  Name             Transport                      Tools        Status    \n  ──────────────── ────────────────────────────── ──────────── ──────────\n  gitlab-mcp       htt
+2026-07-15 08:26:46,972 WARNING [20260715_070211_41b9f9] agent.tool_executor: Tool terminal returned error (60.11s): {"output": "", "exit_code": -1, "error": "BLOCKED: User denied this command. The user has NOT consented to this action. Do NOT retry this command, do NOT rephrase it, and do NOT attempt the same outco
+2026-07-15 08:31:37,199 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 08:31:37,202 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-15 08:31:37,205 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-15 08:31:37,210 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 08:31:37,211 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 08:31:37,211 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-15 08:31:37,651 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-15 08:31:37,673 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-15 08:31:37,673 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn

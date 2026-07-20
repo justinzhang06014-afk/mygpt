@@ -1,0 +1,1 @@
+User is a native Chinese speaker who prefers Chinese communication.

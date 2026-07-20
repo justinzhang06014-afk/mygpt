@@ -1,0 +1,121 @@
+version: '3.11'
+
+services:
+  # 🗄️ 1. PostgreSQL 資料庫貨櫃
+  db:
+    image: postgres:latest
+    container_name: lm_postgres_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "123123"
+      POSTGRES_DB: ChatDB
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    restart: always
+
+  # 🤖 2. Python AI 服務貨櫃 (保留您原有的，不亂改)
+  llm-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: lm_llm_service
+    ports:
+      - "8000:8000"
+    environment:
+      - PHISON_API_KEY=AINX-F78D2FCD53915EE37BD0871392FFBFFAF648C53C388950FC6A1F2ED8C534B249
+    restart: always
+
+  # 🖥️ 3. C# 後端 API 服務 (LMBackend)
+  backend:
+    build:
+      context: ./LMBackend
+      dockerfile: backend.dockerfile
+    container_name: lm_csharp_backend
+    ports:
+      - "5165:5165"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5165
+      - ConnectionStrings__PostgreSQLConnection=Server=db;Port=5432;Database=ChatDB;User Id=postgres;Password=123123;
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    restart: always
+
+  # 🎨 4. Vue 前端網頁服務 (LMFrontend)
+  frontend:
+    build:
+      context: ./LMFrontend
+      dockerfile: frontend.dockerfile
+    container_name: lm_vue_frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    restart: always
+
+  # 🚀 5. ChromaDB 向量資料庫服務
+  chroma-db:
+    image: chromadb/chroma:latest
+    container_name: lm_chroma_db
+    ports:
+      - "8080:8000"
+    volumes:
+      - ./chroma_data:/chroma/chroma
+    environment:
+      - IS_PERSISTENT=TRUE
+      - ANONYMOUS_TELEMETRY=FALSE
+    restart: always
+
+  # 🧠 6. 您的反向代理中介 Agent 服務
+ # 🚀 您重新打掉重練的 Python 中轉代理
+  hermes-agent-proxy:
+    build:
+      context: ./hermes-agent
+      dockerfile: Dockerfile
+    container_name: lm_hermes_agent
+    ports:
+      - "8643:8643"
+    volumes:
+      # 與核心容器共享同一個資料夾，讓 Python 能直接用 CLI 管理 Profile
+      - ./hermes_core_data:/opt/data
+      #【關鍵修正 1】把整個 MYGPT 也掛載進 Python 代理，對應到 /workspace
+      # - ../:/workspace
+      - D:\mygpt:/workspace
+       # 👇 新增這行：把本地的相對路徑掛載到容器內的 /app
+      - ./hermes-agent:/app
+
+      # 🚀 Runtime Provisioner 專用：讓這個容器可以建立/管理其他使用者專屬的 Hermes Runtime 容器
+      # 只掛在這裡（離 Hermes 最近的服務），backend 完全不碰 Docker
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - PROFILES_BASE_DIR=/opt/data/profiles
+      - API_SERVER_KEY=my-local-test-token
+      # 🔐 管理員後台 /admin 用的固定 token，測試用途；正式環境記得換成不會外洩的值
+      - ADMIN_TOKEN=change-me-admin-token
+      # 🧪 0716：services.py 現在支援用 LLM_BASE_URL/LLM_API_KEY/LLM_MODEL 覆寫模型端點
+      # （本機測試 ACP 時用來接 Ollama），沒設定就照舊使用正式的 Phison 端點
+      # 🧪 0717：測試用 Claude API（比 Ollama 小模型穩定很多，工具呼叫可靠度高）。
+      # 0717 這一輪把今天做的全部功能（approve-write、skill 起手式、MCP+approvals 建立流程）
+      # 都用這組跑過一次真實驗證，已確認完成，照使用者指示測完就改回 Phison。
+      # 要重新開 Claude 測試就把下面 4 行取消註解即可，金鑰已經在 .env 裡不用重填。
+      # - LLM_PROVIDER=native
+      # - LLM_NATIVE_PROVIDER=anthropic
+      # - LLM_MODEL=anthropic/claude-haiku-4-5-20251001
+      # - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+    restart: always
+
+  # 🧠 官方原生的 Hermes 核心容器
+  # 🗑️【已確認移除】原本以為 hermes-agent-proxy 會透過 HERMES_CORE_URL 呼叫這個容器，
+  # 但實際核對 main.py / services.py / config.py 後發現完全沒有任何程式碼連到 8642 埠或
+  # 讀取 HERMES_CORE_URL —— hermes CLI 是靠自己 config.yaml 裡的 model.base_url 直連外部
+  # Phison API，繞過了這個容器。已確認零引用後移除，減少每個使用者 Runtime 容器都要
+  # 複製、卻永遠用不到的資源開銷。
+  # hermes-core:
+  #   image: nousresearch/hermes-agent:latest
+  #   ...（原始設定已在 git 歷史中保留，需要的話可以直接復原這個 commit 之前的版本）
+
+volumes:
+  postgres_data:

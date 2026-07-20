@@ -1,0 +1,846 @@
+2026-07-16 01:53:16,570 INFO hermes_cli.plugins: Plugin 'browser-browser-use' registered browser provider: browser-use
+2026-07-16 01:53:16,572 INFO hermes_cli.plugins: Plugin 'browser-browserbase' registered browser provider: browserbase
+2026-07-16 01:53:16,574 INFO hermes_cli.plugins: Plugin 'browser-firecrawl' registered browser provider: firecrawl
+2026-07-16 01:53:16,777 INFO hermes_cli.plugins: Plugin 'fal' registered image_gen provider: fal
+2026-07-16 01:53:16,778 INFO hermes_cli.plugins: Plugin 'krea' registered image_gen provider: krea
+2026-07-16 01:53:16,779 INFO hermes_cli.plugins: Plugin 'openai' registered image_gen provider: openai
+2026-07-16 01:53:16,780 INFO hermes_cli.plugins: Plugin 'openai-codex' registered image_gen provider: openai-codex
+2026-07-16 01:53:16,781 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: openrouter
+2026-07-16 01:53:16,781 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: nous
+2026-07-16 01:53:16,783 INFO hermes_cli.plugins: Plugin 'xai' registered image_gen provider: xai
+2026-07-16 01:53:16,794 INFO hermes_cli.plugins: Plugin 'fal' registered video_gen provider: fal
+2026-07-16 01:53:16,795 INFO hermes_cli.plugins: Plugin 'xai' registered video_gen provider: xai
+2026-07-16 01:53:16,798 INFO hermes_cli.plugins: Plugin 'web-brave-free' registered web provider: brave-free
+2026-07-16 01:53:16,799 INFO hermes_cli.plugins: Plugin 'web-ddgs' registered web provider: ddgs
+2026-07-16 01:53:16,800 INFO hermes_cli.plugins: Plugin 'web-exa' registered web provider: exa
+2026-07-16 01:53:16,803 INFO hermes_cli.plugins: Plugin 'web-firecrawl' registered web provider: firecrawl
+2026-07-16 01:53:16,804 INFO hermes_cli.plugins: Plugin 'web-parallel' registered web provider: parallel
+2026-07-16 01:53:16,805 INFO hermes_cli.plugins: Plugin 'web-searxng' registered web provider: searxng
+2026-07-16 01:53:16,807 INFO hermes_cli.plugins: Plugin 'web-tavily' registered web provider: tavily
+2026-07-16 01:53:16,809 INFO hermes_cli.plugins: Plugin 'web-xai' registered web provider: xai
+2026-07-16 01:53:16,820 INFO hermes_cli.plugins: Plugin discovery complete: 51 found, 44 enabled
+2026-07-16 01:53:17,465 INFO tools.tirith_security: tirith not found — downloading latest release for x86_64-unknown-linux-gnu...
+2026-07-16 01:53:17,609 INFO run_agent: No .env file found. Using system environment variables.
+2026-07-16 01:53:18,888 INFO run_agent: OpenAI client created (agent_init, shared=True) thread=MainThread:131990420034368 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 01:53:18,892 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 01:53:18,894 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-16 01:53:18,896 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-16 01:53:18,898 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 01:53:18,898 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 01:53:18,900 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 01:53:19,432 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-16 01:53:19,454 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-16 01:53:19,454 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 01:53:19,894 INFO agent.auxiliary_client: Vision auto-detect: using main provider custom (Qwen/Qwen3.6-27B)
+2026-07-16 01:53:20,341 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-16 01:53:20,429 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-16 01:53:20,542 INFO agent.model_metadata: Could not detect context length for model 'Qwen/Qwen3.6-27B' at https://ainexus.phison.com/api/external/v1 — defaulting to 256,000 tokens (probe-down). Set model.context_length in config.yaml to override.
+2026-07-16 01:53:20,542 INFO agent.model_metadata: Using hardcoded context length 131,072 for model 'Qwen/Qwen3.6-27B' (custom endpoint, catalog match on 'qwen')
+2026-07-16 01:53:20,556 INFO [20260716_015317_8d0ca2] agent.turn_context: conversation turn: session=20260716_015317_8d0ca2 model=Qwen/Qwen3.6-27B provider=custom platform=cli history=0 msg='你好 介紹一下你自己'
+2026-07-16 01:53:21,328 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-6 (_call):131990183474880 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 01:53:21,563 INFO tools.tirith_security: cosign not on PATH — installing tirith with SHA-256 verification only (install cosign for full supply chain verification)
+2026-07-16 01:53:21,990 INFO tools.tirith_security: tirith installed to /opt/data/profiles/agent_f270ed83ea98/bin/tirith (SHA-256 only)
+2026-07-16 01:53:39,975 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-6 (_call):131990183474880 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 01:53:39,976 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #1: model=Qwen/Qwen3.6-27B provider=custom in=14507 out=128 total=14635 latency=18.7s
+2026-07-16 01:53:40,130 INFO [20260716_015317_8d0ca2] tools.file_tools: Creating new local environment for task default...
+2026-07-16 01:53:40,179 INFO [20260716_015317_8d0ca2] tools.environments.base: Session snapshot created (session=eeaa3a6e07a3, cwd=/app)
+2026-07-16 01:53:40,179 INFO [20260716_015317_8d0ca2] tools.file_tools: local environment ready for task default
+2026-07-16 01:53:40,230 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool read_file completed (0.15s, 278 chars)
+2026-07-16 01:53:41,313 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool read_file completed (0.06s, 967 chars)
+2026-07-16 01:53:42,541 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool terminal completed (0.21s, 862 chars)
+2026-07-16 01:53:42,650 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-18 (_call):131990300104384 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 01:53:57,127 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-18 (_call):131990300104384 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 01:53:57,128 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #2: model=Qwen/Qwen3.6-27B provider=custom in=15642 out=348 total=15990 latency=14.6s
+2026-07-16 01:53:57,204 INFO [20260716_015317_8d0ca2] agent.conversation_loop: Turn ended: reason=text_response(finish_reason=stop) model=Qwen/Qwen3.6-27B api_calls=2/90 budget=2/90 tool_turns=1 last_msg_role=assistant response_len=689 session=20260716_015317_8d0ca2
+2026-07-16 01:53:57,433 INFO tools.terminal_tool: Manually cleaned up environment for task: default
+2026-07-16 01:53:57,440 INFO tools.terminal_tool: Cleaned 1 environments
+2026-07-16 01:53:57,442 INFO cli: CLI cleanup calling memory shutdown for session 20260716_015317_8d0ca2 with 6 message(s)
+2026-07-16 01:53:57,570 INFO agent.auxiliary_client: Auxiliary auto-detect: using main provider custom (Qwen/Qwen3.6-27B)
+2026-07-16 01:53:57,591 INFO agent.auxiliary_client: Auxiliary title_generation: using auto (Qwen/Qwen3.6-27B) at https://ainexus.phison.com/api/external/v1/
+2026-07-16 01:56:35,605 INFO hermes_cli.plugins: Plugin 'browser-browser-use' registered browser provider: browser-use
+2026-07-16 01:56:35,608 INFO hermes_cli.plugins: Plugin 'browser-browserbase' registered browser provider: browserbase
+2026-07-16 01:56:35,610 INFO hermes_cli.plugins: Plugin 'browser-firecrawl' registered browser provider: firecrawl
+2026-07-16 01:56:35,786 INFO hermes_cli.plugins: Plugin 'fal' registered image_gen provider: fal
+2026-07-16 01:56:35,787 INFO hermes_cli.plugins: Plugin 'krea' registered image_gen provider: krea
+2026-07-16 01:56:35,788 INFO hermes_cli.plugins: Plugin 'openai' registered image_gen provider: openai
+2026-07-16 01:56:35,788 INFO hermes_cli.plugins: Plugin 'openai-codex' registered image_gen provider: openai-codex
+2026-07-16 01:56:35,790 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: openrouter
+2026-07-16 01:56:35,790 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: nous
+2026-07-16 01:56:35,791 INFO hermes_cli.plugins: Plugin 'xai' registered image_gen provider: xai
+2026-07-16 01:56:35,802 INFO hermes_cli.plugins: Plugin 'fal' registered video_gen provider: fal
+2026-07-16 01:56:35,803 INFO hermes_cli.plugins: Plugin 'xai' registered video_gen provider: xai
+2026-07-16 01:56:35,809 INFO hermes_cli.plugins: Plugin 'web-brave-free' registered web provider: brave-free
+2026-07-16 01:56:35,810 INFO hermes_cli.plugins: Plugin 'web-ddgs' registered web provider: ddgs
+2026-07-16 01:56:35,812 INFO hermes_cli.plugins: Plugin 'web-exa' registered web provider: exa
+2026-07-16 01:56:35,815 INFO hermes_cli.plugins: Plugin 'web-firecrawl' registered web provider: firecrawl
+2026-07-16 01:56:35,816 INFO hermes_cli.plugins: Plugin 'web-parallel' registered web provider: parallel
+2026-07-16 01:56:35,818 INFO hermes_cli.plugins: Plugin 'web-searxng' registered web provider: searxng
+2026-07-16 01:56:35,819 INFO hermes_cli.plugins: Plugin 'web-tavily' registered web provider: tavily
+2026-07-16 01:56:35,821 INFO hermes_cli.plugins: Plugin 'web-xai' registered web provider: xai
+2026-07-16 01:56:35,832 INFO hermes_cli.plugins: Plugin discovery complete: 51 found, 44 enabled
+2026-07-16 01:56:36,553 INFO run_agent: No .env file found. Using system environment variables.
+2026-07-16 01:56:37,704 INFO run_agent: OpenAI client created (agent_init, shared=True) thread=MainThread:134017402549056 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 01:56:37,709 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 01:56:37,712 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-16 01:56:37,714 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-16 01:56:37,717 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 01:56:37,717 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 01:56:37,719 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 01:56:38,161 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-16 01:56:38,181 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-16 01:56:38,182 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 01:56:38,586 INFO agent.auxiliary_client: Vision auto-detect: using main provider custom (Qwen/Qwen3.6-27B)
+2026-07-16 01:56:38,966 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-16 01:56:39,054 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-16 01:56:39,154 INFO agent.model_metadata: Could not detect context length for model 'Qwen/Qwen3.6-27B' at https://ainexus.phison.com/api/external/v1 — defaulting to 256,000 tokens (probe-down). Set model.context_length in config.yaml to override.
+2026-07-16 01:56:39,154 INFO agent.model_metadata: Using hardcoded context length 131,072 for model 'Qwen/Qwen3.6-27B' (custom endpoint, catalog match on 'qwen')
+2026-07-16 01:56:39,165 INFO [20260716_015317_8d0ca2] agent.turn_context: conversation turn: session=20260716_015317_8d0ca2 model=Qwen/Qwen3.6-27B provider=custom platform=cli history=6 msg='你現在用甚麼模型'
+2026-07-16 01:56:39,349 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-5 (_call):134017226282688 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 01:56:47,825 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-5 (_call):134017226282688 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 01:56:47,826 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #1: model=Qwen/Qwen3.6-27B provider=custom in=16000 out=55 total=16055 latency=8.6s
+2026-07-16 01:56:47,888 INFO [20260716_015317_8d0ca2] agent.conversation_loop: Turn ended: reason=text_response(finish_reason=stop) model=Qwen/Qwen3.6-27B api_calls=1/90 budget=1/90 tool_turns=1 last_msg_role=assistant response_len=122 session=20260716_015317_8d0ca2
+2026-07-16 01:56:48,205 INFO cli: CLI cleanup calling memory shutdown for session 20260716_015317_8d0ca2 with 8 message(s)
+2026-07-16 01:59:18,375 INFO hermes_cli.plugins: Plugin 'browser-browser-use' registered browser provider: browser-use
+2026-07-16 01:59:18,376 INFO hermes_cli.plugins: Plugin 'browser-browserbase' registered browser provider: browserbase
+2026-07-16 01:59:18,378 INFO hermes_cli.plugins: Plugin 'browser-firecrawl' registered browser provider: firecrawl
+2026-07-16 01:59:18,569 INFO hermes_cli.plugins: Plugin 'fal' registered image_gen provider: fal
+2026-07-16 01:59:18,570 INFO hermes_cli.plugins: Plugin 'krea' registered image_gen provider: krea
+2026-07-16 01:59:18,571 INFO hermes_cli.plugins: Plugin 'openai' registered image_gen provider: openai
+2026-07-16 01:59:18,572 INFO hermes_cli.plugins: Plugin 'openai-codex' registered image_gen provider: openai-codex
+2026-07-16 01:59:18,573 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: openrouter
+2026-07-16 01:59:18,573 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: nous
+2026-07-16 01:59:18,575 INFO hermes_cli.plugins: Plugin 'xai' registered image_gen provider: xai
+2026-07-16 01:59:18,584 INFO hermes_cli.plugins: Plugin 'fal' registered video_gen provider: fal
+2026-07-16 01:59:18,584 INFO hermes_cli.plugins: Plugin 'xai' registered video_gen provider: xai
+2026-07-16 01:59:18,587 INFO hermes_cli.plugins: Plugin 'web-brave-free' registered web provider: brave-free
+2026-07-16 01:59:18,588 INFO hermes_cli.plugins: Plugin 'web-ddgs' registered web provider: ddgs
+2026-07-16 01:59:18,590 INFO hermes_cli.plugins: Plugin 'web-exa' registered web provider: exa
+2026-07-16 01:59:18,594 INFO hermes_cli.plugins: Plugin 'web-firecrawl' registered web provider: firecrawl
+2026-07-16 01:59:18,595 INFO hermes_cli.plugins: Plugin 'web-parallel' registered web provider: parallel
+2026-07-16 01:59:18,597 INFO hermes_cli.plugins: Plugin 'web-searxng' registered web provider: searxng
+2026-07-16 01:59:18,598 INFO hermes_cli.plugins: Plugin 'web-tavily' registered web provider: tavily
+2026-07-16 01:59:18,599 INFO hermes_cli.plugins: Plugin 'web-xai' registered web provider: xai
+2026-07-16 01:59:18,610 INFO hermes_cli.plugins: Plugin discovery complete: 51 found, 44 enabled
+2026-07-16 01:59:19,369 INFO run_agent: No .env file found. Using system environment variables.
+2026-07-16 01:59:20,486 INFO run_agent: OpenAI client created (agent_init, shared=True) thread=MainThread:134450562495296 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 01:59:20,494 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 01:59:20,498 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-16 01:59:20,502 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-16 01:59:20,505 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 01:59:20,505 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 01:59:20,507 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 01:59:20,942 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-16 01:59:20,961 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-16 01:59:20,962 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 01:59:21,393 INFO agent.auxiliary_client: Vision auto-detect: using main provider custom (Qwen/Qwen3.6-27B)
+2026-07-16 01:59:21,806 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-16 01:59:21,899 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-16 01:59:22,013 INFO agent.model_metadata: Could not detect context length for model 'Qwen/Qwen3.6-27B' at https://ainexus.phison.com/api/external/v1 — defaulting to 256,000 tokens (probe-down). Set model.context_length in config.yaml to override.
+2026-07-16 01:59:22,013 INFO agent.model_metadata: Using hardcoded context length 131,072 for model 'Qwen/Qwen3.6-27B' (custom endpoint, catalog match on 'qwen')
+2026-07-16 01:59:22,024 INFO [20260716_015317_8d0ca2] agent.turn_context: conversation turn: session=20260716_015317_8d0ca2 model=Qwen/Qwen3.6-27B provider=custom platform=cli history=8 msg='你現在用甚麼模型'
+2026-07-16 01:59:22,210 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-5 (_call):134450317878976 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 01:59:26,484 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-5 (_call):134450317878976 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 01:59:26,484 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #1: model=Qwen/Qwen3.6-27B provider=custom in=16069 out=77 total=16146 latency=4.4s
+2026-07-16 01:59:26,540 INFO [20260716_015317_8d0ca2] agent.conversation_loop: Turn ended: reason=text_response(finish_reason=stop) model=Qwen/Qwen3.6-27B api_calls=1/90 budget=1/90 tool_turns=1 last_msg_role=assistant response_len=168 session=20260716_015317_8d0ca2
+2026-07-16 01:59:26,849 INFO cli: CLI cleanup calling memory shutdown for session 20260716_015317_8d0ca2 with 10 message(s)
+2026-07-16 02:01:21,310 INFO hermes_cli.plugins: Plugin 'browser-browser-use' registered browser provider: browser-use
+2026-07-16 02:01:21,310 INFO hermes_cli.plugins: Plugin 'browser-browserbase' registered browser provider: browserbase
+2026-07-16 02:01:21,310 INFO hermes_cli.plugins: Plugin 'browser-firecrawl' registered browser provider: firecrawl
+2026-07-16 02:01:21,468 INFO hermes_cli.plugins: Plugin 'fal' registered image_gen provider: fal
+2026-07-16 02:01:21,469 INFO hermes_cli.plugins: Plugin 'krea' registered image_gen provider: krea
+2026-07-16 02:01:21,469 INFO hermes_cli.plugins: Plugin 'openai' registered image_gen provider: openai
+2026-07-16 02:01:21,469 INFO hermes_cli.plugins: Plugin 'openai-codex' registered image_gen provider: openai-codex
+2026-07-16 02:01:21,469 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: openrouter
+2026-07-16 02:01:21,470 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: nous
+2026-07-16 02:01:21,470 INFO hermes_cli.plugins: Plugin 'xai' registered image_gen provider: xai
+2026-07-16 02:01:21,477 INFO hermes_cli.plugins: Plugin 'fal' registered video_gen provider: fal
+2026-07-16 02:01:21,477 INFO hermes_cli.plugins: Plugin 'xai' registered video_gen provider: xai
+2026-07-16 02:01:21,478 INFO hermes_cli.plugins: Plugin 'web-brave-free' registered web provider: brave-free
+2026-07-16 02:01:21,478 INFO hermes_cli.plugins: Plugin 'web-ddgs' registered web provider: ddgs
+2026-07-16 02:01:21,479 INFO hermes_cli.plugins: Plugin 'web-exa' registered web provider: exa
+2026-07-16 02:01:21,480 INFO hermes_cli.plugins: Plugin 'web-firecrawl' registered web provider: firecrawl
+2026-07-16 02:01:21,480 INFO hermes_cli.plugins: Plugin 'web-parallel' registered web provider: parallel
+2026-07-16 02:01:21,481 INFO hermes_cli.plugins: Plugin 'web-searxng' registered web provider: searxng
+2026-07-16 02:01:21,481 INFO hermes_cli.plugins: Plugin 'web-tavily' registered web provider: tavily
+2026-07-16 02:01:21,481 INFO hermes_cli.plugins: Plugin 'web-xai' registered web provider: xai
+2026-07-16 02:01:21,490 INFO hermes_cli.plugins: Plugin discovery complete: 51 found, 44 enabled
+2026-07-16 02:01:22,211 INFO run_agent: No .env file found. Using system environment variables.
+2026-07-16 02:01:23,062 INFO run_agent: OpenAI client created (agent_init, shared=True) thread=MainThread:138914232386368 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:01:23,069 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:01:23,073 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-16 02:01:23,076 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-16 02:01:23,078 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:01:23,078 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:01:23,079 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:01:23,508 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-16 02:01:23,529 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-16 02:01:23,529 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:01:23,899 INFO agent.auxiliary_client: Vision auto-detect: using main provider custom (Qwen/Qwen3.6-27B)
+2026-07-16 02:01:24,316 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-16 02:01:24,401 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-16 02:01:24,510 INFO agent.model_metadata: Could not detect context length for model 'Qwen/Qwen3.6-27B' at https://ainexus.phison.com/api/external/v1 — defaulting to 256,000 tokens (probe-down). Set model.context_length in config.yaml to override.
+2026-07-16 02:01:24,510 INFO agent.model_metadata: Using hardcoded context length 131,072 for model 'Qwen/Qwen3.6-27B' (custom endpoint, catalog match on 'qwen')
+2026-07-16 02:01:24,518 INFO [20260716_015317_8d0ca2] agent.turn_context: conversation turn: session=20260716_015317_8d0ca2 model=Qwen/Qwen3.6-27B provider=custom platform=cli history=10 msg='你現在用甚麼模型'
+2026-07-16 02:01:24,687 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-5 (_call):138914055161536 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:01:38,618 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-5 (_call):138914055161536 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:01:38,619 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #1: model=Qwen/Qwen3.6-27B provider=custom in=16160 out=68 total=16228 latency=14.0s
+2026-07-16 02:01:38,673 INFO [20260716_015317_8d0ca2] agent.conversation_loop: Turn ended: reason=text_response(finish_reason=stop) model=Qwen/Qwen3.6-27B api_calls=1/90 budget=1/90 tool_turns=1 last_msg_role=assistant response_len=138 session=20260716_015317_8d0ca2
+2026-07-16 02:01:38,980 INFO cli: CLI cleanup calling memory shutdown for session 20260716_015317_8d0ca2 with 12 message(s)
+2026-07-16 02:03:07,985 INFO hermes_cli.plugins: Plugin 'browser-browser-use' registered browser provider: browser-use
+2026-07-16 02:03:07,985 INFO hermes_cli.plugins: Plugin 'browser-browserbase' registered browser provider: browserbase
+2026-07-16 02:03:07,985 INFO hermes_cli.plugins: Plugin 'browser-firecrawl' registered browser provider: firecrawl
+2026-07-16 02:03:08,139 INFO hermes_cli.plugins: Plugin 'fal' registered image_gen provider: fal
+2026-07-16 02:03:08,140 INFO hermes_cli.plugins: Plugin 'krea' registered image_gen provider: krea
+2026-07-16 02:03:08,140 INFO hermes_cli.plugins: Plugin 'openai' registered image_gen provider: openai
+2026-07-16 02:03:08,141 INFO hermes_cli.plugins: Plugin 'openai-codex' registered image_gen provider: openai-codex
+2026-07-16 02:03:08,141 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: openrouter
+2026-07-16 02:03:08,141 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: nous
+2026-07-16 02:03:08,142 INFO hermes_cli.plugins: Plugin 'xai' registered image_gen provider: xai
+2026-07-16 02:03:08,148 INFO hermes_cli.plugins: Plugin 'fal' registered video_gen provider: fal
+2026-07-16 02:03:08,149 INFO hermes_cli.plugins: Plugin 'xai' registered video_gen provider: xai
+2026-07-16 02:03:08,150 INFO hermes_cli.plugins: Plugin 'web-brave-free' registered web provider: brave-free
+2026-07-16 02:03:08,150 INFO hermes_cli.plugins: Plugin 'web-ddgs' registered web provider: ddgs
+2026-07-16 02:03:08,150 INFO hermes_cli.plugins: Plugin 'web-exa' registered web provider: exa
+2026-07-16 02:03:08,152 INFO hermes_cli.plugins: Plugin 'web-firecrawl' registered web provider: firecrawl
+2026-07-16 02:03:08,152 INFO hermes_cli.plugins: Plugin 'web-parallel' registered web provider: parallel
+2026-07-16 02:03:08,152 INFO hermes_cli.plugins: Plugin 'web-searxng' registered web provider: searxng
+2026-07-16 02:03:08,153 INFO hermes_cli.plugins: Plugin 'web-tavily' registered web provider: tavily
+2026-07-16 02:03:08,153 INFO hermes_cli.plugins: Plugin 'web-xai' registered web provider: xai
+2026-07-16 02:03:08,162 INFO hermes_cli.plugins: Plugin discovery complete: 51 found, 44 enabled
+2026-07-16 02:03:08,821 INFO run_agent: No .env file found. Using system environment variables.
+2026-07-16 02:03:09,633 INFO run_agent: OpenAI client created (agent_init, shared=True) thread=MainThread:131908519191360 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:03:09,643 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:03:09,646 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-16 02:03:09,650 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-16 02:03:09,652 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:03:09,652 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:03:09,653 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:03:10,066 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-16 02:03:10,087 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-16 02:03:10,087 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:03:15,537 INFO agent.auxiliary_client: Vision auto-detect: using main provider custom (Qwen/Qwen3.6-27B)
+2026-07-16 02:03:15,931 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-16 02:03:16,017 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-16 02:03:20,068 INFO agent.model_metadata: Could not detect context length for model 'Qwen/Qwen3.6-27B' at https://ainexus.phison.com/api/external/v1 — defaulting to 256,000 tokens (probe-down). Set model.context_length in config.yaml to override.
+2026-07-16 02:03:20,069 INFO agent.model_metadata: Using hardcoded context length 131,072 for model 'Qwen/Qwen3.6-27B' (custom endpoint, catalog match on 'qwen')
+2026-07-16 02:03:20,080 INFO [20260716_015317_8d0ca2] agent.turn_context: conversation turn: session=20260716_015317_8d0ca2 model=Qwen/Qwen3.6-27B provider=custom platform=cli history=12 msg='那你現在呢 使用甚麼模型'
+2026-07-16 02:03:20,224 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-5 (_call):131908350392000 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:03:45,599 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-5 (_call):131908350392000 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:03:45,600 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #1: model=Qwen/Qwen3.6-27B provider=custom in=16244 out=50 total=16294 latency=25.5s
+2026-07-16 02:03:45,656 INFO [20260716_015317_8d0ca2] agent.conversation_loop: Turn ended: reason=text_response(finish_reason=stop) model=Qwen/Qwen3.6-27B api_calls=1/90 budget=1/90 tool_turns=1 last_msg_role=assistant response_len=109 session=20260716_015317_8d0ca2
+2026-07-16 02:03:45,996 INFO cli: CLI cleanup calling memory shutdown for session 20260716_015317_8d0ca2 with 14 message(s)
+2026-07-16 02:05:33,112 INFO hermes_cli.plugins: Plugin 'browser-browser-use' registered browser provider: browser-use
+2026-07-16 02:05:33,112 INFO hermes_cli.plugins: Plugin 'browser-browserbase' registered browser provider: browserbase
+2026-07-16 02:05:33,113 INFO hermes_cli.plugins: Plugin 'browser-firecrawl' registered browser provider: firecrawl
+2026-07-16 02:05:33,270 INFO hermes_cli.plugins: Plugin 'fal' registered image_gen provider: fal
+2026-07-16 02:05:33,270 INFO hermes_cli.plugins: Plugin 'krea' registered image_gen provider: krea
+2026-07-16 02:05:33,271 INFO hermes_cli.plugins: Plugin 'openai' registered image_gen provider: openai
+2026-07-16 02:05:33,271 INFO hermes_cli.plugins: Plugin 'openai-codex' registered image_gen provider: openai-codex
+2026-07-16 02:05:33,272 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: openrouter
+2026-07-16 02:05:33,272 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: nous
+2026-07-16 02:05:33,273 INFO hermes_cli.plugins: Plugin 'xai' registered image_gen provider: xai
+2026-07-16 02:05:33,279 INFO hermes_cli.plugins: Plugin 'fal' registered video_gen provider: fal
+2026-07-16 02:05:33,279 INFO hermes_cli.plugins: Plugin 'xai' registered video_gen provider: xai
+2026-07-16 02:05:33,281 INFO hermes_cli.plugins: Plugin 'web-brave-free' registered web provider: brave-free
+2026-07-16 02:05:33,281 INFO hermes_cli.plugins: Plugin 'web-ddgs' registered web provider: ddgs
+2026-07-16 02:05:33,282 INFO hermes_cli.plugins: Plugin 'web-exa' registered web provider: exa
+2026-07-16 02:05:33,283 INFO hermes_cli.plugins: Plugin 'web-firecrawl' registered web provider: firecrawl
+2026-07-16 02:05:33,283 INFO hermes_cli.plugins: Plugin 'web-parallel' registered web provider: parallel
+2026-07-16 02:05:33,284 INFO hermes_cli.plugins: Plugin 'web-searxng' registered web provider: searxng
+2026-07-16 02:05:33,284 INFO hermes_cli.plugins: Plugin 'web-tavily' registered web provider: tavily
+2026-07-16 02:05:33,285 INFO hermes_cli.plugins: Plugin 'web-xai' registered web provider: xai
+2026-07-16 02:05:33,293 INFO hermes_cli.plugins: Plugin discovery complete: 51 found, 44 enabled
+2026-07-16 02:05:34,014 INFO run_agent: No .env file found. Using system environment variables.
+2026-07-16 02:05:34,861 INFO run_agent: OpenAI client created (agent_init, shared=True) thread=MainThread:137620868256576 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:05:34,868 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:05:34,871 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-16 02:05:34,874 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-16 02:05:34,877 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:05:34,877 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:05:34,878 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:05:35,352 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-16 02:05:35,375 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-16 02:05:35,375 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:05:35,752 INFO agent.auxiliary_client: Vision auto-detect: using main provider custom (Qwen/Qwen3.6-27B)
+2026-07-16 02:05:36,166 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-16 02:05:36,252 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-16 02:05:36,510 INFO agent.model_metadata: Could not detect context length for model 'Qwen/Qwen3.6-27B' at https://ainexus.phison.com/api/external/v1 — defaulting to 256,000 tokens (probe-down). Set model.context_length in config.yaml to override.
+2026-07-16 02:05:36,510 INFO agent.model_metadata: Using hardcoded context length 131,072 for model 'Qwen/Qwen3.6-27B' (custom endpoint, catalog match on 'qwen')
+2026-07-16 02:05:36,519 INFO [20260716_015317_8d0ca2] agent.turn_context: conversation turn: session=20260716_015317_8d0ca2 model=Qwen/Qwen3.6-27B provider=custom platform=cli history=14 msg='那你現在用甚麼模型'
+2026-07-16 02:05:36,674 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-5 (_call):137620617164480 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:05:39,124 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-5 (_call):137620617164480 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:05:39,125 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #1: model=Qwen/Qwen3.6-27B provider=custom in=16308 out=54 total=16362 latency=2.5s
+2026-07-16 02:05:39,197 INFO [20260716_015317_8d0ca2] agent.conversation_loop: Turn ended: reason=text_response(finish_reason=stop) model=Qwen/Qwen3.6-27B api_calls=1/90 budget=1/90 tool_turns=1 last_msg_role=assistant response_len=114 session=20260716_015317_8d0ca2
+2026-07-16 02:05:39,433 INFO cli: CLI cleanup calling memory shutdown for session 20260716_015317_8d0ca2 with 16 message(s)
+2026-07-16 02:07:58,114 INFO hermes_cli.plugins: Plugin 'browser-browser-use' registered browser provider: browser-use
+2026-07-16 02:07:58,115 INFO hermes_cli.plugins: Plugin 'browser-browserbase' registered browser provider: browserbase
+2026-07-16 02:07:58,115 INFO hermes_cli.plugins: Plugin 'browser-firecrawl' registered browser provider: firecrawl
+2026-07-16 02:07:58,266 INFO hermes_cli.plugins: Plugin 'fal' registered image_gen provider: fal
+2026-07-16 02:07:58,267 INFO hermes_cli.plugins: Plugin 'krea' registered image_gen provider: krea
+2026-07-16 02:07:58,267 INFO hermes_cli.plugins: Plugin 'openai' registered image_gen provider: openai
+2026-07-16 02:07:58,267 INFO hermes_cli.plugins: Plugin 'openai-codex' registered image_gen provider: openai-codex
+2026-07-16 02:07:58,268 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: openrouter
+2026-07-16 02:07:58,268 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: nous
+2026-07-16 02:07:58,268 INFO hermes_cli.plugins: Plugin 'xai' registered image_gen provider: xai
+2026-07-16 02:07:58,275 INFO hermes_cli.plugins: Plugin 'fal' registered video_gen provider: fal
+2026-07-16 02:07:58,275 INFO hermes_cli.plugins: Plugin 'xai' registered video_gen provider: xai
+2026-07-16 02:07:58,276 INFO hermes_cli.plugins: Plugin 'web-brave-free' registered web provider: brave-free
+2026-07-16 02:07:58,276 INFO hermes_cli.plugins: Plugin 'web-ddgs' registered web provider: ddgs
+2026-07-16 02:07:58,277 INFO hermes_cli.plugins: Plugin 'web-exa' registered web provider: exa
+2026-07-16 02:07:58,278 INFO hermes_cli.plugins: Plugin 'web-firecrawl' registered web provider: firecrawl
+2026-07-16 02:07:58,279 INFO hermes_cli.plugins: Plugin 'web-parallel' registered web provider: parallel
+2026-07-16 02:07:58,279 INFO hermes_cli.plugins: Plugin 'web-searxng' registered web provider: searxng
+2026-07-16 02:07:58,280 INFO hermes_cli.plugins: Plugin 'web-tavily' registered web provider: tavily
+2026-07-16 02:07:58,281 INFO hermes_cli.plugins: Plugin 'web-xai' registered web provider: xai
+2026-07-16 02:07:58,291 INFO hermes_cli.plugins: Plugin discovery complete: 51 found, 44 enabled
+2026-07-16 02:07:59,001 INFO run_agent: No .env file found. Using system environment variables.
+2026-07-16 02:07:59,795 INFO run_agent: OpenAI client created (agent_init, shared=True) thread=MainThread:135823263650624 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:07:59,800 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:07:59,805 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-16 02:07:59,809 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-16 02:07:59,812 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:07:59,812 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:07:59,813 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:08:00,252 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-16 02:08:00,274 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-16 02:08:00,274 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:08:07,265 INFO agent.auxiliary_client: Vision auto-detect: using main provider custom (Qwen/Qwen3.6-27B)
+2026-07-16 02:08:07,719 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-16 02:08:07,806 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-16 02:08:09,620 INFO agent.model_metadata: Could not detect context length for model 'Qwen/Qwen3.6-27B' at https://ainexus.phison.com/api/external/v1 — defaulting to 256,000 tokens (probe-down). Set model.context_length in config.yaml to override.
+2026-07-16 02:08:09,620 INFO agent.model_metadata: Using hardcoded context length 131,072 for model 'Qwen/Qwen3.6-27B' (custom endpoint, catalog match on 'qwen')
+2026-07-16 02:08:09,633 INFO [20260716_015317_8d0ca2] agent.turn_context: conversation turn: session=20260716_015317_8d0ca2 model=Qwen/Qwen3.6-27B provider=custom platform=cli history=16 msg='那你現在用甚麼模型'
+2026-07-16 02:08:09,815 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-5 (_call):135823095948992 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:08:13,939 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-5 (_call):135823095948992 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:08:13,940 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #1: model=Qwen/Qwen3.6-27B provider=custom in=16376 out=51 total=16427 latency=4.2s
+2026-07-16 02:08:14,002 INFO [20260716_015317_8d0ca2] agent.conversation_loop: Turn ended: reason=text_response(finish_reason=stop) model=Qwen/Qwen3.6-27B api_calls=1/90 budget=1/90 tool_turns=1 last_msg_role=assistant response_len=100 session=20260716_015317_8d0ca2
+2026-07-16 02:08:14,214 INFO cli: CLI cleanup calling memory shutdown for session 20260716_015317_8d0ca2 with 18 message(s)
+2026-07-16 02:09:13,685 INFO hermes_cli.plugins: Plugin 'browser-browser-use' registered browser provider: browser-use
+2026-07-16 02:09:13,686 INFO hermes_cli.plugins: Plugin 'browser-browserbase' registered browser provider: browserbase
+2026-07-16 02:09:13,687 INFO hermes_cli.plugins: Plugin 'browser-firecrawl' registered browser provider: firecrawl
+2026-07-16 02:09:13,871 INFO hermes_cli.plugins: Plugin 'fal' registered image_gen provider: fal
+2026-07-16 02:09:13,871 INFO hermes_cli.plugins: Plugin 'krea' registered image_gen provider: krea
+2026-07-16 02:09:13,871 INFO hermes_cli.plugins: Plugin 'openai' registered image_gen provider: openai
+2026-07-16 02:09:13,872 INFO hermes_cli.plugins: Plugin 'openai-codex' registered image_gen provider: openai-codex
+2026-07-16 02:09:13,872 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: openrouter
+2026-07-16 02:09:13,872 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: nous
+2026-07-16 02:09:13,873 INFO hermes_cli.plugins: Plugin 'xai' registered image_gen provider: xai
+2026-07-16 02:09:13,879 INFO hermes_cli.plugins: Plugin 'fal' registered video_gen provider: fal
+2026-07-16 02:09:13,879 INFO hermes_cli.plugins: Plugin 'xai' registered video_gen provider: xai
+2026-07-16 02:09:13,880 INFO hermes_cli.plugins: Plugin 'web-brave-free' registered web provider: brave-free
+2026-07-16 02:09:13,880 INFO hermes_cli.plugins: Plugin 'web-ddgs' registered web provider: ddgs
+2026-07-16 02:09:13,881 INFO hermes_cli.plugins: Plugin 'web-exa' registered web provider: exa
+2026-07-16 02:09:13,882 INFO hermes_cli.plugins: Plugin 'web-firecrawl' registered web provider: firecrawl
+2026-07-16 02:09:13,882 INFO hermes_cli.plugins: Plugin 'web-parallel' registered web provider: parallel
+2026-07-16 02:09:13,883 INFO hermes_cli.plugins: Plugin 'web-searxng' registered web provider: searxng
+2026-07-16 02:09:13,883 INFO hermes_cli.plugins: Plugin 'web-tavily' registered web provider: tavily
+2026-07-16 02:09:13,884 INFO hermes_cli.plugins: Plugin 'web-xai' registered web provider: xai
+2026-07-16 02:09:13,892 INFO hermes_cli.plugins: Plugin discovery complete: 51 found, 44 enabled
+2026-07-16 02:09:14,641 INFO run_agent: No .env file found. Using system environment variables.
+2026-07-16 02:09:15,564 INFO run_agent: OpenAI client created (agent_init, shared=True) thread=MainThread:138903816749888 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:09:15,568 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:09:15,571 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-16 02:09:15,573 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-16 02:09:15,575 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:09:15,575 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:09:15,576 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:09:16,042 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-16 02:09:16,061 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-16 02:09:16,061 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:09:18,382 INFO agent.auxiliary_client: Vision auto-detect: using main provider custom (Qwen/Qwen3.6-27B)
+2026-07-16 02:09:18,822 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-16 02:09:18,907 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-16 02:09:19,853 INFO agent.model_metadata: Could not detect context length for model 'Qwen/Qwen3.6-27B' at https://ainexus.phison.com/api/external/v1 — defaulting to 256,000 tokens (probe-down). Set model.context_length in config.yaml to override.
+2026-07-16 02:09:19,853 INFO agent.model_metadata: Using hardcoded context length 131,072 for model 'Qwen/Qwen3.6-27B' (custom endpoint, catalog match on 'qwen')
+2026-07-16 02:09:19,865 INFO [20260716_015317_8d0ca2] agent.turn_context: conversation turn: session=20260716_015317_8d0ca2 model=Qwen/Qwen3.6-27B provider=custom platform=cli history=18 msg='你幫我看一下 workspace底下的hermes agent 不是app底下 哪一個程式碼是真的改動到你的config資訊 能真的寫入的'
+2026-07-16 02:09:20,021 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-5 (_call):138903647913664 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:09:33,954 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-5 (_call):138903647913664 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:09:33,955 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #1: model=Qwen/Qwen3.6-27B provider=custom in=16466 out=198 total=16664 latency=14.0s
+2026-07-16 02:09:34,079 INFO [20260716_015317_8d0ca2] tools.terminal_tool: Creating new local environment for task default...
+2026-07-16 02:09:34,128 INFO [20260716_015317_8d0ca2] tools.environments.base: Session snapshot created (session=1dfba121b4eb, cwd=/app)
+2026-07-16 02:09:34,128 INFO [20260716_015317_8d0ca2] tools.terminal_tool: local environment ready for task default
+2026-07-16 02:09:34,349 WARNING [20260716_015317_8d0ca2] agent.tool_executor: Tool terminal returned error (0.27s): {"output": "ls: cannot access '/root/.hermes/': No such file or directory", "exit_code": 2, "error": null}
+2026-07-16 02:09:35,573 WARNING [20260716_015317_8d0ca2] agent.tool_executor: Tool terminal returned error (0.20s): {"output": "ls: cannot access '/root/.hermes/profiles/': No such file or directory", "exit_code": 2, "error": null}
+2026-07-16 02:09:36,788 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool terminal completed (0.19s, 319 chars)
+2026-07-16 02:09:38,048 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool terminal completed (0.24s, 45 chars)
+2026-07-16 02:09:38,184 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-12 (_call):138903633229504 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:09:48,379 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-12 (_call):138903633229504 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:09:48,379 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #2: model=Qwen/Qwen3.6-27B provider=custom in=16959 out=206 total=17165 latency=10.3s
+2026-07-16 02:09:48,731 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool terminal completed (0.29s, 682 chars)
+2026-07-16 02:09:50,148 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool terminal completed (0.39s, 933 chars)
+2026-07-16 02:10:51,434 WARNING [20260716_015317_8d0ca2] agent.tool_executor: Tool terminal returned error (60.26s): {"output": "", "exit_code": -1, "error": "BLOCKED: User denied this command. The user has NOT consented to this action. Do NOT retry this command, do NOT rephrase it, and do NOT attempt the same outco
+2026-07-16 02:10:51,573 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-15 (_call):138903633229504 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:11:19,675 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-15 (_call):138903633229504 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:11:19,675 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #3: model=Qwen/Qwen3.6-27B provider=custom in=17875 out=95 total=17970 latency=28.2s
+2026-07-16 02:11:20,479 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool terminal completed (0.74s, 607 chars)
+2026-07-16 02:12:21,772 WARNING [20260716_015317_8d0ca2] agent.tool_executor: Tool terminal returned error (60.26s): {"output": "", "exit_code": -1, "error": "BLOCKED: User denied this command. The user has NOT consented to this action. Do NOT retry this command, do NOT rephrase it, and do NOT attempt the same outco
+2026-07-16 02:12:21,880 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-17 (_call):138903633229504 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:12:42,032 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-17 (_call):138903633229504 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:12:42,032 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #4: model=Qwen/Qwen3.6-27B provider=custom in=18250 out=104 total=18354 latency=20.2s
+2026-07-16 02:12:42,285 WARNING [20260716_015317_8d0ca2] agent.tool_executor: Tool terminal returned error (0.18s): {"output": "", "exit_code": 2, "error": null}
+2026-07-16 02:12:43,525 WARNING [20260716_015317_8d0ca2] agent.tool_executor: Tool terminal returned error (0.22s): {"output": "", "exit_code": 1, "error": null, "exit_code_meaning": "Some directories were inaccessible (partial results may still be valid)"}
+
+[Tool loop warning: same_tool_failure_warning; count=3; t
+2026-07-16 02:12:43,624 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-20 (_call):138903633229504 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:13:04,329 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-20 (_call):138903633229504 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:13:04,330 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #5: model=Qwen/Qwen3.6-27B provider=custom in=18537 out=64 total=18601 latency=20.8s
+2026-07-16 02:13:04,630 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool terminal completed (0.24s, 2053 chars)
+2026-07-16 02:13:04,740 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-22 (_call):138903633229504 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:13:26,427 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-22 (_call):138903633229504 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:13:26,428 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #6: model=Qwen/Qwen3.6-27B provider=custom in=19163 out=149 total=19312 latency=21.8s
+2026-07-16 02:13:26,735 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool terminal completed (0.25s, 866 chars)
+2026-07-16 02:13:28,006 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool terminal completed (0.24s, 10083 chars)
+2026-07-16 02:13:28,135 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-25 (_call):138903633229504 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:14:16,183 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-25 (_call):138903633229504 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:14:16,184 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #7: model=Qwen/Qwen3.6-27B provider=custom in=22199 out=167 total=22366 latency=48.1s
+2026-07-16 02:14:16,321 INFO agent.tool_executor: tool read_file completed (0.08s, 4653 chars)
+2026-07-16 02:14:16,341 INFO agent.tool_executor: tool read_file completed (0.10s, 4050 chars)
+2026-07-16 02:14:16,362 INFO agent.tool_executor: tool read_file completed (0.12s, 817 chars)
+2026-07-16 02:14:16,538 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-38 (_call):138903616444096 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:14:27,865 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-38 (_call):138903616444096 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:14:27,866 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #8: model=Qwen/Qwen3.6-27B provider=custom in=25331 out=174 total=25505 latency=11.4s
+2026-07-16 02:14:29,025 INFO agent.tool_executor: tool search_files completed (0.05s, 18 chars)
+2026-07-16 02:14:29,026 INFO agent.tool_executor: tool search_files completed (0.05s, 18 chars)
+2026-07-16 02:14:29,149 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-47 (_call):138903624836800 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:14:33,036 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-47 (_call):138903624836800 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:14:33,036 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #9: model=Qwen/Qwen3.6-27B provider=custom in=25541 out=86 total=25627 latency=4.0s
+2026-07-16 02:14:33,135 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool search_files completed (0.03s, 18 chars)
+2026-07-16 02:14:33,234 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-50 (_call):138903624836800 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:14:36,054 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-50 (_call):138903624836800 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:14:36,054 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #10: model=Qwen/Qwen3.6-27B provider=custom in=25651 out=55 total=25706 latency=2.9s
+2026-07-16 02:14:36,411 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool terminal completed (0.22s, 3475 chars)
+2026-07-16 02:14:36,533 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-52 (_call):138903624836800 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:14:39,461 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-52 (_call):138903624836800 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:14:39,461 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #11: model=Qwen/Qwen3.6-27B provider=custom in=26771 out=55 total=26826 latency=3.0s
+2026-07-16 02:14:39,731 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool terminal completed (0.21s, 3434 chars)
+2026-07-16 02:14:39,839 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-54 (_call):138903624836800 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:14:43,483 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-54 (_call):138903624836800 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:14:43,484 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #12: model=Qwen/Qwen3.6-27B provider=custom in=27951 out=68 total=28019 latency=3.7s
+2026-07-16 02:14:43,600 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool read_file completed (0.05s, 6214 chars)
+2026-07-16 02:14:43,721 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-59 (_call):138903624836800 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:14:47,918 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-59 (_call):138903624836800 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:14:47,919 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #13: model=Qwen/Qwen3.6-27B provider=custom in=29944 out=68 total=30012 latency=4.3s
+2026-07-16 02:14:48,021 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool read_file completed (0.04s, 6361 chars)
+2026-07-16 02:14:48,143 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-64 (_call):138903624836800 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:14:54,960 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-64 (_call):138903624836800 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:14:54,960 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #14: model=Qwen/Qwen3.6-27B provider=custom in=32177 out=133 total=32310 latency=6.9s
+2026-07-16 02:14:55,063 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool read_file completed (0.04s, 4380 chars)
+2026-07-16 02:14:56,151 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool read_file completed (0.05s, 3669 chars)
+2026-07-16 02:14:56,257 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-73 (_call):138903624836800 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:15:03,786 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-73 (_call):138903624836800 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:15:03,786 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #15: model=Qwen/Qwen3.6-27B provider=custom in=34991 out=140 total=35131 latency=7.6s
+2026-07-16 02:15:03,942 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool read_file completed (0.05s, 3578 chars)
+2026-07-16 02:15:05,214 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool terminal completed (0.24s, 1941 chars)
+2026-07-16 02:15:05,338 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-79 (_call):138903624836800 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:15:09,539 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-79 (_call):138903624836800 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:15:09,539 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #16: model=Qwen/Qwen3.6-27B provider=custom in=36876 out=64 total=36940 latency=4.3s
+2026-07-16 02:15:09,664 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool read_file completed (0.05s, 4220 chars)
+2026-07-16 02:15:09,786 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-84 (_call):138903624836800 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:15:13,735 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-84 (_call):138903624836800 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:15:13,736 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #17: model=Qwen/Qwen3.6-27B provider=custom in=38224 out=35 total=38259 latency=4.0s
+2026-07-16 02:15:13,975 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool terminal completed (0.18s, 94 chars)
+2026-07-16 02:15:14,077 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-86 (_call):138903624836800 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:15:21,234 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-86 (_call):138903624836800 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:15:21,234 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #18: model=Qwen/Qwen3.6-27B provider=custom in=38313 out=140 total=38453 latency=7.2s
+2026-07-16 02:15:24,656 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool terminal completed (3.35s, 120 chars)
+2026-07-16 02:15:25,865 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool terminal completed (0.17s, 71 chars)
+2026-07-16 02:15:25,965 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-89 (_call):138903624836800 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:15:29,748 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-89 (_call):138903624836800 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:15:29,748 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #19: model=Qwen/Qwen3.6-27B provider=custom in=38536 out=63 total=38599 latency=3.9s
+2026-07-16 02:15:29,853 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool read_file completed (0.04s, 3685 chars)
+2026-07-16 02:15:29,971 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-94 (_call):138903624836800 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:15:35,557 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-94 (_call):138903624836800 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:15:35,559 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #20: model=Qwen/Qwen3.6-27B provider=custom in=39776 out=97 total=39873 latency=5.7s
+2026-07-16 02:15:35,667 INFO agent.tool_executor: tool read_file completed (0.05s, 3478 chars)
+2026-07-16 02:15:35,675 INFO agent.tool_executor: tool read_file completed (0.05s, 1299 chars)
+2026-07-16 02:15:36,011 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-103 (_call):138903616444096 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:15:40,784 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-103 (_call):138903616444096 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:15:40,785 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #21: model=Qwen/Qwen3.6-27B provider=custom in=41840 out=68 total=41908 latency=4.9s
+2026-07-16 02:15:40,905 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool search_files completed (0.04s, 18 chars)
+2026-07-16 02:15:41,013 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-106 (_call):138903616444096 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:15:48,536 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-106 (_call):138903616444096 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:15:48,536 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #22: model=Qwen/Qwen3.6-27B provider=custom in=41932 out=162 total=42094 latency=7.6s
+2026-07-16 02:15:48,788 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool terminal completed (0.18s, 260 chars)
+2026-07-16 02:15:50,004 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool terminal completed (0.19s, 480 chars)
+2026-07-16 02:15:51,233 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool terminal completed (0.20s, 83 chars)
+2026-07-16 02:15:52,453 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool terminal completed (0.20s, 72 chars)
+2026-07-16 02:15:52,562 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-111 (_call):138903616444096 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:15:52,614 INFO agent.chat_completion_helpers: Streaming failed before delivery: Error code: 429 - {'error': {'message': 'Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.', 'type': 'rate_limit_exceeded', 'param': None, 'code': 'rate_limit_exceeded'}}
+2026-07-16 02:15:52,614 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-111 (_call):138903616444096 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:15:52,614 WARNING [20260716_015317_8d0ca2] agent.conversation_loop: API call failed (attempt 1/3) error_type=RateLimitError thread=Thread-4 (run_agent):138903762892480 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B summary=HTTP 429: Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.
+2026-07-16 02:15:52,614 WARNING [20260716_015317_8d0ca2] agent.conversation_loop: Retrying API call in 8.0s (attempt 1/3) thread=Thread-4 (run_agent):138903762892480 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B policy=default error=Error code: 429 - {'error': {'message': 'Rate limit exceeded. minute_requests_limit=20, minute_tokens_limit=250000.', 'type': 'rate_limit_exceeded', 'param': None, 'code': 'rate_limit_exceeded'}}
+2026-07-16 02:16:00,718 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-112 (_call):138903616444096 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:16:19,768 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-112 (_call):138903616444096 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:16:19,769 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #23: model=Qwen/Qwen3.6-27B provider=custom in=42435 out=54 total=42489 latency=27.3s
+2026-07-16 02:16:19,871 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool read_file completed (0.04s, 3876 chars)
+2026-07-16 02:16:19,978 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-117 (_call):138903616444096 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:16:54,099 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-117 (_call):138903616444096 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:16:54,099 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #24: model=Qwen/Qwen3.6-27B provider=custom in=43914 out=41 total=43955 latency=34.2s
+2026-07-16 02:16:54,205 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool read_file completed (0.05s, 8015 chars)
+2026-07-16 02:16:54,324 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-122 (_call):138903616444096 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:17:42,264 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-122 (_call):138903616444096 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:17:42,264 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #25: model=Qwen/Qwen3.6-27B provider=custom in=46786 out=805 total=47591 latency=48.0s
+2026-07-16 02:17:42,330 INFO [20260716_015317_8d0ca2] agent.conversation_loop: Turn ended: reason=text_response(finish_reason=stop) model=Qwen/Qwen3.6-27B api_calls=25/90 budget=25/90 tool_turns=25 last_msg_role=assistant response_len=1874 session=20260716_015317_8d0ca2
+2026-07-16 02:17:42,519 INFO run_agent: OpenAI client created (agent_init, shared=True) thread=bg-review:138903616444096 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:17:42,526 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:17:42,530 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-16 02:17:42,533 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-16 02:17:42,537 INFO tools.terminal_tool: Manually cleaned up environment for task: default
+2026-07-16 02:17:42,538 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:17:42,538 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:17:42,538 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:17:42,544 INFO tools.terminal_tool: Cleaned 1 environments
+2026-07-16 02:17:42,546 INFO cli: CLI cleanup calling memory shutdown for session 20260716_015317_8d0ca2 with 86 message(s)
+2026-07-16 02:17:43,035 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-16 02:17:43,059 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-16 02:17:43,059 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:21:32,179 INFO hermes_cli.plugins: Plugin 'browser-browser-use' registered browser provider: browser-use
+2026-07-16 02:21:32,180 INFO hermes_cli.plugins: Plugin 'browser-browserbase' registered browser provider: browserbase
+2026-07-16 02:21:32,180 INFO hermes_cli.plugins: Plugin 'browser-firecrawl' registered browser provider: firecrawl
+2026-07-16 02:21:32,344 INFO hermes_cli.plugins: Plugin 'fal' registered image_gen provider: fal
+2026-07-16 02:21:32,345 INFO hermes_cli.plugins: Plugin 'krea' registered image_gen provider: krea
+2026-07-16 02:21:32,345 INFO hermes_cli.plugins: Plugin 'openai' registered image_gen provider: openai
+2026-07-16 02:21:32,345 INFO hermes_cli.plugins: Plugin 'openai-codex' registered image_gen provider: openai-codex
+2026-07-16 02:21:32,346 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: openrouter
+2026-07-16 02:21:32,346 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: nous
+2026-07-16 02:21:32,346 INFO hermes_cli.plugins: Plugin 'xai' registered image_gen provider: xai
+2026-07-16 02:21:32,353 INFO hermes_cli.plugins: Plugin 'fal' registered video_gen provider: fal
+2026-07-16 02:21:32,353 INFO hermes_cli.plugins: Plugin 'xai' registered video_gen provider: xai
+2026-07-16 02:21:32,354 INFO hermes_cli.plugins: Plugin 'web-brave-free' registered web provider: brave-free
+2026-07-16 02:21:32,355 INFO hermes_cli.plugins: Plugin 'web-ddgs' registered web provider: ddgs
+2026-07-16 02:21:32,355 INFO hermes_cli.plugins: Plugin 'web-exa' registered web provider: exa
+2026-07-16 02:21:32,356 INFO hermes_cli.plugins: Plugin 'web-firecrawl' registered web provider: firecrawl
+2026-07-16 02:21:32,356 INFO hermes_cli.plugins: Plugin 'web-parallel' registered web provider: parallel
+2026-07-16 02:21:32,357 INFO hermes_cli.plugins: Plugin 'web-searxng' registered web provider: searxng
+2026-07-16 02:21:32,357 INFO hermes_cli.plugins: Plugin 'web-tavily' registered web provider: tavily
+2026-07-16 02:21:32,358 INFO hermes_cli.plugins: Plugin 'web-xai' registered web provider: xai
+2026-07-16 02:21:32,365 INFO hermes_cli.plugins: Plugin discovery complete: 51 found, 44 enabled
+2026-07-16 02:21:33,151 INFO run_agent: No .env file found. Using system environment variables.
+2026-07-16 02:21:33,980 INFO run_agent: OpenAI client created (agent_init, shared=True) thread=MainThread:128712720094016 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:21:33,989 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:21:33,994 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-16 02:21:33,997 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-16 02:21:34,000 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:21:34,000 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:21:34,001 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:21:34,456 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-16 02:21:34,482 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-16 02:21:34,482 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:21:34,858 INFO agent.auxiliary_client: Vision auto-detect: using main provider custom (Qwen/Qwen3.6-27B)
+2026-07-16 02:21:35,276 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-16 02:21:35,364 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-16 02:21:35,475 INFO agent.model_metadata: Could not detect context length for model 'Qwen/Qwen3.6-27B' at https://ainexus.phison.com/api/external/v1 — defaulting to 256,000 tokens (probe-down). Set model.context_length in config.yaml to override.
+2026-07-16 02:21:35,475 INFO agent.model_metadata: Using hardcoded context length 131,072 for model 'Qwen/Qwen3.6-27B' (custom endpoint, catalog match on 'qwen')
+2026-07-16 02:21:35,485 INFO [20260716_015317_8d0ca2] agent.turn_context: conversation turn: session=20260716_015317_8d0ca2 model=Qwen/Qwen3.6-27B provider=custom platform=cli history=86 msg='你現在用甚麼模型'
+2026-07-16 02:21:35,671 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-5 (_call):128712543651520 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:21:59,594 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-5 (_call):128712543651520 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:21:59,594 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #1: model=Qwen/Qwen3.6-27B provider=custom in=47510 out=107 total=47617 latency=24.0s
+2026-07-16 02:21:59,657 INFO [20260716_015317_8d0ca2] agent.conversation_loop: Turn ended: reason=text_response(finish_reason=stop) model=Qwen/Qwen3.6-27B api_calls=1/90 budget=1/90 tool_turns=25 last_msg_role=assistant response_len=277 session=20260716_015317_8d0ca2
+2026-07-16 02:21:59,941 INFO cli: CLI cleanup calling memory shutdown for session 20260716_015317_8d0ca2 with 88 message(s)
+2026-07-16 02:25:51,078 INFO hermes_cli.plugins: Plugin 'browser-browser-use' registered browser provider: browser-use
+2026-07-16 02:25:51,079 INFO hermes_cli.plugins: Plugin 'browser-browserbase' registered browser provider: browserbase
+2026-07-16 02:25:51,079 INFO hermes_cli.plugins: Plugin 'browser-firecrawl' registered browser provider: firecrawl
+2026-07-16 02:25:51,248 INFO hermes_cli.plugins: Plugin 'fal' registered image_gen provider: fal
+2026-07-16 02:25:51,248 INFO hermes_cli.plugins: Plugin 'krea' registered image_gen provider: krea
+2026-07-16 02:25:51,248 INFO hermes_cli.plugins: Plugin 'openai' registered image_gen provider: openai
+2026-07-16 02:25:51,249 INFO hermes_cli.plugins: Plugin 'openai-codex' registered image_gen provider: openai-codex
+2026-07-16 02:25:51,249 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: openrouter
+2026-07-16 02:25:51,249 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: nous
+2026-07-16 02:25:51,250 INFO hermes_cli.plugins: Plugin 'xai' registered image_gen provider: xai
+2026-07-16 02:25:51,255 INFO hermes_cli.plugins: Plugin 'fal' registered video_gen provider: fal
+2026-07-16 02:25:51,255 INFO hermes_cli.plugins: Plugin 'xai' registered video_gen provider: xai
+2026-07-16 02:25:51,256 INFO hermes_cli.plugins: Plugin 'web-brave-free' registered web provider: brave-free
+2026-07-16 02:25:51,257 INFO hermes_cli.plugins: Plugin 'web-ddgs' registered web provider: ddgs
+2026-07-16 02:25:51,257 INFO hermes_cli.plugins: Plugin 'web-exa' registered web provider: exa
+2026-07-16 02:25:51,258 INFO hermes_cli.plugins: Plugin 'web-firecrawl' registered web provider: firecrawl
+2026-07-16 02:25:51,259 INFO hermes_cli.plugins: Plugin 'web-parallel' registered web provider: parallel
+2026-07-16 02:25:51,259 INFO hermes_cli.plugins: Plugin 'web-searxng' registered web provider: searxng
+2026-07-16 02:25:51,259 INFO hermes_cli.plugins: Plugin 'web-tavily' registered web provider: tavily
+2026-07-16 02:25:51,260 INFO hermes_cli.plugins: Plugin 'web-xai' registered web provider: xai
+2026-07-16 02:25:51,268 INFO hermes_cli.plugins: Plugin discovery complete: 51 found, 44 enabled
+2026-07-16 02:25:51,971 INFO run_agent: No .env file found. Using system environment variables.
+2026-07-16 02:25:52,769 INFO run_agent: OpenAI client created (agent_init, shared=True) thread=MainThread:139721133294400 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:25:52,777 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:25:52,781 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-16 02:25:52,786 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-16 02:25:52,791 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:25:52,791 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:25:52,792 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:25:53,240 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-16 02:25:53,264 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-16 02:25:53,264 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:25:53,676 INFO agent.auxiliary_client: Vision auto-detect: using main provider custom (Qwen/Qwen3.6-27B)
+2026-07-16 02:25:54,074 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-16 02:25:54,155 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-16 02:25:54,261 INFO agent.model_metadata: Could not detect context length for model 'Qwen/Qwen3.6-27B' at https://ainexus.phison.com/api/external/v1 — defaulting to 256,000 tokens (probe-down). Set model.context_length in config.yaml to override.
+2026-07-16 02:25:54,262 INFO agent.model_metadata: Using hardcoded context length 131,072 for model 'Qwen/Qwen3.6-27B' (custom endpoint, catalog match on 'qwen')
+2026-07-16 02:25:54,270 INFO [20260716_015317_8d0ca2] agent.turn_context: conversation turn: session=20260716_015317_8d0ca2 model=Qwen/Qwen3.6-27B provider=custom platform=cli history=88 msg='你現在用甚麼模型'
+2026-07-16 02:25:54,473 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-5 (_call):139720955872960 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:25:57,556 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-5 (_call):139720955872960 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:25:57,557 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #1: model=Qwen/Qwen3.6-27B provider=custom in=47631 out=46 total=47677 latency=3.2s
+2026-07-16 02:25:57,630 INFO [20260716_015317_8d0ca2] agent.conversation_loop: Turn ended: reason=text_response(finish_reason=stop) model=Qwen/Qwen3.6-27B api_calls=1/90 budget=1/90 tool_turns=25 last_msg_role=assistant response_len=106 session=20260716_015317_8d0ca2
+2026-07-16 02:25:57,828 INFO run_agent: OpenAI client created (agent_init, shared=True) thread=bg-review:139720955872960 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:25:57,892 INFO cli: CLI cleanup calling memory shutdown for session 20260716_015317_8d0ca2 with 90 message(s)
+2026-07-16 02:29:08,335 INFO hermes_cli.plugins: Plugin 'browser-browser-use' registered browser provider: browser-use
+2026-07-16 02:29:08,335 INFO hermes_cli.plugins: Plugin 'browser-browserbase' registered browser provider: browserbase
+2026-07-16 02:29:08,336 INFO hermes_cli.plugins: Plugin 'browser-firecrawl' registered browser provider: firecrawl
+2026-07-16 02:29:08,492 INFO hermes_cli.plugins: Plugin 'fal' registered image_gen provider: fal
+2026-07-16 02:29:08,492 INFO hermes_cli.plugins: Plugin 'krea' registered image_gen provider: krea
+2026-07-16 02:29:08,492 INFO hermes_cli.plugins: Plugin 'openai' registered image_gen provider: openai
+2026-07-16 02:29:08,493 INFO hermes_cli.plugins: Plugin 'openai-codex' registered image_gen provider: openai-codex
+2026-07-16 02:29:08,493 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: openrouter
+2026-07-16 02:29:08,493 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: nous
+2026-07-16 02:29:08,494 INFO hermes_cli.plugins: Plugin 'xai' registered image_gen provider: xai
+2026-07-16 02:29:08,500 INFO hermes_cli.plugins: Plugin 'fal' registered video_gen provider: fal
+2026-07-16 02:29:08,500 INFO hermes_cli.plugins: Plugin 'xai' registered video_gen provider: xai
+2026-07-16 02:29:08,501 INFO hermes_cli.plugins: Plugin 'web-brave-free' registered web provider: brave-free
+2026-07-16 02:29:08,502 INFO hermes_cli.plugins: Plugin 'web-ddgs' registered web provider: ddgs
+2026-07-16 02:29:08,503 INFO hermes_cli.plugins: Plugin 'web-exa' registered web provider: exa
+2026-07-16 02:29:08,504 INFO hermes_cli.plugins: Plugin 'web-firecrawl' registered web provider: firecrawl
+2026-07-16 02:29:08,505 INFO hermes_cli.plugins: Plugin 'web-parallel' registered web provider: parallel
+2026-07-16 02:29:08,506 INFO hermes_cli.plugins: Plugin 'web-searxng' registered web provider: searxng
+2026-07-16 02:29:08,507 INFO hermes_cli.plugins: Plugin 'web-tavily' registered web provider: tavily
+2026-07-16 02:29:08,507 INFO hermes_cli.plugins: Plugin 'web-xai' registered web provider: xai
+2026-07-16 02:29:08,515 INFO hermes_cli.plugins: Plugin discovery complete: 51 found, 44 enabled
+2026-07-16 02:29:09,318 INFO run_agent: No .env file found. Using system environment variables.
+2026-07-16 02:29:10,163 INFO run_agent: OpenAI client created (agent_init, shared=True) thread=MainThread:135564975215424 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:29:10,169 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:29:10,173 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-16 02:29:10,176 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-16 02:29:10,179 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:29:10,179 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:29:10,180 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:29:10,607 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-16 02:29:10,629 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-16 02:29:10,629 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:29:11,944 INFO agent.auxiliary_client: Vision auto-detect: using main provider custom (Qwen/Qwen3.6-27B)
+2026-07-16 02:29:12,350 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-16 02:29:12,441 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-16 02:29:12,732 INFO agent.model_metadata: Could not detect context length for model 'Qwen/Qwen3.6-27B' at https://ainexus.phison.com/api/external/v1 — defaulting to 256,000 tokens (probe-down). Set model.context_length in config.yaml to override.
+2026-07-16 02:29:12,732 INFO agent.model_metadata: Using hardcoded context length 131,072 for model 'Qwen/Qwen3.6-27B' (custom endpoint, catalog match on 'qwen')
+2026-07-16 02:29:12,743 INFO [20260716_015317_8d0ca2] agent.turn_context: conversation turn: session=20260716_015317_8d0ca2 model=Qwen/Qwen3.6-27B provider=custom platform=cli history=90 msg='你現在用甚麼模型'
+2026-07-16 02:29:12,923 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-5 (_call):135564728723136 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:29:16,064 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-5 (_call):135564728723136 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:29:16,065 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #1: model=Qwen/Qwen3.6-27B provider=custom in=47691 out=44 total=47735 latency=3.2s
+2026-07-16 02:29:16,129 INFO [20260716_015317_8d0ca2] agent.conversation_loop: Turn ended: reason=text_response(finish_reason=stop) model=Qwen/Qwen3.6-27B api_calls=1/90 budget=1/90 tool_turns=25 last_msg_role=assistant response_len=87 session=20260716_015317_8d0ca2
+2026-07-16 02:29:16,358 INFO cli: CLI cleanup calling memory shutdown for session 20260716_015317_8d0ca2 with 92 message(s)
+2026-07-16 02:29:45,446 INFO hermes_cli.plugins: Plugin 'browser-browser-use' registered browser provider: browser-use
+2026-07-16 02:29:45,447 INFO hermes_cli.plugins: Plugin 'browser-browserbase' registered browser provider: browserbase
+2026-07-16 02:29:45,447 INFO hermes_cli.plugins: Plugin 'browser-firecrawl' registered browser provider: firecrawl
+2026-07-16 02:29:45,610 INFO hermes_cli.plugins: Plugin 'fal' registered image_gen provider: fal
+2026-07-16 02:29:45,611 INFO hermes_cli.plugins: Plugin 'krea' registered image_gen provider: krea
+2026-07-16 02:29:45,611 INFO hermes_cli.plugins: Plugin 'openai' registered image_gen provider: openai
+2026-07-16 02:29:45,611 INFO hermes_cli.plugins: Plugin 'openai-codex' registered image_gen provider: openai-codex
+2026-07-16 02:29:45,612 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: openrouter
+2026-07-16 02:29:45,612 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: nous
+2026-07-16 02:29:45,612 INFO hermes_cli.plugins: Plugin 'xai' registered image_gen provider: xai
+2026-07-16 02:29:45,617 INFO hermes_cli.plugins: Plugin 'fal' registered video_gen provider: fal
+2026-07-16 02:29:45,618 INFO hermes_cli.plugins: Plugin 'xai' registered video_gen provider: xai
+2026-07-16 02:29:45,619 INFO hermes_cli.plugins: Plugin 'web-brave-free' registered web provider: brave-free
+2026-07-16 02:29:45,619 INFO hermes_cli.plugins: Plugin 'web-ddgs' registered web provider: ddgs
+2026-07-16 02:29:45,620 INFO hermes_cli.plugins: Plugin 'web-exa' registered web provider: exa
+2026-07-16 02:29:45,621 INFO hermes_cli.plugins: Plugin 'web-firecrawl' registered web provider: firecrawl
+2026-07-16 02:29:45,622 INFO hermes_cli.plugins: Plugin 'web-parallel' registered web provider: parallel
+2026-07-16 02:29:45,622 INFO hermes_cli.plugins: Plugin 'web-searxng' registered web provider: searxng
+2026-07-16 02:29:45,622 INFO hermes_cli.plugins: Plugin 'web-tavily' registered web provider: tavily
+2026-07-16 02:29:45,623 INFO hermes_cli.plugins: Plugin 'web-xai' registered web provider: xai
+2026-07-16 02:29:45,630 INFO hermes_cli.plugins: Plugin discovery complete: 51 found, 44 enabled
+2026-07-16 02:29:46,339 INFO run_agent: No .env file found. Using system environment variables.
+2026-07-16 02:29:47,218 INFO run_agent: OpenAI client created (agent_init, shared=True) thread=MainThread:123990283600704 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:29:47,223 WARNING tools.registry: check_fn check_browser_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:29:47,225 WARNING tools.registry: check_fn _browser_cdp_check returned False; dependent tools will be unavailable this turn
+2026-07-16 02:29:47,228 WARNING tools.registry: check_fn _browser_dialog_check returned False; dependent tools will be unavailable this turn
+2026-07-16 02:29:47,230 WARNING tools.registry: check_fn check_browser_vision_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:29:47,230 WARNING tools.registry: check_fn check_close_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:29:47,231 WARNING tools.registry: check_fn check_computer_use_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:29:47,733 WARNING tools.registry: check_fn _check_kanban_mode returned False; dependent tools will be unavailable this turn
+2026-07-16 02:29:47,756 WARNING tools.registry: check_fn _check_kanban_orchestrator_mode returned False; dependent tools will be unavailable this turn
+2026-07-16 02:29:47,756 WARNING tools.registry: check_fn check_read_terminal_requirements returned False; dependent tools will be unavailable this turn
+2026-07-16 02:29:48,154 INFO agent.auxiliary_client: Vision auto-detect: using main provider custom (Qwen/Qwen3.6-27B)
+2026-07-16 02:29:48,649 WARNING tools.registry: check_fn check_web_api_key returned False; dependent tools will be unavailable this turn
+2026-07-16 02:29:48,731 WARNING agent.model_metadata: Failed to fetch model metadata from OpenRouter: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1016)')))
+2026-07-16 02:29:48,853 INFO agent.model_metadata: Could not detect context length for model 'Qwen/Qwen3.6-27B' at https://ainexus.phison.com/api/external/v1 — defaulting to 256,000 tokens (probe-down). Set model.context_length in config.yaml to override.
+2026-07-16 02:29:48,853 INFO agent.model_metadata: Using hardcoded context length 131,072 for model 'Qwen/Qwen3.6-27B' (custom endpoint, catalog match on 'qwen')
+2026-07-16 02:29:48,862 INFO [20260716_015317_8d0ca2] agent.turn_context: conversation turn: session=20260716_015317_8d0ca2 model=Qwen/Qwen3.6-27B provider=custom platform=cli history=92 msg='我要切換模型 但一直改不了'
+2026-07-16 02:29:49,043 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-5 (_call):123990106318528 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:29:54,313 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-5 (_call):123990106318528 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:29:54,313 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #1: model=Qwen/Qwen3.6-27B provider=custom in=47752 out=90 total=47842 latency=5.4s
+2026-07-16 02:29:54,468 INFO [20260716_015317_8d0ca2] tools.file_tools: Creating new local environment for task default...
+2026-07-16 02:29:54,515 INFO [20260716_015317_8d0ca2] tools.environments.base: Session snapshot created (session=2837e6d482ad, cwd=/app)
+2026-07-16 02:29:54,516 INFO [20260716_015317_8d0ca2] tools.file_tools: local environment ready for task default
+2026-07-16 02:29:54,592 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool read_file completed (0.18s, 740 chars)
+2026-07-16 02:29:55,836 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool terminal completed (0.20s, 94 chars)
+2026-07-16 02:29:55,946 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-13 (_call):123990230791872 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:30:08,899 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-13 (_call):123990230791872 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:30:08,899 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #2: model=Qwen/Qwen3.6-27B provider=custom in=48225 out=237 total=48462 latency=13.0s
+2026-07-16 02:32:08,995 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool clarify completed (120.03s, 282 chars)
+2026-07-16 02:32:09,139 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-14 (_call):123990230791872 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:32:17,443 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-14 (_call):123990230791872 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:32:17,443 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #3: model=Qwen/Qwen3.6-27B provider=custom in=48582 out=153 total=48735 latency=8.4s
+2026-07-16 02:33:17,784 WARNING [20260716_015317_8d0ca2] agent.tool_executor: Tool terminal returned error (60.28s): {"output": "", "exit_code": -1, "error": "BLOCKED: User denied this command. The user has NOT consented to this action. Do NOT retry this command, do NOT rephrase it, and do NOT attempt the same outco
+2026-07-16 02:33:17,891 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-15 (_call):123990230791872 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:33:26,534 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-15 (_call):123990230791872 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:33:26,535 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #4: model=Qwen/Qwen3.6-27B provider=custom in=48835 out=160 total=48995 latency=8.7s
+2026-07-16 02:33:26,615 WARNING [20260716_015317_8d0ca2] agent.tool_executor: Tool patch returned error (0.00s): {"error": "Refusing to write to Hermes config file: /opt/data/profiles/agent_f270ed83ea98/config.yaml\nAgent cannot modify security-sensitive configuration. Edit ~/.hermes/config.yaml directly or use 
+2026-07-16 02:33:26,734 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-16 (_call):123990230791872 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:33:31,286 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-16 (_call):123990230791872 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:33:31,287 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #5: model=Qwen/Qwen3.6-27B provider=custom in=49069 out=77 total=49146 latency=4.6s
+2026-07-16 02:33:31,900 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool terminal completed (0.55s, 141 chars)
+2026-07-16 02:33:32,009 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-18 (_call):123990230791872 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:33:34,817 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-18 (_call):123990230791872 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:33:34,817 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #6: model=Qwen/Qwen3.6-27B provider=custom in=49217 out=42 total=49259 latency=2.9s
+2026-07-16 02:33:34,949 INFO [20260716_015317_8d0ca2] agent.tool_executor: tool read_file completed (0.05s, 822 chars)
+2026-07-16 02:33:35,056 INFO run_agent: OpenAI client created (chat_completion_stream_request, shared=False) thread=Thread-23 (_call):123990230791872 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:33:44,022 INFO run_agent: OpenAI client closed (stream_request_complete, shared=False, tcp_force_closed=0) thread=Thread-23 (_call):123990230791872 provider=custom base_url=https://ainexus.phison.com/api/external/v1 model=Qwen/Qwen3.6-27B
+2026-07-16 02:33:44,023 INFO [20260716_015317_8d0ca2] agent.conversation_loop: API call #7: model=Qwen/Qwen3.6-27B provider=custom in=49625 out=128 total=49753 latency=9.0s
+2026-07-16 02:33:44,084 INFO [20260716_015317_8d0ca2] agent.conversation_loop: Turn ended: reason=text_response(finish_reason=stop) model=Qwen/Qwen3.6-27B api_calls=7/90 budget=7/90 tool_turns=31 last_msg_role=assistant response_len=254 session=20260716_015317_8d0ca2
+2026-07-16 02:33:44,386 INFO tools.terminal_tool: Manually cleaned up environment for task: default
+2026-07-16 02:33:44,395 INFO tools.terminal_tool: Cleaned 1 environments
+2026-07-16 02:33:44,398 INFO cli: CLI cleanup calling memory shutdown for session 20260716_015317_8d0ca2 with 107 message(s)
+2026-07-16 02:40:19,654 INFO hermes_cli.plugins: Plugin 'browser-browser-use' registered browser provider: browser-use
+2026-07-16 02:40:19,656 INFO hermes_cli.plugins: Plugin 'browser-browserbase' registered browser provider: browserbase
+2026-07-16 02:40:19,657 INFO hermes_cli.plugins: Plugin 'browser-firecrawl' registered browser provider: firecrawl
+2026-07-16 02:40:19,833 INFO hermes_cli.plugins: Plugin 'fal' registered image_gen provider: fal
+2026-07-16 02:40:19,833 INFO hermes_cli.plugins: Plugin 'krea' registered image_gen provider: krea
+2026-07-16 02:40:19,834 INFO hermes_cli.plugins: Plugin 'openai' registered image_gen provider: openai
+2026-07-16 02:40:19,835 INFO hermes_cli.plugins: Plugin 'openai-codex' registered image_gen provider: openai-codex
+2026-07-16 02:40:19,836 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: openrouter
+2026-07-16 02:40:19,836 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: nous
+2026-07-16 02:40:19,837 INFO hermes_cli.plugins: Plugin 'xai' registered image_gen provider: xai
+2026-07-16 02:40:19,851 INFO hermes_cli.plugins: Plugin 'fal' registered video_gen provider: fal
+2026-07-16 02:40:19,852 INFO hermes_cli.plugins: Plugin 'xai' registered video_gen provider: xai
+2026-07-16 02:40:19,855 INFO hermes_cli.plugins: Plugin 'web-brave-free' registered web provider: brave-free
+2026-07-16 02:40:19,856 INFO hermes_cli.plugins: Plugin 'web-ddgs' registered web provider: ddgs
+2026-07-16 02:40:19,857 INFO hermes_cli.plugins: Plugin 'web-exa' registered web provider: exa
+2026-07-16 02:40:19,861 INFO hermes_cli.plugins: Plugin 'web-firecrawl' registered web provider: firecrawl
+2026-07-16 02:40:19,863 INFO hermes_cli.plugins: Plugin 'web-parallel' registered web provider: parallel
+2026-07-16 02:40:19,864 INFO hermes_cli.plugins: Plugin 'web-searxng' registered web provider: searxng
+2026-07-16 02:40:19,865 INFO hermes_cli.plugins: Plugin 'web-tavily' registered web provider: tavily
+2026-07-16 02:40:19,867 INFO hermes_cli.plugins: Plugin 'web-xai' registered web provider: xai
+2026-07-16 02:40:19,878 INFO hermes_cli.plugins: Plugin discovery complete: 51 found, 44 enabled
+2026-07-16 03:24:52,406 INFO hermes_cli.plugins: Plugin 'browser-browser-use' registered browser provider: browser-use
+2026-07-16 03:24:52,406 INFO hermes_cli.plugins: Plugin 'browser-browserbase' registered browser provider: browserbase
+2026-07-16 03:24:52,407 INFO hermes_cli.plugins: Plugin 'browser-firecrawl' registered browser provider: firecrawl
+2026-07-16 03:24:52,573 INFO hermes_cli.plugins: Plugin 'fal' registered image_gen provider: fal
+2026-07-16 03:24:52,574 INFO hermes_cli.plugins: Plugin 'krea' registered image_gen provider: krea
+2026-07-16 03:24:52,574 INFO hermes_cli.plugins: Plugin 'openai' registered image_gen provider: openai
+2026-07-16 03:24:52,574 INFO hermes_cli.plugins: Plugin 'openai-codex' registered image_gen provider: openai-codex
+2026-07-16 03:24:52,575 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: openrouter
+2026-07-16 03:24:52,575 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: nous
+2026-07-16 03:24:52,575 INFO hermes_cli.plugins: Plugin 'xai' registered image_gen provider: xai
+2026-07-16 03:24:52,586 INFO hermes_cli.plugins: Plugin 'fal' registered video_gen provider: fal
+2026-07-16 03:24:52,586 INFO hermes_cli.plugins: Plugin 'xai' registered video_gen provider: xai
+2026-07-16 03:24:52,587 INFO hermes_cli.plugins: Plugin 'web-brave-free' registered web provider: brave-free
+2026-07-16 03:24:52,588 INFO hermes_cli.plugins: Plugin 'web-ddgs' registered web provider: ddgs
+2026-07-16 03:24:52,588 INFO hermes_cli.plugins: Plugin 'web-exa' registered web provider: exa
+2026-07-16 03:24:52,590 INFO hermes_cli.plugins: Plugin 'web-firecrawl' registered web provider: firecrawl
+2026-07-16 03:24:52,591 INFO hermes_cli.plugins: Plugin 'web-parallel' registered web provider: parallel
+2026-07-16 03:24:52,591 INFO hermes_cli.plugins: Plugin 'web-searxng' registered web provider: searxng
+2026-07-16 03:24:52,592 INFO hermes_cli.plugins: Plugin 'web-tavily' registered web provider: tavily
+2026-07-16 03:24:52,592 INFO hermes_cli.plugins: Plugin 'web-xai' registered web provider: xai
+2026-07-16 03:24:52,601 INFO hermes_cli.plugins: Plugin discovery complete: 51 found, 44 enabled
+2026-07-16 03:29:10,058 INFO hermes_cli.plugins: Plugin 'browser-browser-use' registered browser provider: browser-use
+2026-07-16 03:29:10,059 INFO hermes_cli.plugins: Plugin 'browser-browserbase' registered browser provider: browserbase
+2026-07-16 03:29:10,059 INFO hermes_cli.plugins: Plugin 'browser-firecrawl' registered browser provider: firecrawl
+2026-07-16 03:29:10,237 INFO hermes_cli.plugins: Plugin 'fal' registered image_gen provider: fal
+2026-07-16 03:29:10,238 INFO hermes_cli.plugins: Plugin 'krea' registered image_gen provider: krea
+2026-07-16 03:29:10,238 INFO hermes_cli.plugins: Plugin 'openai' registered image_gen provider: openai
+2026-07-16 03:29:10,238 INFO hermes_cli.plugins: Plugin 'openai-codex' registered image_gen provider: openai-codex
+2026-07-16 03:29:10,239 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: openrouter
+2026-07-16 03:29:10,239 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: nous
+2026-07-16 03:29:10,239 INFO hermes_cli.plugins: Plugin 'xai' registered image_gen provider: xai
+2026-07-16 03:29:10,245 INFO hermes_cli.plugins: Plugin 'fal' registered video_gen provider: fal
+2026-07-16 03:29:10,245 INFO hermes_cli.plugins: Plugin 'xai' registered video_gen provider: xai
+2026-07-16 03:29:10,246 INFO hermes_cli.plugins: Plugin 'web-brave-free' registered web provider: brave-free
+2026-07-16 03:29:10,246 INFO hermes_cli.plugins: Plugin 'web-ddgs' registered web provider: ddgs
+2026-07-16 03:29:10,247 INFO hermes_cli.plugins: Plugin 'web-exa' registered web provider: exa
+2026-07-16 03:29:10,248 INFO hermes_cli.plugins: Plugin 'web-firecrawl' registered web provider: firecrawl
+2026-07-16 03:29:10,249 INFO hermes_cli.plugins: Plugin 'web-parallel' registered web provider: parallel
+2026-07-16 03:29:10,250 INFO hermes_cli.plugins: Plugin 'web-searxng' registered web provider: searxng
+2026-07-16 03:29:10,251 INFO hermes_cli.plugins: Plugin 'web-tavily' registered web provider: tavily
+2026-07-16 03:29:10,251 INFO hermes_cli.plugins: Plugin 'web-xai' registered web provider: xai
+2026-07-16 03:29:10,259 INFO hermes_cli.plugins: Plugin discovery complete: 51 found, 44 enabled
+2026-07-16 03:42:05,317 INFO hermes_cli.plugins: Plugin 'browser-browser-use' registered browser provider: browser-use
+2026-07-16 03:42:05,319 INFO hermes_cli.plugins: Plugin 'browser-browserbase' registered browser provider: browserbase
+2026-07-16 03:42:05,320 INFO hermes_cli.plugins: Plugin 'browser-firecrawl' registered browser provider: firecrawl
+2026-07-16 03:42:05,574 INFO hermes_cli.plugins: Plugin 'fal' registered image_gen provider: fal
+2026-07-16 03:42:05,575 INFO hermes_cli.plugins: Plugin 'krea' registered image_gen provider: krea
+2026-07-16 03:42:05,576 INFO hermes_cli.plugins: Plugin 'openai' registered image_gen provider: openai
+2026-07-16 03:42:05,576 INFO hermes_cli.plugins: Plugin 'openai-codex' registered image_gen provider: openai-codex
+2026-07-16 03:42:05,577 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: openrouter
+2026-07-16 03:42:05,577 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: nous
+2026-07-16 03:42:05,579 INFO hermes_cli.plugins: Plugin 'xai' registered image_gen provider: xai
+2026-07-16 03:42:05,592 INFO hermes_cli.plugins: Plugin 'fal' registered video_gen provider: fal
+2026-07-16 03:42:05,593 INFO hermes_cli.plugins: Plugin 'xai' registered video_gen provider: xai
+2026-07-16 03:42:05,596 INFO hermes_cli.plugins: Plugin 'web-brave-free' registered web provider: brave-free
+2026-07-16 03:42:05,597 INFO hermes_cli.plugins: Plugin 'web-ddgs' registered web provider: ddgs
+2026-07-16 03:42:05,599 INFO hermes_cli.plugins: Plugin 'web-exa' registered web provider: exa
+2026-07-16 03:42:05,602 INFO hermes_cli.plugins: Plugin 'web-firecrawl' registered web provider: firecrawl
+2026-07-16 03:42:05,604 INFO hermes_cli.plugins: Plugin 'web-parallel' registered web provider: parallel
+2026-07-16 03:42:05,605 INFO hermes_cli.plugins: Plugin 'web-searxng' registered web provider: searxng
+2026-07-16 03:42:05,607 INFO hermes_cli.plugins: Plugin 'web-tavily' registered web provider: tavily
+2026-07-16 03:42:05,608 INFO hermes_cli.plugins: Plugin 'web-xai' registered web provider: xai
+2026-07-16 03:42:05,621 INFO hermes_cli.plugins: Plugin discovery complete: 51 found, 44 enabled
+2026-07-16 05:38:10,677 INFO hermes_cli.plugins: Plugin 'browser-browser-use' registered browser provider: browser-use
+2026-07-16 05:38:10,678 INFO hermes_cli.plugins: Plugin 'browser-browserbase' registered browser provider: browserbase
+2026-07-16 05:38:10,679 INFO hermes_cli.plugins: Plugin 'browser-firecrawl' registered browser provider: firecrawl
+2026-07-16 05:38:10,871 INFO hermes_cli.plugins: Plugin 'fal' registered image_gen provider: fal
+2026-07-16 05:38:10,872 INFO hermes_cli.plugins: Plugin 'krea' registered image_gen provider: krea
+2026-07-16 05:38:10,873 INFO hermes_cli.plugins: Plugin 'openai' registered image_gen provider: openai
+2026-07-16 05:38:10,874 INFO hermes_cli.plugins: Plugin 'openai-codex' registered image_gen provider: openai-codex
+2026-07-16 05:38:10,874 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: openrouter
+2026-07-16 05:38:10,875 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: nous
+2026-07-16 05:38:10,877 INFO hermes_cli.plugins: Plugin 'xai' registered image_gen provider: xai
+2026-07-16 05:38:10,887 INFO hermes_cli.plugins: Plugin 'fal' registered video_gen provider: fal
+2026-07-16 05:38:10,888 INFO hermes_cli.plugins: Plugin 'xai' registered video_gen provider: xai
+2026-07-16 05:38:10,891 INFO hermes_cli.plugins: Plugin 'web-brave-free' registered web provider: brave-free
+2026-07-16 05:38:10,893 INFO hermes_cli.plugins: Plugin 'web-ddgs' registered web provider: ddgs
+2026-07-16 05:38:10,894 INFO hermes_cli.plugins: Plugin 'web-exa' registered web provider: exa
+2026-07-16 05:38:10,897 INFO hermes_cli.plugins: Plugin 'web-firecrawl' registered web provider: firecrawl
+2026-07-16 05:38:10,899 INFO hermes_cli.plugins: Plugin 'web-parallel' registered web provider: parallel
+2026-07-16 05:38:10,900 INFO hermes_cli.plugins: Plugin 'web-searxng' registered web provider: searxng
+2026-07-16 05:38:10,902 INFO hermes_cli.plugins: Plugin 'web-tavily' registered web provider: tavily
+2026-07-16 05:38:10,904 INFO hermes_cli.plugins: Plugin 'web-xai' registered web provider: xai
+2026-07-16 05:38:10,913 INFO hermes_cli.plugins: Plugin discovery complete: 51 found, 44 enabled
+2026-07-16 05:43:52,032 INFO hermes_cli.plugins: Plugin 'browser-browser-use' registered browser provider: browser-use
+2026-07-16 05:43:52,033 INFO hermes_cli.plugins: Plugin 'browser-browserbase' registered browser provider: browserbase
+2026-07-16 05:43:52,033 INFO hermes_cli.plugins: Plugin 'browser-firecrawl' registered browser provider: firecrawl
+2026-07-16 05:43:52,195 INFO hermes_cli.plugins: Plugin 'fal' registered image_gen provider: fal
+2026-07-16 05:43:52,195 INFO hermes_cli.plugins: Plugin 'krea' registered image_gen provider: krea
+2026-07-16 05:43:52,195 INFO hermes_cli.plugins: Plugin 'openai' registered image_gen provider: openai
+2026-07-16 05:43:52,196 INFO hermes_cli.plugins: Plugin 'openai-codex' registered image_gen provider: openai-codex
+2026-07-16 05:43:52,196 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: openrouter
+2026-07-16 05:43:52,196 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: nous
+2026-07-16 05:43:52,197 INFO hermes_cli.plugins: Plugin 'xai' registered image_gen provider: xai
+2026-07-16 05:43:52,203 INFO hermes_cli.plugins: Plugin 'fal' registered video_gen provider: fal
+2026-07-16 05:43:52,204 INFO hermes_cli.plugins: Plugin 'xai' registered video_gen provider: xai
+2026-07-16 05:43:52,205 INFO hermes_cli.plugins: Plugin 'web-brave-free' registered web provider: brave-free
+2026-07-16 05:43:52,205 INFO hermes_cli.plugins: Plugin 'web-ddgs' registered web provider: ddgs
+2026-07-16 05:43:52,206 INFO hermes_cli.plugins: Plugin 'web-exa' registered web provider: exa
+2026-07-16 05:43:52,207 INFO hermes_cli.plugins: Plugin 'web-firecrawl' registered web provider: firecrawl
+2026-07-16 05:43:52,208 INFO hermes_cli.plugins: Plugin 'web-parallel' registered web provider: parallel
+2026-07-16 05:43:52,208 INFO hermes_cli.plugins: Plugin 'web-searxng' registered web provider: searxng
+2026-07-16 05:43:52,209 INFO hermes_cli.plugins: Plugin 'web-tavily' registered web provider: tavily
+2026-07-16 05:43:52,209 INFO hermes_cli.plugins: Plugin 'web-xai' registered web provider: xai
+2026-07-16 05:43:52,217 INFO hermes_cli.plugins: Plugin discovery complete: 51 found, 44 enabled
+2026-07-16 05:49:20,506 INFO hermes_cli.plugins: Plugin 'browser-browser-use' registered browser provider: browser-use
+2026-07-16 05:49:20,508 INFO hermes_cli.plugins: Plugin 'browser-browserbase' registered browser provider: browserbase
+2026-07-16 05:49:20,509 INFO hermes_cli.plugins: Plugin 'browser-firecrawl' registered browser provider: firecrawl
+2026-07-16 05:49:20,700 INFO hermes_cli.plugins: Plugin 'fal' registered image_gen provider: fal
+2026-07-16 05:49:20,701 INFO hermes_cli.plugins: Plugin 'krea' registered image_gen provider: krea
+2026-07-16 05:49:20,701 INFO hermes_cli.plugins: Plugin 'openai' registered image_gen provider: openai
+2026-07-16 05:49:20,702 INFO hermes_cli.plugins: Plugin 'openai-codex' registered image_gen provider: openai-codex
+2026-07-16 05:49:20,703 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: openrouter
+2026-07-16 05:49:20,703 INFO hermes_cli.plugins: Plugin 'openrouter' registered image_gen provider: nous
+2026-07-16 05:49:20,704 INFO hermes_cli.plugins: Plugin 'xai' registered image_gen provider: xai
+2026-07-16 05:49:20,713 INFO hermes_cli.plugins: Plugin 'fal' registered video_gen provider: fal
+2026-07-16 05:49:20,714 INFO hermes_cli.plugins: Plugin 'xai' registered video_gen provider: xai
+2026-07-16 05:49:20,717 INFO hermes_cli.plugins: Plugin 'web-brave-free' registered web provider: brave-free
+2026-07-16 05:49:20,718 INFO hermes_cli.plugins: Plugin 'web-ddgs' registered web provider: ddgs
+2026-07-16 05:49:20,719 INFO hermes_cli.plugins: Plugin 'web-exa' registered web provider: exa
+2026-07-16 05:49:20,723 INFO hermes_cli.plugins: Plugin 'web-firecrawl' registered web provider: firecrawl
+2026-07-16 05:49:20,724 INFO hermes_cli.plugins: Plugin 'web-parallel' registered web provider: parallel
+2026-07-16 05:49:20,725 INFO hermes_cli.plugins: Plugin 'web-searxng' registered web provider: searxng
+2026-07-16 05:49:20,726 INFO hermes_cli.plugins: Plugin 'web-tavily' registered web provider: tavily
+2026-07-16 05:49:20,727 INFO hermes_cli.plugins: Plugin 'web-xai' registered web provider: xai
+2026-07-16 05:49:20,738 INFO hermes_cli.plugins: Plugin discovery complete: 51 found, 44 enabled

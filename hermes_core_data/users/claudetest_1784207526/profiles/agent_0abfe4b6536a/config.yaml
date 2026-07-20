@@ -1,0 +1,28 @@
+mcp_servers:
+  websearch:
+    enabled: true
+    url: http://ainexus.phison.com:5155/api/v1/Agent/mcp/4/MTIwOTA6MTc4NDEwOTEwNA.5BiSODXCP7FwaMac9Es4foYw7aaK5pE1aC5qeEoDWuU
+memory:
+  memory_enabled: true
+  provider: ''
+  user_profile_enabled: true
+  write_approval: false
+model:
+  default: anthropic/claude-haiku-4-5-20251001
+  provider: anthropic
+skills:
+  write_approval: false
+terminal:
+  backend: local
+  cwd: /workspace
+  persistent_shell: true
+  timeout: 180
+tools:
+  enabled:
+  - file_read
+  - file_write
+  - file_edit
+  - patch_code_file
+  - view_code_item
+  - grep_search
+  - bash

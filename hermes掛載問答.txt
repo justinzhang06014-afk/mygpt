@@ -1,0 +1,102 @@
+<<<<<<< HEAD
+好問題！讓我直接回答核心問題：
+
+沒有 /app 掛載，不會出問題
+關鍵理解：Docker 內的 Hermes 只需要 Docker 內部的路徑，它根本不知道也不關心 /app 是否存在。
+
+架構釐清
+你的系統 (外部管理)          Docker 容器內部
+┌─────────────────┐         ┌──────────────────────┐
+│  你的後端服務     │         │  /opt/data/          │
+│  (自建的)        │         │    └── profiles/     │
+│                 │         │        └── agent_xxx/ │
+│  管理 Hermess    │  ↔ API  │           ├── memory │
+│  Agent 的 CRUD   │         │           ├── cron   │
+│                 │         │           └── skills │
+│  存儲在 DB       │         │                      │
+│  (PostgreSQL)   │         │  /root/.hermes/       │
+└─────────────────┘         │    └── config.json   │
+                            └──────────────────────┘
+重點
+Hermes 在 Docker 內完全自包含 — 所有數據寫在容器內的 /opt/data/ 和 /root/.hermes/
+沒有掛載 /app 沒問題 — Hermes 不需要讀你的外部代碼
+你的系統怎麼管理 Agent？
+你做的事	怎麼跟 Docker 溝通
+建立 Agent	API → docker exec hermes-agent hermes agent create ...
+修改配置	API → docker exec hermes-agent hermes config set ...
+查看狀態	API → docker exec hermes-agent hermes agent list
+觸發任務	API → docker exec -it hermes-agent hermes agent chat ...
+唯一需要掛掛掛的情況
+情況	需要 /app 掛載？
+只管理 Hermes Agent CRUD	❌ 不需要
+要讓 Agent 讀取你的代碼庫	✅ 需要掛載
+要讓 Agent 修改你的代碼	✅ 需要掛載
+要讓 Agent 運行你的 Python 腳本	✅ 需要掛載
+只讓 Agent 做知識查詢、記憶管理	❌ 不需要
+結論
+如果你只是管理 Hermes Agent 的 CRUD、不讓 Agent 碰你的代碼，那你的架構完全沒問題：
+
+你的系統 (DB)
+    ↕ API
+Docker (Hermes 自包含)
+    ↕ ACP/SSE
+外部用戶
+掛掛掛 /app 只在你需要「讓 Hermes Agent 能看到你的代碼」時才需要。
+
+那如果說，你的系統需要「讓 Agent 幫你跑代碼、review 代碼、讀你的 project」，那才需要：
+
+docker run -v /your/code:/app ...
+這樣 Docker 內的 Hermes Agent 才能看到 /app 下面的代碼。
+
+=======
+好問題！讓我直接回答核心問題：
+
+沒有 /app 掛載，不會出問題
+關鍵理解：Docker 內的 Hermes 只需要 Docker 內部的路徑，它根本不知道也不關心 /app 是否存在。
+
+架構釐清
+你的系統 (外部管理)          Docker 容器內部
+┌─────────────────┐         ┌──────────────────────┐
+│  你的後端服務     │         │  /opt/data/          │
+│  (自建的)        │         │    └── profiles/     │
+│                 │         │        └── agent_xxx/ │
+│  管理 Hermess    │  ↔ API  │           ├── memory │
+│  Agent 的 CRUD   │         │           ├── cron   │
+│                 │         │           └── skills │
+│  存儲在 DB       │         │                      │
+│  (PostgreSQL)   │         │  /root/.hermes/       │
+└─────────────────┘         │    └── config.json   │
+                            └──────────────────────┘
+重點
+Hermes 在 Docker 內完全自包含 — 所有數據寫在容器內的 /opt/data/ 和 /root/.hermes/
+沒有掛載 /app 沒問題 — Hermes 不需要讀你的外部代碼
+你的系統怎麼管理 Agent？
+你做的事	怎麼跟 Docker 溝通
+建立 Agent	API → docker exec hermes-agent hermes agent create ...
+修改配置	API → docker exec hermes-agent hermes config set ...
+查看狀態	API → docker exec hermes-agent hermes agent list
+觸發任務	API → docker exec -it hermes-agent hermes agent chat ...
+唯一需要掛掛掛的情況
+情況	需要 /app 掛載？
+只管理 Hermes Agent CRUD	❌ 不需要
+要讓 Agent 讀取你的代碼庫	✅ 需要掛載
+要讓 Agent 修改你的代碼	✅ 需要掛載
+要讓 Agent 運行你的 Python 腳本	✅ 需要掛載
+只讓 Agent 做知識查詢、記憶管理	❌ 不需要
+結論
+如果你只是管理 Hermes Agent 的 CRUD、不讓 Agent 碰你的代碼，那你的架構完全沒問題：
+
+你的系統 (DB)
+    ↕ API
+Docker (Hermes 自包含)
+    ↕ ACP/SSE
+外部用戶
+掛掛掛 /app 只在你需要「讓 Hermes Agent 能看到你的代碼」時才需要。
+
+那如果說，你的系統需要「讓 Agent 幫你跑代碼、review 代碼、讀你的 project」，那才需要：
+
+docker run -v /your/code:/app ...
+這樣 Docker 內的 Hermes Agent 才能看到 /app 下面的代碼。
+
+>>>>>>> 325be2f2fa3d02d658765010f5c51af97b5a118a
+你目前的場景需要掛掛掛嗎？ 如果只需要管理 Agent 生命週期，完全不需要。

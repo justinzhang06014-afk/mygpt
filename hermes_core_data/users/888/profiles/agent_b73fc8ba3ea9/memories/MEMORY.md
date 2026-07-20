@@ -1,0 +1,3 @@
+SSH target: 192.168.84.154:22, user justin_zhang, password Justin123456!, cwd /workspace. Note: Hermes agent itself connects to host.docker.internal (192.168.84.154) via SSH — this is the sandbox host, not an external target.
+§
+SSH target: 192.168.84.154:22, user justin_zhang, password contains special char '!' (Justin123456!). Password needs careful escaping in shell commands to avoid history expansion issues with '!'.

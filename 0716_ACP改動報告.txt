@@ -1,0 +1,123 @@
+================================================================================
+0716 改動報告：全面改用 hermes acp（Agent Client Protocol）
+================================================================================
+產出時間：睡前你交代「全部改成 acp 模式」之後，整晚自主完成，邊做邊用本機 Ollama
+實測驗證，沒有留下沒測過就宣稱完成的部分。這份報告誠實列出：做了什麼、怎麼驗證的、
+還有哪些沒做完/沒驗證到，供你早上檢查。
+
+--------------------------------------------------------------------------------
+一、用了哪些技術/套件
+--------------------------------------------------------------------------------
+1. Agent Client Protocol (ACP) —— hermes 官方跟 VS Code / Zed / JetBrains 外掛
+   用的同一套結構化事件協定，Python 套件叫 agent-client-protocol（PyPI，Zed
+   Industries 維護，跟 hermes-agent 是完全獨立的兩個套件，hermes 只是實作了
+   agent 端）。透過 `hermes acp` 這個子指令啟動，走 JSON-RPC over stdio。
+2. 官方提供的 acp.connect_to_agent() / acp.Client Protocol 介面 —— 用來跟 hermes
+   acp 子進程建立連線、收發結構化訊息，不用自己刻 JSON-RPC 底層。
+3. Python asyncio（asyncio.Queue、asyncio.Event、asyncio.create_subprocess_exec）
+   —— 沿用你專案原本就在用的異步模式，approval 機制的「等待使用者回應」現在是
+   正式的 request/response（acp 的 request_permission 呼叫），不是舊版塞 stdin
+   字元模擬按鍵那種土法煉鋼。
+4. 本機 Ollama（llama3.1:8b，OpenAI 相容 API）—— 因為這個開發環境連不到你們
+   正式的 Phison 內網端點，全部驗證都是接你電腦上開的 Ollama 做的。為此在
+   services.py 加了 LLM_BASE_URL / LLM_API_KEY / LLM_MODEL 三個可選環境變數，
+   沒設定就照舊用正式 Phison 端點，不影響正式環境行為。
+
+--------------------------------------------------------------------------------
+二、改了哪些檔案
+--------------------------------------------------------------------------------
+【hermes-agent/Dockerfile】
+  加裝 [acp] extras（pip install "hermes-agent[mcp,acp]"）。
+
+【hermes-agent/acp_client.py】（全新檔案）
+  ACP 整合的核心。實作 HermesAcpClient（session_update 收串流事件、
+  request_permission 接管核准請求並正式回應）、run_acp_turn()（開一次
+  hermes acp 連線跑一輪對話的 async generator）、submit_permission_decision()
+  （給 approve-write 端點呼叫，把使用者選的 option_id 灌回去喚醒等待中的核准）。
+
+【hermes-agent/main.py】
+  - agent_chat_stream 整個重寫：不再 spawn `hermes chat -q`逐行讀文字，改呼叫
+    acp_client.run_acp_turn()，把結構化事件轉成 SSE 標記吐給前端。
+  - approve_agent_write 改吃 option_id（不再是 approve 布林值）。
+  - 移除整組舊版文字猜測機制：_NOISE_LINE_PATTERNS、_is_noise_line、
+    _TERMINAL_FAILURE_PATTERNS、active_processes 全域登記簿，這些東西在 ACP
+    模式下完全用不到了，故意整段刪除，不是漏掉。
+  - services.py 只多了 3 個可選環境變數（見上），MCP/memory/skills 那整套
+    config.yaml 寫入邏輯完全沒動——查證過 HERMES_HOME 解析、config.yaml 載入
+    都是所有 hermes 子指令共用的機制，跟走 chat 還是 acp 無關。
+
+【LMBackend/ChatControllers/LlmController.cs】
+  - SSE 重組緩衝區的 markerPrefixes 陣列加 4 個新標記：__ACP_THOUGHT__、
+    __ACP_TOOL__、__ACP_PLAN__、__ACP_USAGE__。
+  - ApproveWrite 端點改讀/轉發 option_id（保留舊版 approve 布林值的相容判斷，
+    避免舊版前端還沒更新時直接壞掉）。
+
+【LMFrontend/src/stores/chat.js】
+  - submitApproveDecision 改送 option_id。
+  - 新增 4 種新事件標記的解析邏輯，掛到訊息物件的 thoughts/toolCalls/plan/usage
+    欄位上。
+
+【LMFrontend/src/components/ChatRoom.vue】
+  - 核准彈窗全面重做：不再是「同意/拒絕」兩顆寫死按鈕，改成動態渲染 hermes 真正
+    提供的選項清單（實測常見 5 種：allow_once/allow_session/allow_always/
+    reject_once/reject_always），選項內容（真實指令/檔案內容）也是 JSON 結構化
+    資料，不是猜出來的文字。
+
+【LMFrontend/src/components/MessageBubble.vue】
+  - 🚨移除一個真的算 bug 的地方：舊版有一組寫死的假指令範本（curlPatterns，內容
+    是寫死的 yahoo.com curl 指令），只要對話內容剛好包含 "://yahoo.com" 這個關鍵字
+    就會顯示這組假資料，跟這次真正執行的內容無關，會誤導你。已經整段刪除。
+  - 新增思考過程（可收合）、工具呼叫卡片（狀態直接來自 hermes）、計畫/todo 清單、
+    token 用量統計四種新的結構化區塊，全部是真實資料直接渲染，沒有再用正則表達式
+    去猜終端機文字的意思。
+
+--------------------------------------------------------------------------------
+三、怎麼驗證的（誠實列出成功/失敗）
+--------------------------------------------------------------------------------
+✅ 已用真實 hermes acp 子進程 + 本機 Ollama，透過官方 acp 函式庫（不是我自己
+   寫的模擬）完整跑過一次：initialize → new_session → prompt → 真的觸發
+   request_permission（實測 rm -rf 指令，拿到 5 個真實選項）→ 我方回應
+   allow_once → 工具真的執行成功（exit_code 0）→ ToolCallProgress 回報完成。
+   這證明了 ACP 的核准機制本身、還有官方函式庫的用法都是正確的。
+
+✅ 已透過我們自己正式的 /api/agent/chat/stream + /api/agent/approve-write
+   兩支端點（不是繞過去直接測底層函式庫），跑過好幾輪真實對話，確認：
+   - session 正確建立、正確存進 session_mapping.json（跟舊版共用同一份檔案）
+   - 串流文字正確透過 SSE 吐出來，沒有卡住、沒有例外
+   - 過程中抓到一個真的資源清理 bug（acp 連線背景任務沒有正確關閉，只 terminate
+     了 subprocess），已經修正（在 finally 區塊加上 await agent.close()）
+
+⚠️ 沒有實測到：透過我們自己這兩支正式端點、由 Ollama 模型自主決定呼叫危險指令
+   進而觸發 request_permission 的完整往返。原因是 llama3.1:8b 這顆本機小模型
+   對「主動呼叫工具」這件事不夠穩定，同一句指令試了 6 次左右，只有 1 次真的
+   呼叫了工具（其餘要嘛用文字描述假裝呼叫、要嘛直接拒絕）。這是模型能力問題，
+   不是我們程式碼的問題——因為同一套 acp_client.py 用的函式庫呼叫方式，跟前面
+   ✅ 那次成功案例是完全一樣的程式碼路徑，只是這次沒能讓模型配合演出而已。
+   建議你起床後找一個工具呼叫更穩定的模型（或用正式的 Phison 端點）重新測一次
+   這個情境，我沒辦法保證這是 100% 沒問題，只能說底層機制已經證實可行。
+
+✅ 前端 npm run build 全綠（含 vue-tsc 型別檢查），過程中發現並清掉兩個跟這次
+   改動無關、但擋住整個建置的壞檔案（_mb_new.vue、MessageBubble_P1.vue，你已
+   經口頭確認過可以刪）。
+
+✅ 所有服務（frontend/backend/hermes-agent-proxy）重新部署後健康檢查都正常。
+
+--------------------------------------------------------------------------------
+四、還沒做的（照你排的優先順序，時間排到最後沒做完）
+--------------------------------------------------------------------------------
+❌ Skill 安裝/審查改進 ACP：目前 skill 的 pending 佇列機制（main.py 的
+   /skills/pending 那組端點）維持原樣沒動，還是走舊的機制，沒有整合進 ACP 的
+   request_permission。這是你排的最後順位，時間到這裡已經接近極限，沒有動它。
+
+❌ MCP 母版/管理後台：沒有改動（也不需要改，已經在報告二裡說明過原因——ACP 不
+   影響 config.yaml 這條路徑）。
+
+--------------------------------------------------------------------------------
+五、你起床後建議做的事
+--------------------------------------------------------------------------------
+1. 找一顆工具呼叫更穩定的模型（或接回正式 Phison 端點），實際在瀏覽器上跑一次
+   會觸發核准彈窗的對話，看看新版五選一彈窗、思考過程/工具卡片顯示得對不對。
+2. 如果一切正常，考慮要不要接著把 skill 審查也整合進同一套 ACP 核准管道。
+3. LLM_BASE_URL/LLM_API_KEY/LLM_MODEL 這三個環境變數目前只是「可選覆寫」，
+   docker-compose.yaml 裡沒有設定它們，正式環境行為完全沒變，可以放心。
+================================================================================

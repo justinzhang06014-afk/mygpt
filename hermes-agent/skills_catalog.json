@@ -1,0 +1,19 @@
+{
+  "skills": {
+    "excel-author": {
+      "identifier": "official/finance/excel-author",
+      "displayName": "Excel 報表產生",
+      "description": "用 openpyxl 產生可稽核的 Excel 試算表，hermes 官方技能市集 builtin 信任等級。"
+    },
+    "gitnexus-explorer": {
+      "identifier": "official/research/gitnexus-explorer",
+      "displayName": "程式碼庫索引與探索",
+      "description": "幫整個專案建立索引，用互動式知識圖譜方式探索程式碼庫，hermes 官方技能市集 builtin 信任等級。"
+    },
+    "web-pentest": {
+      "identifier": "official/security/web-pentest",
+      "displayName": "網頁滲透測試",
+      "description": "授權範圍內的網站滲透測試（偵查、弱點分析、驗證性利用、專業報告），hermes 官方技能市集 builtin 信任等級。"
+    }
+  }
+}
