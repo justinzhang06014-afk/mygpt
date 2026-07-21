@@ -4,6 +4,7 @@ import json
 import logging
 from datetime import datetime
 from config import PROFILES_BASE_DIR
+import expert_catalog
 
 logger = logging.getLogger("hermes-proxy.mcp")
 
@@ -67,8 +68,12 @@ def get_agent_mcp_state(agent_id: str) -> dict:
     讀取（不存在就用母版建立）這個 agent 自己的 $HERMES_HOME/mcp.json。
     每次讀取都會用母版「補新」——管理員後台新增的條目，既有 agent 也會自動看到（selection 預設 null），
     但不會動到使用者既有的 selection / credentialsConfigured 狀態。
+
+    🆕 0720：母版之外，另外把 expert_catalog.load_expert_entries()（response.json 轉換出來的
+    Agentic Hub 專家）一併合併進來當作「等同母版」的來源。純記憶體合併，不會寫回 mcp.json 或
+    response.json 任何一邊——兩份原始檔案各自保持獨立，之後要調整都不用跑遷移腳本。
     """
-    master = load_master_catalog()
+    master = {**load_master_catalog(), **expert_catalog.load_expert_entries()}
     path = _agent_mcp_json_path(agent_id)
 
     existing_servers = {}

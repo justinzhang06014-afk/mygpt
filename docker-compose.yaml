@@ -105,6 +105,7 @@ services:
       # - LLM_NATIVE_PROVIDER=anthropic
       # - LLM_MODEL=anthropic/claude-haiku-4-5-20251001
       # - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+
     restart: always
 
   # 🧠 官方原生的 Hermes 核心容器

@@ -66,7 +66,7 @@ WORKDIR /app
 # 5. Python 依賴
 RUN pip install --no-cache-dir --default-timeout=1000 \
     fastapi uvicorn pydantic httpx pyyaml docker \
-    "hermes-agent[mcp,acp]"
+    "hermes-agent[mcp,acp]>=0.18.2"
 
 COPY . .
 

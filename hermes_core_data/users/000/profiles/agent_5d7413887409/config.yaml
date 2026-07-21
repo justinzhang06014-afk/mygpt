@@ -1,0 +1,47 @@
+approvals:
+  mode: manual
+mcp_servers:
+  image-generator:
+    enabled: true
+    url: http://ainexus.phison.com:5155/api/v1/Agent/mcp/254/MTIwOTA6MTc4NDEwOTEwNA.5BiSODXCP7FwaMac9Es4foYw7aaK5pE1aC5qeEoDWuU
+  sk-VKnH0FxQbH78ei7M3iMp_g:
+    enabled: true
+    headers:
+      '"Authorization": "Bearer sk-VKnH0FxQbH78ei7M3iMp_g"': ${MCP_SK_VKNH0FXQBH78EI7M3IMP_G__AUTHORIZATION____BEARER_SK_VKNH0FXQBH78EI7M3IMP_G_}
+      '"headers": {': ${MCP_SK_VKNH0FXQBH78EI7M3IMP_G__HEADERS____}
+      '"mcpServers": {': ${MCP_SK_VKNH0FXQBH78EI7M3IMP_G__MCPSERVERS____}
+      '"twinkle-hub": {': ${MCP_SK_VKNH0FXQBH78EI7M3IMP_G__TWINKLE_HUB____}
+      '"url": "https://api.twinkleai.tw/mcp/"': ${MCP_SK_VKNH0FXQBH78EI7M3IMP_G__URL____HTTPS___API_TWINKLEAI_TW_MCP__}
+      '{': ${MCP_SK_VKNH0FXQBH78EI7M3IMP_G__}
+      '}': ${MCP_SK_VKNH0FXQBH78EI7M3IMP_G__}
+    url: https://api.twinkleai.tw/mcp/
+  websearch:
+    enabled: true
+    url: http://ainexus.phison.com:5155/api/v1/Agent/mcp/4/MTIwOTA6MTc4NDEwOTEwNA.5BiSODXCP7FwaMac9Es4foYw7aaK5pE1aC5qeEoDWuU
+memory:
+  memory_enabled: true
+  nudge_interval: 10
+  provider: ''
+  user_profile_enabled: true
+  write_approval: true
+model:
+  api_key: AINX-F78D2FCD53915EE37BD0871392FFBFFAF648C53C388950FC6A1F2ED8C534B249
+  base_url: https://ainexus.phison.com/api/external/v1
+  default: Qwen/Qwen3.6-35B-A3B-FP8
+  provider: custom
+skills:
+  write_approval: true
+terminal:
+  backend: local
+  cwd: /workspace
+  persistent_shell: true
+  timeout: 180
+tools:
+  enabled:
+  - file_read
+  - file_write
+  - file_edit
+  - patch_code_file
+  - view_code_item
+  - grep_search
+  - bash

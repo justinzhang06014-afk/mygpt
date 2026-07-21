@@ -261,6 +261,10 @@ async def ensure_hermes_profile_exists(
             # 已經寫好、隨時可用，要開的話改成 True 即可，不用動其他任何程式碼。
             "skills": {
                 "write_approval": agent_approvals["skills_write_approval"]
+            },
+            
+            "context":{
+                "enabled": True  # 確保上下文注入開啟
             }
 
         }

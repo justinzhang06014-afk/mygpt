@@ -1,0 +1,144 @@
+0720 工作總結（給明天的你，開始看程式碼用）
+=====================================================================
+
+今天做的事情圍繞 4 個主題：Hermes Docker Orchestrator 對接規劃、MCP 全部匯入測試、
+Agentic Hub 專家匯入、session 忘記上下文 bug 修復。以下依主題整理，每項都標明
+「這是規劃/待確認」還是「這是已實測驗證的結論」。
+
+---
+
+## 主題一：Hermes Docker Orchestrator 對接規劃（純規劃，還沒動任何 production 程式碼）
+
+新增兩份文件：
+- `hermes-agent/docs/01_orchestrator_split_plan.md`
+- `hermes-agent/docs/02_lifecycle_and_communication.md`
+
+重點結論：
+1. 現在 `hermes-agent-proxy` 身兼「業務邏輯」+「Docker 基礎設施」兩個角色，朋友
+   要接手的是後者（建容器/存檔案/CRUD/生命週期）。
+2. `hermes_dockerPOST架構.txt` 範例裡的 `HERMES_HOME` 指到單一 agent 資料夾是
+   錯的——現在架構是一個容器服務一個使用者底下所有 agent，不是一個 agent 一個容器。
+   **這是要優先跟朋友對齊的問題**，不然容器數量規模假設整個不對。
+3. CRUD API 到底需不需要，取決於朋友的 orchestrator 跟 hermes-agent-proxy 是否
+   還共用同一個檔案系統（現在是共用的，直接寫檔案不需要 API）。
+4. 查了 NousResearch 官方文件：hermes 官方建議「一個容器裝所有 profile」（s6
+   supervision），但**這不適用我們的多租戶場景**（每個使用者的 agent 都能執行
+   bash，共用容器等於共用資安邊界）——維持現在「一人一容器」的判斷是對的，不要
+   因為官方建議就改。可以借用的只有資源限制的參考數值（記憶體 2-4GB、CPU 2 核心）。
+5. 官方文件對 session/context 管理的說法本身有出入（一份說手動 /compress、
+   一份搜尋摘要說有自動壓縮門檻）——這只是網路資料，**還沒有對照我們實際安裝的
+   hermes-agent 版本原始碼驗證過**，正式採用前要再查。
+
+## 主題二：MCP 全部匯入（測試版本已寫好，你明天自己切著測）
+
+新增檔案（**原本的 `mcp_services.py` 完全沒被改動核心邏輯**）：
+- `hermes-agent/expert_catalog.py`（新增，見主題三）
+- `hermes-agent/mcp_services_all.py`（新增，全部匯入版本）
+- `hermes-agent/mcp_services.py`（小改：`get_agent_mcp_state()` 多合併了專家清單，
+  `build_hermes_mcp_servers_block()` 這個核心篩選函式本身完全沒動）
+
+**⚠️ 重要：不能直接把 `mcp_services_all.py` 改名成 `mcp_services.py`**，會整個
+app 壞掉（它靠 import 原本的 `mcp_services` 活著）。要切換測試，去改
+`services.py` 的 `_write_isolated_config()` 裡呼叫 `mcp_services.build_hermes_mcp_servers_block()`
+那一行，換成呼叫 `mcp_services_all.build_hermes_mcp_servers_block_all()`。測完
+改回來即可。
+
+## 主題三：Agentic Hub 專家匯入（response.json → MCP，已完成）
+
+新增 `expert_catalog.py`：把 `response.json`（AINexus Agentic Hub 匯出的專家清單，
+`shareCode`+`mcpLink`）轉成跟母版 `mcp.json` 一樣的格式（`kind:"url"`），key 格式
+`expert_<名稱>_<shareCode短雜湊>`，避免撞名。**純記憶體合併，`response.json` 和
+`mcp.json` 兩個原始檔案都沒被覆寫**，之後要嘛重新匯出 response.json、要嘛手動改
+母版，互不影響。
+
+`mcp_services.py` 的 `get_agent_mcp_state()` 已經接上這個合併（一行改動），
+`mcp_services_all.py` 也接上了，兩邊都能用。
+
+per-agent 的 `mcp.json`（`profiles/<agent_id>/mcp.json`）**建議不要改名**——
+路徑本身已經跟母版區隔開來，改名要動程式碼還要遷移所有既有 agent 的檔案，
+划不來。
+
+## 主題四：session 忘記上下文——找到根因並修好了（✅ 已實測驗證）
+
+**根因**（對照容器內實際安裝的 `acp` 套件原始碼確認，`hermes-agent` pip 版本
+0.18.2）：`acp_client.py` 的 `run_acp_turn()` 裡，resume_session 分支原本靠
+`hasattr(sess, "session_id")` 判斷 resume 有沒有成功——但 ACP 協定的
+`ResumeSessionResponse` 這個 model **本來就沒有 `session_id` 欄位**（跟
+`NewSessionResponse` 不一樣，resume 時 client 早就知道 session_id 了）。這個
+判斷式對「每一次成功的 resume」都會誤判成格式異常，導致**每一輪對話事實上都在
+偷偷開一個全新空白 session**，只有 hermes 自己判斷「值得寫進 MEMORY.md/USER.md」
+的內容才會留下來，其餘的下一輪就是真的憑空消失——這正是回報的症狀。
+
+**修復**：`acp_client.py` 裡，resume 成功（沒拋例外）就直接沿用呼叫端已經知道的
+`resume_session_id` 當 session_id，不再去讀根本不存在的欄位。已修改並重啟容器
+生效。
+
+**驗證方式**：3 輪對話測試，turn 1 講一個「不用存記憶」的暗號、turn 2 講無關的話、
+turn 3 問暗號是什麼。
+- 修復前：log 每輪都印「resume_session 回傳格式異常，改開新 session」，
+  hermes 原生對話 ID 每輪都不同。
+- 修復後：log 不再出現那行警告，三輪的原生對話 ID 完全一致，暗號正確答對。
+
+這個 bug 從 0716 導入 ACP 之後應該就一直存在，影響的是**所有使用者的每一輪對話**，
+不是邊角案例。
+
+## 額外發現：hermes profile create 其實是壞的（silent failure，今天先不修，但已確認影響範圍很小）
+
+原本以為 `hermes profile create` 是真正建立 agent 資料夾的機制。用三種全新路徑
+情境實測（完全空白、只先建父層、都不建）——**三次都回報「Profile already exists」
+的假錯誤**，即使路徑真的從沒存在過。原因：hermes CLI 啟動時會先在 HERMES_HOME
+底下側效應建立 `logs/`，然後同一次呼叫裡的「是否已存在」檢查看到自己剛建的資料夾，
+誤判成已存在。
+
+`services.py` 呼叫這個指令的地方（非 clone 分支）完全沒檢查 `returncode`，所以
+這個指令其實一直在悄悄失敗，真正建立資料夾/寫 config.yaml/SOUL.md 的是
+`_write_isolated_config()`/`_write_soul()` 自己的 Python 程式碼，不是 hermes CLI。
+
+**後續追加驗證，嚴重性比第一眼看起來低**：借用 `--clone-from` 那段已經在用的解法
+（HERMES_HOME 指到旁邊暫存資料夾），讓 `hermes profile create` 真的成功一次，
+對照它產生的檔案跟我們正式環境的 agent 資料夾差在哪裡。**唯一少的東西是
+`profile.yaml`**——查了 `hermes_cli/profiles.py:798-806` 的原始碼註解，寫得很白：
+「`config.yaml` 是真正驅動 hermes 的 ~5000 行設定；`profile.yaml` 只是描述這個
+profile 本身的裝飾性 metadata（description/role），**缺少這個檔案不會出錯，就是
+空預設值**」。也就是說，真正重要的 `config.yaml` 從頭到尾都是我們自己的程式碼在
+正確寫，今天所有實測（對話/記憶/MCP/session resume）都成功正是因為這個檔案一直
+是對的。結論：**這是死碼+吞掉錯誤的程式碼衛生問題，不是資料遺失或設定失效的
+風險**，不急著修，但建議之後找時間把 returncode 檢查補上或乾脆拿掉這段呼叫。
+
+**對 orchestrator 規劃的實際影響**：不需要預先 mount 建好 `profiles/`/`skills/`/
+`memories/` 路徑骨架，orchestrator 只要掛一個空的、可寫入的資料夾到 `/opt/data`
+就夠了——但也不能指望「hermes 指令自己會建資料夾」，撐起初始化的其實是
+hermes-agent 自己的程式碼。這件事今天沒有動手修，只是記錄下來。
+
+## MCP 工具端到端驗證（✅ 已實測）
+
+用 `mcp.json` 母版裡現成的公開測試伺服器 `_test_everything`
+（`@modelcontextprotocol/server-everything`，MCP 官方維護、免憑證）跑了一次完整
+流程：設定 agent 的 MCP selection 為 resident → 對話請它用 echo 工具 →
+`__ACP_TOOL__` 事件顯示成功呼叫 `mcp___test_everything__echo` → 正確回傳結果。
+母版 → agent 選配 → config.yaml → hermes 真的連上並執行，整條路徑驗證通過。
+
+## 測試環境注意事項
+
+- 這台機器連不到 Phison 內網（`ainexus.phison.com`），要測真的模型回應，得暫時
+  把 `docker-compose.yaml` 裡那 4 行 Claude 測試用環境變數取消註解、
+  `docker compose up -d hermes-agent-proxy` 重建容器，測完記得改回註解、
+  再重建一次容器復原。今天測了兩次，都已經改回 Phison。
+- `.env`（`d:\mygpt\mygpt\.env`）裡已經補回 `ANTHROPIC_API_KEY`（用的是
+  `claude api.txt` 裡那把——**這把 key 就是先前 handoff 記錄裡標記「疑似被
+  GitHub push protection 攔下、疑似外洩」的那支，建議之後找時間去 Anthropic
+  Console 撤銷重發，這件事還沒處理**）。
+- 測試建立的 `agent_test_ctxcheck`、`agent_test_mcpcheck` profile 資料夾都已經
+  清掉，`hermes_core_data/profiles/` 裡沒有殘留（`mcp_test_agent` 是本來就在的
+  資料夾，不是這次測試建的，沒動它）。
+
+## 明天可以直接接著做的事
+
+1. 把 `services.py` 的 mcp_servers_block 呼叫換成 `mcp_services_all`，測「全部
+   匯入不管使用者選擇」的實際效果（尤其是「需要憑證但沒填」的 MCP，例如
+   `email`，會不會讓整個 config.yaml 啟動失敗）。
+2. 跟朋友對齊 `01_orchestrator_split_plan.md`/`02_lifecycle_and_communication.md`
+   裡列的幾個關鍵問題（per-user vs per-agent granularity、CRUD 需不需要、資源
+   限制數值）。
+3. 考慮要不要順手修 `hermes profile create` 的 silent failure（今天只診斷，沒修）。
+4. Anthropic API key 洩漏那件事，找時間去 Console 撤銷重發。

@@ -1,0 +1,64 @@
+<<<<<<< HEAD
+20260720 1742定奪版
+{
+  "userId": "42",
+  "agentId": "agent_a26dcad41262",
+  "environment": {
+    "AINEXUS_API_KEY": "example-key",
+    "LOG_LEVEL": "info",
+    "HERMES_HOME": "/opt/data/profiles/agent_a26dcad41262"
+  },
+  "volumes": {
+    "/host/path/to/user-data": "/opt/data:rw"
+  },
+  "resource_limits": {
+    "nano_cpus": 1000000000,
+    "mem_limit": "2g",
+    "mem_reservation": "1g"
+  }
+}
+
+回應版本
+{
+  "status": "success",
+  "containerId": "a1b2c3d4e5f6",
+  "containerName": "hermes-runtime-42",
+  "userId": "42",
+  "agentId": "agent_a26dcad41262",
+  "status": "running",
+  "baseUrl": "http://hermes-runtime-42:8643",
+  "port": 8643,
+  "image": "hermes-agent:latest"
+=======
+20260720 1742定奪版
+{
+  "userId": "42",
+  "agentId": "agent_a26dcad41262",
+  "environment": {
+    "AINEXUS_API_KEY": "example-key",
+    "LOG_LEVEL": "info",
+    "HERMES_HOME": "/opt/data/profiles/agent_a26dcad41262"
+  },
+  "volumes": {
+    "/host/path/to/user-data": "/opt/data:rw"
+  },
+  "resource_limits": {
+    "nano_cpus": 1000000000,
+    "mem_limit": "2g",
+    "mem_reservation": "1g"
+  }
+}
+
+回應版本
+{
+  "status": "success",
+  "containerId": "a1b2c3d4e5f6",
+  "containerName": "hermes-runtime-42",
+  "userId": "42",
+  "agentId": "agent_a26dcad41262",
+  "status": "running",
+  "baseUrl": "http://hermes-runtime-42:8643",
+  "port": 8643,
+  "image": "hermes-agent:latest"
+>>>>>>> 325be2f2fa3d02d658765010f5c51af97b5a118a
+}

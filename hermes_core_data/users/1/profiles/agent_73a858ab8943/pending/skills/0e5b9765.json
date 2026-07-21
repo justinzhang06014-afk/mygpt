@@ -1,0 +1,14 @@
+{
+  "id": "0e5b9765",
+  "subsystem": "skills",
+  "action": "create",
+  "summary": "create 'hermes-basic-ops' (556 chars)",
+  "origin": "assistant_tool",
+  "created_at": 1784515943.6074731,
+  "payload": {
+    "action": "create",
+    "name": "hermes-basic-ops",
+    "content": "# hermes Agent 基本操作技能\n\n## 快速操作\n- 列出技能: `hermes skills list`\n- 執行技能: `hermes skills execute <skill_name>`\n- 建立技能: `hermes skills create --name <name> --content \"...\"`\n- 刪除技能: `hermes skills delete <name>`\n- 查看記憶: `hermes memory list`\n- 新增記憶: `hermes memory add --content \"fact\"`\n\n## Session 操作\n- 列出 session: `hermes sessions list`\n- 讀取 session: `hermes sessions read <id>`\n- 新建 session: `hermes sessions new`\n- 刪除 session: `hermes sessions delete <id>`\n\n## CLI 基礎\n- 狀態: `hermes status`\n- 設定: `hermes config`\n- 幫助: `hermis --help` 或 `hermis <command> --help`",
+    "replace_all": false
+  }
+}

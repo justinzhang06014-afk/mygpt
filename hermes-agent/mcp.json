@@ -15,8 +15,18 @@
       "transport": "sse",
       "url": "http://ainexus.phison.com:5155/api/v1/Agent/mcp/12/MTIwOTA6MTc4NDEwOTEwNA.5BiSODXCP7FwaMac9Es4foYw7aaK5pE1aC5qeEoDWuU",
       "credentialFields": [
-        {"key": "USER", "label": "帳號", "type": "text", "required": true},
-        {"key": "PASSWORD", "label": "密碼", "type": "password", "required": true}
+        {
+          "key": "USER",
+          "label": "帳號",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "PASSWORD",
+          "label": "密碼",
+          "type": "password",
+          "required": true
+        }
       ]
     },
     "image-generator": {
@@ -64,7 +74,10 @@
       "description": "Model Context Protocol 官方維護的公開測試伺服器，不需要任何憑證，用來驗證母版→agent mcp.json→config.yaml→hermes 真的連得上的完整流程。驗證完成後可以從母版移除。",
       "kind": "stdio",
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-everything"],
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-everything"
+      ],
       "credentialFields": []
     },
     "sequential-thinking": {
@@ -72,8 +85,81 @@
       "description": "Model Context Protocol 官方維護的另一個公開伺服器，用來驗證管理員之後新增母版項目，既有 agent 會不會自動看到——這筆是後來才加的，測試用完可以刪。",
       "kind": "stdio",
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
       "credentialFields": []
+    },
+    "sk-VKnH0FxQbH78ei7M3iMp_g": {
+      "displayName": "Twinkle Hub",
+      "description": "Twinkle Hub 是 Twinkle AI 開發的台灣首個 MCP（Model Context Protocol）服務。它將上萬筆台灣政府公開資料及採購數據整合為單一端點，讓 Claude、Cursor 等 AI 工具能即時查詢，省去繁瑣爬蟲",
+      "kind": "url",
+      "transport": "",
+      "url": "https://api.twinkleai.tw/mcp/",
+      "args": [],
+      "credentialFields": [
+        {
+          "key": "{",
+          "label": "{",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "\"mcpServers\": {",
+          "label": "\"mcpServers\": {",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "\"twinkle-hub\": {",
+          "label": "\"twinkle-hub\": {",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "\"url\": \"https://api.twinkleai.tw/mcp/\"",
+          "label": "\"url\": \"https://api.twinkleai.tw/mcp/\"",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "\"headers\": {",
+          "label": "\"headers\": {",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "\"Authorization\": \"Bearer sk-VKnH0FxQbH78ei7M3iMp_g\"",
+          "label": "\"Authorization\": \"Bearer sk-VKnH0FxQbH78ei7M3iMp_g\"",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "}",
+          "label": "}",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "}",
+          "label": "}",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "}",
+          "label": "}",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "}",
+          "label": "}",
+          "type": "text",
+          "required": false
+        }
+      ]
     }
   }
 }

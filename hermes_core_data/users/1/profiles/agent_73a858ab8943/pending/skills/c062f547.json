@@ -1,0 +1,14 @@
+{
+  "id": "c062f547",
+  "subsystem": "skills",
+  "action": "create",
+  "summary": "create 'hermes-cli-troubleshooting' (366 chars)",
+  "origin": "assistant_tool",
+  "created_at": 1784515947.8942537,
+  "payload": {
+    "action": "create",
+    "name": "hermes-cli-troubleshooting",
+    "content": "# CLI 設定與除錯技能\n\n## 常見問題\n1. 連線失敗: 檢查 `hermes config get server_url`\n2. 權限問題: 確認環境變數 HERMES_API_KEY\n3. 技能找不到: 檢查 `~/.hermes/skills/` 目錄\n4. 記憶體滿: `hermes memory list` 查看\n\n## 設定檔位置\n- 主設定: `~/.hermes/config.yaml`\n- 技能: `~/.hermes/skills/`\n- 記憶: `~/.hermes/memories/`\n- Session: `~/.hermes/sessions/`\n\n## 除錯模式\n```bash\nhermis --verbose <command>\nhermis --debug <command>\n```",
+    "replace_all": false
+  }
+}

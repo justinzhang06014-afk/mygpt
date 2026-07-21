@@ -113,6 +113,12 @@ def ensure_user_runtime(user_id: str) -> str:
         network=networks[0] if networks else None,
         detach=True,
         restart_policy={"Name": "always"},
+
+        # 👇【關鍵新增：精準限制動態複製出來的 Hermes 帳號用量】👇
+        # nano_cpus=1000000000,       # 限制最高 2.0 核 (10^9 nano_cpus = 1核)
+        # mem_limit="1g",             # 限制最高記憶體為 2GB (天花板，過線會 OOM)
+        # mem_reservation="0.5g",       # 保證分配 1GB 記憶體 (保底資源)
+        # ipc_mode="host",             # 🚀 這行極重要！給予瀏覽器共享記憶體，防止 Chromium 報錯崩潰
     )
 
     for extra_network in networks[1:]:

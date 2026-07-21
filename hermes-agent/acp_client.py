@@ -177,16 +177,25 @@ async def run_acp_turn(
 
         if resume_session_id:
             try:
-                sess = await agent.resume_session(cwd="/workspace", session_id=resume_session_id)
-                # 🛡️ 檢查回傳物件中是否有 session_id，沒有就代表雖然沒噴 exception 但內容是失敗的
-                if not hasattr(sess, "session_id") or not sess.session_id:
-                    logger.warning(f"[ACP] resume_session 回傳格式異常，可能新模型不支援此會話，改開新 session")
-                    sess = await agent.new_session(cwd="/workspace")
+                # 🐛 0720 修正【已對照 acp/schema.py 原始碼實測核對】：舊版這裡會檢查
+                # `sess.session_id` 是否存在，沒有就當成「resume 失敗」改開新 session——
+                # 但 ACP 協定裡 ResumeSessionResponse 這個 model 本來就沒有 session_id
+                # 欄位（跟 NewSessionResponse 不一樣，resume 時 client 早就知道 session_id
+                # 了，不需要再回傳一次）。導致這個判斷式對「每一次成功的 resume」都會誤判成
+                # 格式異常，實測驗證：3 輪對話裡，第 2、3 輪 log 都印出「改開新 session」，
+                # 等於整條 resume 機制形同虛設，每輪都是全新空白 session，使用者回報的
+                # 「同一個 session 內忘記上下文」正是這裡造成的。
+                # 修法：resume 成功（沒拋例外）就直接沿用呼叫端已經知道的 resume_session_id，
+                # 不要去讀根本不存在的欄位。
+                await agent.resume_session(cwd="/workspace", session_id=resume_session_id)
+                session_id = resume_session_id
             except Exception as e:
                 logger.warning(f"[ACP] resume_session 失敗（{e}），改開新 session")
                 sess = await agent.new_session(cwd="/workspace")
+                session_id = getattr(sess, "session_id", None)
         else:
             sess = await agent.new_session(cwd="/workspace")
+            session_id = getattr(sess, "session_id", None)
 
         # 🐛 0716 修正：resume_session() 內部會把歷史對話透過 session_update 重播一次，
         # 這些通知跟這輪真正的新事件共用同一個 event_queue，先前沒有丟棄，
@@ -200,9 +209,8 @@ async def run_acp_turn(
             logger.info(f"[ACP] resume_session 丟棄了 {discarded} 個重播事件")
 
         # 🛡️ 安全獲取 session_id，如果連 new_session 都因為新模型壞掉而沒拿到，就主動拋出有意義的錯誤
-        session_id = getattr(sess, "session_id", None)
         if not session_id:
-            raise RuntimeError(f"❌ 無法從 ACP 獲取有效的 session_id！請檢查新模型是否啟動成功、API Key 是否正確。收到回傳: {sess}")
+            raise RuntimeError(f"❌ 無法從 ACP 獲取有效的 session_id！請檢查新模型是否啟動成功、API Key 是否正確。")
 
         prompt_task = asyncio.create_task(
             agent.prompt(session_id=session_id, prompt=[TextContentBlock(text=message, type="text")])

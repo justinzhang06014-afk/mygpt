@@ -1,0 +1,14 @@
+{
+  "id": "22e8ab41",
+  "subsystem": "skills",
+  "action": "create",
+  "summary": "create 'hermes-mcp-converter' (371 chars)",
+  "origin": "assistant_tool",
+  "created_at": 1784515946.8251708,
+  "payload": {
+    "action": "create",
+    "name": "hermes-mcp-converter",
+    "content": "# MCP (Model Context Protocol) 轉換技能\n\n## MCP JSON 轉換流程\n1. 讀取 `.hermes/mcp.json`\n2. 解析 MCP 伺服器定義\n3. 轉換為 Hermes Skill 格式\n4. 存入 skills 目錄\n\n## 轉換規則\n- MCP server name → Skill name\n- MCP tools → Skill functions\n- MCP prompts → Skill templates\n\n## 手動觸發轉換\n```bash\nhermis mcp convert --input .hermes/mcp.json --output ~/.hermes/skills/\n```\n\n## 驗證轉換結果\n```bash\nhermis skills list\n```",
+    "replace_all": false
+  }
+}

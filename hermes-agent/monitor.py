@@ -17,6 +17,9 @@ ROLLING_WINDOW_SAMPLES = 30  # 30 筆 * 10 秒 = 5 分鐘
 # container_name -> deque[dict]，各自獨立的滾動採樣歷史
 _history: dict[str, deque] = {}
 
+# container_name -> {cpu_percent: {min, max}, mem_usage_mb: {min, max}}
+_peak: dict[str, dict] = {}
+
 def _get_docker_client() -> docker.DockerClient:
     # 💡 讓 Docker 根據環境變數自動尋找最正確的連線方式
     return docker.from_env()
@@ -79,6 +82,27 @@ def _average_samples(samples: list) -> dict:
     return avg
 
 
+def _peak_update(name: str, cpu: float, mem_mb: float):
+    """紀錄高峰/低峰（滾動視窗內）"""
+    if name not in _peak:
+        _peak[name] = {"cpu_percent": {"min": cpu, "max": cpu}, "mem_usage_mb": {"min": mem_mb, "max": mem_mb}}
+    p = _peak[name]
+    p["cpu_percent"]["min"] = min(p["cpu_percent"]["min"], cpu)
+    p["cpu_percent"]["max"] = max(p["cpu_percent"]["max"], cpu)
+    p["mem_usage_mb"]["min"] = min(p["mem_usage_mb"]["min"], mem_mb)
+    p["mem_usage_mb"]["max"] = max(p["mem_usage_mb"]["max"], mem_mb)
+
+
+def _peak_get(name: str) -> dict:
+    if name not in _peak:
+        return {}
+    p = _peak[name]
+    return {
+        "min": {"cpu_percent": p["cpu_percent"]["min"], "mem_usage_mb": p["mem_usage_mb"]["min"]},
+        "max": {"cpu_percent": p["cpu_percent"]["max"], "mem_usage_mb": p["mem_usage_mb"]["max"]},
+    }
+
+
 async def _monitor_loop():
     while True:
         try:
@@ -96,10 +120,14 @@ async def _monitor_loop():
 
                     history = _history.setdefault(container.name, deque(maxlen=ROLLING_WINDOW_SAMPLES))
                     history.append(current)
+                    _peak_update(container.name, current["cpu_percent"], current["mem_usage_mb"])
+
                     snapshot[user_id] = {
                         "container_name": container.name,
                         "current": current,
                         "avg_5min": _average_samples(list(history)),
+                        "min": _peak_get(container.name).get("min", {}),
+                        "max": _peak_get(container.name).get("max", {}),
                     }
             finally:
                 client.close()

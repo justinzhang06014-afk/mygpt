@@ -1,5 +1,42 @@
-{
-  "timestamp": "2026-07-16T13:04:23Z",
-  "sample_interval_seconds": 10,
-  "containers": {}
+﻿{
+    "timestamp":  "2026-07-17T10:14:12Z",
+    "containers":  {
+                       "222":  {
+                                   "container_name":  "hermes-runtime-222",
+                                   "current":  {
+                                                   "cpu_percent":  "0.11%",
+                                                   "net_io":  "0.40%",
+                                                   "mem_usage":  "63.18MiB / 15.5GiB",
+                                                   "block_io":  "80.4MB / 14.8MB"
+                                               }
+                               },
+                       "33":  {
+                                  "container_name":  "hermes-runtime-33",
+                                  "current":  {
+                                                  "cpu_percent":  "0.21%",
+                                                  "net_io":  "5.45%",
+                                                  "mem_usage":  "173.7MiB / 15.5GiB",
+                                                  "block_io":  "66MB / 10.9MB"
+                                              }
+                              },
+                       "000":  {
+                                   "container_name":  "hermes-runtime-000",
+                                   "current":  {
+                                                   "cpu_percent":  "0.11%",
+                                                   "net_io":  "0.34%",
+                                                   "mem_usage":  "54.26MiB / 15.5GiB",
+                                                   "block_io":  "30MB / 3.74MB"
+                                               }
+                               },
+                       "hermes_agent":  {
+                                            "container_name":  "lm_hermes_agent",
+                                            "current":  {
+                                                            "cpu_percent":  "0.10%",
+                                                            "net_io":  "0.31%",
+                                                            "mem_usage":  "49.14MiB / 15.5GiB",
+                                                            "block_io":  "65.9kB / 81.8kB"
+                                                        }
+                                        }
+                   },
+    "sample_interval_seconds":  10
 }

@@ -1,0 +1,15 @@
+{
+  "id": "a9e75acb",
+  "subsystem": "skills",
+  "action": "create",
+  "summary": "create '' (2 KB)",
+  "origin": "assistant_tool",
+  "created_at": 1784526587.1305885,
+  "payload": {
+    "action": "create",
+    "name": "",
+    "content": "# MCP JSON to Hermes Config Converter\n\n## 用途\n將用戶的 mcp.json 配置自動轉換為 Hermes Agent 可讀取的命令格式。\n\n## 流程\n1. 讀取 mcp.json（SSE/Z-Image 配置）\n2. 解析為 Hermes 相容的格式\n3. 寫入 /root/.hermes/mcp.json\n4. 建立 skills、plugins、tools 對應\n\n## 母版配置架構\n\n### 工具類型 (tools/)\n每個 MCP tool 在 Hermes 中對應一個 function calling tool：\n- name: tool_name\n- description: 從 description + input_schema 生成\n- parameters: 從 input_schema 生成\n\n### Skill 對應 (skills/)\n每個 MCP server 對應一個 skill，包含：\n- 完整的 function calling tool 定義\n- 使用範例（從 examples 生成）\n\n### 母版複製 (master_templates/)\n每個 server 的母版包含所有工具的完整定義，平行複製給 Hermes 使用。\n\n## 轉換規則\n1. **保留 JSON 格式**: 原始 mcp.json 完整保留\n2. **保留所有功能**: 不遺漏任何 tool\n3. **母版平行複製**: 每個 server 的所有 tool 平行複製為 Hermes function tools\n4. **使用者不可選**: 母版是預設全部載入，使用者不能再增減（但可手動修改）\n5. **動態更新**: 當 mcp.json 新增 server 時，自動啟動對應 tool\n\n## 配置路徑\n- 原始 mcp.json: /root/.hermes/mcp.json 或當前目錄\n- 轉換後: /root/.hermes/tools/ 下對應 function tools\n- Skills: /root/.hermes/skills/ 下對應 server skills\n\n## 使用範例\n```json\n{\n  \"mcpServers\": {\n    \"image_generator\": {\n      \"url\": \"http://localhost:8000/mcp\",\n      \"transport\": \"sse\",\n      \"tools\": {\n        \"image_generate\": {\n          \"name\": \"image_generate\",\n          \"description\": \"Generate images using Z-Image model\",\n          \"input_schema\": { ... }\n        }\n      }\n    }\n  }\n}\n```\n\n轉換後產生：\n- /root/.hermes/tools/z_image_generate.py (function tool)\n- /root/.hermes/skills/image_generator/skill.md (skill 文件)\n",
+    "category": "agent-config",
+    "replace_all": false
+  }
+}

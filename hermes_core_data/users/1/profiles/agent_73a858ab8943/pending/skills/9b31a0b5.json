@@ -1,0 +1,14 @@
+{
+  "id": "9b31a0b5",
+  "subsystem": "skills",
+  "action": "create",
+  "summary": "create 'hermes-acp' (328 chars)",
+  "origin": "assistant_tool",
+  "created_at": 1784515944.6906247,
+  "payload": {
+    "action": "create",
+    "name": "hermes-acp",
+    "content": "# ACP (Agent Communication Protocol) 技能\n\n## 什麼是 ACP？\nACP 是一個 Agent 之間溝通的協定，讓不同的 AI Agent 可以互相傳遞任務、狀態和結果。\n\n## 關鍵概念\n- ACP Message: Agent 之間傳遞的訊息格式\n- ACP Channel: Agent 之間的通訊管道\n- ACP Handler: 處理 ACP 訊息的處理器\n\n## 在 Hermes 中的應用\n- Hermes Agent 可以透過 ACP 與其他 Agent 溝通\n- ACP 訊息格式包含: sender, receiver, content, metadata\n- 可以用於任務委派、狀態同步、結果回報",
+    "replace_all": false
+  }
+}

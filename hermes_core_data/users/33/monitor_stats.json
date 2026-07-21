@@ -1,0 +1,106 @@
+{
+    "timestamp": "2026-07-17T10:14:12Z",
+    "containers": {
+        "222": {
+            "container_name": "hermes-runtime-222",
+            "current": {
+                "cpu_percent": "0.11%",
+                "net_io": "0.40%",
+                "mem_usage": "63.18MiB / 15.5GiB",
+                "block_io": "80.4MB / 14.8MB",
+                "cpu_percent_min": 0.05,
+                "cpu_percent_max": 2.34,
+                "mem_usage_mb_min": 55.2,
+                "mem_usage_mb_max": 89.5
+            },
+            "min": {
+                "cpu_percent": 0.05,
+                "mem_usage_mb": 55.2
+            },
+            "max": {
+                "cpu_percent": 2.34,
+                "mem_usage_mb": 89.5
+            },
+            "avg_5min": {
+                "cpu_percent": 0.42,
+                "mem_usage_mb": 67.3
+            }
+        },
+        "33": {
+            "container_name": "hermes-runtime-33",
+            "current": {
+                "cpu_percent": "0.21%",
+                "net_io": "5.45%",
+                "mem_usage": "173.7MiB / 15.5GiB",
+                "block_io": "66MB / 10.9MB",
+                "cpu_percent_min": 0.08,
+                "cpu_percent_max": 5.67,
+                "mem_usage_mb_min": 150.3,
+                "mem_usage_mb_max": 210.8
+            },
+            "min": {
+                "cpu_percent": 0.08,
+                "mem_usage_mb": 150.3
+            },
+            "max": {
+                "cpu_percent": 5.67,
+                "mem_usage_mb": 210.8
+            },
+            "avg_5min": {
+                "cpu_percent": 1.23,
+                "mem_usage_mb": 178.5
+            }
+        },
+        "000": {
+            "container_name": "hermes-runtime-000",
+            "current": {
+                "cpu_percent": "0.11%",
+                "net_io": "0.34%",
+                "mem_usage": "54.26MiB / 15.5GiB",
+                "block_io": "30MB / 3.74MB",
+                "cpu_percent_min": 0.02,
+                "cpu_percent_max": 1.12,
+                "mem_usage_mb_min": 48.0,
+                "mem_usage_mb_max": 72.1
+            },
+            "min": {
+                "cpu_percent": 0.02,
+                "mem_usage_mb": 48.0
+            },
+            "max": {
+                "cpu_percent": 1.12,
+                "mem_usage_mb": 72.1
+            },
+            "avg_5min": {
+                "cpu_percent": 0.28,
+                "mem_usage_mb": 56.8
+            }
+        },
+        "hermes_agent": {
+            "container_name": "lm_hermes_agent",
+            "current": {
+                "cpu_percent": "0.10%",
+                "net_io": "0.31%",
+                "mem_usage": "49.14MiB / 15.5GiB",
+                "block_io": "65.9kB / 81.8kB",
+                "cpu_percent_min": 0.01,
+                "cpu_percent_max": 0.89,
+                "mem_usage_mb_min": 45.0,
+                "mem_usage_mb_max": 62.3
+            },
+            "min": {
+                "cpu_percent": 0.01,
+                "mem_usage_mb": 45.0
+            },
+            "max": {
+                "cpu_percent": 0.89,
+                "mem_usage_mb": 62.3
+            },
+            "avg_5min": {
+                "cpu_percent": 0.18,
+                "mem_usage_mb": 51.2
+            }
+        }
+    },
+    "sample_interval_seconds": 10
+}
