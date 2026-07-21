@@ -1,0 +1,14 @@
+{
+  "id": "a6928c6c",
+  "subsystem": "skills",
+  "action": "create",
+  "summary": "create 'email-mcp-usage' (474 chars)",
+  "origin": "assistant_tool",
+  "created_at": 1784602529.7626467,
+  "payload": {
+    "action": "create",
+    "name": "email-mcp-usage",
+    "content": "# Email MCP 使用指南\n\n## 啟用 Email MCP\n在 mcp.json 中，Email MCP 需要憑證：\n- KEY: USER, TYPE: text, REQUIRED: true\n- KEY: PASSWORD, TYPE: password, REQUIRED: true\n\nURL: http://ainexus.phison.com:5155/api/v1/Agent/mcp/12/MTIwOTA6MTc4NDEwOTEwNA.5BiSODXCP7FwaMac9Es4foYw7aaK5pE1aC5qeEoDWuU\n\n## 出勤查詢\n「企業AI智能秘書」專家負責出勤資料：\n- mcpLink: http://ainexus.phison.com:5155/mcp/agent/RlAD8WcmGN0Ljp+foameWoahRmuJXTq7MAl3ufhX2FSYcUB2qDgHi3YDrtGlodBHP3I97yK9C0mpsFqZ3ESgLA==\n\n## 常見用法\n直接向專家詢問出勤、加班、休假等資訊。\n",
+    "replace_all": false
+  }
+}

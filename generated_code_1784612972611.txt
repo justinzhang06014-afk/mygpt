@@ -1,0 +1,93 @@
+┌─────────────────────────────────────────────────────────────────────┐
+│  API 1: 確保容器存在（你改 runtime_manager.py 後的樣子）              │
+│                                                                     │
+│  POST http://hermes-orchestrator:8642/api/runtime/ensure             │
+│                                                                     │
+│  Request:                                                           │
+│  {                                                                 │
+│    "userId": "42",                                                 │
+│    "agentId": "agent_xxx",                                          │
+│    "environment": {                                                │
+│      "PROFILES_BASE_DIR": "/opt/data/profiles",                    │
+│      "LLM_BASE_URL": "https://ainexus.phison.com/api/external/v1",  │
+│      "LLM_API_KEY": "${LLM_API_KEY}",                              │
+│      "LLM_MODEL": "Qwen/Qwen3.6-35B-A3B-FP8",                     │
+│      "LLM_PROVIDER": "custom",                                     │
+│      "LOG_LEVEL": "info"                                           │
+│    },                                                              │
+│    "volumes": {                                                    │
+│      "/path/on/host/users/42": {                                   │
+│        "bind": "/opt/data",                                        │
+│        "mode": "rw"                                                │
+│      }                                                             │
+│    },                                                              │
+│    "resource_limits": {                                            │
+│      "nano_cpus": 1000000000,                                      │
+│      "mem_limit": "2g",                                            │
+│      "mem_reservation": "1g"                                       │
+│    }                                                               │
+│  }                                                                 │
+│                                                                     │
+│  Response:                                                          │
+│  {                                                                 │
+│    "status": "success",                                            │
+│    "user_id": "42",                                                │
+│    "container_name": "hermes-runtime-42",                           │
+│    "base_url": "http://hermes-runtime-42:8643"                     │
+│  }                                                                 │
+│                                                                     │
+│  注意：                                                              │
+│  • base_url 用 container name + 8643 port，走 Docker 內部 DNS       │
+│  • 不對外發布 port                                                  │
+│  • 如果容器已存在，回傳既有的 base_url（冪等）                       │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────┐
+│  API 2: 容器狀態查詢（你建議新增的）                                  │
+│                                                                     │
+│  GET  http://hermes-orchestrator:8642/api/runtime/status/{userId}    │
+│                                                                     │
+│  Response:                                                          │
+│  {                                                                 │
+│    "user_id": "42",                                                │
+│    "status": "running",         # running | stopped | error        │
+│    "container_id": "abc123",                                        │
+│    "created_at": "2026-07-20T10:00:00Z",                            │
+│    "base_url": "http://hermes-runtime-42:8643"                     │
+│  }                                                                 │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────┐
+│  API 3: 容器停止（優雅停止，不刪資料）                                │
+│                                                                     │
+│  POST http://hermes-orchestrator:8642/api/runtime/stop/{userId}      │
+│                                                                     │
+│  Response:                                                          │
+│  {                                                                 │
+│    "status": "stopped"                                             │
+│  }                                                                 │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────┐
+│  API 4: 容器重啟                                                     │
+│                                                                     │
+│  POST http://hermes-orchestrator:8642/api/runtime/restart/{userId}   │
+│                                                                     │
+│  Response:                                                          │
+│  {                                                                 │
+│    "status": "running",                                            │
+│    "base_url": "http://hermes-runtime-42:8643"                     │
+│  }                                                                 │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────┐
+│  API 5: 容器刪除（高風險，需要二次確認）                              │
+│                                                                     │
+│  DELETE http://hermes-orchestrator:8642/api/runtime/delete/{userId}  │
+│  Header: X-Confirm-Delete: "true"                                   │
+│                                                                     │
+│  Response:                                                          │
+│  {                                                                 │
+│    "status": "deleted"                                             │
+│  }                                                                 │
+└─────────────────────────────────────────────────────────────────────┘

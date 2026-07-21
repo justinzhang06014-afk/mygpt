@@ -1,0 +1,2849 @@
+{
+  "mcpConfig": {
+    "mcpServers": {
+      "websearch": {
+        "type": "streamable-http",
+        "url": "http://192.168.41.133:1145/api/v1/Agent/mcp/4/MTIwOTA6MTc4NDYzMDg4NA.crwczrdFokAqjxdIy7K_2o-4xdZI6n2_jVTbBv6qraQ",
+        "headers": {},
+        "alwaysAllow": [],
+        "disabled": false
+      },
+      "email": {
+        "type": "sse",
+        "url": "http://192.168.41.133:1145/api/v1/Agent/mcp/12/MTIwOTA6MTc4NDYzMDg4NA.crwczrdFokAqjxdIy7K_2o-4xdZI6n2_jVTbBv6qraQ",
+        "headers": {
+          "USER": "justin_zhang@phison.com",
+          "PASSWORD": "Justin123456!"
+        },
+        "alwaysAllow": [],
+        "disabled": false
+      },
+      "image-generator": {
+        "type": "streamable-http",
+        "url": "http://192.168.41.133:1145/api/v1/Agent/mcp/254/MTIwOTA6MTc4NDYzMDg4NA.crwczrdFokAqjxdIy7K_2o-4xdZI6n2_jVTbBv6qraQ",
+        "headers": {},
+        "alwaysAllow": [],
+        "disabled": false
+      },
+      "everything-to-md-converter": {
+        "type": "streamable-http",
+        "url": "http://192.168.41.133:1145/api/v1/Agent/mcp/2295/MTIwOTA6MTc4NDYzMDg4NA.crwczrdFokAqjxdIy7K_2o-4xdZI6n2_jVTbBv6qraQ",
+        "headers": {},
+        "alwaysAllow": [],
+        "disabled": false
+      },
+      "call_tree_mcp": {
+        "type": "streamable-http",
+        "url": "http://192.168.41.133:1145/api/v1/Agent/mcp/2835/MTIwOTA6MTc4NDYzMDg4NA.crwczrdFokAqjxdIy7K_2o-4xdZI6n2_jVTbBv6qraQ",
+        "headers": {},
+        "alwaysAllow": [],
+        "disabled": false
+      },
+      "co-gitlab-mcp": {
+        "type": "streamable-http",
+        "url": "http://192.168.41.133:1145/api/v1/Agent/mcp/3949/MTIwOTA6MTc4NDYzMDg4NA.crwczrdFokAqjxdIy7K_2o-4xdZI6n2_jVTbBv6qraQ",
+        "headers": {},
+        "alwaysAllow": [],
+        "disabled": false
+      },
+      "fw-git2-gitlab-mcp": {
+        "type": "streamable-http",
+        "url": "http://192.168.41.133:1145/api/v1/Agent/mcp/3973/MTIwOTA6MTc4NDYzMDg4NA.crwczrdFokAqjxdIy7K_2o-4xdZI6n2_jVTbBv6qraQ",
+        "headers": {},
+        "alwaysAllow": [],
+        "disabled": false
+      },
+      "markdown_converter_via_sharefolder": {
+        "type": "streamable-http",
+        "url": "http://192.168.41.133:1145/api/v1/Agent/mcp/4252/MTIwOTA6MTc4NDYzMDg4NA.crwczrdFokAqjxdIy7K_2o-4xdZI6n2_jVTbBv6qraQ",
+        "headers": {},
+        "alwaysAllow": [],
+        "disabled": false
+      }
+    }
+  },
+  "experts": [
+    {
+      "id": 127,
+      "name": "災害專家",
+      "description": "你是一個公司災害防治的專家",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2025-12-03T08:47:50.782168Z",
+      "updatedAt": "2026-06-11T07:39:25.070064Z"
+    },
+    {
+      "id": 138,
+      "name": "企業防災指揮官",
+      "description": "這是一位專為大型企業與極高密度建築量身打造的「災害防禦顧問」。他的特質與一般消防員不同，",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2025-12-05T08:14:38.233848Z",
+      "updatedAt": "2026-06-11T07:39:25.045039Z"
+    },
+    {
+      "id": 161,
+      "name": "UFS規格大師",
+      "description": "+ 規格文件包含\n  - JESD220H.pdf (Universal Flash Storage (UFS5.0))\n  - JESD220G.pdf (Universal Flash Storage (UFS4.1))\n  - JESD223E.pdf (Universal Flash Storage Host Controller Interface (UFSHCI))\n  - mipi_DRAFT_UniPro_specification_v3-0_r04.pdf\n  - mipi_M-PHY_specification_v6-0.pdf\n  - mipi_M-PHY-v5-0_app-note_Eye-Diagram_v1-0 4.pdf",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2025-12-12T05:33:07.683731Z",
+      "updatedAt": "2026-06-11T07:40:25.649686Z"
+    },
+    {
+      "id": 164,
+      "name": "智能人才篩選專家",
+      "description": "它是一個懂技術、懂群聯、且眼光毒辣的虛擬技術招募顧問，能幫你從海量履歷中直接揪出具備即戰力的頂尖人才",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2025-12-12T11:36:10.517134Z",
+      "updatedAt": "2026-06-11T07:39:26.261809Z"
+    },
+    {
+      "id": 172,
+      "name": "test",
+      "description": "test tool",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2025-12-16T07:34:48.083363Z",
+      "updatedAt": "2026-06-11T07:39:26.286383Z"
+    },
+    {
+      "id": 173,
+      "name": "TIC Insight Engine",
+      "description": "這是一個基於 MCP（Model Context Protocol）的架構，提供下列服務：Delivery 放測資訊查詢 (放測資源、放測進度、放測 fail、工單基本資訊、Task 資訊、組合資訊、放測時間預估)、VWO 主檔新增、Pattern／Sample／Platform／Realtime 資訊查詢，並可透過拍攝 Sample 實體條碼 （Barcode）查詢對應的 Sample 資訊和進行 Sample 移轉作業。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2025-12-16T07:44:32.387234Z",
+      "updatedAt": "2026-07-13T14:25:40.727413Z"
+    },
+    {
+      "id": 175,
+      "name": "智能人才評估專家",
+      "description": "它是一個懂技術、懂群聯、且眼光毒辣的虛擬技術招募顧問，能幫你從海量履歷中直接揪出具備即戰力的頂尖人才",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2025-12-16T09:01:36.931377Z",
+      "updatedAt": "2026-06-11T07:39:25.533178Z"
+    },
+    {
+      "id": 205,
+      "name": "需求回報助理",
+      "description": "用來將使用者的需求蒐集，並開立Jira單。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2025-12-18T06:43:03.804926Z",
+      "updatedAt": "2026-06-11T07:39:26.984429Z"
+    },
+    {
+      "id": 207,
+      "name": "車規Agent_測試用",
+      "description": "ASPICE",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2025-12-18T07:50:02.802708Z",
+      "updatedAt": "2026-06-11T07:39:26.94666Z"
+    },
+    {
+      "id": 212,
+      "name": "AutoDump Robot",
+      "description": "你是專門處理「autodump」和「icehub」相關問題的助理。你只能回答嚴格固定的回覆格式，必須依據知識庫現有資訊直接回答，不可過度思考和杜撰",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2025-12-19T04:02:03.769198Z",
+      "updatedAt": "2026-06-29T10:04:10.367807Z"
+    },
+    {
+      "id": 222,
+      "name": "UFS Master",
+      "description": "UFS知識大師.\n熟知UFS Spec, 並熟悉各專案特殊功能規格.",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2025-12-23T03:16:06.635341Z",
+      "updatedAt": "2026-06-11T07:39:33.751122Z"
+    },
+    {
+      "id": 249,
+      "name": "PPS SEC Agent (知識庫)",
+      "description": "PPS Security 相關資料查詢 (有問題可以聯繫Hugh_he #36009)",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2025-12-26T10:38:21.983917Z",
+      "updatedAt": "2026-06-11T07:40:02.275421Z"
+    },
+    {
+      "id": 260,
+      "name": "PPS1.0 Tool 疑難雜症交給我",
+      "description": "幫你解決 PCIe/NVMe PPS1.0 Tool 的疑難雜症，也可以幫你找 Pattern PIC",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2025-12-30T08:15:43.72381Z",
+      "updatedAt": "2026-06-11T07:39:28.77859Z"
+    },
+    {
+      "id": 273,
+      "name": "review_assistant_test_bak",
+      "description": "test",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2025-12-30T09:11:25.951033Z",
+      "updatedAt": "2026-06-11T07:39:32.032576Z"
+    },
+    {
+      "id": 294,
+      "name": "TesterQA_PCIE Agent",
+      "description": "可以回答任何跟Tester, PCIE, Bridge相關問題, 包含介紹能回答的窗口人員",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-02T06:57:24.617171Z",
+      "updatedAt": "2026-06-11T07:39:31.94971Z"
+    },
+    {
+      "id": 298,
+      "name": "Confluence to markdown",
+      "description": "可以讀取指定的Confluence Page ID內容, 並轉成markdown.",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-02T08:54:30.615947Z",
+      "updatedAt": "2026-06-11T07:39:31.898798Z"
+    },
+    {
+      "id": 299,
+      "name": "Agentic hub 小秘書",
+      "description": "你是專門處理「AI Nexus」相關問題的助理，從操作說明，使用手冊，workshop，開發流程，故障排除都可以問你。",
+      "isPublic": true,
+      "isAdded": true,
+      "createdAt": "2026-01-02T09:00:47.599636Z",
+      "updatedAt": "2026-07-02T06:55:37.910895Z"
+    },
+    {
+      "id": 303,
+      "name": "NAV故障排除與導引助手",
+      "description": "讓使用者能透過自然語言詢問（例如：「出現 \"找不到FW Version對應的TestPlan\"如何解決？」）並獲得精確引導",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-05T03:10:38.667749Z",
+      "updatedAt": "2026-06-11T07:39:49.791746Z"
+    },
+    {
+      "id": 304,
+      "name": "ISO程序文件 Agent",
+      "description": "建置「品質知識AI問答小幫手」，透過導入公司內部品質相關文件，協助同仁能以「自然語言」方式快速查詢/瞭解品質規範、定義及跨部門作業流程說明。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-05T03:16:44.58221Z",
+      "updatedAt": "2026-06-11T07:39:41.680688Z"
+    },
+    {
+      "id": 305,
+      "name": "ISO程序文件 Agent",
+      "description": "建置「品質知識AI問答小幫手」，透過導入公司內部品質相關文件，協助同仁能以「自然語言」方式快速查詢/瞭解品質規範、定義及跨部門作業流程說明。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-05T03:18:47.258007Z",
+      "updatedAt": "2026-06-11T07:39:41.703476Z"
+    },
+    {
+      "id": 381,
+      "name": "NVMe2.1-2024.08.05-Ratified",
+      "description": "NVMe2.1 Spec",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-06T07:07:32.728712Z",
+      "updatedAt": "2026-06-11T07:40:50.533204Z"
+    },
+    {
+      "id": 428,
+      "name": "gpt_price",
+      "description": "gpt price",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-06T08:03:08.02306Z",
+      "updatedAt": "2026-06-11T07:39:50.524631Z"
+    },
+    {
+      "id": 430,
+      "name": "AHCI.spec",
+      "description": "AHCI Spec. \nSATA AHCI 規格查詢",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-06T08:03:41.087738Z",
+      "updatedAt": "2026-06-11T07:39:47.281352Z"
+    },
+    {
+      "id": 465,
+      "name": "hybrid app version",
+      "description": "有關Hybrid App 的所有版本更動, release note的知識. \n所有的資料每天都會由這個confluence page跟以下的children pages的內容update.\nhttps://confluence.phison.com:8443/display/RD9AD/N23+Hybrid+Sorting+Version+Table",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-06T08:09:14.021559Z",
+      "updatedAt": "2026-06-11T07:39:51.834827Z"
+    },
+    {
+      "id": 482,
+      "name": "GPT API價格分析師",
+      "description": "專門分析GPT 4.1 API價格",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-06T08:17:03.405537Z",
+      "updatedAt": "2026-06-11T07:39:50.653654Z"
+    },
+    {
+      "id": 505,
+      "name": "Judge Agent",
+      "description": "你只能回答嚴格固定的回覆格式，絕對不可更改回答格式",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-07T03:21:38.427604Z",
+      "updatedAt": "2026-06-11T07:40:14.825124Z"
+    },
+    {
+      "id": 508,
+      "name": "Unitest",
+      "description": "你是專門處理「unittest」相關問題的助理，請永久遵守以下規則並以繁體中文回應使用者",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-07T06:06:09.144813Z",
+      "updatedAt": "2026-06-11T07:39:41.733379Z"
+    },
+    {
+      "id": 515,
+      "name": "Physical Verification Lib.",
+      "description": "Users can access information regarding PV-related issues, such as DRC, LVS, and more. \nAdditional, utilitie and flow are also available here.",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-07T10:15:53.109908Z",
+      "updatedAt": "2026-06-11T07:39:42.082851Z"
+    },
+    {
+      "id": 534,
+      "name": "Dell PVE - 提供Pattern查詢對應Dell Spec",
+      "description": "提供Dell Spec對應章節相關測項",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-09T06:22:12.141544Z",
+      "updatedAt": "2026-06-11T07:40:16.246253Z"
+    },
+    {
+      "id": 544,
+      "name": "成語接龍大師pro",
+      "description": "成語接龍大師pro",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-12T05:48:15.284135Z",
+      "updatedAt": "2026-06-11T07:39:41.754713Z"
+    },
+    {
+      "id": 557,
+      "name": "國產水泥磚家",
+      "description": "國產水泥磚家",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-13T05:20:50.868419Z",
+      "updatedAt": "2026-06-11T07:39:41.7862Z"
+    },
+    {
+      "id": 575,
+      "name": "食品所 RAG 智庫",
+      "description": "食品所 RAG 智庫 測試用",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-14T07:20:50.731227Z",
+      "updatedAt": "2026-06-11T07:39:42.39326Z"
+    },
+    {
+      "id": 580,
+      "name": "SSD Domain Knowledge 知識專家",
+      "description": "自然語言查詢SSD相關技術知識庫：搜尋規格書（NVMe Base 2.3 / NVM CS 1.2 / Boot 1.3 / MI 2.1；  PCIe Base 6.4；OCP DC SSD v2.7；TCG Opal 2.02 / Key-Per-IO 1.41）、友情支援回答 驗證資訊、廠內有沒有XX。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-14T10:02:36.402262Z",
+      "updatedAt": "2026-06-11T07:40:50.558987Z"
+    },
+    {
+      "id": 592,
+      "name": "AE JIRA建立機器人",
+      "description": "協助AE快速開立日常派工JIRA",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-15T11:43:30.42555Z",
+      "updatedAt": "2026-06-11T07:39:53.74209Z"
+    },
+    {
+      "id": 610,
+      "name": "eMMC FW專家",
+      "description": "FW 問題解答專家",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-16T10:36:30.833355Z",
+      "updatedAt": "2026-06-11T07:39:43.371399Z"
+    },
+    {
+      "id": 663,
+      "name": "FW-NVME 大師",
+      "description": "包含 NVME protocol",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-20T07:33:44.705112Z",
+      "updatedAt": "2026-06-11T07:39:38.402445Z"
+    },
+    {
+      "id": 676,
+      "name": "dd_test",
+      "description": "dd_test",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-20T07:37:24.395188Z",
+      "updatedAt": "2026-06-11T07:39:43.481927Z"
+    },
+    {
+      "id": 707,
+      "name": "記者",
+      "description": "專業記者",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-21T12:15:07.878944Z",
+      "updatedAt": "2026-06-11T07:39:33.495916Z"
+    },
+    {
+      "id": 716,
+      "name": "商周編輯專家-v1",
+      "description": "商周編輯小助手，協助記者撰寫報稿單",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-22T03:05:35.36037Z",
+      "updatedAt": "2026-06-11T07:39:43.502046Z"
+    },
+    {
+      "id": 719,
+      "name": "USB_SPEC_QA_Agent",
+      "description": "專門用於 USB Fail 分析的 AI 專家，設計目標是串接五處 PPS 自動化分析流程，一般對話使用會有部分限制。\n主要應用於自動化 IIRA Sighting Fail 分析，專注解析測試過程中所帶的 log，並產出 Fail log 分析結果，作為 PPS 流程中的第一線分析工具，減少人工判讀失誤並提升處理效率。\n其他使用者在使用 AI 時，必須至少提供該Fail log 作為分析基礎；若能同時提供對應的 Test Case，可提升分析精度；若有指定輸出格式，AI 會依格式嚴格輸出，以利自動化系統後續處理。若資訊不足，分析內容將只限於觀察性描述，不會進行下結論。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-22T06:37:17.032241Z",
+      "updatedAt": "2026-06-24T04:03:54.497323Z"
+    },
+    {
+      "id": 765,
+      "name": "Draftable 文件比對專家",
+      "description": "使用 draftable 進行文件比對, 使用流程如下:\n1. 上傳比對文件\n2. 輸入 Prompt : 比對這兩個檔案",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-23T02:54:10.192273Z",
+      "updatedAt": "2026-07-01T01:37:36.91223Z"
+    },
+    {
+      "id": 795,
+      "name": "資訊服務課",
+      "description": "你是專門排解 OFFICE (包含 outlook、excel、word、powerpoint)、連線、電腦無法開機等相關問題的助理。你只能回答嚴格固定的回覆格式，必須依據知識庫現有資訊直接回答，不可過度思考和杜撰。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-27T05:56:28.55877Z",
+      "updatedAt": "2026-06-11T07:40:39.050087Z"
+    },
+    {
+      "id": 810,
+      "name": "PPS_Library_API_搜尋工具",
+      "description": "分析使用者提供的Test Step，根據Test Step的功能描述，在知識庫中搜尋與其功能描述相近的API Function，若無任何相近之API Function，則回覆使用者目前無相配之功能。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-28T02:33:36.578069Z",
+      "updatedAt": "2026-06-11T07:40:50.599694Z"
+    },
+    {
+      "id": 811,
+      "name": "USB spec",
+      "description": "只看USB spec的資料",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-28T03:26:46.951545Z",
+      "updatedAt": "2026-06-11T07:39:40.855596Z"
+    },
+    {
+      "id": 819,
+      "name": "商業英文翻譯專家 - 桌面板即可用",
+      "description": "翻譯不用開網頁 , 桌面板即可用 - \n輸入中文就翻成英文 / 輸入英文就翻成中文",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-28T08:08:53.208375Z",
+      "updatedAt": "2026-06-11T07:39:31.333334Z"
+    },
+    {
+      "id": 848,
+      "name": "PHISON客戶VID查詢",
+      "description": "輸入中文/英文/申請人/日期等資訊查詢客戶VID",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-29T07:12:26.249121Z",
+      "updatedAt": "2026-06-11T07:39:36.28328Z"
+    },
+    {
+      "id": 849,
+      "name": "FTE造錯專家",
+      "description": "它是一個懂SSD FTE單位在MAG & WBT驗證招式的專家，能回答你驗證過程常用的造錯手法",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-29T07:16:35.509936Z",
+      "updatedAt": "2026-06-11T07:39:43.3106Z"
+    },
+    {
+      "id": 872,
+      "name": "PPS 卡類FA Helper",
+      "description": "PPS 卡類FA Helper",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-01-30T00:14:10.761741Z",
+      "updatedAt": "2026-06-11T07:39:25.368571Z"
+    },
+    {
+      "id": 929,
+      "name": "股市專家",
+      "description": "群聯",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-02-02T07:19:12.704547Z",
+      "updatedAt": "2026-06-11T07:39:38.287685Z"
+    },
+    {
+      "id": 1021,
+      "name": "PPS/PPTS遇到校正日期calibration date問題的處理方式",
+      "description": "回答PPS/PPTS遇到校正日期calibration date問題時該處理的方法",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-02-09T02:00:46.780962Z",
+      "updatedAt": "2026-06-11T07:40:51.036969Z"
+    },
+    {
+      "id": 1024,
+      "name": "業務小幫手",
+      "description": "快速回答SOP疑難雜症＋快速找出負責窗口",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-02-09T07:00:28.890611Z",
+      "updatedAt": "2026-06-11T07:40:50.633487Z"
+    },
+    {
+      "id": 1051,
+      "name": "AI 自動分析 JIRA 需求",
+      "description": "AI 自動分析 JIRA 需求，作為開發AI Nexus的參考",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-02-12T07:55:01.385183Z",
+      "updatedAt": "2026-06-11T07:40:37.296021Z"
+    },
+    {
+      "id": 1061,
+      "name": "群聯路跑社專家",
+      "description": "數據健檢： 分析 Garmin/Strava 每週數據，防止過度訓練。\n\n課表客製： 針對台北馬、東京馬等特定賽事提供 Sub 3/330/400 規劃。\n\n裝備策略： 針對賽道地形建議最適合的碳板跑鞋。\n\n傷病預防： 提供動態熱身與跑後恢復的科學指導。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-02-23T10:08:16.208312Z",
+      "updatedAt": "2026-06-11T07:40:16.198073Z"
+    },
+    {
+      "id": 1062,
+      "name": "頂級品酒大師",
+      "description": "一個頂尖的品酒大師，說話時必須帶有畫面感、精確的感官詞彙，以及一種優雅的權威感。他不只是在介紹飲料，他是在解讀液體中的「時間與風土」。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-02-23T10:31:31.963374Z",
+      "updatedAt": "2026-06-11T07:40:37.322605Z"
+    },
+    {
+      "id": 1076,
+      "name": "SSIR VUC test spec專家",
+      "description": "SSIR VUC test spec專家，非常需要反饋 Jackson #58005",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-02-25T04:02:12.754642Z",
+      "updatedAt": "2026-06-11T07:40:37.352035Z"
+    },
+    {
+      "id": 1077,
+      "name": "USB4大師",
+      "description": "解惑你任何USB4相關問題",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-02-25T06:34:07.546297Z",
+      "updatedAt": "2026-06-11T07:40:37.384768Z"
+    },
+    {
+      "id": 1078,
+      "name": "MFi大師",
+      "description": "熟讀MFi 的小幫手",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-02-25T07:49:27.510577Z",
+      "updatedAt": "2026-06-11T07:40:37.440357Z"
+    },
+    {
+      "id": 1079,
+      "name": "PowerDelivery大師",
+      "description": "熟讀PD SPEC的小幫手",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-02-25T08:25:59.318516Z",
+      "updatedAt": "2026-06-11T07:40:37.504039Z"
+    },
+    {
+      "id": 1088,
+      "name": "eMMC RMA分析專家",
+      "description": "eMMC RMA相關問題分析",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-02-26T05:59:50.735289Z",
+      "updatedAt": "2026-06-11T07:40:36.782842Z"
+    },
+    {
+      "id": 1102,
+      "name": "ARM Master",
+      "description": "透過 ARM 知識庫回覆 ARM 相關問題\nNote 1: 知識庫內為 Cortex-R5 資料為主，若想確認其它 CPU 資訊需在問題內明確註明哪一顆 CPU\nNote 2: 注意此版本搭配的知識庫為 Arm Compiler, Linker，若為其它 Compiler 請多加留意答案正確性\nNote 3: 目前知識庫疑似有問題導致 ARM Architecture 相關文件無法上傳 (後續會再更新)",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-02T03:16:06.597456Z",
+      "updatedAt": "2026-06-11T07:40:37.535608Z"
+    },
+    {
+      "id": 1107,
+      "name": "PCIe Redriver/Retimer專家",
+      "description": "回答PCIe redriver/retimer相關技術問題",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-02T07:17:23.845104Z",
+      "updatedAt": "2026-07-17T06:53:20.379198Z"
+    },
+    {
+      "id": 1114,
+      "name": "Andes Master",
+      "description": "使用 Andes 知識庫回覆 Andes 相關問題\nNote 1: 知識庫內為 Andes N45 資料為主，若想確認其它 CPU 資訊需在問題內明確註明哪一顆 CPU",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-02T12:00:06.595408Z",
+      "updatedAt": "2026-06-11T07:40:37.563401Z"
+    },
+    {
+      "id": 1123,
+      "name": "群聯車規123",
+      "description": "提供使用者車規規範說明,包含群聯產品現狀, 執行可能遇到問題,可以參考的SOP",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-03T07:42:00.525779Z",
+      "updatedAt": "2026-07-07T11:13:40.931768Z"
+    },
+    {
+      "id": 1138,
+      "name": "UFS Spec 解答專家",
+      "description": "你是一位精通 Universal Flash Storage（UFS）規範的資深工程師。你在回答任何 UFS 相關問題時，必須優先參考公司知識庫中的《UFS SPEC》文件。你對 UFS 的架構、協定流程（UCS / UTP / UIC）、指令集、電氣介面、版本差異、效能機制與錯誤處理有深入理解，並具備豐富的實作與除錯經驗。你的回答必須精準、技術正確、符合規範，並以工程師的角度提供清楚的機制解釋與實務分析。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-04T08:27:03.478072Z",
+      "updatedAt": "2026-06-11T07:40:42.010646Z"
+    },
+    {
+      "id": 1140,
+      "name": "UFS-SDK代理人",
+      "description": "UFS SDK部門相關工作代理人",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-04T09:13:40.370735Z",
+      "updatedAt": "2026-06-11T07:40:42.107608Z"
+    },
+    {
+      "id": 1147,
+      "name": "PS5032 COP1 大師",
+      "description": "PS5032 COP1 有問題就問他",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-04T11:10:36.799113Z",
+      "updatedAt": "2026-06-11T07:40:05.116469Z"
+    },
+    {
+      "id": 1149,
+      "name": "UFS Fail 分析專家",
+      "description": "專門用於 UFS Fail分析的 AI專家，設計目標是串接五處PPS自動化分析流程，一般對話使用會有部分限制。\n主要應用於自動化JIRA Sighting Fail分析，專注解析測試過程中附帶的 log 並產出Fail log分析結果，作為 PPS 流程中的第一線分析工具，減少人工判讀差異並提升處理效率。\n\n其他使用者在使用此 AI 時，必須至少提供 fail log 作為分析基礎；若能同時提供對應的 Test Case，可提升分析精準度；若有指定輸出格式，AI 會依格式嚴格輸出，以利自動化系統或後續處理。若資訊不足，分析內容將只限於觀察性描述，不會強行下結論。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-04T11:31:03.507282Z",
+      "updatedAt": "2026-06-11T07:41:23.647199Z"
+    },
+    {
+      "id": 1172,
+      "name": "Copgen1 Coding Style專家",
+      "description": "回答Copgen1 Coding Style相關問題",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-06T02:14:35.739863Z",
+      "updatedAt": "2026-06-11T07:40:04.885231Z"
+    },
+    {
+      "id": 1177,
+      "name": "LSF專家",
+      "description": "回答群聯廠內會使用到的LSF相關問題",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-06T02:50:20.519945Z",
+      "updatedAt": "2026-06-11T07:40:42.186912Z"
+    },
+    {
+      "id": 1185,
+      "name": "PPS_API_Search_Agent",
+      "description": "根據動作描述快速分析有哪些 API 可以使用",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-06T06:18:00.47349Z",
+      "updatedAt": "2026-06-11T07:40:08.26149Z"
+    },
+    {
+      "id": 1189,
+      "name": "UFS_FA_QA (請搜尋改用新版或找ch_chien要分享碼)",
+      "description": "[測試版]已知部分FW功能設計，協助回答UFS fail分析時遇到的問題。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-06T07:19:12.263849Z",
+      "updatedAt": "2026-06-11T07:40:08.45128Z"
+    },
+    {
+      "id": 1199,
+      "name": "Andes CPU 專家",
+      "description": "Andes CPU 專家是具備20年計算機架構師工作經驗，特別針對RISC-V架構有高度理解。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-06T08:18:25.099468Z",
+      "updatedAt": "2026-06-11T07:40:42.213599Z"
+    },
+    {
+      "id": 1208,
+      "name": "HW ESD 測試結果",
+      "description": "分析HW ESD Result裡的測試結果，並給出正確的資訊",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-09T02:37:27.931613Z",
+      "updatedAt": "2026-06-11T07:40:14.908988Z"
+    },
+    {
+      "id": 1209,
+      "name": "SD SPEC",
+      "description": "SPEC 資訊查找",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-09T02:51:13.094406Z",
+      "updatedAt": "2026-06-11T07:40:42.239746Z"
+    },
+    {
+      "id": 1213,
+      "name": "Confluence -> 知識庫 幫手",
+      "description": "使用 Confluence 建立知識庫\n\nInput:\n- Confluence URL: {{url}}\n- 知識庫名稱: {{vector_store_name}}\n\nRequirement MCP:\n- Atlassian\n- upd-confluence-docs-to-km",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-09T04:39:09.989559Z",
+      "updatedAt": "2026-06-11T07:40:42.272307Z"
+    },
+    {
+      "id": 1236,
+      "name": "WHLK專家",
+      "description": "WHLK疑難雜症詢問，非常需要反饋 Jackson #58005",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-09T13:00:42.847592Z",
+      "updatedAt": "2026-06-11T07:40:42.301937Z"
+    },
+    {
+      "id": 1237,
+      "name": "AIPM & PCIe Leve1~4 pattern專家",
+      "description": "功能包括，非常需要反饋 Jackson #58005\n【A】查 Testing Name 的 Level：精確比對；多筆逐一列出\n【B】統計某 Main Item / Host Tool 下的 pattern 數：\n【C】檢查某 pattern 是否存在：精確比對\n【D】排程估算（Greedy LPT + 條件過濾；對齊 VBA 邏輯）：",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-09T13:15:24.491875Z",
+      "updatedAt": "2026-06-11T07:40:10.564196Z"
+    },
+    {
+      "id": 1243,
+      "name": "語句相似度比對專家",
+      "description": "你是一個嚴格的 QA 工程師。請比較 [實際回答] 與 [標準答案] 的語意相似度。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-10T04:31:40.449557Z",
+      "updatedAt": "2026-06-11T07:40:42.3335Z"
+    },
+    {
+      "id": 1247,
+      "name": "ESD Testing Result Agent",
+      "description": "ESD測試項目HBM & CDM & Latch-up(LU) 結果。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-10T07:42:11.248519Z",
+      "updatedAt": "2026-06-11T07:40:12.317339Z"
+    },
+    {
+      "id": 1252,
+      "name": "JIRA Fail Summary",
+      "description": "Generates a fail summary table that concludes each bug/sighting by AI & comment on Jira Delivery for further tracking.",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-10T08:46:02.502023Z",
+      "updatedAt": "2026-06-23T11:14:10.898092Z"
+    },
+    {
+      "id": 1257,
+      "name": "產品開發網路安全活動與EU CRA專家",
+      "description": "此 AI 問答專家定位為群聯電子內部資安支援助手，專注於「靜態分析、漏洞掃描、漏洞管理與 EU CRA 合規」相關議題。其回應嚴格依據公司既有知識庫與指定文件（如 QP0516 與 Confluence page），確保資訊一致性與可稽核性。系統具備服務分類判斷能力，能依使用者問題自動對應至靜態分析工具說明、漏洞管理流程、或客戶回應支援，並提供標準化且具來源標註的答案。此 AI 主要目標為降低溝通成本、提升回覆品質，同時確保所有對外與內部回應符合公司既有規範與資安要求",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-10T10:20:22.849996Z",
+      "updatedAt": "2026-07-02T07:21:35.85129Z"
+    },
+    {
+      "id": 1267,
+      "name": "read card info parser",
+      "description": "get read card info data",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-11T02:20:41.236969Z",
+      "updatedAt": "2026-06-11T07:40:42.386015Z"
+    },
+    {
+      "id": 1274,
+      "name": "UFS HCI 小幫手",
+      "description": "詢問HCI相關問題",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-11T06:15:43.354288Z",
+      "updatedAt": "2026-06-11T07:40:42.412773Z"
+    },
+    {
+      "id": 1284,
+      "name": "群聯每日產業新聞摘要與分析",
+      "description": "提供客觀、精準、具備戰略洞察力的每日市場情報，包括儲存技術及相關關鍵元件（如 HBM、GPU）市場動態，協助決策者掌握市場脈動",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-11T09:19:46.958423Z",
+      "updatedAt": "2026-06-30T02:49:41.687468Z"
+    },
+    {
+      "id": 1286,
+      "name": "Prompt 優化專家",
+      "description": "輸入需優化提示詞，如需翻譯提示詞，在開頭做說明，否則預設使用您寫的語言做優化",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-11T09:36:00.462376Z",
+      "updatedAt": "2026-06-11T07:40:42.472193Z"
+    },
+    {
+      "id": 1319,
+      "name": "良率計算小幫手",
+      "description": "良率計算小幫手",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-13T05:39:44.103853Z",
+      "updatedAt": "2026-06-11T07:40:42.501116Z"
+    },
+    {
+      "id": 1327,
+      "name": "2026 家庭日_福委會QA機器人",
+      "description": "專門回答2026 群聯家庭日的QA機器人",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-13T09:22:59.749069Z",
+      "updatedAt": "2026-06-11T07:40:42.532023Z"
+    },
+    {
+      "id": 1332,
+      "name": "AI需求Q&A",
+      "description": "用來回答各種使用者在建置AI環境或Skill時會遇到的問題",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-16T03:00:48.294294Z",
+      "updatedAt": "2026-06-11T07:40:46.311581Z"
+    },
+    {
+      "id": 1336,
+      "name": "晶片工作站問題",
+      "description": "這是專門排解晶片工作站問題、連線、License等相關問題的助理。必須依據知識庫現有資訊直接回答，不可過度思考和杜撰。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-16T06:29:49.504232Z",
+      "updatedAt": "2026-06-11T07:40:45.024108Z"
+    },
+    {
+      "id": 1354,
+      "name": "UFS Performance技術窗口",
+      "description": "UFS Performance Team的技術窗口, 熟知UFS Spec, 擅長解決Performance問題",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-17T03:19:58.227826Z",
+      "updatedAt": "2026-06-11T07:40:45.051821Z"
+    },
+    {
+      "id": 1361,
+      "name": "IC晶圓封測廠商與產品基本資訊",
+      "description": "IC晶圓廠商與產品基本資訊\nIC封裝廠商基本資訊\nIC測試廠商基本資訊",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-17T08:05:05.609503Z",
+      "updatedAt": "2026-06-11T07:40:46.548833Z"
+    },
+    {
+      "id": 1376,
+      "name": "PS8363 Reg Spec 專家",
+      "description": "查詢PS8363 register內容, 改進聯絡: ch_chien@phison.com.",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-18T03:18:16.77996Z",
+      "updatedAt": "2026-06-11T07:40:45.988864Z"
+    },
+    {
+      "id": 1380,
+      "name": "UFS_FA_QA",
+      "description": "回答 UFS fail 分析相關問題，改進需求請找 ch_chien@phison.com",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-18T03:57:07.075675Z",
+      "updatedAt": "2026-06-11T07:40:17.390294Z"
+    },
+    {
+      "id": 1391,
+      "name": "營養大師",
+      "description": "回答營養學相關的問題",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-18T07:50:36.335415Z",
+      "updatedAt": "2026-06-11T07:40:00.462203Z"
+    },
+    {
+      "id": 1392,
+      "name": "論文整理專家",
+      "description": "整理並摘要論文",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-18T08:06:10.806344Z",
+      "updatedAt": "2026-06-11T07:40:45.111432Z"
+    },
+    {
+      "id": 1402,
+      "name": "SI 三太子",
+      "description": "SI 專家",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-18T08:35:20.036157Z",
+      "updatedAt": "2026-06-11T07:39:55.573375Z"
+    },
+    {
+      "id": 1405,
+      "name": "White Box FW Code Bank Poter",
+      "description": "分析FW BANK使用情形，給出解爆Code的建議",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-18T09:01:00.197556Z",
+      "updatedAt": "2026-06-11T07:40:45.873224Z"
+    },
+    {
+      "id": 1411,
+      "name": "卡類FMEDA 專家KM",
+      "description": "查詢eMMC、UFS專案FMEDA數值。\n輸入規則: 專案名稱+NAND型號+容量 (ex: PS8317+BiCS5 128GB)",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-18T10:47:50.791659Z",
+      "updatedAt": "2026-07-08T07:57:27.971933Z"
+    },
+    {
+      "id": 1444,
+      "name": "AI Root Cause 分析",
+      "description": "你是一位專業的 PPS Jira 問題分析專家，擅長從 issue 內容中提取關鍵資訊並進行 Root Cause 與 FA（Failure Analysis）分類。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-19T09:19:42.937619Z",
+      "updatedAt": "2026-06-11T07:40:45.192157Z"
+    },
+    {
+      "id": 1453,
+      "name": "Phison 新人資訊指導員",
+      "description": "餵了一些HR提供給新人的各部門新人訓練文件，方便幫助新人了解 Phison。我就是那個需要幫助的菜雞",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-20T03:26:28.678166Z",
+      "updatedAt": "2026-06-11T07:39:56.646409Z"
+    },
+    {
+      "id": 1468,
+      "name": "DDR4 SRAM spec",
+      "description": "你是一位精通 DDR4 規範的資深工程師。你在回答任何 DDR4 相關問題時，必須優先參考公司知識庫中的spec文件。你對 DDR4 的架構、協定流、指令集、電氣介面、版本差異、效能機制與錯誤處理有深入理解，並具備豐富的實作與除錯經驗。你的回答必須精準、技術正確、符合規範，並以工程師的角度提供清楚的機制解釋與實務分析。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-23T03:04:28.505418Z",
+      "updatedAt": "2026-07-06T11:15:28.483818Z"
+    },
+    {
+      "id": 1487,
+      "name": "AI Root Cause分析分類",
+      "description": "AI Root Cause分析分類",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-24T05:37:22.481834Z",
+      "updatedAt": "2026-06-16T08:45:59.787857Z"
+    },
+    {
+      "id": 1516,
+      "name": "golden DCT",
+      "description": "回答 DCT 環境相關使用問題",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-25T05:36:18.579681Z",
+      "updatedAt": "2026-06-11T07:40:45.42924Z"
+    },
+    {
+      "id": 1517,
+      "name": "0607 FW SPEC 解讀",
+      "description": "[FW RD 的角度翻譯 spec]\n[使用方式]\n把 spec 丟上去請他解讀",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-25T05:47:09.10969Z",
+      "updatedAt": "2026-06-11T07:40:45.485031Z"
+    },
+    {
+      "id": 1522,
+      "name": "安規檢查專家",
+      "description": "ME1使用",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-25T06:11:49.555946Z",
+      "updatedAt": "2026-06-11T07:40:45.54108Z"
+    },
+    {
+      "id": 1548,
+      "name": "AI 彙整 Confluence 重點專家",
+      "description": "Confluence  內容太多，懶得找看，只想看重點嗎?   AI ㄧ鍵幫你整理重點。 輸入範例:    [ Confluence ]   整理重點",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-26T06:23:53.656932Z",
+      "updatedAt": "2026-06-11T07:40:45.589426Z"
+    },
+    {
+      "id": 1549,
+      "name": "UFS Performance Pattern Recommender",
+      "description": "提供特定條件或Flow給機器人，會提供ufs performance pattern是否有相似的Pattern。\n※建議描述完整得目的以及flow特徵",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-26T07:32:39.609413Z",
+      "updatedAt": "2026-06-11T07:40:28.541717Z"
+    },
+    {
+      "id": 1563,
+      "name": "0607 5 Why report 專家",
+      "description": "藉由 bug 協助出 5 why report",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-29T03:12:54.378375Z",
+      "updatedAt": "2026-06-11T07:40:45.674799Z"
+    },
+    {
+      "id": 1564,
+      "name": "UFS FA結果比較專家",
+      "description": "用於比對兩輸入之結果，判斷其相似性",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-30T01:59:13.176537Z",
+      "updatedAt": "2026-06-11T07:40:51.309565Z"
+    },
+    {
+      "id": 1565,
+      "name": "0607 日本人 email 專家",
+      "description": "幫忙翻譯/回信 KIC 等日本客戶",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-30T02:18:04.876533Z",
+      "updatedAt": "2026-06-11T07:40:46.10368Z"
+    },
+    {
+      "id": 1566,
+      "name": "Static Analysis",
+      "description": "各種靜態分析程式碼工具",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-30T02:50:42.064462Z",
+      "updatedAt": "2026-06-11T07:40:51.372827Z"
+    },
+    {
+      "id": 1573,
+      "name": "初試評語專家",
+      "description": "初試評語專家",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-30T10:23:38.613336Z",
+      "updatedAt": "2026-06-11T07:40:45.720233Z"
+    },
+    {
+      "id": 1575,
+      "name": "DriveLog 大師",
+      "description": "DriveLog 大師",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-30T11:01:13.771132Z",
+      "updatedAt": "2026-06-11T07:40:45.748595Z"
+    },
+    {
+      "id": 1578,
+      "name": "golden STA",
+      "description": "協助回答 golden STA 相關問題",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-31T02:01:11.129695Z",
+      "updatedAt": "2026-06-11T07:40:26.4545Z"
+    },
+    {
+      "id": 1579,
+      "name": "golden LEC",
+      "description": "協助回答 golden LEC 相關問題",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-31T02:01:37.878086Z",
+      "updatedAt": "2026-06-11T07:40:26.52037Z"
+    },
+    {
+      "id": 1600,
+      "name": "BG9 嚴格Rule Builder Agent (excel)",
+      "description": "負責從已知lesson learn excel表格建立 Review Rule 知識庫，不自己改寫",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-31T09:42:01.976577Z",
+      "updatedAt": "2026-06-11T07:40:59.687332Z"
+    },
+    {
+      "id": 1607,
+      "name": "SD 檔案系統 FAT 專家",
+      "description": "熟悉 FAT12、FAT16、FAT32 以及 exFAT 的規範與實作細節",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-03-31T13:35:05.726143Z",
+      "updatedAt": "2026-06-24T09:38:06.336913Z"
+    },
+    {
+      "id": 1620,
+      "name": "VS cmd to nvme tool function",
+      "description": "提供 (1) SAS Page VS Command 頁面 Jira link 或 (2) 先將該頁面內容轉成 Markdown 格式 ，即可用此專家幫忙轉成 Unit Test 所需的 python code",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-01T09:16:57.613078Z",
+      "updatedAt": "2026-06-11T07:40:58.842005Z"
+    },
+    {
+      "id": 1660,
+      "name": "(開發人員專用) TIC Insight Engine",
+      "description": "這是一個基於 MCP（Model Context Protocol）的架構，提供下列服務：Delivery 放測資訊查詢 (放測資源、放測進度、放測 fail、工單基本資訊、Task 資訊、組合資訊、放測時間預估)、VWO 主檔新增、Pattern／Sample／Platform／Realtime 資訊查詢，並可透過拍攝 Sample 實體條碼 （Barcode）查詢對應的 Sample 資訊和進行 Sample 移轉作業。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-02T10:57:01.083431Z",
+      "updatedAt": "2026-07-13T14:25:52.806731Z"
+    },
+    {
+      "id": 1664,
+      "name": "UFS Spec 答題Supervisor",
+      "description": "你是一位嚴格但公正的技術規格測驗裁判。\n \n  ## 評分任務\n  請比對「參考答案」與「受測者答案」，給予 0-100 分。\n \n  ## 評分標準\n  - 正確性（50%）：答案是否與 spec 一致\n  - 完整性（30%）：是否涵蓋所有關鍵點\n  - 精確性（20%）：是否有多餘或錯誤的資訊\n \n  ## 題目類型\n  {{question_type}}\n \n  ## 題目\n  {{question}}\n \n  ## 參考答案\n  {{reference_answer}}\n \n  ## 受測者答案\n  {{examinee_answer}}\n \n  ## 請嚴格以下列 JSON 格式回覆（不要加 markdown code fence）：\n  {\n    \"score\": 75,\n    \"feedback\": \"評語，說明扣分原因\",\n    \"improvement_suggestion\": \"如果下次要答對，應該在 prompt 或規則中加入什麼\"\n  }\n \noverall_template: |\n  你是一位嚴格但公正的技術規格測驗裁判。\n \n  以下是一份考試的所有題目與評分結果摘要：\n \n  {{results_summary}}\n \n  平均分數：{{average_score}} 分\n \n  請根據以上結果，撰寫一份綜合改善建議。\n \n  要求：\n  - 分析答題者的弱點領域（哪些主題/章節表現差）\n  - 分析答題者的強項領域\n  - 提供具體、可執行的改善建議\n  - 最後產出一段可以直接作為 system prompt 或規則使用的文字，讓答題者下次表現更好\n \n  請以純文字回覆，不要用 JSON 格式。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-05T18:45:13.620897Z",
+      "updatedAt": "2026-06-11T07:40:51.061796Z"
+    },
+    {
+      "id": 1669,
+      "name": "UFS Spec Examinee",
+      "description": "你是一位精通 Universal Flash Storage（UFS）規範的資深工程師。你在回答任何 UFS 相關問題時，必須優先參考公司知識庫中的《UFS SPEC》文件。你對 UFS 的架構、協定流程（UCS / UTP / UIC）、指令集、電氣介面、版本差異、效能機制與錯誤處理有深入理解，並具備豐富的實作與除錯經驗。你的回答必須精準、技術正確、符合規範，並以工程師的角度提供清楚的機制解釋與實務分析。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-06T12:19:46.190341Z",
+      "updatedAt": "2026-06-11T07:40:30.659775Z"
+    },
+    {
+      "id": 1691,
+      "name": "FIP Randomizer 專家",
+      "description": "支援 X2, X3, E22, E25 FIP 的 data scramble 和 descramble (資料的 randomizer)",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-07T13:45:37.746346Z",
+      "updatedAt": "2026-06-11T07:40:51.088229Z"
+    },
+    {
+      "id": 1698,
+      "name": "Tester專家",
+      "description": "1. 詢問Tester相關問題。\n2. 詢問Tester相關零件問題(INA228)",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-08T06:17:01.501675Z",
+      "updatedAt": "2026-06-11T07:40:37.049953Z"
+    },
+    {
+      "id": 1707,
+      "name": "FIP CRC Checksum 專家",
+      "description": "這是 FIP CRC Checksum 的計算專家, 幫忙了解使用者輸入的檔案格式和使用需求後, 轉換成操作 FIP CRC 工具的指令去操作 CRC 工具.",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-08T12:32:24.082208Z",
+      "updatedAt": "2026-06-11T07:40:51.120824Z"
+    },
+    {
+      "id": 1710,
+      "name": "MST",
+      "description": "不是聊天機器人，是一個 MST FW 工程師，可以幫你處理 JIRA 內容",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-09T02:53:24.480011Z",
+      "updatedAt": "2026-06-30T07:43:34.321104Z"
+    },
+    {
+      "id": 1738,
+      "name": "MAG專家",
+      "description": "MAG相關問題的專家",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-10T04:36:06.86141Z",
+      "updatedAt": "2026-06-11T07:40:51.148664Z"
+    },
+    {
+      "id": 1752,
+      "name": "SS SuperSet Req分析",
+      "description": "SuperSet Req分析",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-10T09:10:47.755864Z",
+      "updatedAt": "2026-06-11T07:41:00.187893Z"
+    },
+    {
+      "id": 1779,
+      "name": "BG9 SSD FW Review Agent (offline)",
+      "description": "負責分析改動並套用Review Rule",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-13T11:59:43.99213Z",
+      "updatedAt": "2026-06-11T07:40:51.450674Z"
+    },
+    {
+      "id": 1788,
+      "name": "UFS Spec 專家",
+      "description": "回答 UFS spec 問題。改進意見請通知：ch_chien@phison.com。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-14T03:19:53.637186Z",
+      "updatedAt": "2026-06-11T07:40:36.453404Z"
+    },
+    {
+      "id": 1797,
+      "name": "HP PVE - 提供Pattern查詢對應HP Spec",
+      "description": "提供HP Spec對應章節相關測項",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-14T06:24:42.991908Z",
+      "updatedAt": "2026-06-11T07:40:47.693341Z"
+    },
+    {
+      "id": 1817,
+      "name": "USB4專家",
+      "description": "你是 USB4專家",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-15T05:37:04.811683Z",
+      "updatedAt": "2026-06-11T07:40:16.300249Z"
+    },
+    {
+      "id": 1845,
+      "name": "品質知識小幫手",
+      "description": "用於回答群聯電子品質相關之知識(testing)",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-16T07:04:38.136421Z",
+      "updatedAt": "2026-06-11T07:39:57.933915Z"
+    },
+    {
+      "id": 1849,
+      "name": "ST3",
+      "description": "一位資深 ST3 DE",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-16T09:23:00.457706Z",
+      "updatedAt": "2026-06-11T07:40:07.77512Z"
+    },
+    {
+      "id": 1852,
+      "name": "DF - GBB Analysis",
+      "description": "An automated tool that takes a Jira ID, analyzes GBB data from telemetry logs, and sends the results back to the user.",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-16T09:56:21.656319Z",
+      "updatedAt": "2026-06-11T07:40:51.559317Z"
+    },
+    {
+      "id": 1876,
+      "name": "BG9 web reader",
+      "description": "讀網頁",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-17T07:59:52.777566Z",
+      "updatedAt": "2026-06-11T07:40:58.594099Z"
+    },
+    {
+      "id": 1889,
+      "name": "8299股價瞎掰預測分析師",
+      "description": "告訴你明天的行情",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-17T11:33:51.906091Z",
+      "updatedAt": "2026-06-11T07:40:26.379439Z"
+    },
+    {
+      "id": 1925,
+      "name": "BG9 JIRA comment writer",
+      "description": "把review的內容寫到指定JIRA上",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-21T08:15:17.88042Z",
+      "updatedAt": "2026-06-11T07:40:49.738398Z"
+    },
+    {
+      "id": 1947,
+      "name": "SDK/FW for SD",
+      "description": "Answer questions about SD tester SDK/FW",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-22T04:00:58.43791Z",
+      "updatedAt": "2026-06-11T07:40:51.583397Z"
+    },
+    {
+      "id": 1948,
+      "name": "SDK/FW for UHS-II",
+      "description": "Answer questions about UHS-II tester SDK/FW",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-22T05:52:39.800429Z",
+      "updatedAt": "2026-06-11T07:40:51.609661Z"
+    },
+    {
+      "id": 1967,
+      "name": "ARM GIC 專家",
+      "description": "整合 ARM GIC 相關 spec 的專家",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-22T09:55:07.363131Z",
+      "updatedAt": "2026-06-11T07:40:51.973608Z"
+    },
+    {
+      "id": 1975,
+      "name": "SCA Protocol LA Parsing Expert",
+      "description": "Keysight LA (Logical Analyzer) 的 .ala 檔案輸出成 .csv (Comma Separated Values) 後的 .csv to .vcd (Value Change Dump) 的轉檔處理專家, 會跟使用者互動, 幫忙使用者操作 CSVCD SCA parsing tool.",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-23T06:35:15.58876Z",
+      "updatedAt": "2026-06-11T07:40:52.146094Z"
+    },
+    {
+      "id": 1994,
+      "name": "PPS Pattern專家",
+      "description": "PPS Pattern專家",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-24T03:12:24.5429Z",
+      "updatedAt": "2026-06-11T07:40:51.635838Z"
+    },
+    {
+      "id": 1995,
+      "name": "FW Delivery Test Summary Report",
+      "description": "Generate a FW test report with test progress, device issue table and fail tracking table.",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-24T03:17:45.918467Z",
+      "updatedAt": "2026-06-24T09:12:59.659348Z"
+    },
+    {
+      "id": 2009,
+      "name": "COPGEN1 Flash Error CF專家",
+      "description": "從知識庫 COPGEN1_Flash_Error_Group 輔助回答問題",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-24T09:51:03.326413Z",
+      "updatedAt": "2026-06-11T07:40:31.90424Z"
+    },
+    {
+      "id": 2012,
+      "name": "打線圖比對專家",
+      "description": "使用此專家進行接點比對, 使用流程如下:\n1. 上傳比對文件\n2. 輸入 Prompt 範例 : 「使用 SCP 對圖方式幫我檢查 PS3112 For 量產的接點是否正確」",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-24T10:59:59.775891Z",
+      "updatedAt": "2026-06-11T07:40:51.735775Z"
+    },
+    {
+      "id": 2013,
+      "name": "test report",
+      "description": "你是一名產生測試報告的專家，當使用者提供delivery id 時，請呼叫test report 並把delivery id 傳給他進行分析",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-25T19:00:51.156324Z",
+      "updatedAt": "2026-06-11T07:40:32.239494Z"
+    },
+    {
+      "id": 2015,
+      "name": "Gitlab MR Summary 專家 [測試]",
+      "description": "Gitlab MR Summary 專家 [測試]",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-26T15:46:23.882551Z",
+      "updatedAt": "2026-06-18T09:02:50.515773Z"
+    },
+    {
+      "id": 2023,
+      "name": "test_for_BiCS5_SPEC_專家",
+      "description": "k3d_qlc_BICS5_QLC_1.33Tb2P_02-BiCS5_1.33Tb_D4_2Plane_152BGA_Datasheet_ Rev1.0 專家",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-27T07:28:16.628792Z",
+      "updatedAt": "2026-06-11T07:40:51.772685Z"
+    },
+    {
+      "id": 2025,
+      "name": "test_for_美光SPEC專家",
+      "description": "美光SPEC專家",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-27T08:57:55.075181Z",
+      "updatedAt": "2026-06-11T07:40:51.803045Z"
+    },
+    {
+      "id": 2031,
+      "name": "Gitlab MR Summary 專家",
+      "description": "Gitlab MR Summary 專家",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-27T12:17:03.848563Z",
+      "updatedAt": "2026-06-11T07:40:35.057999Z"
+    },
+    {
+      "id": 2043,
+      "name": "CVE_Platform_Assistant",
+      "description": "CVE AI 專家: 可以回答CVE Platform各種資訊，使用方式可以參考confluence : https://confluence.phison.com:8443/display/~kuanyu_lin/CVE+MCP+Tool",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-28T02:30:16.498947Z",
+      "updatedAt": "2026-06-11T07:40:36.072877Z"
+    },
+    {
+      "id": 2044,
+      "name": "CVE_Project_Assistant",
+      "description": "CVE AI 專家: 可以查詢在CVE專案測試平台使用率，讓各專案Handle了解CVE測試平台情況",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-28T02:46:17.276331Z",
+      "updatedAt": "2026-06-11T07:40:19.210717Z"
+    },
+    {
+      "id": 2045,
+      "name": "CVE New Project Platform Allocation",
+      "description": "CVE AI 專家\n提供新專案導入至CVE的平台分配建議 -\n詢問方式須包含 \"Tier1\" or \"Direct\" , 客戶: DELL/HP/Lenovo/MA, 專案開始時間\nDirect DELL 專案P0537 於 5月15要進行驗證，請協助新專案的分配平台數量  \n目前完成功能:\n- 新DELL專案導入CVE使用預估!\n- 新HP專案導入(開發中)",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-28T02:56:53.139677Z",
+      "updatedAt": "2026-06-11T07:39:31.172581Z"
+    },
+    {
+      "id": 2063,
+      "name": "VUC 查號台",
+      "description": "查詢 DSI 已註冊的 VUC 資訊",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-04-28T09:43:26.856203Z",
+      "updatedAt": "2026-06-11T07:39:29.7916Z"
+    },
+    {
+      "id": 2073,
+      "name": "企業AI智能秘書",
+      "description": "提供agentflow 會議室相關功能、出勤資料查詢",
+      "isPublic": true,
+      "isAdded": true,
+      "createdAt": "2026-04-29T02:09:48.559165Z",
+      "updatedAt": "2026-07-16T06:53:09.570572Z"
+    },
+    {
+      "id": 2186,
+      "name": "EVS 資料查詢專家-測試開發區",
+      "description": "提供查詢EVS 資料庫功能",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-05T07:42:50.228711Z",
+      "updatedAt": "2026-07-16T10:08:13.561921Z"
+    },
+    {
+      "id": 2215,
+      "name": "NVMe Spec 2.1 專家",
+      "description": "可協助回答NVMe spec.行為的專家, 以內部知識庫回答",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-06T09:51:30.592163Z",
+      "updatedAt": "2026-06-11T07:41:00.840317Z"
+    },
+    {
+      "id": 2227,
+      "name": "週報彙整專家",
+      "description": "你是一個週報產生助手。根據提供的每周工作原始內容，將其整理為工作任務周報",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-07T03:15:32.183161Z",
+      "updatedAt": "2026-06-11T07:40:38.370424Z"
+    },
+    {
+      "id": 2228,
+      "name": "[AI閉環] 需求討論",
+      "description": "聚焦在AI 開發前端資料呈現頁面 (Web / Dashboard) 的需求討論專家，唯一目標是產出 speckit 的 specify 與 plan 文件",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-07T03:20:24.515134Z",
+      "updatedAt": "2026-07-20T09:44:51.105002Z"
+    },
+    {
+      "id": 2245,
+      "name": "EVS 資料查詢專家",
+      "description": "提供查詢EVS 資料庫功能",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-07T10:08:36.684889Z",
+      "updatedAt": "2026-07-01T07:27:44.190409Z"
+    },
+    {
+      "id": 2274,
+      "name": "週報摘要專家",
+      "description": "你是一個週報產生助手。根據提供的每周工作原始內容，整理為工作任務週報。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-08T09:09:01.85906Z",
+      "updatedAt": "2026-06-11T07:41:08.091635Z"
+    },
+    {
+      "id": 2302,
+      "name": "HR專家",
+      "description": "針對HR相關事務對應的辦法、SOP及Q&A",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-12T07:06:17.641952Z",
+      "updatedAt": "2026-06-11T07:39:31.410612Z"
+    },
+    {
+      "id": 2303,
+      "name": "Stdcell 專家 (N4/N5)",
+      "description": "精通 N4/N5 知識的 Stdcell 專家",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-12T07:07:19.443069Z",
+      "updatedAt": "2026-06-11T07:41:20.15409Z"
+    },
+    {
+      "id": 2305,
+      "name": "EVERYTHING to MD converter",
+      "description": "Input filename and get md string.\n上傳pdf至\\\\192.168.0.81\\RD_personal\\token_hung\\markitdown_docs後, 於prompt內輸入檔案名稱\nSupported formats: https://github.com/microsoft/markitdown/tree/main\nOr you could directly ask the export for supported extensions.",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-12T07:28:09.503037Z",
+      "updatedAt": "2026-07-01T00:29:56.999815Z"
+    },
+    {
+      "id": 2325,
+      "name": "ME2_跨部門資料查詢與系統資訊整合助理",
+      "description": "ME2內部知識庫專家",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-13T06:57:56.471521Z",
+      "updatedAt": "2026-06-11T07:40:55.857802Z"
+    },
+    {
+      "id": 2418,
+      "name": "eMMC TCS 產生專家",
+      "description": "專門用來產出 eMMC TCS 的專家",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-14T02:47:53.969561Z",
+      "updatedAt": "2026-06-11T07:41:04.407071Z"
+    },
+    {
+      "id": 2427,
+      "name": "AI團隊經理人",
+      "description": "旨在將 AI 轉化為高階監督者，針對員工 Jira 任務 (近半年期) 進行稽核。透過分析 Description / Comment 完整度、進度回饋及溝通邏輯，給予百分制評分，並產出包含優缺點分析、模型標記與日期的專業報告，實現客觀、高效的績效追蹤與管理。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-14T07:10:25.08792Z",
+      "updatedAt": "2026-06-11T07:41:21.726973Z"
+    },
+    {
+      "id": 2430,
+      "name": "EVS 唯一專家",
+      "description": "目前功能：\n1. EVS 資料查詢\n2. EVS 新增模板/欄位",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-14T08:08:10.545396Z",
+      "updatedAt": "2026-07-03T05:55:05.624467Z"
+    },
+    {
+      "id": 2433,
+      "name": "ARM A55",
+      "description": "提供快速查詢 ARM A55 / DSU / SoC600 /GIC600 / ARM-V8A 相關文件",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-14T08:35:29.01172Z",
+      "updatedAt": "2026-06-11T07:41:08.849443Z"
+    },
+    {
+      "id": 2445,
+      "name": "RegSpec 專家(MCP)",
+      "description": "RegSpec 專家",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-14T09:31:27.356597Z",
+      "updatedAt": "2026-06-29T10:56:01.987588Z"
+    },
+    {
+      "id": 2481,
+      "name": "MST Code Style Check",
+      "description": "modular_rdt / mst_fw 程式碼庫的專門審查者。用於檢查 MST C 程式碼風格、命名、分層、include 位置與檔案組織，並以目前的 modular_rdt 程式碼庫為基準",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-15T07:36:04.338876Z",
+      "updatedAt": "2026-06-11T07:41:16.526852Z"
+    },
+    {
+      "id": 2487,
+      "name": "ARM R5",
+      "description": "提供快速查詢 ARM R5 & arm v7 arch 相關文件",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-15T08:44:00.941367Z",
+      "updatedAt": "2026-06-11T07:40:51.999068Z"
+    },
+    {
+      "id": 2498,
+      "name": "SD Spec 記憶卡規格專家",
+      "description": "熟悉各版本 SD Part 1 Physical Layer Specification 規範與流程細節",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-15T10:22:22.924149Z",
+      "updatedAt": "2026-07-13T06:57:41.283548Z"
+    },
+    {
+      "id": 2546,
+      "name": "𓀇 USB 通靈王 𓀇",
+      "description": "以規格為燭，向 USB 深處問卜。若未得其解，乃通靈未至；若幸而命中，也不過是條文之靈偶然垂憐。望周知。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-18T09:07:45.936281Z",
+      "updatedAt": "2026-06-11T07:41:14.806333Z"
+    },
+    {
+      "id": 2549,
+      "name": "BG9 All in one AI reviewer",
+      "description": "負責review的專家",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-18T10:14:42.384775Z",
+      "updatedAt": "2026-07-07T06:01:12.105762Z"
+    },
+    {
+      "id": 2587,
+      "name": "X3 COP1 專家",
+      "description": "使用者對於X3 COP1 IP使用有任何疑慮都可以詢問",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-20T05:32:37.938215Z",
+      "updatedAt": "2026-07-17T08:30:43.037643Z"
+    },
+    {
+      "id": 2588,
+      "name": "Green bom 需求，AG表單詢問",
+      "description": "Green 表單指南",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-20T05:49:36.053339Z",
+      "updatedAt": "2026-06-11T07:40:28.086266Z"
+    },
+    {
+      "id": 2658,
+      "name": "問卷審閱與合規稽核專家",
+      "description": "回覆各種國際規範(ANSI、ISO、IATF、JEDEC、IPC...)與準則相關問題",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-22T07:11:15.570679Z",
+      "updatedAt": "2026-07-06T02:37:28.854995Z"
+    },
+    {
+      "id": 2659,
+      "name": "製造與技術專家",
+      "description": "核心職責：專注於技術底層邏輯。\n涵蓋範圍：SMT 製程異常、原料特性分析、IC 製程問題診斷。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-22T07:13:24.466159Z",
+      "updatedAt": "2026-06-30T06:21:33.927342Z"
+    },
+    {
+      "id": 2662,
+      "name": "其他問題",
+      "description": "其他問題專家",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-22T07:39:49.978072Z",
+      "updatedAt": "2026-07-20T05:24:20.885579Z"
+    },
+    {
+      "id": 2683,
+      "name": "PPS Task JIRA",
+      "description": "Write Task JIRA Followed by PPS template",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-25T08:44:07.049341Z",
+      "updatedAt": "2026-06-17T03:12:43.435916Z"
+    },
+    {
+      "id": 2733,
+      "name": "SD Spec 顧問",
+      "description": "專門負責解析與回答 SD SPEC 文件內容內的專家\n從資料庫的Spec去找答案告知出處, 禁止AI 杜撰非Spec的答案\n\n \"SD Specification\" 的資料庫以下\n\n1. Part 1 Physical Layer Specification Ver.9.00_20220210.pdf\n2. Part 2 File System Specification Ver.700 Final 180612.pdf\n3. Part 3 Security Specification Ver7.00 Final 180612.pdf\n4. Part 1 Physical 9.00 Test Guideline Ver1.01 Final Draft 230921_7250_2.pdf\n5. Low Voltage Interface Addendum Ver.100 Final 170227.pdf\n6. Part 1 microSD Card Addendum Ver4.20 Final 150805.pdf\n7. Part 1 Standard Size SD Card Mechanical Addendum Ver6.00 Final 170618.pdf",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-27T06:29:43.088201Z",
+      "updatedAt": "2026-07-21T03:24:23.561977Z"
+    },
+    {
+      "id": 2734,
+      "name": "TSM SPEC 比對專家",
+      "description": "TSM SPEC 文件比對",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-27T07:29:36.574302Z",
+      "updatedAt": "2026-06-11T07:39:25.497301Z"
+    },
+    {
+      "id": 2770,
+      "name": "Lexus Review++",
+      "description": "SCH review used",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-05-29T01:49:55.532511Z",
+      "updatedAt": "2026-06-12T09:34:14.619836Z"
+    },
+    {
+      "id": 2789,
+      "name": "TaipeiHostTeam門神",
+      "description": "分析HostTeamIsuue及相關問題分析",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-01T02:51:27.505027Z",
+      "updatedAt": "2026-06-11T07:40:56.828137Z"
+    },
+    {
+      "id": 2801,
+      "name": "Andes N25",
+      "description": "提供快速查詢 Andes N25 & Risc-v spec & Andesgiht 相關文件",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-01T06:47:36.879651Z",
+      "updatedAt": "2026-06-11T07:41:12.430521Z"
+    },
+    {
+      "id": 2802,
+      "name": "Andes N45",
+      "description": "提供快速查詢 Andes N45 & Risc-v spec & Andesgiht 相關文件",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-01T06:48:49.895357Z",
+      "updatedAt": "2026-06-11T07:41:12.494647Z"
+    },
+    {
+      "id": 2819,
+      "name": "PhisonUEFI",
+      "description": "PhisonUEFI",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-02T03:50:08.535959Z",
+      "updatedAt": "2026-06-30T06:27:08.593694Z"
+    },
+    {
+      "id": 2820,
+      "name": "FIP CTL reg",
+      "description": "你是一位資深數位IC設計工程師，使用者會來詢問UFS FIP關於ctrl reg的問題，你需要根據excel來回答\n若spec中有明確提到就在對話開頭加上[success]，若無則加上[unknown]",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-02T05:37:43.531949Z",
+      "updatedAt": "2026-06-11T07:41:16.405855Z"
+    },
+    {
+      "id": 2827,
+      "name": "X3 CoP1 HW 大師",
+      "description": "專門解答 X3 CoP1 HW 相關的Spec",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-02T06:47:43.396307Z",
+      "updatedAt": "2026-06-11T07:40:55.201243Z"
+    },
+    {
+      "id": 2840,
+      "name": "CopGen1_CodeReviewer",
+      "description": "對CopGen1 src code 進行 code review.",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-02T10:07:42.761449Z",
+      "updatedAt": "2026-07-03T08:16:32.512058Z"
+    },
+    {
+      "id": 2842,
+      "name": "ACS-4",
+      "description": "ATA Command Set",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-02T12:18:19.974208Z",
+      "updatedAt": "2026-06-11T07:41:01.201122Z"
+    },
+    {
+      "id": 2852,
+      "name": "SATA Rev3.3",
+      "description": "SATA Rev3.3",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-03T03:40:27.613013Z",
+      "updatedAt": "2026-06-11T07:41:23.94119Z"
+    },
+    {
+      "id": 2869,
+      "name": "review_assistant_linux",
+      "description": "串接用小幫手 Linux",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-03T08:47:58.593436Z",
+      "updatedAt": "2026-07-07T06:38:35.907636Z"
+    },
+    {
+      "id": 2870,
+      "name": "review_consolidate_assistant",
+      "description": "協助統整review結果",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-03T08:48:38.696006Z",
+      "updatedAt": "2026-07-03T01:12:39.200798Z"
+    },
+    {
+      "id": 2874,
+      "name": "Micron NTODT",
+      "description": "回答Micron NTODT回答Micron NTODT",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-03T10:07:22.204091Z",
+      "updatedAt": "2026-06-11T07:41:24.05863Z"
+    },
+    {
+      "id": 2902,
+      "name": "Jira 總結 review 規則",
+      "description": "由JIRA 萃取出 review 規則 以便新增 review 知識庫",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-04T08:29:48.166519Z",
+      "updatedAt": "2026-06-15T02:36:31.775902Z"
+    },
+    {
+      "id": 2933,
+      "name": "NTODT 專家",
+      "description": "目前沒連結知識庫，查詢得當會透過MCP正確連結到CF查資料，沒成功連結到會亂講話(幻覺)\natlassian 工具沒辦法查圖片，所以AI 是沒辦法看到圖片的",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-05T02:51:26.429292Z",
+      "updatedAt": "2026-06-11T07:41:20.326379Z"
+    },
+    {
+      "id": 2936,
+      "name": "E37 NVMe OPCode Check",
+      "description": "E37 NVMe OPCode Check",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-05T04:07:06.399533Z",
+      "updatedAt": "2026-06-11T07:41:23.97366Z"
+    },
+    {
+      "id": 2953,
+      "name": "FIP Reigster Spec",
+      "description": "將FIP Register Spec 轉成csv檔案 (5031、5033、5037)\n5031、5033裡面spec是用dword表示，5037是用Bytes offset表示，prompt不準確可能會讓他亂查，AI不會自己轉",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-08T02:59:52.187575Z",
+      "updatedAt": "2026-06-11T07:41:20.288844Z"
+    },
+    {
+      "id": 2955,
+      "name": "S17 生產不良 Error code 分析歷史",
+      "description": "提供 S17 生產不良 Error code 的分析過程，可以快速的回憶之前的分析內容。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-08T06:22:33.734774Z",
+      "updatedAt": "2026-06-12T09:29:54.666176Z"
+    },
+    {
+      "id": 2956,
+      "name": "PCIE PIC專家",
+      "description": "自動化分析PCIE pattern打到的fail log，總結出fail原因 & next action",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-08T06:43:01.396463Z",
+      "updatedAt": "2026-06-11T07:41:19.156633Z"
+    },
+    {
+      "id": 3017,
+      "name": "Bug Fix/Feature/Improve Sync 通知方式整理",
+      "description": "Bug Fix/Feature/Improve Sync 通知方式整理",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-10T02:41:22.929646Z",
+      "updatedAt": "2026-06-11T07:41:23.410563Z"
+    },
+    {
+      "id": 3024,
+      "name": "溫室氣體排放量秘書",
+      "description": "提供群聯電子各年度各類別的溫室氣體排放量。\nPS.範例年份(西元年)自行更改",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-10T05:49:42.325366Z",
+      "updatedAt": "2026-06-22T06:04:06.678578Z"
+    },
+    {
+      "id": 3028,
+      "name": "SD Q&A",
+      "description": "針對SD 常見問題解釋",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-10T07:28:10.591443Z",
+      "updatedAt": "2026-07-17T02:03:27.293289Z"
+    },
+    {
+      "id": 3032,
+      "name": "客戶問卷or法規鑑別專家",
+      "description": "1.提供客戶問卷題目，即引用環安衛相關「程序書」、「管理辦法」、「檢測紀錄」「查證紀錄」「政策」，一鍵答題。\n2.提供更新法規後，即執行群聯電子規範符合性鑑別及分析。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-10T08:02:07.973201Z",
+      "updatedAt": "2026-06-22T06:04:37.169871Z"
+    },
+    {
+      "id": 3036,
+      "name": "MP VUC 專家",
+      "description": "MP VUC 專家",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-10T08:55:27.701395Z",
+      "updatedAt": "2026-06-11T07:41:25.764959Z"
+    },
+    {
+      "id": 3071,
+      "name": "數據處理大師",
+      "description": "處理數據資料+報表與log檔案分析+巨集撰寫",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-11T05:30:09.453739Z",
+      "updatedAt": "2026-07-06T02:37:42.286086Z"
+    },
+    {
+      "id": 3073,
+      "name": "縮寫及禁用表查詢專家",
+      "description": "提供縮寫及禁用表查詢服務",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-11T05:56:56.271472Z",
+      "updatedAt": "2026-06-25T08:38:10.877661Z"
+    },
+    {
+      "id": 3076,
+      "name": "緊急應變管家",
+      "description": "1.提供各地辦公室內部及外部，發生緊急事故時的連絡窗口。\n2.提供各地辦公室自衛消防編組人員及聯絡方式。(如:通報班、滅火班、避難引導班、安全防護班、救護班)",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-11T07:28:32.100814Z",
+      "updatedAt": "2026-06-22T06:08:36.008639Z"
+    },
+    {
+      "id": 3085,
+      "name": "PPS Wiki專家",
+      "description": "自然語言查詢SSD相關技術知識庫：搜尋規格書（NVMe Base 2.3 / NVM CS 1.2 / Boot 1.3 / MI 2.1；  PCIe Base 6.4；OCP DC SSD v2.7；TCG Opal 2.02 / Key-Per-IO 1.41）或廠內common資訊",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-11T10:02:10.955154Z",
+      "updatedAt": "2026-06-11T19:00:00.492897Z"
+    },
+    {
+      "id": 3087,
+      "name": "測試Jira/CF",
+      "description": "測試Jira篩選",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-11T11:00:39.176904Z",
+      "updatedAt": "2026-06-18T09:40:06.040976Z"
+    },
+    {
+      "id": 3097,
+      "name": "技術名詞大白話專家",
+      "description": "當研發部門（RD）給了你一堆生硬的技術數據時，可以請 AI：「請將這段關於 NAND Flash 控制器韌體優化的技術描述，轉化為『非技術背景的採購』也能聽懂的商業價值（例如：能幫客戶延長裝置壽命 20%、降低 15% 維護成本）。」",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-12T02:12:38.772035Z",
+      "updatedAt": "2026-06-12T19:00:00.337789Z"
+    },
+    {
+      "id": 3098,
+      "name": "競爭對手產品規格對比表專家",
+      "description": "將自家產品與市場競品的規格參數（讀寫速度、通道數、功耗等）提供給 AI，請它自動生成一張 優劣勢對比表格（Pros & Cons），並為您歸納出「面對客戶時的攻擊點」與「被質疑時的防禦點」。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-12T02:19:36.338717Z",
+      "updatedAt": "2026-06-12T19:00:00.857849Z"
+    },
+    {
+      "id": 3103,
+      "name": "unipro",
+      "description": "unipro spec",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-12T02:35:49.413409Z",
+      "updatedAt": "2026-06-12T19:00:00.47545Z"
+    },
+    {
+      "id": 3104,
+      "name": "NAND FLASH產業動態即時摘要",
+      "description": "利用具備聯網功能的 AI 工具，定期查詢NAND FLASH電子產業巨頭的最新財報、季報或法說會重點。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-12T02:36:29.143398Z",
+      "updatedAt": "2026-06-12T19:00:00.452552Z"
+    },
+    {
+      "id": 3110,
+      "name": "伺服器SSD規格及價格比較專家",
+      "description": "規格自動比對與技術問答加速（Technical Sales Support）\n伺服器 SSD 的規格極其繁瑣（介面如 U.2, U.3, E1.S, E3.S；協議如 NVMe, SATA；還有隨機讀寫 IOPS、延遲、耐用度、掉電保護等）。\n 自動化規格比對（Cross-Reference）： 當客戶丟來一份競爭對手（如 Samsung, Micron, Solidigm）的 Spec 或是投標需求書（RFP）時，AI 可以秒級完成規格比對，告訴業務：「我們哪幾款型號完全符合、哪幾項指標超越對手、哪些地方需要調整韌體（Firmware）來補足。」",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-12T03:29:21.676814Z",
+      "updatedAt": "2026-06-12T19:00:00.887851Z"
+    },
+    {
+      "id": 3126,
+      "name": "Confluence該不會有吧",
+      "description": "幫忙找confluence、JIRA上的資訊，整理重點並列出來源頁面\n* 更新語意模糊搜尋\n* 更新頁面access失敗retry機制",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-12T09:40:06.435584Z",
+      "updatedAt": "2026-07-13T03:09:58.84604Z"
+    },
+    {
+      "id": 3191,
+      "name": "PCIe & NVME 專家",
+      "description": "主要依據**：所有對話內容必須基於提供的知識庫文件。請優先從知識庫中提取相關資訊以回應使用者需求。\n\"PCIe\" & \"NVME\" Specification 資料庫文件如下\n1. PCIe_CEM_R6.0.1_02-13-2025_NCB \n2. PCI_Express_M.2_Spec_Rev5.1_05012024_NCB \n3. PCI_Express_External_Cabling_R3.0a_06042020_NCB (1) \n4. PCIe_SFF_R5.0_02062024_NCB \n5. NCB-PCI_Express_Base_4.0r1.0_September-27-2017-c",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-16T03:03:45.654392Z",
+      "updatedAt": "2026-07-07T01:33:35.492977Z"
+    },
+    {
+      "id": 3195,
+      "name": "電路設計-計算小工具",
+      "description": "電阻分壓、RC delay 等等小工具",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-16T07:56:37.061248Z",
+      "updatedAt": "2026-06-16T19:00:00.478497Z"
+    },
+    {
+      "id": 3215,
+      "name": "Next Draw.IO 專家",
+      "description": "Next Draw.IO 專家",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-17T02:01:17.78682Z",
+      "updatedAt": "2026-07-21T03:51:16.712258Z"
+    },
+    {
+      "id": 3253,
+      "name": "opencode使用問答專家",
+      "description": "專門回復opencode使用上的疑問",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-18T04:12:18.364526Z",
+      "updatedAt": "2026-07-13T08:33:30.997259Z"
+    },
+    {
+      "id": 3272,
+      "name": "N69R SPEC 專家",
+      "description": "專家 for N69R SPEC",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-18T08:29:05.235214Z",
+      "updatedAt": "2026-07-08T03:21:50.861855Z"
+    },
+    {
+      "id": 3294,
+      "name": "E320 Site數評估大師",
+      "description": "輸入產品DPS、IO、FRC評估可使用的E320機型及最大site數",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-22T04:40:30.201482Z",
+      "updatedAt": "2026-06-23T08:14:25.043147Z"
+    },
+    {
+      "id": 3303,
+      "name": "倉庫智能小幫手",
+      "description": "倉庫工作對應負責人，加工廠回貨時間點，等倉庫各式工作查詢",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-22T07:01:19.854479Z",
+      "updatedAt": "2026-07-09T03:12:20.786344Z"
+    },
+    {
+      "id": 3310,
+      "name": "CopGen1_CodeReviewer_MRPost_CI",
+      "description": "CopGen1_CodeReviewer_MRPost_CI",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-22T07:49:14.757591Z",
+      "updatedAt": "2026-06-22T19:00:00.350072Z"
+    },
+    {
+      "id": 3311,
+      "name": "SQA系統廠log alarm system監控問題及 ParserTool使用說明",
+      "description": "可查詢監控站點Log短少問題、監控窗口、及ParserTool使用說明, \n、回答近期Fixed中性TEST AP版本進版評估狀況",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-22T07:55:02.222561Z",
+      "updatedAt": "2026-07-21T09:01:50.633461Z"
+    },
+    {
+      "id": 3316,
+      "name": "Cadence OrCAD Capture_知識庫",
+      "description": "Cadence OrCAD Capture_軟體安裝/影片教學操作/軟體問&答/CIS設定等等。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-22T08:40:56.478458Z",
+      "updatedAt": "2026-07-02T02:31:23.353441Z"
+    },
+    {
+      "id": 3346,
+      "name": "料號搜尋",
+      "description": "料號搜尋",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-23T09:11:00.573341Z",
+      "updatedAt": "2026-06-30T06:36:09.587242Z"
+    },
+    {
+      "id": 3352,
+      "name": "TPE_HostTeamJIRA",
+      "description": "TPE_HostTeamJIRA",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-23T11:06:11.983731Z",
+      "updatedAt": "2026-06-30T08:57:17.800032Z"
+    },
+    {
+      "id": 3363,
+      "name": "Controller HW Spec 查詢專家",
+      "description": "提供查詢 Controller HW Spec 服務",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-24T02:25:04.733637Z",
+      "updatedAt": "2026-07-08T09:30:46.797949Z"
+    },
+    {
+      "id": 3366,
+      "name": "WebSearchImage GeneratorEVERYTHING to MD convertercall_tree_mcpAtlassiangitlab-mcp專家",
+      "description": "WebSearchImage GeneratorEVERYTHING to MD convertercall_tree_mcpAtlassiangitlab-mcp",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-24T02:46:19.428493Z",
+      "updatedAt": "2026-06-24T19:00:00.86521Z"
+    },
+    {
+      "id": 3368,
+      "name": "sid_test_git",
+      "description": "測試與gitlab連接",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-24T03:16:48.825703Z",
+      "updatedAt": "2026-06-24T19:00:01.066569Z"
+    },
+    {
+      "id": 3388,
+      "name": "技術名詞小老師",
+      "description": "這是精通半導體、AI的專家，會用大學生能懂的方式舉例解釋複雜概念。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-24T03:30:32.095679Z",
+      "updatedAt": "2026-07-16T08:35:17.000969Z"
+    },
+    {
+      "id": 3487,
+      "name": "review_info_icv",
+      "description": "review_info_icv (新版Code Review)",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-24T11:07:10.527882Z",
+      "updatedAt": "2026-07-03T01:12:30.977459Z"
+    },
+    {
+      "id": 3489,
+      "name": "review_assistant_icv",
+      "description": "review_assistant_ICV 新版CodeReview",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-24T11:09:21.071408Z",
+      "updatedAt": "2026-07-03T01:12:23.044421Z"
+    },
+    {
+      "id": 3491,
+      "name": "review_assistant_postprocessing_icv",
+      "description": "review_assistant_postprocessing_icv 新版CodeReview",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-24T11:14:38.626976Z",
+      "updatedAt": "2026-07-03T01:12:24.89229Z"
+    },
+    {
+      "id": 3545,
+      "name": "eMMC tool 放測查詢",
+      "description": "查詢該  project key 哪些版本有使用 TIC 測試該 tool (tool name 支援只輸入部分，大小寫敏感，且太舊的可能找不到)",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-26T03:20:10.41937Z",
+      "updatedAt": "2026-07-02T07:13:38.35262Z"
+    },
+    {
+      "id": 3562,
+      "name": "eSSD 組合資訊查詢",
+      "description": "供查詢Config使用\n來源: cbmi103- PM PASCARI BOM組合維護作業",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-26T08:38:56.248486Z",
+      "updatedAt": "2026-06-26T19:00:00.887965Z"
+    },
+    {
+      "id": 3563,
+      "name": "外出交通費申請專家",
+      "description": "外出交通費申請流程-113.03\n外出交通費申請單與EIPS整合應用簡易說明",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-26T09:09:37.350046Z",
+      "updatedAt": "2026-06-26T19:00:00.911318Z"
+    },
+    {
+      "id": 3564,
+      "name": "樣品申請專家",
+      "description": "樣品申請Q & A",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-26T09:16:09.924415Z",
+      "updatedAt": "2026-06-26T19:00:00.96174Z"
+    },
+    {
+      "id": 3602,
+      "name": "報關 OCR",
+      "description": "擷取報關欄位(進口稅/營業稅/推廣貿易服務費/稅費合計/統一編號/報單號碼/稅單號碼…)",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-29T05:54:45.346919Z",
+      "updatedAt": "2026-06-30T06:00:20.366841Z"
+    },
+    {
+      "id": 3667,
+      "name": "資訊整合",
+      "description": "串接多個工作流整合資訊",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-30T03:16:58.618198Z",
+      "updatedAt": "2026-06-30T08:14:40.582143Z"
+    },
+    {
+      "id": 3673,
+      "name": "try_run",
+      "description": "try_run",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-30T05:47:02.335149Z",
+      "updatedAt": "2026-07-16T08:45:51.635375Z"
+    },
+    {
+      "id": 3675,
+      "name": "Pre-Audit問題集",
+      "description": "根據上傳的檔案，產生Pre Audit協力廠題目，檔案素材，必須含有問題或缺失或question或finding字串欄位，可自動產生25題題目",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-30T06:22:38.768996Z",
+      "updatedAt": "2026-07-14T05:24:04.381528Z"
+    },
+    {
+      "id": 3685,
+      "name": "eMMC Guru Commercial",
+      "description": "使用上有問題/或想新增功能可聯絡arnold_chang@phison.com #21275\nPHISON商規eMMC產品專家\n可回答以下問題\n1. 可以透過Inking查詢產品組合\n2. 查詢特定容量對應的組合\n3. 特定組合performance/功耗等等",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-30T07:29:18.66867Z",
+      "updatedAt": "2026-07-17T02:49:12.319746Z"
+    },
+    {
+      "id": 3694,
+      "name": "合約辨識",
+      "description": "辨識法務合約內容",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-30T09:42:39.835006Z",
+      "updatedAt": "2026-07-09T05:37:14.988619Z"
+    },
+    {
+      "id": 3695,
+      "name": "生產數據 - 異常相似性分析專家",
+      "description": "查詢過去異常單號，提供過往的解決方向。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-06-30T09:43:25.034957Z",
+      "updatedAt": "2026-07-07T09:17:16.851833Z"
+    },
+    {
+      "id": 3706,
+      "name": "MD Converter for demo",
+      "description": "可以請chat顯示所有檔案\n可以請chat轉純文字或存成md\ndefault output dir: output\n\nshared folder路徑寫死於mcp",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-01T01:28:26.965083Z",
+      "updatedAt": "2026-07-01T02:55:47.544048Z"
+    },
+    {
+      "id": 3708,
+      "name": "半導體產業分析專家",
+      "description": "提供客觀、精準、具備戰略洞察力的每日儲存技術及相關關鍵元件（如 HBM、DRAM、GPU）市場動態市場情報，協助決策者掌握市場脈動",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-01T01:54:11.113223Z",
+      "updatedAt": "2026-07-01T02:20:35.401012Z"
+    },
+    {
+      "id": 3739,
+      "name": "中英雙向翻譯與文法優化專家",
+      "description": "支援中翻英與英翻中，不僅提供精準翻譯，還能自動檢查英文文法錯誤，並詳細說明修改原因（如時態、搭配詞、語氣優化等），幫助使用者在翻譯過程中同時提升英文寫作能力。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-01T02:59:21.015381Z",
+      "updatedAt": "2026-07-01T02:59:21.067033Z"
+    },
+    {
+      "id": 3788,
+      "name": "Python Script 撰寫",
+      "description": "Python Script 撰寫",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-02T01:48:48.010447Z",
+      "updatedAt": "2026-07-02T01:48:48.078881Z"
+    },
+    {
+      "id": 3818,
+      "name": "IPQA Search 專家",
+      "description": "IPQA Search 專家",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-02T07:41:30.560253Z",
+      "updatedAt": "2026-07-02T07:42:21.089384Z"
+    },
+    {
+      "id": 3853,
+      "name": "PhisonUEFI_Skill",
+      "description": "PhisonUEFI_Skill",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-03T03:00:21.35203Z",
+      "updatedAt": "2026-07-14T07:24:53.289161Z"
+    },
+    {
+      "id": 3855,
+      "name": "小律師",
+      "description": "會上網查詢法規，可以初步分析簡單的法律問題\nAI生成結果僅供參考，不構成正式法律意見。如有法律問題，請諮詢專業律師。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-03T03:19:32.100995Z",
+      "updatedAt": "2026-07-16T08:40:42.941706Z"
+    },
+    {
+      "id": 3876,
+      "name": "BOM 表零件差異標記專家",
+      "description": "比對 BOM 表並標記零件差異圖檔",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-03T07:29:12.702863Z",
+      "updatedAt": "2026-07-21T05:54:37.121823Z"
+    },
+    {
+      "id": 3900,
+      "name": "AI 會議彙整專家",
+      "description": "將 會議逐字稿轉化為高階的專業報告",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-06T03:24:40.262901Z",
+      "updatedAt": "2026-07-13T05:53:57.989895Z"
+    },
+    {
+      "id": 3908,
+      "name": "Mai FAE Expert",
+      "description": "FAE Q&A",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-06T06:53:01.245959Z",
+      "updatedAt": "2026-07-06T07:18:46.59569Z"
+    },
+    {
+      "id": 3912,
+      "name": "Mai LAB general Expert",
+      "description": "can answer general for Maistorage lab",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-06T08:53:45.355779Z",
+      "updatedAt": "2026-07-06T08:53:45.695704Z"
+    },
+    {
+      "id": 3931,
+      "name": "AI news（更新中）",
+      "description": "協助整理每週 AI 產業動態，包含 AI 模型更新、NVIDIA 本週動向與值得追蹤的產業訊號。可產出 Email 草稿，並在寄送前讓使用者確認收件者、署名、內容與排版。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-07T05:59:13.808006Z",
+      "updatedAt": "2026-07-16T07:56:29.044211Z"
+    },
+    {
+      "id": 3953,
+      "name": "P新聞專家",
+      "description": "分析P新聞的專家",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-07T10:54:59.03244Z",
+      "updatedAt": "2026-07-07T10:54:59.080946Z"
+    },
+    {
+      "id": 3962,
+      "name": "文件設計圖面檢查專家",
+      "description": "檢查圖片設計細節差異問題",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-08T03:06:12.53802Z",
+      "updatedAt": "2026-07-08T08:57:35.075033Z"
+    },
+    {
+      "id": 3966,
+      "name": "CE Mapping查詢專家",
+      "description": "CE Mapping查詢",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-08T04:05:43.048014Z",
+      "updatedAt": "2026-07-14T09:40:43.80556Z"
+    },
+    {
+      "id": 3968,
+      "name": "PAIR需求建立專家",
+      "description": "用來將使用者的需求蒐集，並開立Jira單。",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-08T04:58:29.936445Z",
+      "updatedAt": "2026-07-08T09:47:14.290309Z"
+    },
+    {
+      "id": 4170,
+      "name": "1",
+      "description": "1",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-14T11:12:14.205887Z",
+      "updatedAt": "2026-07-14T11:12:14.268922Z"
+    },
+    {
+      "id": 4191,
+      "name": "skill專家",
+      "description": "你現在是skill專家",
+      "isPublic": false,
+      "isAdded": true,
+      "createdAt": "2026-07-15T07:29:33.620789Z",
+      "updatedAt": "2026-07-15T07:29:33.692425Z"
+    },
+    {
+      "id": 4192,
+      "name": "token_upd_cf_to_km_merge_test",
+      "description": "token upd cf to km merge test",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-15T07:36:38.935253Z",
+      "updatedAt": "2026-07-15T09:16:48.151271Z"
+    },
+    {
+      "id": 4212,
+      "name": "Phison 料號搜尋與庫存屬性查詢助手",
+      "description": "Phison 料號搜尋與庫存屬性查詢助手",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-15T10:29:34.863126Z",
+      "updatedAt": "2026-07-21T03:26:33.87514Z"
+    },
+    {
+      "id": 4216,
+      "name": "PCIE量產問題分析(JSON)",
+      "description": "使用者可以提供PCIE量產問題的Error code，讓AI參考問題分析的歷史記錄提供問題解決方案",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-15T12:44:26.182638Z",
+      "updatedAt": "2026-07-17T10:01:54.949242Z"
+    },
+    {
+      "id": 4217,
+      "name": "PCIE量產問題分析(MD)",
+      "description": "使用者可以提供PCIE量產問題的Error code，讓AI參考問題分析的歷史記錄提供問題解決方案",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-15T12:44:53.695244Z",
+      "updatedAt": "2026-07-17T10:16:50.546639Z"
+    },
+    {
+      "id": 4251,
+      "name": "SD TC",
+      "description": "SD TC",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-16T07:26:24.691984Z",
+      "updatedAt": "2026-07-16T08:02:00.193088Z"
+    },
+    {
+      "id": 4253,
+      "name": "markdown_converter_via_sharefolder",
+      "description": "Tool list:\n1. list_files: list all files in the input shared folder path.\n2. list_supported_format: list all supported formats to convert to md.\n3. convert_file: enter file name (relative) on shared folder then it will convert at \"output\" folder on the shared folder.\n\nRequired header:\nshared-folder-path (use forward slash \"//\" and \"/\" only)\nshared-folder-username (same as LDAP username)\nshared-folder-password (same as LDAP password)\nBackend: markitdown\n\nOr you could use the following cmd to convert files to md:\ncurl -fSL -X POST \"http://10.101.24.232:3002/convert\"  -F \"input=@path/to/local.pdf\"  -o output.md",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-16T07:38:02.566909Z",
+      "updatedAt": "2026-07-16T07:38:02.627475Z"
+    },
+    {
+      "id": 4293,
+      "name": "政府公文產生專家",
+      "description": "可依據 User 提供的內容, 去生成 \"令\"、\"函\"、\"公告\"的政府公文內容",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-17T06:12:06.791466Z",
+      "updatedAt": "2026-07-17T06:45:54.346549Z"
+    },
+    {
+      "id": 4320,
+      "name": "群聯產品大師",
+      "description": "提供群聯產品的對外簡介",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-20T00:20:41.178673Z",
+      "updatedAt": "2026-07-20T00:20:41.246986Z"
+    },
+    {
+      "id": 4323,
+      "name": "天氣",
+      "description": "天氣",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-20T02:24:50.830954Z",
+      "updatedAt": "2026-07-20T02:26:14.974747Z"
+    },
+    {
+      "id": 4349,
+      "name": "公司料件搜尋小工具",
+      "description": "查詢公司料件訊息",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-20T08:40:55.068815Z",
+      "updatedAt": "2026-07-21T10:22:35.633292Z"
+    },
+    {
+      "id": 4350,
+      "name": "TPE_HostTeamJIRA_USB",
+      "description": "TPE_HostTeamJIRA_USB",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-20T08:51:20.16261Z",
+      "updatedAt": "2026-07-21T05:49:23.981237Z"
+    },
+    {
+      "id": 4377,
+      "name": "PS5027 PMU/SYS",
+      "description": "PS5027 PMU/SYS",
+      "isPublic": true,
+      "isAdded": false,
+      "createdAt": "2026-07-21T06:09:52.896799Z",
+      "updatedAt": "2026-07-21T10:40:03.765509Z"
+    }
+  ],
+  "workflows": [],
+  "workflowRun": {
+    "method": "POST",
+    "path": "/api/v1/hermes/ainexus/workflows/run",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "workflowId": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "parameters": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "工作流參數；有提供時必須符合該工作流的 parametersSchema"
+        },
+        "inputs": {
+          "type": "object",
+          "description": "Manual 類型工作流可使用的自訂 inputs"
+        }
+      },
+      "required": [
+        "workflowId"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "workflowStream": {
+    "method": "POST",
+    "path": "/api/v1/hermes/ainexus/workflows/stream",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "workflowId": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "parameters": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "工作流參數；有提供時必須符合該工作流的 parametersSchema"
+        },
+        "inputs": {
+          "type": "object",
+          "description": "Manual 類型工作流可使用的自訂 inputs"
+        }
+      },
+      "required": [
+        "workflowId"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "skills": [],
+  "skillDownload": {
+    "method": "POST",
+    "path": "/api/v1/hermes/ainexus/skills/download",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "skillId": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "skillId"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "tools": [
+    {
+      "name": "GetRecommendedExperts",
+      "description": "找出最適合處理使用者需求的專家。",
+      "method": "POST",
+      "path": "/api/v1/hermes/ainexus/tools/recommend-experts",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "專家的功能"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "GetExpertResponse",
+      "description": "呼叫指定專家回答問題。若使用者尚未加入該專家，系統會先自動新增。",
+      "method": "POST",
+      "path": "/api/v1/hermes/ainexus/tools/expert-response",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expertId": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "query": {
+            "type": "string"
+          },
+          "fileIds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "enableMemory": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "expertId",
+          "query"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "GetFilesContext",
+      "description": "依檔案 ID 讀取檔案內容（文字、文件、影像、音訊）供回覆使用。",
+      "method": "POST",
+      "path": "/api/v1/hermes/ainexus/tools/files-context",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "fileIds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 1,
+            "description": "要讀取的檔案 ID 清單"
+          }
+        },
+        "required": [
+          "fileIds"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "gen_ppt",
+      "description": "產生 PowerPoint。必填 topic、reference；theme 可選 dark/light，預設 dark。",
+      "method": "POST",
+      "path": "/api/v1/hermes/ainexus/tools/generate-ppt",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "topic": {
+            "type": "string"
+          },
+          "reference": {
+            "type": "string"
+          },
+          "section_length": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 15,
+            "default": 5
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "ja-JP",
+              "en-US",
+              "zh-TW",
+              "zh-CN"
+            ],
+            "default": "zh-TW"
+          },
+          "need_image": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ],
+            "default": 1
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "dark",
+              "light"
+            ],
+            "default": "dark"
+          }
+        },
+        "required": [
+          "topic",
+          "reference"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "gen_docx",
+      "description": "產生 Word。必填 topic；檔案內容透過 fileIds 帶入。",
+      "method": "POST",
+      "path": "/api/v1/hermes/ainexus/tools/generate-docx",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "topic": {
+            "type": "string"
+          },
+          "reference": {
+            "type": "string"
+          },
+          "fileIds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "section_length": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 15,
+            "default": 5
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "ja-JP",
+              "en-US",
+              "zh-TW"
+            ],
+            "default": "zh-TW"
+          },
+          "need_image": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ],
+            "default": 1
+          }
+        },
+        "required": [
+          "topic"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "query_km",
+      "description": "查詢使用者可用的 KM 知識庫，包含舊版與新版。",
+      "method": "POST",
+      "path": "/api/v1/hermes/ainexus/tools/query-km",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string"
+          },
+          "topk": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50,
+            "default": 5
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

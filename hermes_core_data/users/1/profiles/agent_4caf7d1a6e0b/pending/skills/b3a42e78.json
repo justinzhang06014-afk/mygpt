@@ -1,0 +1,15 @@
+{
+  "id": "b3a42e78",
+  "subsystem": "skills",
+  "action": "create",
+  "summary": "create 'temp-dummy-please-delete' (5 chars)",
+  "origin": "assistant_tool",
+  "created_at": 1784602031.757831,
+  "payload": {
+    "action": "create",
+    "name": "temp-dummy-please-delete",
+    "content": "dummy",
+    "category": "temp",
+    "replace_all": false
+  }
+}

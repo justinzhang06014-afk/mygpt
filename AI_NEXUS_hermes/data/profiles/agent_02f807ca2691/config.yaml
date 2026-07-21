@@ -1,0 +1,31 @@
+approvals:
+  mode: manual
+context:
+  enabled: true
+memory:
+  memory_enabled: true
+  nudge_interval: 10
+  provider: ''
+  user_profile_enabled: true
+  write_approval: false
+model:
+  api_key: YOUR_API_KEY_HERE
+  base_url: https://ainexus.phison.com/api/external/v1
+  default: Qwen/Qwen3.6-35B-A3B-FP8
+  provider: custom
+skills:
+  write_approval: false
+terminal:
+  backend: local
+  cwd: /workspace
+  persistent_shell: true
+  timeout: 180
+tools:
+  enabled:
+  - file_read
+  - file_write
+  - file_edit
+  - patch_code_file
+  - view_code_item
+  - grep_search
+  - bash

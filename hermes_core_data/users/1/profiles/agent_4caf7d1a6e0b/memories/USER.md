@@ -1,0 +1,1 @@
+User communicates in Traditional Chinese, prefers responses in Chinese

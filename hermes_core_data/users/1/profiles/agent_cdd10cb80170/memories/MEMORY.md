@@ -1,0 +1,1 @@
+User prefers to communicate in Traditional Chinese. User asked about checking attendance records for 張哲瑜 (Zhang Zheyu) via corporate AI system. User inquired about MCP (Model Context Protocol) availability.

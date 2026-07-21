@@ -1,0 +1,13 @@
+{
+  "id": "8ced466c",
+  "subsystem": "skills",
+  "action": "delete",
+  "summary": "delete skill 'temp-dummy-please-delete'",
+  "origin": "assistant_tool",
+  "created_at": 1784602034.1529117,
+  "payload": {
+    "action": "delete",
+    "name": "temp-dummy-please-delete",
+    "replace_all": false
+  }
+}
