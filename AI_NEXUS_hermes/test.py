@@ -1,433 +1,112 @@
 """
-AI_NEXUS Hermes Test Client
+AI_NEXUS Hermes 測試客戶端 —— 模擬「別人的前端/後端」怎麼呼叫這個服務。
 
-模擬使用者建立 hermes 聊天請求並接收訊息
+流程完全對應正式架構的兩段式呼叫：
+  1. 一開始呼叫一次 /api/session/ensure（入口），拿到這個使用者專屬的 chat_endpoint。
+  2. 之後每一輪對話都直接打那個 chat_endpoint，不再呼叫 ensure。
+
+執行方式：
+    python test.py
 """
-import requests
 import json
-import time
-import logging
-from typing import Optional, Dict, Any
-from datetime import datetime
+import re
+import requests
 
-# =============================================
-# 設定
-# =============================================
+ENTRY_URL = "http://localhost:8643"       # 入口服務（跑 docker compose 那個）
+USER_ID = "demo001"                       # 模擬登入拿到的使用者 ID
+ROOM_ID = "room_default"
 
-# 目前本地端測試（取消註解使用本地端）
-BASE_URL = "http://localhost:8643"
+# 純顯示用，把串流裡的內部標記轉成人看得懂的一行摘要，不影響正文輸出
+_MARKER_PATTERN = re.compile(r"__(ACP_THOUGHT|ACP_TOOL|ACP_PLAN|ACP_USAGE|APPROVAL_REQUIRED)__:(\{.*?\})\n?", re.DOTALL)
 
-# 未來部署的主機（取消註解使用部署環境）
-# BASE_URL = "http://192.168.41.173:5080"
 
-# API 端點
-CHAT_ENDPOINT = f"{BASE_URL}/api/agent/chat/stream"
+def ensure_session() -> dict:
+    print(f"[1/2] 呼叫 {ENTRY_URL}/api/session/ensure ...")
+    resp = requests.post(
+        f"{ENTRY_URL}/api/session/ensure",
+        json={"user_id": USER_ID},
+        timeout=60,  # 第一次可能要真的建容器，給久一點
+    )
+    resp.raise_for_status()
+    data = resp.json()
+    print(f"      status={data['status']}  agent_id={data['agent_id']}")
+    print(f"      chat_endpoint (容器內部位址，只有同網路的容器連得到) = {data['chat_endpoint']}")
 
-# 測試 Agent 設定
-TEST_AGENT_ID = None  # 將在 main 函數中設定
-TEST_ROOM_ID = None   # 將在 main 函數中設定
-TEST_SYSTEM_PROMPT = "你是一位專業的 AI 助理，能夠協助使用者處理各種任務。"
+    # 這支腳本是從「host」執行（不是從 docker 網路裡面），連不到 chat_endpoint 那個
+    # 容器內部主機名稱——所以優先用 swagger_url 換算出來的、真的對外開放的 host port。
+    # 如果你的「前後端」是跑在同一個 docker network 裡（正式部署常見的做法），
+    # 直接用 chat_endpoint 就好，不需要這個轉換。
+    if data.get("swagger_url"):
+        host_port = data["swagger_url"].rsplit(":", 1)[1].split("/")[0]
+        data["_reachable_chat_endpoint"] = f"http://localhost:{host_port}/api/agent/chat/stream"
+        print(f"      swagger_url   = {data['swagger_url']}  ← 也可以直接開瀏覽器測")
+    else:
+        data["_reachable_chat_endpoint"] = data["chat_endpoint"]
+        print("      ⚠️ 沒有 swagger_url（PUBLISH_CHILD_PORTS 沒開），這支腳本要跟服務跑在同個 docker network 裡才連得到")
+    return data
 
-# 日誌設定
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s"
-)
-logger = logging.getLogger("hermes_test_client")
 
-# =============================================
-# 聊天請求模型
-# =============================================
+def send_message(chat_endpoint: str, message: str) -> None:
+    # 帶 user_id（不用自己組 agent_id 字串）——服務會自動換算成跟 ensure 時
+    # 一致的 f"user_{user_id}"，這就是模擬「前端只需要記住 user_id」的呼叫方式。
+    resp = requests.post(
+        chat_endpoint,
+        json={"user_id": USER_ID, "room_id": ROOM_ID, "message": message},
+        stream=True,
+        timeout=300,
+    )
+    if resp.status_code != 200:
+        print(f"❌ HTTP {resp.status_code}: {resp.text}")
+        return
 
-class ChatRequest:
-    def __init__(
-        self,
-        agent_id: str,
-        room_id: str,
-        system_prompt: str,
-        message: str
-    ):
-        self.agent_id = agent_id
-        self.room_id = room_id
-        self.system_prompt = system_prompt
-        self.message = message
-    
-    def to_dict(self) -> dict:
-        return {
-            "agent_id": self.agent_id,
-            "room_id": self.room_id,
-            "system_prompt": self.system_prompt,
-            "message": self.message
-        }
-
-# =============================================
-# HTTP 客戶端
-# =============================================
-
-class HermesChatClient:
-    """Hermes 聊天客戶端"""
-    
-    def __init__(self, base_url: str):
-        self.base_url = base_url
-        self.chat_endpoint = f"{base_url}/api/agent/chat/stream"
-        self.session = requests.Session()
-        self.session.headers.update({
-            "Content-Type": "application/json"
-        })
-    
-    def send_chat_request(self, request: ChatRequest) -> int:
-        """
-        發送聊天請求
-        
-        Args:
-            request: ChatRequest 物件
-        
-        Returns:
-            HTTP 狀態碼
-        """
-        try:
-            logger.info("\n" + "=" * 60)
-            logger.info("發送聊天請求")
-            logger.info("=" * 60)
-            logger.info(f"Agent ID: {request.agent_id}")
-            logger.info(f"Room ID: {request.room_id}")
-            logger.info(f"Message: {request.message}")
-            logger.info("-" * 60)
-            
-            response = self.session.post(
-                self.chat_endpoint,
-                json=request.to_dict(),
-                stream=True,
-                timeout=300
-            )
-            
-            logger.info(f"HTTP 狀態碼: {response.status_code}")
-            
-            return response.status_code
-        
-        except requests.exceptions.Timeout:
-            logger.error("請求超時")
-            return -1
-        except requests.exceptions.ConnectionError:
-            logger.error("連線失敗，請確認 hermes 服務是否啟動")
-            return -2
-        except Exception as e:
-            logger.error(f"請求失敗: {str(e)}")
-            return -3
-    
-    def stream_response(self, request: ChatRequest):
-        """
-        串流接收聊天回應
-        
-        Args:
-            request: ChatRequest 物件
-        
-        Yields:
-            回應片段
-        """
-        try:
-            response = self.session.post(
-                self.chat_endpoint,
-                json=request.to_dict(),
-                stream=True,
-                timeout=300
-            )
-            
-            if response.status_code != 200:
-                yield f"❌ HTTP 錯誤: {response.status_code}\n"
-                yield f"錯誤訊息: {response.text}\n"
-                return
-            
-            logger.info("開始接收串流回應...")
-            logger.info("-" * 60)
-            
-            # 累積的回應
-            full_response = ""
-            thought_buffer = []
-            tool_buffer = []
-            skill_suggested = None
-            
-            for chunk in response.iter_content(chunk_size=512, decode_unicode=True):
-                if not chunk:
-                    continue
-                
-                # 輸出原始內容（除錯用）
-                # logger.debug(f"原始 chunk: {repr(chunk)}")
-                
-                # 解析特殊標記
-                if "__ACP_THOUGHT__:" in chunk:
-                    parts = chunk.split("__ACP_THOUGHT__:")
-                    for part in parts[1:]:
-                        try:
-                            thought_data = json.loads(part.strip())
-                            thought_text = thought_data.get("text", "")
-                            thought_buffer.append(thought_text)
-                        except json.JSONDecodeError:
-                            pass
-                    continue
-                
-                if "__ACP_TOOL__:" in chunk:
-                    parts = chunk.split("__ACP_TOOL__:")
-                    for part in parts[1:]:
-                        try:
-                            tool_data = json.loads(part.strip())
-                            tool_buffer.append(tool_data)
-                        except json.JSONDecodeError:
-                            pass
-                    continue
-                
-                if "__SKILL_SUGGESTED__:" in chunk:
-                    parts = chunk.split("__SKILL_SUGGESTED__:")
-                    for part in parts[1:]:
-                        try:
-                            skill_suggested = json.loads(part.strip())
-                        except json.JSONDecodeError:
-                            pass
-                    continue
-                
-                # 一般文字內容
-                if not any(marker in chunk for marker in [
-                    "__ACP_THOUGHT__:", "__ACP_TOOL__:", "__SKILL_SUGGESTED__:",
-                    "__APPROVAL_REQUIRED__:"
-                ]):
-                    full_response += chunk
-                    print(chunk, end="", flush=True)
-            
-            print()  # 換行
-            
-            # 顯示思考過程
-            if thought_buffer:
-                logger.info("\n🧠 思考過程:")
-                for thought in thought_buffer:
-                    logger.info(f"  - {thought}")
-            
-            # 顯示工具呼叫
-            if tool_buffer:
-                logger.info(f"\n🔧 工具呼叫 ({len(tool_buffer)} 次):")
-                for i, tool in enumerate(tool_buffer, 1):
-                    title = tool.get("title", "Unknown")
-                    kind = tool.get("kind", "Unknown")
-                    status = tool.get("status", "Unknown")
-                    logger.info(f"  {i}. [{status}] {title} ({kind})")
-            
-            # 顯示技能建議
-            if skill_suggested:
-                logger.info(f"\n💡 技能建議:")
-                logger.info(f"  名稱: {skill_suggested.get('name', 'Unknown')}")
-                logger.info(f"  說明: {skill_suggested.get('description', '')}")
-                logger.info(f"  識別碼: {skill_suggested.get('identifier', '')}")
-            
-            logger.info("-" * 60)
-            logger.info("✅ 串流回應接收完成")
-            
-            return full_response
-        
-        except requests.exceptions.Timeout:
-            yield "❌ 串流接收超時\n"
-        except requests.exceptions.ConnectionError:
-            yield "❌ 連線中斷\n"
-        except Exception as e:
-            logger.error(f"串流接收錯誤: {str(e)}")
-            yield f"❌ 發生錯誤: {str(e)}\n"
-    
-    def chat(self, message: str, agent_id: str, room_id: str, system_prompt: str) -> str:
-        """
-        簡化的聊天介面
-        
-        Args:
-            message: 使用者訊息
-            agent_id: Agent ID
-            room_id: 房間 ID
-            system_prompt: 系統提示詞
-        
-        Returns:
-            完整回應
-        """
-        request = ChatRequest(agent_id, room_id, system_prompt, message)
-        
-        try:
-            full_response = ""
-            for chunk in self.stream_response(request):
-                if not chunk.startswith("__") and not chunk.startswith("❌"):
-                    full_response += chunk
-            
-            return full_response
-        except Exception as e:
-            logger.error(f"聊天失敗: {str(e)}")
-            return ""
-
-# =============================================
-# 測試案例
-# =============================================
-
-def test_basic_chat(client: HermesChatClient, agent_id: str, room_id: str, system_prompt: str):
-    """測試基本對話"""
-    logger.info("\n" + "=" * 60)
-    logger.info("測試案例: 基本對話")
-    logger.info("=" * 60)
-    
-    messages = [
-        "你好，請自我介紹一下。",
-        "請幫我用 Python 寫一個 Hello World 程式。",
-        "再見！"
-    ]
-    
-    for msg in messages:
-        full_response = client.chat(
-            message=msg,
-            agent_id=agent_id,
-            room_id=room_id,
-            system_prompt=system_prompt
-        )
-        
-        logger.info(f"\n📝 完整回應長度: {len(full_response)} 字元")
-        
-        # 等待一下再發送下一個訊息
-        time.sleep(2)
-
-def test_mcp_tools(client: HermesChatClient, agent_id: str, room_id: str, system_prompt: str):
-    """測試 MCP 工具使用"""
-    logger.info("\n" + "=" * 60)
-    logger.info("測試案例: MCP 工具使用")
-    logger.info("=" * 60)
-    
-    messages = [
-        "請幫我搜尋今天的網路新聞。",
-        "請幫我產生一張美麗的風景圖片。",
-    ]
-    
-    for msg in messages:
-        full_response = client.chat(
-            message=msg,
-            agent_id=agent_id,
-            room_id=room_id,
-            system_prompt=system_prompt
-        )
-        
-        logger.info(f"\n📝 完整回應長度: {len(full_response)} 字元")
-        time.sleep(3)
-
-def test_memory_functionality(client: HermesChatClient, agent_id: str, room_id: str, system_prompt: str):
-    """測試記憶功能"""
-    logger.info("\n" + "=" * 60)
-    logger.info("測試案例: 記憶功能")
-    logger.info("=" * 60)
-    
-    messages = [
-        "我的名字是張三，我喜歡寫程式。",
-        "請問我喜歡做什麼？",
-    ]
-    
-    for msg in messages:
-        full_response = client.chat(
-            message=msg,
-            agent_id=agent_id,
-            room_id=room_id,
-            system_prompt=system_prompt
-        )
-        
-        logger.info(f"\n📝 完整回應長度: {len(full_response)} 字元")
-        time.sleep(3)
-
-# =============================================
-# 互動式聊天
-# =============================================
-
-def interactive_chat(client: HermesChatClient, agent_id: str, room_id: str, system_prompt: str):
-    """互動式聊天介面"""
-    logger.info("\n" + "=" * 60)
-    logger.info("互動式聊天模式")
-    logger.info("=" * 60)
-    logger.info("輸入 'exit' 或 'quit' 離開")
-    logger.info("-" * 60)
-    
-    while True:
-        try:
-            user_input = input(f"\n[C:{room_id}] > ").strip()
-            
-            if not user_input:
-                continue
-            
-            if user_input.lower() in ('exit', 'quit'):
-                logger.info("結束聊天")
+    buffer = ""
+    for chunk in resp.iter_content(chunk_size=256, decode_unicode=True):
+        if not chunk:
+            continue
+        buffer += chunk
+        # 標記一定是完整一段才處理，避免切在標記中間
+        while True:
+            m = _MARKER_PATTERN.search(buffer)
+            if not m:
                 break
-            
-            full_response = client.chat(
-                message=user_input,
-                agent_id=agent_id,
-                room_id=room_id,
-                system_prompt=system_prompt
-            )
-            
-            logger.info(f"回應長度: {len(full_response)} 字元")
-        
-        except KeyboardInterrupt:
-            logger.info("\n收到中斷訊號，結束聊天")
-            break
-        except Exception as e:
-            logger.error(f"發生錯誤: {str(e)}")
+            before = buffer[: m.start()]
+            if before:
+                print(before, end="", flush=True)
+            kind = m.group(1)
+            try:
+                body = json.loads(m.group(2))
+            except json.JSONDecodeError:
+                body = {}
+            if kind == "ACP_TOOL" and body.get("title"):
+                print(f"\n  🔧 [工具] {body.get('title')} ({body.get('status')})\n", flush=True)
+            buffer = buffer[m.end():]
+    if buffer:
+        print(buffer, end="", flush=True)
+    print()
 
-# =============================================
-# 主程式
-# =============================================
 
 def main():
-    """主函數"""
-    logger.info("=" * 60)
-    logger.info("AI_NEXUS Hermes Test Client")
-    logger.info("=" * 60)
-    logger.info(f"連接到: {BASE_URL}")
-    logger.info(f"聊天端點: {CHAT_ENDPOINT}")
-    
-    # 建立客戶端
-    client = HermesChatClient(BASE_URL)
-    
-    # 測試 Agent 設定
-    agent_id = "agent_test_001"
-    room_id = "room_test_001"
-    system_prompt = "你是一位專業的 AI 助理，能夠協助使用者處理各種任務。"
-    
-    logger.info(f"\n測試 Agent ID: {agent_id}")
-    logger.info(f"測試 Room ID: {room_id}")
-    logger.info(f"系統提示詞: {system_prompt}")
-    
-    # 檢查連線
-    try:
-        response = requests.get(f"{BASE_URL}/", timeout=5)
-        logger.info(f"\n✅ 連線成功: {response.status_code}")
-    except Exception as e:
-        logger.error(f"\n❌ 無法連接到 {BASE_URL}: {str(e)}")
-        logger.error("請確認 hermes 容器是否已啟動")
-        return
-    
-    # 選擇測試模式
-    print("\n請選擇測試模式:")
-    print("1. 基本對話測試")
-    print("2. MCP 工具測試")
-    print("3. 記憶功能測試")
-    print("4. 互動式聊天")
-    print("0. 退出")
-    
-    choice = input("\n請輸入選項 (0-4): ").strip()
-    
-    if choice == "1":
-        test_basic_chat(client, agent_id, room_id, system_prompt)
-    elif choice == "2":
-        test_mcp_tools(client, agent_id, room_id, system_prompt)
-    elif choice == "3":
-        test_memory_functionality(client, agent_id, room_id, system_prompt)
-    elif choice == "4":
-        interactive_chat(client, agent_id, room_id, system_prompt)
-    elif choice == "0":
-        logger.info("退出程式")
-        return
-    else:
-        logger.warning("無效選項，執行基本對話測試")
-        test_basic_chat(client, agent_id, room_id, system_prompt)
-    
-    logger.info("\n" + "=" * 60)
-    logger.info("測試完成")
-    logger.info("=" * 60)
+    print("=" * 60)
+    print("AI_NEXUS Hermes 測試客戶端")
+    print("=" * 60)
+
+    session = ensure_session()
+    chat_endpoint = session["_reachable_chat_endpoint"]
+
+    print("\n[2/2] 開始互動式聊天（輸入 exit 離開）")
+    print("-" * 60)
+    while True:
+        try:
+            message = input("你: ").strip()
+        except (KeyboardInterrupt, EOFError):
+            break
+        if not message:
+            continue
+        if message.lower() in ("exit", "quit"):
+            break
+        print("Hermes: ", end="", flush=True)
+        send_message(chat_endpoint, message)
+
 
 if __name__ == "__main__":
     main()

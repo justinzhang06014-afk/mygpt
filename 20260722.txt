@@ -1,0 +1,188 @@
+0722 AI_NEXUS_hermes 完整記錄：今天做了什麼、改了哪裡、明天怎麼測
+=====================================================================
+撰寫時間：2026-07-22。給誰看：明天要接手測試/串接的人（含未來的自己）。
+原則跟 0721_system.txt 一樣：只寫實際驗證過的內容，不確定的地方明確標記。
+
+---------------------------------------------------------------------
+## 0. 一句話總結今天做的事
+
+把 hermes-agent/ 的業務邏輯（config.yaml 產生、ACP 對話執行、MCP 專家路由）拆成
+一支獨立服務 AI_NEXUS_hermes/，加上「一個帳號一個容器」的 ensure 機制（可以是
+自己用 docker.sock 建，也可以委派給同事的 orchestrator），今天全程用 Claude
+（LLM_PROVIDER=native）代替 Phison 模型做端到端測試，測完已經改回 Phison 正式設定
+（結尾第 9 節有截圖等級的驗證證據）。
+
+---------------------------------------------------------------------
+## 1. 檔案總覽：每一支檔案是做什麼的
+
+| 檔案 | 角色 | 一句話說明 |
+|---|---|---|
+| `main.py` | FastAPI 入口 | 所有 API 端點定義的地方，Swagger 分類（①②③④）也在這裡設定 |
+| `config.py` | 設定 + DTO | 環境變數讀取、`ChatRequest` 這個聊天請求的欄位定義 |
+| `services.py` | hermes config 產生核心 | 寫 `config.yaml`/`SOUL.md`，session_mapping 讀寫 |
+| `acp_client.py` | ACP 對話執行 | spawn `hermes acp` subprocess、轉發結構化事件（逐字複製自 hermes-agent，含 0720 resume_session 修復） |
+| `mcp_services.py` | MCP 商店邏輯 | 母版目錄讀取、per-agent 的 MCP selection/憑證、產生 `config.yaml` 的 `mcp_servers` 區塊 |
+| `expert_catalog.py` | Agentic Hub 匯入 | 把 `response.json`（已發布固定 agent）轉成 MCP URL 條目（逐字複製，今天沒動） |
+| `approval_settings.py` | 核准設定 | 每個 agent 的 approvals.json 讀寫（逐字複製，今天沒動） |
+| `runtime_manager.py` | 容器 ensure 邏輯 | docker.sock 建/查/刪容器；今天新增「委派給 orchestrator」的開關 |
+| `orchestrator_client.py` | 🆕 今天新增 | 呼叫同事外部 orchestrator 的 HTTP client，取代 docker.sock 那條路（可切換） |
+| `phison_mcp_bridge.py` | 🆕 今天新增 | AINexus 動態專家路由的 MCP stdio bridge（詳見第 3 節） |
+| `mock_ainexus_server.py` | 🆕 今天新增，僅測試用 | 本機假 AINexus，模擬 recommend-experts/expert-response |
+| `mcp.json` | MCP 母版目錄 | 新增了 `phison-ainexus` 這個條目 |
+| `test.py` | 🆕 今天重寫 | 模擬「別人的前後端」怎麼呼叫這個服務，可以直接 `python test.py` 跑 |
+| `docker-compose.yml` | 🆕 今天新增 | 一個指令啟動整套測試環境，今天結尾已改回 Phison 設定 |
+| `Dockerfile` | 🆕 今天新增 | 不含 SSH/docker.sock 內建（那是 hermes-agent/Dockerfile 已知風險，這裡刻意不重蹈覆轍） |
+| `.env` / `.env.example` | 環境變數 | 今天結尾已清掉 Claude 相關設定，改回 Phison |
+| `data/` | 舊版殘留 | 今晚最早期（重寫前）的本地測試資料夾，跟現在架構無關，可以忽略/之後清掉 |
+
+---------------------------------------------------------------------
+## 2. 今天的架構決策（為什麼長這樣）
+
+1. **拿掉 Docker 建立邏輯又加回來**：一開始把 runtime_manager.py 整支拿掉（以為
+   docker 完全交給別人），後來確認使用者的意思是「我們還是要自己管 ensure/建容器
+   的邏輯，只是儲存/設備由別人提供」，所以加回來，用 docker.sock。
+2. **加上 orchestrator_client.py**：再確認一次，發現真的有同事在做外部 orchestrator
+   （負責空間/儲存/容器連線），我們只需要 POST create 給他、他回傳 URL。所以把
+   「怎麼拿到容器」這件事抽成可切換的兩條路（`ORCHESTRATOR_URL` 環境變數是開關），
+   main.py/services.py 完全不用管現在走哪一條路。
+3. **兩段式呼叫**（已跟 hermes-agent 正式系統的架構對照過，不是新設計）：
+   ```
+   別人前後端 → POST /api/session/ensure {user_id}（只打一次）
+            → 拿到 chat_endpoint
+   別人前後端 → 之後每輪都直接 POST chat_endpoint（不再經過 ensure）
+   ```
+4. **user_id 直接可以帶進聊天請求**：一開始聊天只認 `agent_id`（要自己組
+   `f"user_{user_id}"` 字串），現在 `ChatRequest.user_id` 帶進來就自動換算，
+   跟 ensure 用同一套規則，別人不用自己組字串。
+5. **CRUD 使用者管理**：`GET/POST/DELETE /api/users`，走 docker.sock 模式全部能用；
+   走 orchestrator 模式目前只有 Create 有委派邏輯，List/Get/Delete 會明確報錯
+   （等同事有對應端點再補，不是忘記做）。
+
+---------------------------------------------------------------------
+## 3. 專家 REST API 怎麼轉換成 MCP（今天的核心新功能）
+
+### 背景問題
+AINexus 平台的「動態推薦專家」不是現成的 MCP endpoint，是兩支普通 REST API：
+```
+POST {API_BASE}/tools/recommend-experts  {query}              -> 推薦專家清單
+POST {API_BASE}/tools/expert-response    {expertId, query}    -> 實際問專家拿答案
+```
+hermes 只吃 MCP protocol（JSON-RPC），沒辦法直接打普通 REST API。
+
+### 轉換做法：`phison_mcp_bridge.py`
+用官方 `mcp.server.fastmcp.FastMCP` 套件包一層，對 hermes 而言它就是一個標準
+stdio MCP server，裡面只有一個工具 `query_phison_expert(query: str)`，內部依序：
+1. 呼叫 recommend-experts，拿 `experts[0].id`
+2. 用那個 id 呼叫 expert-response，拿到文字答案
+3. 把答案原樣回傳給 hermes
+
+### 怎麼接進 hermes 原生設定
+`mcp.json`（母版目錄）新增一筆：
+```json
+"phison-ainexus": {
+  "kind": "stdio",
+  "command": "python3",
+  "args": ["/opt/data/phison_mcp_bridge.py"],
+  "credentialFields": [
+    {"key": "PHISON_TOKEN", "type": "password", "required": true},
+    {"key": "PHISON_API_URL", "type": "text", "required": false}
+  ]
+}
+```
+`mcp_services.py::build_hermes_mcp_servers_block()` 把這個轉成 hermes 真正認得的
+`config.yaml` 格式：
+```yaml
+mcp_servers:
+  phison-ainexus:
+    command: python3
+    args: ["/opt/data/phison_mcp_bridge.py"]
+    enabled: true          # 注意是 enabled，不是 transport（母版目錄自己的欄位跟這個不一樣，容易搞混）
+    env:
+      PHISON_TOKEN: ${MCP_PHISON_AINEXUS_PHISON_TOKEN}   # 只有真的設定過值才會出現，見下面 bug
+```
+Token 從 `POST /api/agent/{agent_id}/mcp/phison-ainexus/credentials` 或聊天時
+`ChatRequest.phison_token` 寫進 `$HERMES_HOME/.env`，hermes CLI 自己的
+`hermes_cli/env_loader.py::load_hermes_dotenv()` 會在啟動時自動載入、解析
+`${MCP_...}` 參照——這整條路今天已經用真的 `hermes` CLI（容器內 hermes-agent==0.18.2）
+跑過，不是憑推論。
+
+### 🐛 今天發現並修好的真實 bug
+`mcp_services.py::build_hermes_mcp_servers_block()` 原本不管欄位有沒有真的被
+設定過值，母版宣告的 `credentialFields` 一律塞進 `env_refs`。`PHISON_API_URL`
+是選填欄位，正常情況下沒有人會去設定它（因為 `phison_mcp_bridge.py` 自己的
+預設值就是正確的 `192.168.41.133:1145`）——但因為沒設定過，`${MCP_..._PHISON_API_URL}`
+這個參照在 hermes 找不到對應環境變數時會被解析成**空字串**（不是保留原樣、
+也不是不設定），空字串會蓋掉 `phison_mcp_bridge.py` 裡 `os.getenv("PHISON_API_URL",
+預設值)` 的合理 fallback，導致工具真的執行時出現「缺少 URL scheme」的錯誤
+（實測時 Claude 自己回報了這個錯誤訊息，才發現的）。
+
+**修法**：`build_hermes_mcp_servers_block()` 現在只有「`credentialsConfigured`
+裡真的標記為 True」的欄位才會產生 `${...}` 參照，沒設定過的欄位乾脆不放進
+`env`，讓 MCP 腳本自己的 `os.getenv(KEY, 合理預設值)` fallback 生效。已重新
+實測確認：修好之後，沒設定 `PHISON_API_URL` 時工具正確 fallback 到
+`192.168.41.133:1145`（連線被拒絕，因為這裡連不到 Phison 內網，但至少不再是
+「缺少 URL scheme」這種設定錯誤——這證明修法正確，明天在真的能連到內網的環境
+測試應該就會成功）。
+
+---------------------------------------------------------------------
+## 4. 已知限制（誠實列出）
+
+- LLM 不會 100% 主動呼叫 `query_phison_expert`：明確下指令一定會呼叫且正確；
+  模糊問法（例如「幫我看出勤」）用 Claude Haiku 測試時，有時會先反問細節。
+  這是 prompt/模型層面的行為，換成 Phison 真正的模型明天可能表現不同，
+  建議用真的目標模型重新調 SOUL.md 措辭（`services.py` 裡的規則 4）。
+- 容器生命週期只做到「ensure 冪等 + 掛掉自動重啟」，沒有閒置自動關閉/刪除。
+- `orchestrator_client.py` 的 payload/回應欄位名稱是根據舊草案
+  `hermes_dockerPOST架構.txt` 猜的，不是同事確認過的正式規格，明天要跟同事
+  對齊之後只改這一支檔案。
+- 走 orchestrator 模式時，使用者 CRUD 的 List/Get/Delete 還沒有委派邏輯
+  （草案沒定義這幾支端點）。
+- `llm_api_key`（每個使用者自己的模型 API key）沒有持久化機制，每次呼叫
+  沒帶就會退回系統共用的 `PHISON_API_KEY`——這是刻意的，使用者已確認
+  「API key 共用可以接受」，不是遺漏。
+
+---------------------------------------------------------------------
+## 5. 明天的三種測試流程
+
+### A. 自己本地端測試（不需要真的 Phison 網路、不需要同事的東西）
+```powershell
+cd d:\mygpt\mygpt\AI_NEXUS_hermes
+docker compose up -d
+```
+開 `http://localhost:8643/docs`，照 Swagger 分類的順序（①②③④）點著測。
+`/api/session/ensure` 會回傳 `swagger_url`（因為 `PUBLISH_CHILD_PORTS=true`），
+那個網址就是這個使用者專屬容器自己的 Swagger，可以直接在瀏覽器測聊天。
+或直接 `python test.py`，模擬前後端跑一次完整流程。
+
+### B. 跟真的 Phison / docker 端連結測試
+1. 確認部署的機器連得到 `192.168.41.133:1145`（AINexus 內網）跟
+   `https://ainexus.phison.com`（模型端點）。
+2. `.env` 已經改回 Phison 設定（不設定 `LLM_PROVIDER`，用 `PHISON_API_KEY`）。
+3. 建一個使用者、設定真的 `phison_token`（AINexus bearer token），問一個
+   會觸發 `query_phison_expert` 的問題，確認真的拿到專家回答（不是「connection
+   refused」）。
+4. 如果同事的 orchestrator 已經有真的網址：設定 `ORCHESTRATOR_URL` 環境變數，
+   確認 `ensure_user_runtime()` 走的是 orchestrator 那條路（`/health` 的
+   `container_backend` 欄位會顯示 `orchestrator (...)`）。
+
+### C. 跟前端/後端連結測試
+1. 給對接的後端這份契約：
+   - Create：`POST http://<入口位址>:8643/api/session/ensure {"user_id": "..."}`，
+     拿到 `chat_endpoint`。
+   - Chat：`POST {chat_endpoint} {"user_id": "...", "room_id": "...", "message": "..."}`，
+     直接打，不再經過建立時的入口。
+2. 請對方帶著真實 `user_id` 呼叫一次 ensure，確認回傳格式跟預期一致。
+3. 請對方直接打 `chat_endpoint`，確認不用經過我這邊轉發，直接連得到那個
+   使用者專屬的容器。
+4. `room_id` 由對方自己產生/保存（例如一個聊天視窗一個 room_id），同一個
+   room_id 才會 resume 同一個 hermes session（`session_mapping.json` 機制，
+   今天沒動過，逐字複製自已修好的版本）。
+
+---------------------------------------------------------------------
+## 6. 今天結尾已確認完成的收尾動作
+
+- ✅ `docker-compose.yml`/`.env`/`.env.example` 已清掉所有 Claude/Anthropic 設定，
+  改回 Phison 正式設定（`PHISON_API_KEY`/`LLM_BASE_URL`/`LLM_MODEL`），並實測
+  確認新建立的使用者 `config.yaml` 正確顯示 `provider: custom` + Phison 端點。
+- ✅ `mcp_services.py` 的 PHISON_API_URL 空字串 bug 已修好並重新驗證。
+- ✅ 所有今天新增/修改的檔案都已加上「為什麼這樣設計」的註解，不是只有程式碼。

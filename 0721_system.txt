@@ -1,0 +1,172 @@
+0721 系統架構總覽（給新對話當開場背景說明用，取代已過時的部分）
+=====================================================================
+生成日期：2026-07-21。這份文件是「目前系統架構」的完整快照，內容全部對照實際
+原始碼行號/實測結果得出，不是憑空整理。如果要開一個新的 Claude 對話接續這個
+專案，把這份文件貼給它就能有完整背景。
+
+⚠️ 已知有問題的參考資料：`hermes-agent/docs/note_config_py.md` 這份筆記裡描述的
+`config.py` 原始碼內容跟實際檔案對不上（例如它說 `ADMIN_TOKEN` 預設值是
+"default_token"，實際是 "change-me-admin-token"；它說 `BASE_URL` 寫死
+"http://10.1.11.118:8002/v1"，實際檔案裡根本沒有這個網址，真正的是
+`TARGET_BASE_URL = "https://ainexus.phison.com/api/external/v1"`）。這份筆記
+的分析基礎是錯的，先不要依據它做決策或修改，等跟使用者確認過再說。
+
+---
+
+## 1. 專案是什麼
+
+多租戶 AI Agent 平台：讓每個使用者建立自己的 AI 助理（agent），每個 agent 可以裝
+MCP 工具、技能（skill）、有自己的長期記憶。底層跑的是官方 `hermes-agent` CLI
+（Nous Research，pip 套件 `hermes-agent[mcp,acp]`，目前版本 0.18.2）。目標規模：
+1000+ 使用者。
+
+## 2. 架構流程
+
+```
+Vue(LMFrontend) → chat.js
+  → C#(LMBackend/LlmController.cs)
+    → hermes-agent-proxy (main.py, FastAPI, container: lm_hermes_agent)
+      ├─ 業務邏輯：config.yaml/mcp.json/skills/approvals 產生、ACP 串流、記憶 CRUD
+      ├─ runtime_manager.py：用 docker.sock 建立/管理每個使用者專屬的
+      │   hermes-runtime-<user_id> 容器（現況；規劃中要拆給外部 orchestrator，見第 7 節）
+      └─ 每輪對話 spawn 一個 `hermes acp` subprocess（ACP 協定，結構化事件）
+```
+
+C# 完全不碰 Docker（`LlmController.cs:518` 註解），always 打
+`hermes-agent-proxy:8643`。使用者第一次聊天前，C# 會先呼叫
+`/api/runtime/ensure {user_id}`，拿到該使用者專屬 runtime 容器的 base_url，
+之後都打那個 base_url。
+
+## 3. 關鍵檔案與職責（`hermes-agent/` 目錄下）
+
+| 檔案 | 職責 |
+|---|---|
+| `main.py` | FastAPI 主程式：聊天串流、approve-write、記憶 CRUD、agent clone/export/fork、skills 相關端點、MCP 相關端點、approvals 端點、`/admin` 管理後台 |
+| `services.py` | `ensure_hermes_profile_exists()`：寫 config.yaml + SOUL.md；session_mapping.json 讀寫 |
+| `acp_client.py` | ACP 協定客戶端，`run_acp_turn()` 每輪對話 spawn 一次 `hermes acp` subprocess。**0720 修好 resume_session 的 bug（見第 5 節）** |
+| `mcp_services.py` | 母版 `mcp.json` CRUD、per-agent 的 selection/憑證狀態、把選好的組成 hermes 原生 `mcp_servers` 格式。**0720 加了合併 Agentic Hub 專家清單，核心篩選函式 `build_hermes_mcp_servers_block()` 沒動** |
+| `expert_catalog.py`（0720 新增） | 把 `response.json`（AINexus Agentic Hub 匯出清單）轉成母版格式，純記憶體合併，不寫回任何原始檔案 |
+| `mcp_services_all.py`（0720 新增，尚未接上） | 「全部匯入、不看使用者選擇」的測試版本，跟原本的 `mcp_services.py` 平行存在，要切換測試需改 `services.py` 一行呼叫（見第 7 節） |
+| `skills_catalog.py` | 管理員精選技能起手式清單（`skills_catalog.json`） |
+| `approval_settings.py` | 每個 agent 自己的 approvals.json（mode/memory_write_approval/skills_write_approval），對應 hermes 原生 `approvals.mode`/`memory.write_approval`/`skills.write_approval` |
+| `runtime_manager.py` | 用 docker.sock 建立/管理每個使用者專屬容器（`hermes-runtime-<user_id>`），**規劃中要交給外部 orchestrator** |
+| `config.py` | Proxy 全域設定：logger、`PROFILES_BASE_DIR`（環境變數，預設 `~/.hermes/profiles`）、`ADMIN_TOKEN`（環境變數，預設 `change-me-admin-token`，弱預設值未修）、`PHISON_LLM_KEY`（環境變數，**有硬編碼的真實 key 當 fallback 預設值，屬於已知風險**）、`TARGET_BASE_URL = https://ainexus.phison.com/api/external/v1`、`ChatRequest` pydantic model |
+| `Dockerfile` | 裝 `hermes-agent[mcp,acp]`；**同時內建完整 OpenSSH server + 寫死 root 密碼 "hermespass" + 掛載 docker.sock，這是已知但尚未處理的資安風險（1000 個容器共用同一組洩漏的密碼）** |
+| `monitor.py` | 背景資源監控，餵 `/api/monitor/stats` |
+
+## 4. 資料存放位置（共用 volume：host `./hermes_core_data` → 容器內 `/opt/data`）
+
+```
+/opt/data/profiles/<agent_id>/
+  ├── config.yaml          # 真正驅動 hermes 的設定，我們自己的 Python 程式碼寫的
+  ├── SOUL.md               # 系統提示詞，我們自己寫的
+  ├── memories/{MEMORY.md, USER.md}   # hermes 自己的長期記憶，運行時懶惰建立
+  ├── skills/               # 已安裝技能，hermes 自己管理
+  ├── sessions/, state.db*  # hermes 自己的 session/狀態儲存
+  ├── mcp.json              # per-agent 的 MCP selection/憑證狀態（跟根目錄母版不同檔案）
+  ├── .env                  # per-agent 的 MCP 憑證實際值
+  ├── session_mapping.json  # room_id -> hermes 原生 session_id 對照表
+  └── approvals.json        # 這個 agent 的 approval 設定
+hermes-agent/mcp.json         # 母版 MCP 目錄（管理員後台編輯）
+hermes-agent/skills_catalog.json  # 母版技能精選清單
+hermes-agent/response.json    # AINexus Agentic Hub 原始匯出清單（跟母版分開保留）
+```
+
+## 5. 今天（0720-0721）實測驗證過的重大發現
+
+### 5.1 ✅ 已修復：ACP resume_session 判斷 bug（同一 session 內忘記上下文的根因）
+
+`acp_client.py` 原本用 `hasattr(sess, "session_id")` 判斷 resume 是否成功，但對照
+容器內實際安裝的 `acp` 套件原始碼（`acp/schema.py`）確認：`ResumeSessionResponse`
+這個 model 根本沒有 `session_id` 欄位（協定設計上 resume 時 client 早就知道
+session_id，不需要回傳）。導致**每一輪對話事實上都被誤判成 resume 失敗、悄悄開
+新 session**，只有 hermes 自己判斷「值得存進 MEMORY.md/USER.md」的內容才留得下來。
+
+已修復（改成 resume 沒拋例外就直接沿用已知的 `resume_session_id`），用 3 輪對話
+（含一個刻意標記「不用存長期記憶」的暗號）實測驗證：修復前 hermes 原生對話 ID
+每輪都不同，修復後三輪完全一致、暗號正確答對。**這個 bug 從 0716 導入 ACP 後應該
+就一直存在，影響所有使用者的每一輪對話。**
+
+### 5.2 診斷但故意不修：`hermes profile create` 是死碼（低風險）
+
+實測發現這個指令在任何全新路徑下都會誤判「已存在」而失敗（hermes CLI 啟動時的
+side effect 自己建了 `logs/` 資料夾，污染了自己的存在性檢查），而
+`services.py` 從沒檢查過它的 returncode。**但後續追加驗證發現風險比想像中低**：
+唯一差的檔案是 `profile.yaml`，查了 `hermes_cli/profiles.py` 原始碼註解明講
+「這只是裝飾性 metadata，缺少時就是空預設值，不會出錯」。真正驅動 hermes 的
+`config.yaml` 從頭到尾都是我們自己的 Python 程式碼在寫，這件事沒有被這個 bug
+影響。結論：這是程式碼衛生問題（死碼+吞錯誤），不是資料/設定風險，**故意先不修**。
+
+**對外部 orchestrator 規劃的影響**：orchestrator 不需要預先建好
+`profiles/`/`skills/`/`memories/` 路徑骨架，掛一個空的可寫入資料夾到 `/opt/data`
+就夠了。
+
+### 5.3 ✅ MCP 端到端驗證成功
+
+用母版裡現成的官方公開測試伺服器 `_test_everything`
+（`@modelcontextprotocol/server-everything`，免憑證）測過：母版 → agent 選配 →
+config.yaml 的 mcp_servers → hermes 真的連上並成功呼叫 echo 工具，整條路徑通。
+
+### 5.4 官方 hermes 文件研究結論（來自 hermes-agent.nousresearch.com，非原始碼實測）
+
+官方建議「一個容器裝所有 profile」（s6-overlay），**但這個專案刻意不採用**：
+因為每個使用者的 agent 都能執行 bash（`tools.enabled` 含 `bash`，
+`terminal.backend: local`），共用容器等於共用資安邊界，不適合 1000 個互不信任的
+使用者。現有「一人一容器」（`runtime_manager.py`）的設計判斷是對的。有參考價值
+的只有官方建議的資源限制數值（記憶體 2-4GB、CPU 2 核心），可以當
+`resource_limits` 的起點。
+
+## 6. 進行中、還沒接上 production 的東西
+
+- `mcp_services_all.py`：全部匯入測試版本，明天要測。切換方法：改
+  `services.py` 的 `_write_isolated_config()` 裡呼叫
+  `mcp_services.build_hermes_mcp_servers_block(agent_id)` 那一行，換成
+  `mcp_services_all.build_hermes_mcp_servers_block_all(agent_id)`，測完換回來。
+  **不能直接把檔案改名蓋掉 `mcp_services.py`**，會整個 app 壞掉。
+- `expert_catalog.py`：已經接上 `mcp_services.get_agent_mcp_state()`（一行合併），
+  Agentic Hub 專家會跟一般 MCP 一樣走 selection 流程。
+
+## 7. Docker Orchestrator 對接規劃（純規劃，還沒動 production 程式碼）
+
+詳細內容在 `hermes-agent/docs/01_orchestrator_split_plan.md`、
+`02_lifecycle_and_communication.md`。核心：把 `runtime_manager.py` 現在直接用
+docker.sock 建容器的邏輯，換成呼叫外部朋友寫的 orchestrator API。要優先跟朋友
+對齊的問題：
+1. **容器 granularity 是 per-user 還是 per-agent？**（現況是 per-user，建議維持）
+2. **檔案存取要不要走 CRUD API，還是繼續共用同一個 host volume 直接寫檔？**
+   （現在是共用 volume 直接寫，建議維持，除非未來要拆到不同主機）
+3. 資源限制數值參考官方建議（2-4GB/2 核心）
+4. `ensure` 語意要保持冪等（重複呼叫同一 userId 不重建，只回傳既有的）
+
+## 8. 已知未解決風險（沿用之前 handoff，今天沒處理）
+
+- **Anthropic API key 疑似外洩**：`d:\mygpt\claude api.txt` 裡那把 key 之前
+  git push 時被 GitHub push protection 攔下，使用者已知情、**明確表示先不處理**。
+  今天測試時重複使用過這把 key（已取得使用者當場同意）。
+- `ADMIN_TOKEN` 弱預設值 `change-me-admin-token`，未換。
+- Dockerfile 內建完整 SSH server + 寫死 root 密碼，未處理。
+- 每個使用者的 runtime 容器目前沒有資源上限（`mem_limit`/`cpus`），規劃中要在
+  orchestrator 對接時一併解決。
+
+## 9. 測試環境注意事項
+
+- 這台開發機**連不到 Phison 內網**（`ainexus.phison.com`），要測真的模型回應
+  必須暫時把 `docker-compose.yaml` 裡那 4 行 Claude 測試環境變數取消註解、
+  `docker compose up -d hermes-agent-proxy` 重建容器，測完照慣例改回註解、
+  再重建一次復原。今天用過兩次，都已經改回 Phison。
+- `docker exec` 帶絕對路徑參數在 git-bash 下要加 `MSYS_NO_PATHCONV=1` 前綴，否則
+  路徑會被 MSYS 誤轉成 Windows 路徑。
+- 改 `hermes-agent/*.py` 不用重 build image（bind mount 即時生效），但要
+  `docker restart lm_hermes_agent` 才會讓 uvicorn 重新載入程式碼（沒開 --reload）。
+
+## 10. 使用者偏好（跟這個專案協作的固定模式）
+
+- 全程繁體中文。
+- 規劃/討論的訊息，先不要動程式碼，除非明確說「開始做」。
+- 非常重視「有沒有實測驗證」——不要只憑推論宣稱完成或宣稱找到根因，要進容器對照
+  真實原始碼或實際跑一次。
+- 新功能優先看 hermes 有沒有原生指令/設定可以用，不要重造一套。
+- 允許測試時暫時切到 Claude API（因為連不到 Phison 內網），但每次測完都要改回
+  Phison，這是固定流程不是每次都要重新問。
+- 任何刪除資料、資料庫結構變動、force push、docker.sock/SSH 資安態勢變更，
+  一律先確認才動手。

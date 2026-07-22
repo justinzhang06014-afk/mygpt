@@ -91,6 +91,27 @@
       ],
       "credentialFields": []
     },
+    "phison-ainexus": {
+      "displayName": "Phison AINexus 動態專家路由",
+      "description": "自動幫問題找最合適的 AINexus 專家並取得回答（recommend-experts -> expert-response 兩段式，跟已發布固定 agent 的 MCP URL 不是同一種機制）。",
+      "kind": "stdio",
+      "command": "python3",
+      "args": ["/opt/data/phison_mcp_bridge.py"],
+      "credentialFields": [
+        {
+          "key": "PHISON_TOKEN",
+          "label": "AINexus Bearer Token",
+          "type": "password",
+          "required": true
+        },
+        {
+          "key": "PHISON_API_URL",
+          "label": "AINexus API Base URL（留空用預設的內網位址，本機測試才需要覆寫成 mock server）",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
     "sk-VKnH0FxQbH78ei7M3iMp_g": {
       "displayName": "Twinkle Hub",
       "description": "Twinkle Hub 是 Twinkle AI 開發的台灣首個 MCP（Model Context Protocol）服務。它將上萬筆台灣政府公開資料及採購數據整合為單一端點，讓 Claude、Cursor 等 AI 工具能即時查詢，省去繁瑣爬蟲",

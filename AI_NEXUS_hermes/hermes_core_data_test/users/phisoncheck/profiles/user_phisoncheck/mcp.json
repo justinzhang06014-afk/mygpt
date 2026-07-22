@@ -1,0 +1,244 @@
+{
+  "servers": {
+    "websearch": {
+      "displayName": "網頁搜尋",
+      "description": "讓 Agent 可以搜尋網路上的即時資訊。",
+      "kind": "url",
+      "transport": "streamable-http",
+      "url": "http://ainexus.phison.com:5155/api/v1/Agent/mcp/4/MTIwOTA6MTc4NDEwOTEwNA.5BiSODXCP7FwaMac9Es4foYw7aaK5pE1aC5qeEoDWuU",
+      "credentialFields": [],
+      "selection": null,
+      "credentialsConfigured": {}
+    },
+    "email": {
+      "displayName": "Email 收發",
+      "description": "讓 Agent 可以幫忙收發電子郵件，需要填入使用者自己的信箱帳密。",
+      "kind": "url",
+      "transport": "sse",
+      "url": "http://ainexus.phison.com:5155/api/v1/Agent/mcp/12/MTIwOTA6MTc4NDEwOTEwNA.5BiSODXCP7FwaMac9Es4foYw7aaK5pE1aC5qeEoDWuU",
+      "credentialFields": [
+        {
+          "key": "USER",
+          "label": "帳號",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "PASSWORD",
+          "label": "密碼",
+          "type": "password",
+          "required": true
+        }
+      ],
+      "selection": null,
+      "credentialsConfigured": {}
+    },
+    "image-generator": {
+      "displayName": "圖片生成",
+      "description": "讓 Agent 可以產生圖片。",
+      "kind": "url",
+      "transport": "streamable-http",
+      "url": "http://ainexus.phison.com:5155/api/v1/Agent/mcp/254/MTIwOTA6MTc4NDEwOTEwNA.5BiSODXCP7FwaMac9Es4foYw7aaK5pE1aC5qeEoDWuU",
+      "credentialFields": [],
+      "selection": null,
+      "credentialsConfigured": {}
+    },
+    "everything-to-md-converter": {
+      "displayName": "萬用轉 Markdown",
+      "description": "把各種格式的檔案轉成 Markdown。",
+      "kind": "url",
+      "transport": "streamable-http",
+      "url": "http://ainexus.phison.com:5155/api/v1/Agent/mcp/2295/MTIwOTA6MTc4NDEwOTEwNA.5BiSODXCP7FwaMac9Es4foYw7aaK5pE1aC5qeEoDWuU",
+      "credentialFields": [],
+      "selection": null,
+      "credentialsConfigured": {}
+    },
+    "call_tree_mcp": {
+      "displayName": "Call Tree 分析",
+      "description": "程式碼呼叫關係分析工具。",
+      "kind": "url",
+      "transport": "streamable-http",
+      "url": "http://ainexus.phison.com:5155/api/v1/Agent/mcp/2835/MTIwOTA6MTc4NDEwOTEwNA.5BiSODXCP7FwaMac9Es4foYw7aaK5pE1aC5qeEoDWuU",
+      "credentialFields": [],
+      "selection": null,
+      "credentialsConfigured": {}
+    },
+    "co-gitlab-mcp": {
+      "displayName": "GitLab（Co）",
+      "description": "存取公司 GitLab 專案資料。",
+      "kind": "url",
+      "transport": "streamable-http",
+      "url": "http://ainexus.phison.com:5155/api/v1/Agent/mcp/3949/MTIwOTA6MTc4NDEwOTEwNA.5BiSODXCP7FwaMac9Es4foYw7aaK5pE1aC5qeEoDWuU",
+      "credentialFields": [],
+      "selection": null,
+      "credentialsConfigured": {}
+    },
+    "fw-git2-gitlab-mcp": {
+      "displayName": "GitLab（FW）",
+      "description": "存取韌體組 GitLab 專案資料。",
+      "kind": "url",
+      "transport": "streamable-http",
+      "url": "http://ainexus.phison.com:5155/api/v1/Agent/mcp/3973/MTIwOTA6MTc4NDEwOTEwNA.5BiSODXCP7FwaMac9Es4foYw7aaK5pE1aC5qeEoDWuU",
+      "credentialFields": [],
+      "selection": null,
+      "credentialsConfigured": {}
+    },
+    "_test_everything": {
+      "displayName": "【測試用】MCP 官方參考伺服器",
+      "description": "Model Context Protocol 官方維護的公開測試伺服器，不需要任何憑證，用來驗證母版→agent mcp.json→config.yaml→hermes 真的連得上的完整流程。驗證完成後可以從母版移除。",
+      "kind": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-everything"
+      ],
+      "credentialFields": [],
+      "selection": null,
+      "credentialsConfigured": {}
+    },
+    "sequential-thinking": {
+      "displayName": "【測試用】循序思考工具",
+      "description": "Model Context Protocol 官方維護的另一個公開伺服器，用來驗證管理員之後新增母版項目，既有 agent 會不會自動看到——這筆是後來才加的，測試用完可以刪。",
+      "kind": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
+      "credentialFields": [],
+      "selection": null,
+      "credentialsConfigured": {}
+    },
+    "phison-ainexus": {
+      "displayName": "Phison AINexus 動態專家路由",
+      "description": "自動幫問題找最合適的 AINexus 專家並取得回答（recommend-experts -> expert-response 兩段式，跟已發布固定 agent 的 MCP URL 不是同一種機制）。",
+      "kind": "stdio",
+      "command": "python3",
+      "args": [
+        "/opt/data/phison_mcp_bridge.py"
+      ],
+      "credentialFields": [
+        {
+          "key": "PHISON_TOKEN",
+          "label": "AINexus Bearer Token",
+          "type": "password",
+          "required": true
+        },
+        {
+          "key": "PHISON_API_URL",
+          "label": "AINexus API Base URL（留空用預設的內網位址，本機測試才需要覆寫成 mock server）",
+          "type": "text",
+          "required": false
+        }
+      ],
+      "selection": "resident",
+      "credentialsConfigured": {}
+    },
+    "sk-VKnH0FxQbH78ei7M3iMp_g": {
+      "displayName": "Twinkle Hub",
+      "description": "Twinkle Hub 是 Twinkle AI 開發的台灣首個 MCP（Model Context Protocol）服務。它將上萬筆台灣政府公開資料及採購數據整合為單一端點，讓 Claude、Cursor 等 AI 工具能即時查詢，省去繁瑣爬蟲",
+      "kind": "url",
+      "transport": "",
+      "url": "https://api.twinkleai.tw/mcp/",
+      "args": [],
+      "credentialFields": [
+        {
+          "key": "{",
+          "label": "{",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "\"mcpServers\": {",
+          "label": "\"mcpServers\": {",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "\"twinkle-hub\": {",
+          "label": "\"twinkle-hub\": {",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "\"url\": \"https://api.twinkleai.tw/mcp/\"",
+          "label": "\"url\": \"https://api.twinkleai.tw/mcp/\"",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "\"headers\": {",
+          "label": "\"headers\": {",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "\"Authorization\": \"Bearer sk-VKnH0FxQbH78ei7M3iMp_g\"",
+          "label": "\"Authorization\": \"Bearer sk-VKnH0FxQbH78ei7M3iMp_g\"",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "}",
+          "label": "}",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "}",
+          "label": "}",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "}",
+          "label": "}",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "}",
+          "label": "}",
+          "type": "text",
+          "required": false
+        }
+      ],
+      "selection": null,
+      "credentialsConfigured": {}
+    },
+    "expert_agentic_hub_96ee03fe": {
+      "displayName": "Agentic hub 小秘書",
+      "description": "你是專門處理「AI Nexus」相關問題的助理，從操作說明，使用手冊，workshop，開發流程，故障排除都可以問你。",
+      "kind": "url",
+      "transport": "streamable-http",
+      "url": "http://ainexus.phison.com:5155/mcp/agent/YCWtF5JRerzSdmVt3HC4xN9/RDYFBK5110xmwcNGRoeSI+4AlM0Nsjkdf19MRe7kce9gSf6jUREnzAqK3lAYOA==",
+      "credentialFields": [],
+      "source": "agentic_hub",
+      "selection": null,
+      "credentialsConfigured": {}
+    },
+    "expert_ai_36e8fdca": {
+      "displayName": "企業AI智能秘書",
+      "description": "提供agentflow 會議室相關功能、出勤資料查詢",
+      "kind": "url",
+      "transport": "streamable-http",
+      "url": "http://ainexus.phison.com:5155/mcp/agent/RlAD8WcmGN0Ljp+foameWoahRmuJXTq7MAl3ufhX2FSYcUB2qDgHi3YDrtGlodBHP3I97yK9C0mpsFqZ3ESgLA==",
+      "credentialFields": [],
+      "source": "agentic_hub",
+      "selection": null,
+      "credentialsConfigured": {}
+    },
+    "expert_skill_81ed6cb2": {
+      "displayName": "skill專家",
+      "description": "你現在是skill專家",
+      "kind": "url",
+      "transport": "streamable-http",
+      "url": "https://ainexus.phison.com/mcp/agent/EATp0947/KftBrlaSAHFz1qhRUcRdsk4RIY2KO+Udiof+d/lRSDj3uZ9kI4FE6lwwoToyDbYY1MRr7kF76lWPg==?token=bDkxT0eqWopoPx18Ozp2RySKTzZ_MhrEBU94zXNevjpM3ZITMHuO_UCuOEoiJOOvpHchemHNLcMGmLz2BnGm6g",
+      "credentialFields": [],
+      "source": "agentic_hub",
+      "selection": null,
+      "credentialsConfigured": {}
+    }
+  },
+  "updated_at": "2026-07-21T17:24:16Z"
+}
