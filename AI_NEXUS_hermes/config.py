@@ -17,6 +17,12 @@ TARGET_MODEL = os.getenv("LLM_MODEL", "Qwen/Qwen3.6-35B-A3B-FP8")
 
 
 class ChatRequest(BaseModel):
+    message: str = Field(..., description="使用者輸入")
+    # 🆕 讓前端每次點選的模型都能生效：config.yaml 本來就每輪對話都會重寫一次
+    # （hermes CLI 是每輪 spawn 一次全新 subprocess，重讀 config.yaml），所以模型
+    # 選擇不需要、也不應該綁在容器建立/profile 建立當下，才能做到「這輪選這個模型
+    # 就這輪生效」，不用重建容器或重啟任何東西。留空就照 LLM_MODEL 環境變數的預設值。
+    
     # 📍 對接的後端不用自己組合/記住 agent_id 字串——直接帶你自己的 user_id 進來，
     # 這裡會自動換算成 /api/session/ensure 建立時同一套規則（f"user_{user_id}"）。
     # agent_id 保留給「未來 multi-agent」用：不傳 user_id、只傳自訂 agent_id 時才生效。
@@ -29,11 +35,6 @@ class ChatRequest(BaseModel):
     # 這個值在 prepare/第一輪之後根本不會變。改成選填，沒傳就沿用系統預設的通用助理人設；
     # 真的要換人設，傳新的值進來就會覆寫（因為 SOUL.md 本來就每輪都重寫一次）。
     system_prompt: str | None = Field(None, description="Agent 的系統提示詞 (SOUL)，留空用系統預設的通用助理人設")
-    message: str = Field(..., description="使用者輸入")
-    # 🆕 讓前端每次點選的模型都能生效：config.yaml 本來就每輪對話都會重寫一次
-    # （hermes CLI 是每輪 spawn 一次全新 subprocess，重讀 config.yaml），所以模型
-    # 選擇不需要、也不應該綁在容器建立/profile 建立當下，才能做到「這輪選這個模型
-    # 就這輪生效」，不用重建容器或重啟任何東西。留空就照 LLM_MODEL 環境變數的預設值。
     model: str | None = Field(None, description="這一輪對話要用的模型（前端下拉選單傳入，留空用預設）")
     # 🆕 這個模型端點自己的 API key，如果每個使用者要用自己的 Phison key（不是全系統
     # 共用同一把），從這裡每輪帶進來覆寫，比存在檔案裡更符合「token 是浮動的」這件事——

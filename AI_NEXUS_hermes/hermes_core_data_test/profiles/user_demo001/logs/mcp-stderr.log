@@ -1,0 +1,46 @@
+
+===== [2026-07-22 02:35:31] starting MCP server 'phison-ainexus-router' =====
+[07/22/26 02:35:32] INFO     Processing request of type            server.py:720
+                             ListToolsRequest                                   
+
+===== [2026-07-22 02:36:07] starting MCP server 'phison-ainexus-router' =====
+[07/22/26 02:36:07] INFO     Processing request of type            server.py:720
+                             ListToolsRequest                                   
+[07/22/26 02:36:14] INFO     Processing request of type            server.py:720
+                             CallToolRequest                                    
+
+===== [2026-07-22 03:00:08] starting MCP server 'phison-ainexus-router' =====
+[07/22/26 03:00:09] INFO     Processing request of type            server.py:720
+                             ListToolsRequest                                   
+[07/22/26 03:00:14] INFO     Processing request of type            server.py:720
+                             CallToolRequest                                    
+[07/22/26 03:00:46] INFO     Processing request of type            server.py:720
+                             ListResourcesRequest                               
+[07/22/26 03:00:47] INFO     Processing request of type            server.py:720
+                             ListPromptsRequest                                 
+
+===== [2026-07-22 10:38:00] starting MCP server 'phison-ainexus-router' =====
+[07/22/26 10:38:01] INFO     Processing request of type            server.py:720
+                             ListToolsRequest                                   
+[07/22/26 10:38:09] INFO     Processing request of type            server.py:720
+                             CallToolRequest                                    
+[07/22/26 10:38:10] INFO     Processing request of type            server.py:720
+                             CallToolRequest                                    
+[07/22/26 10:38:13] INFO     Processing request of type            server.py:720
+                             GetPromptRequest                                   
+                    ERROR    Error getting prompt attendance      server.py:1082
+                             ╭─ Traceback (most recent call las─╮               
+                             │ /usr/local/lib/python3.11/site-p │               
+                             │ ackages/mcp/server/fastmcp/serve │               
+                             │ r.py:1073 in get_prompt          │               
+                             │                                  │               
+                             │   1070 │   │   try:              │               
+                             │   1071 │   │   │   prompt = self │               
+                             │   1072 │   │   │   if not prompt │               
+                             │ ❱ 1073 │   │   │   │   raise Val │               
+                             │   1074 │   │   │                 │               
+                             │   1075 │   │   │   messages = aw │               
+                             │   1076                           │               
+                             ╰──────────────────────────────────╯               
+                             ValueError: Unknown prompt:                        
+                             attendance                                         

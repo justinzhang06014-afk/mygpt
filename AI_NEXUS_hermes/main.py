@@ -34,6 +34,9 @@ import mcp_services
 import runtime_manager
 import orchestrator_client
 
+from typing import Optional #0722
+
+
 TAGS_METADATA = [
     {
         "name": "① 建立/Ensure（入口角色，需要 docker.sock）",
@@ -54,6 +57,11 @@ TAGS_METADATA = [
         "name": "④ 使用者管理 User CRUD（入口角色，需要 docker.sock）",
         "description": "查詢/刪除使用者專屬容器。Create 就是「①」的 /api/session/ensure"
                        "（這裡額外提供 REST 風格的 POST /api/users 當別名，效果一樣）。",
+    },
+    {
+        "name": "⑤ 遠端 Orchestrator API（對方主機 192.168.41.173）",
+        "description": "直接對接遠端 orchestrator 的 API，用於測試和管理對方主機上的容器。"
+                       "包含建立、查詢、刪除等功能，透過 orchestrator_client.py 轉發。",
     },
     {
         "name": "系統",
@@ -180,72 +188,158 @@ async def prepare_agent(payload: PrepareAgentPayload):
     )
     return {"status": "success", "agent_id": payload.agent_id, "agent_dir": agent_dir}
 
-
+#0722
 class EnsureSessionPayload(BaseModel):
+    # 必填欄位 - 修改為支援字串和整數
     user_id: str = Field(..., description="外部系統的使用者 ID（模擬登入後拿到的那個 ID）")
-    system_prompt: str | None = Field(None, description="留空用系統預設的通用助理人設")
-    model: str | None = None
-    llm_api_key: str | None = Field(None, description="這個使用者自己的模型 API key，留空用系統預設共用 key")
-    phison_token: str | None = Field(
-        None,
+    
+    # 選填欄位：使用 Optional + 明確指定 default=None 幫助 Swagger 解析
+    system_prompt: Optional[str] = Field(default=None, description="留空用系統預設的通用助理人設")
+    model: Optional[str] = Field(default=None, description="模型名稱")
+    llm_api_key: Optional[str] = Field(default=None, description="這個使用者自己的模型 API key，留空用系統預設共用 key")
+    phison_token: Optional[str] = Field(
+        default=None,
         description="有提供的話，順便幫這個使用者把 phison-ainexus 設好憑證。"
                      "這個 token 會過期/浮動，之後每輪聊天也可以用 ChatRequest.phison_token 帶新的覆寫，不用只能在這裡設一次。",
     )
 
+    # 👇 修改測試範例為整數格式，方便遠端 orchestrator 測試
     model_config = {
         "json_schema_extra": {
-            "example": {"user_id": "demo001", "system_prompt": None, "model": None, "llm_api_key": None, "phison_token": None}
+            "examples": [
+                {
+                    "user_id": "123",
+                    "system_prompt": "你是一個得力的辦公助理",
+                    "model": "InferenceModel43",
+                    "llm_api_key": "sk-or-your-key-here",
+                    "phison_token": "token_xyz"
+                }
+            ]
         }
     }
 
 
 async def _ensure_session_impl(payload: EnsureSessionPayload) -> dict:
-    """實際邏輯抽出來，讓 /api/session/ensure 和 /api/users（Create）共用同一套，不重複寫。"""
-    agent_id = f"user_{payload.user_id}"  # 1 帳號 1 hermes 的預設對應；multi-agent 之後要拓展，換成接受多個 agent_id 即可
+    """實際邏輯抽出來，讓 /api/session/ensure 和 /api/users（Create）共用同一套，不重複寫。
+
+    #0722修正：根據 orchestrator_client.py 的修改，確保能正確回傳容器建立狀態
+    - status: "created"（新建立）或 "existing"（已存在）
+    - 包含完整的容器資訊：id, name, baseUrl, externalBaseUrl（如果orchestrator啟用external access）
+
+    #0722完整流程修正：
+    1. 在本地準備資料（services.ensure_hermes_profile_exists）
+    2. 呼叫對方orchestrator建立容器（runtime_manager.enablement標誌處理後）
+    3. 透過對方容器API寫入資料，options：直接用本機資料給容器，密碼為X-Api-Key（需配置ExternalAccess）
+    """
+    agent_id = f"user_{payload.user_id}"  # 容器內部 agent_id
+
+    # 步驟1: 在本地準備資料（資料結構和計算）
+    agent_dir = await services.ensure_hermes_profile_exists(
+        agent_id, payload.system_prompt, model=payload.model, llm_api_key=payload.llm_api_key
+    )
+    logger.info(f"📝 [Session Ensure] 本地準備資料完成: {agent_dir}")
 
     try:
-        runtime = await asyncio.to_thread(runtime_manager.ensure_user_runtime, payload.user_id)
+        # 步驟2: 呼叫對方 orchestrator 建立容器（遠端模式會自動上傳檔案）
+        if orchestrator_client.is_enabled():
+            # 遠端模式：直接呼叫 orchestrator_client，會自動上傳檔案到遠端
+            runtime = await asyncio.to_thread(orchestrator_client.ensure_user_runtime, payload.user_id, agent_dir)
+        else:
+            # 本地模式：使用 runtime_manager
+            runtime = await asyncio.to_thread(runtime_manager.ensure_user_runtime, payload.user_id)
     except Exception as e:
         logger.error(f"❌ [Session Ensure] 使用者 {payload.user_id} 的容器 ensure 失敗: {str(e)}")
         raise HTTPException(status_code=500, detail=f"容器 ensure 失敗: {str(e)}")
 
     base_url = runtime["base_url"]
+    logger.info(f"🔗 [Session Ensure] 容器基礎URL: {base_url}")
+
+    # 步驟3: 透過容器API寫入資料，優先使用 externalBaseUrl（如有）
+    prepare_url = None
+    if "external_base_url" in runtime and runtime["external_base_url"]:
+        # 當ExternalAccess啟用時用proxy方式，避免內部網路限制
+        prepare_url = f"{runtime['external_base_url']}/api/agent/prepare"
+        logger.info(f"🌐 [Session Ensure] 使用對方ExternalProxy: {prepare_url}")
+    else:
+        # 使用內部網路的 baseUrl
+        prepare_url = f"{base_url}/api/agent/prepare"
 
     try:
+        # 準備請求標頭（當使用 externalBaseUrl 時需要 API Key）
+        headers = {}
+        if "external_base_url" in runtime and runtime["external_base_url"]:
+            api_key = os.getenv("ORCHESTRATOR_EXTERNAL_API_KEY", "change-me")
+            headers["X-Api-Key"] = api_key
+            logger.info(f"🔐 [Session Ensure] 使用 External Access API Key: {api_key[:8]}...")
+
         prep_resp = requests.post(
-            f"{base_url}/api/agent/prepare",
+            prepare_url,
             json={
                 "agent_id": agent_id, "system_prompt": payload.system_prompt,
                 "model": payload.model, "llm_api_key": payload.llm_api_key,
             },
-            timeout=15,
+            headers=headers,
+            timeout=30,
         )
         prep_resp.raise_for_status()
     except requests.exceptions.RequestException as e:
+        # 嘗試用 https://docs.docker.com/engine/api/v1.45/#tag/Exec/ExecCreate 手動寫入備案
+        logger.warning(f"⚠️  [Session Ensure] 容器API準備失敗，原因可能包含網絡訪問問題: {str(e)}")
+        # 提示：可以透過調用 /api/orchestrator/workers/:id/proxy 拿到本機資料後傳送
         raise HTTPException(status_code=502, detail=f"容器已建立但設定檔寫入失敗: {str(e)}")
 
+    # 步驟4: 設置MCP（如果使用外部proxy）
+    mcp_setup_url = f"{runtime.get('external_base_url', base_url)}/api/agent/{agent_id}/mcp/phison-ainexus/selection"
+    creds_setup_url = f"{runtime.get('external_base_url', base_url)}/api/agent/{agent_id}/mcp/phison-ainexus/credentials"
+    logger.info(f"🌐 [Session Ensure] MCP設定基礎URL: {mcp_setup_url}")
+
     try:
+        # 準備請求標頭（當使用 externalBaseUrl 時需要 API Key）
+        headers = {}
+        if "external_base_url" in runtime and runtime["external_base_url"]:
+            api_key = os.getenv("ORCHESTRATOR_EXTERNAL_API_KEY", "change-me")
+            headers["X-Api-Key"] = api_key
+
         requests.post(
-            f"{base_url}/api/agent/{agent_id}/mcp/phison-ainexus/selection",
+            mcp_setup_url,
             json={"selection": "resident"}, timeout=10,
+            headers=headers
         )
+    except requests.exceptions.RequestException as e:
+        logger.warning(f"⚠️  [Session Ensure] MCP選擇失敗（不影響基本聊天）: {str(e)}")
+
+    try:
         if payload.phison_token:
+            # 準備請求標頭（當使用 externalBaseUrl 時需要 API Key）
+            headers = {}
+            if "external_base_url" in runtime and runtime["external_base_url"]:
+                api_key = os.getenv("ORCHESTRATOR_EXTERNAL_API_KEY", "change-me")
+                headers["X-Api-Key"] = api_key
+
             requests.post(
-                f"{base_url}/api/agent/{agent_id}/mcp/phison-ainexus/credentials",
+                creds_setup_url,
                 json={"credentials": {"PHISON_TOKEN": payload.phison_token}}, timeout=10,
+                headers=headers
             )
     except requests.exceptions.RequestException as e:
-        logger.warning(f"⚠️ [Session Ensure] 預設 MCP 設定失敗（不影響基本聊天）: {str(e)}")
+        logger.warning(f"⚠️  [Session Ensure] PHISON token設定失敗（不影響基本聊天）: {str(e)}")
 
+    # #0722修正：回應格式包含更詳細的容器狀態資訊
     response = {
-        "status": runtime["status"],
+        "status": runtime["status"],  # "created" 或 "existing"
         "user_id": payload.user_id,
         "agent_id": agent_id,
         "base_url": base_url,
         "chat_endpoint": f"{base_url}/api/agent/chat/stream",
+        "message": "容器建立成功並準備完成" if runtime["status"] == "created" else "使用既有容器",
+        # 當存在 externalBaseUrl 時顯示給呼叫端
+        "external_base_url": runtime.get("external_base_url")
     }
     if "swagger_url" in runtime:
         response["swagger_url"] = runtime["swagger_url"]
+    if "worker_id" in runtime:
+        response["worker_id"] = runtime["worker_id"]
+
     return response
 
 
@@ -327,6 +421,8 @@ async def agent_chat_stream(payload: ChatRequest):
         "OPENAI_BASE_URL": os.getenv("LLM_BASE_URL", "https://ainexus.phison.com/api/external/v1"),
         "HERMES_BASE_URL": os.getenv("LLM_BASE_URL", "https://ainexus.phison.com/api/external/v1"),
         "HERMES_MODEL_BASE_URL": os.getenv("LLM_BASE_URL", "https://ainexus.phison.com/api/external/v1"),
+        # 🚀 思考路徑核心修復：每一輪聊天都將最新傳入的 token 轉譯為標準 MCP 變數名稱注入環境
+        "MCP_PHISON_AINEXUS_PHISON_TOKEN": payload.phison_token or os.getenv("PHISON_TOKEN", ""),
         # LLM_PROVIDER=native 測試模式（今晚用 Claude 代替 Phison）才需要這個 key，
         # 沒設定 ANTHROPIC_API_KEY 就不會加，不影響走 Phison custom 端點的正式路徑
         **({"ANTHROPIC_API_KEY": os.environ["ANTHROPIC_API_KEY"]} if os.getenv("ANTHROPIC_API_KEY") else {}),
@@ -372,6 +468,180 @@ async def approve_write(room_id: str, option_id: str):
 
 
 # =====================================================================
+# #0722 修改：遠端 Orchestrator API 功能
+# 直接對接對方主機 192.168.41.173:5080 的 orchestrator 服務
+# =====================================================================
+
+@app.get("/api/orchestrator/swagger", tags=["⑤ 遠端 Orchestrator API（對方主機 192.168.41.173）"], summary="取得對方 Orchestrator 的 Swagger 資訊")
+async def get_orchestrator_swagger():
+    """取得遠端 Orchestrator 的 Swagger/OpenAPI 文件，方便測試和了解對方的 API 能力。"""
+    try:
+        orchestrator_url = orchestrator_client.ORCHESTRATOR_URL
+        swagger_url = f"{orchestrator_url}/swagger/v1/swagger.json"
+        logger.info(f"🔍 [Orchestrator] 取得對方 Swagger 文件: {swagger_url}")
+
+        resp = requests.get(swagger_url, timeout=10)
+        resp.raise_for_status()
+
+        swagger_data = resp.json()
+        logger.info(f"✅ [Orchestrator] 成功取得對方 Swagger 文件，包含 {len(swagger_data.get('paths', {}))} 個端點")
+
+        return {
+            "status": "success",
+            "orchestrator_url": orchestrator_url,
+            "swagger_url": swagger_url,
+            "info": swagger_data.get("info", {}),
+            "paths_count": len(swagger_data.get("paths", {})),
+            "tags": [tag.get("name") for tag in swagger_data.get("tags", [])],
+            "full_swagger": swagger_data  # 完整的 Swagger 內容
+        }
+    except requests.exceptions.RequestException as e:
+        logger.error(f"❌ [Orchestrator] 無法取得對方 Swagger 文件: {str(e)}")
+        raise HTTPException(status_code=502, detail=f"無法連線到遠端 Orchestrator: {str(e)}")
+
+
+@app.get("/api/orchestrator/workers", tags=["⑤ 遠端 Orchestrator API（對方主機 192.168.41.173）"], summary="查看對方主機所有使用者容器")
+async def list_orchestrator_workers():
+    """直接查詢遠端 Orchestrator 上的所有 worker 容器，不含任何過濾條件。
+
+    回應範例：
+    {
+      "status": "success",
+      "workers": [
+        {
+          "id": "a1b2c3d4e5f6",
+          "name": "agent-worker-a1b2c3d4e5f6",
+          "image": "nousresearch/hermes-agent:latest",
+          "userId": "demo001",
+          "status": "running",
+          "baseUrl": "http://agent-worker-a1b2c3d4e5f6:8080"
+        }
+      ],
+      "count": 1
+    }
+    """
+    try:
+        orchestrator_url = orchestrator_client.ORCHESTRATOR_URL
+        api_url = f"{orchestrator_url}/api/v1/workers"
+        logger.info(f"🔍 [Orchestrator] 查詢對方主機所有容器: {api_url}")
+
+        resp = requests.get(api_url, timeout=30)
+        resp.raise_for_status()
+
+        workers_data = resp.json()
+        workers = workers_data if isinstance(workers_data, list) else []
+
+        logger.info(f"✅ [Orchestrator] 成功取得 {len(workers)} 個容器")
+
+        return {
+            "status": "success",
+            "orchestrator_url": orchestrator_url,
+            "workers": workers,
+            "count": len(workers)
+        }
+    except requests.exceptions.RequestException as e:
+        logger.error(f"❌ [Orchestrator] 查詢容器列表失敗: {str(e)}")
+        raise HTTPException(status_code=502, detail=f"無法查詢遠端 Orchestrator 容器: {str(e)}")
+
+
+@app.get("/api/orchestrator/workers/{worker_id}", tags=["⑤ 遠端 Orchestrator API（對方主機 192.168.41.173）"], summary="取得對方單一容器詳細資訊")
+async def get_orchestrator_worker(worker_id: str):
+    """根據 worker ID 查詢遠端 Orchestrator 上特定容器的詳細資訊。
+
+    參數：
+    - worker_id: 工作容器 ID（例如從前面建立時得到的 ID 或從 /api/orchestrator/workers 列表中獲取）
+
+    回應範例：
+    {
+      "status": "success",
+      "worker": {
+        "id": "a1b2c3d4e5f6",
+        "name": "agent-worker-a1b2c3d4e5f6",
+        "userId": "demo001",
+        "status": "running",
+        "baseUrl": "http://agent-worker-a1b2c3d4e5f6:8080",
+        "externalBaseUrl": "http://192.168.41.173:5080/api/v1/workers/a1b2c3d4e5f6/proxy"
+      }
+    }
+    """
+    try:
+        orchestrator_url = orchestrator_client.ORCHESTRATOR_URL
+        api_url = f"{orchestrator_url}/api/v1/workers/{worker_id}"
+        logger.info(f"🔍 [Orchestrator] 查詢容器詳細資訊: {api_url}")
+
+        resp = requests.get(api_url, timeout=30)
+        resp.raise_for_status()
+
+        worker_data = resp.json()
+        logger.info(f"✅ [Orchestrator] 成功取得容器 {worker_id} 詳細資訊")
+
+        return {
+            "status": "success",
+            "orchestrator_url": orchestrator_url,
+            "worker": worker_data
+        }
+    except requests.exceptions.RequestException as e:
+        logger.error(f"❌ [Orchestrator] 查詢容器 {worker_id} 失敗: {str(e)}")
+        raise HTTPException(status_code=502, detail=f"無法查詢容器 {worker_id}: {str(e)}")
+
+
+@app.delete("/api/orchestrator/workers/{worker_id}", tags=["⑤ 遠端 Orchestrator API（對方主機 192.168.41.173）"], summary="刪除對方容器")
+async def delete_orchestrator_worker(worker_id: str):
+    """停止並移除遠端 Orchestrator 上指定的容器。
+
+    參數：
+    - worker_id: 要刪除的工作容器 ID
+
+    回應範例：
+    {
+      "status": "success",
+      "worker_id": "a1b2c3d4e5f6",
+      "message": "容器已成功刪除"
+    }
+
+    錯誤範例（容器不存在）：
+    {
+      "status": "error",
+      "error": "Worker 'a1b2c3d4e5f6' was not found.",
+      "worker_id": "a1b2c3d4e5f6"
+    }
+    """
+    try:
+        orchestrator_url = orchestrator_client.ORCHESTRATOR_URL
+        api_url = f"{orchestrator_url}/api/v1/workers/{worker_id}"
+        logger.info(f"🗑️  [Orchestrator] 刪除容器: {api_url}")
+
+        resp = requests.delete(api_url, timeout=30)
+
+        if resp.status_code == 204:
+            # 刪除成功，204 No Content
+            logger.info(f"✅ [Orchestrator] 容器 {worker_id} 刪除成功")
+            return {
+                "status": "success",
+                "orchestrator_url": orchestrator_url,
+                "worker_id": worker_id,
+                "message": "容器已成功刪除"
+            }
+        elif resp.status_code == 404:
+            # 容器不存在
+            error_data = resp.json() if resp.content else {}
+            logger.warning(f"⚠️  [Orchestrator] 容器 {worker_id} 不存在")
+            return {
+                "status": "error",
+                "orchestrator_url": orchestrator_url,
+                "worker_id": worker_id,
+                "error": error_data.get("error", "容器不存在")
+            }
+        else:
+            # 其他錯誤
+            resp.raise_for_status()
+
+    except requests.exceptions.RequestException as e:
+        logger.error(f"❌ [Orchestrator] 刪除容器 {worker_id} 失敗: {str(e)}")
+        raise HTTPException(status_code=502, detail=f"無法刪除容器 {worker_id}: {str(e)}")
+
+
+# =====================================================================
 # MCP 商店最小端點：跟 hermes-agent/main.py 的 /api/agent/{id}/mcp/* 同一套邏輯，
 # 沒有這幾支端點就沒有任何方式能把 phison-ainexus（或任何 MCP）設成 resident。
 # =====================================================================
@@ -414,6 +684,180 @@ async def set_agent_mcp_credentials(agent_id: str, mcp_name: str, payload: McpCr
     except KeyError as e:
         raise HTTPException(status_code=404, detail=str(e))
     return {"status": "success", "entry": entry}
+
+
+# =====================================================================
+# #0722 修改：遠端 Orchestrator API 功能
+# 直接對接對方主機 192.168.41.173:5080 的 orchestrator 服務
+# =====================================================================
+
+@app.get("/api/orchestrator/swagger", tags=["⑤ 遠端 Orchestrator API（對方主機 192.168.41.173）"], summary="取得對方 Orchestrator 的 Swagger 資訊")
+async def get_orchestrator_swagger():
+    """取得遠端 Orchestrator 的 Swagger/OpenAPI 文件，方便測試和了解對方的 API 能力。"""
+    try:
+        orchestrator_url = orchestrator_client.ORCHESTRATOR_URL
+        swagger_url = f"{orchestrator_url}/swagger/v1/swagger.json"
+        logger.info(f"🔍 [Orchestrator] 取得對方 Swagger 文件: {swagger_url}")
+
+        resp = requests.get(swagger_url, timeout=10)
+        resp.raise_for_status()
+
+        swagger_data = resp.json()
+        logger.info(f"✅ [Orchestrator] 成功取得對方 Swagger 文件，包含 {len(swagger_data.get('paths', {}))} 個端點")
+
+        return {
+            "status": "success",
+            "orchestrator_url": orchestrator_url,
+            "swagger_url": swagger_url,
+            "info": swagger_data.get("info", {}),
+            "paths_count": len(swagger_data.get("paths", {})),
+            "tags": [tag.get("name") for tag in swagger_data.get("tags", [])],
+            "full_swagger": swagger_data  # 完整的 Swagger 內容
+        }
+    except requests.exceptions.RequestException as e:
+        logger.error(f"❌ [Orchestrator] 無法取得對方 Swagger 文件: {str(e)}")
+        raise HTTPException(status_code=502, detail=f"無法連線到遠端 Orchestrator: {str(e)}")
+
+
+@app.get("/api/orchestrator/workers", tags=["⑤ 遠端 Orchestrator API（對方主機 192.168.41.173）"], summary="查看對方主機所有使用者容器")
+async def list_orchestrator_workers():
+    """直接查詢遠端 Orchestrator 上的所有 worker 容器，不含任何過濾條件。
+
+    回應範例：
+    {
+      "status": "success",
+      "workers": [
+        {
+          "id": "a1b2c3d4e5f6",
+          "name": "agent-worker-a1b2c3d4e5f6",
+          "image": "nousresearch/hermes-agent:latest",
+          "userId": "demo001",
+          "status": "running",
+          "baseUrl": "http://agent-worker-a1b2c3d4e5f6:8080"
+        }
+      ],
+      "count": 1
+    }
+    """
+    try:
+        orchestrator_url = orchestrator_client.ORCHESTRATOR_URL
+        api_url = f"{orchestrator_url}/api/v1/workers"
+        logger.info(f"🔍 [Orchestrator] 查詢對方主機所有容器: {api_url}")
+
+        resp = requests.get(api_url, timeout=30)
+        resp.raise_for_status()
+
+        workers_data = resp.json()
+        workers = workers_data if isinstance(workers_data, list) else []
+
+        logger.info(f"✅ [Orchestrator] 成功取得 {len(workers)} 個容器")
+
+        return {
+            "status": "success",
+            "orchestrator_url": orchestrator_url,
+            "workers": workers,
+            "count": len(workers)
+        }
+    except requests.exceptions.RequestException as e:
+        logger.error(f"❌ [Orchestrator] 查詢容器列表失敗: {str(e)}")
+        raise HTTPException(status_code=502, detail=f"無法查詢遠端 Orchestrator 容器: {str(e)}")
+
+
+@app.get("/api/orchestrator/workers/{worker_id}", tags=["⑤ 遠端 Orchestrator API（對方主機 192.168.41.173）"], summary="取得對方單一容器詳細資訊")
+async def get_orchestrator_worker(worker_id: str):
+    """根據 worker ID 查詢遠端 Orchestrator 上特定容器的詳細資訊。
+
+    參數：
+    - worker_id: 工作容器 ID（例如從前面建立時得到的 ID 或從 /api/orchestrator/workers 列表中獲取）
+
+    回應範例：
+    {
+      "status": "success",
+      "worker": {
+        "id": "a1b2c3d4e5f6",
+        "name": "agent-worker-a1b2c3d4e5f6",
+        "userId": "demo001",
+        "status": "running",
+        "baseUrl": "http://agent-worker-a1b2c3d4e5f6:8080",
+        "externalBaseUrl": "http://192.168.41.173:5080/api/v1/workers/a1b2c3d4e5f6/proxy"
+      }
+    }
+    """
+    try:
+        orchestrator_url = orchestrator_client.ORCHESTRATOR_URL
+        api_url = f"{orchestrator_url}/api/v1/workers/{worker_id}"
+        logger.info(f"🔍 [Orchestrator] 查詢容器詳細資訊: {api_url}")
+
+        resp = requests.get(api_url, timeout=30)
+        resp.raise_for_status()
+
+        worker_data = resp.json()
+        logger.info(f"✅ [Orchestrator] 成功取得容器 {worker_id} 詳細資訊")
+
+        return {
+            "status": "success",
+            "orchestrator_url": orchestrator_url,
+            "worker": worker_data
+        }
+    except requests.exceptions.RequestException as e:
+        logger.error(f"❌ [Orchestrator] 查詢容器 {worker_id} 失敗: {str(e)}")
+        raise HTTPException(status_code=502, detail=f"無法查詢容器 {worker_id}: {str(e)}")
+
+
+@app.delete("/api/orchestrator/workers/{worker_id}", tags=["⑤ 遠端 Orchestrator API（對方主機 192.168.41.173）"], summary="刪除對方容器")
+async def delete_orchestrator_worker(worker_id: str):
+    """停止並移除遠端 Orchestrator 上指定的容器。
+
+    參數：
+    - worker_id: 要刪除的工作容器 ID
+
+    回應範例：
+    {
+      "status": "success",
+      "worker_id": "a1b2c3d4e5f6",
+      "message": "容器已成功刪除"
+    }
+
+    錯誤範例（容器不存在）：
+    {
+      "status": "error",
+      "error": "Worker 'a1b2c3d4e5f6' was not found.",
+      "worker_id": "a1b2c3d4e5f6"
+    }
+    """
+    try:
+        orchestrator_url = orchestrator_client.ORCHESTRATOR_URL
+        api_url = f"{orchestrator_url}/api/v1/workers/{worker_id}"
+        logger.info(f"🗑️  [Orchestrator] 刪除容器: {api_url}")
+
+        resp = requests.delete(api_url, timeout=30)
+
+        if resp.status_code == 204:
+            # 刪除成功，204 No Content
+            logger.info(f"✅ [Orchestrator] 容器 {worker_id} 刪除成功")
+            return {
+                "status": "success",
+                "orchestrator_url": orchestrator_url,
+                "worker_id": worker_id,
+                "message": "容器已成功刪除"
+            }
+        elif resp.status_code == 404:
+            # 容器不存在
+            error_data = resp.json() if resp.content else {}
+            logger.warning(f"⚠️  [Orchestrator] 容器 {worker_id} 不存在")
+            return {
+                "status": "error",
+                "orchestrator_url": orchestrator_url,
+                "worker_id": worker_id,
+                "error": error_data.get("error", "容器不存在")
+            }
+        else:
+            # 其他錯誤
+            resp.raise_for_status()
+
+    except requests.exceptions.RequestException as e:
+        logger.error(f"❌ [Orchestrator] 刪除容器 {worker_id} 失敗: {str(e)}")
+        raise HTTPException(status_code=502, detail=f"無法刪除容器 {worker_id}: {str(e)}")
 
 
 def main():

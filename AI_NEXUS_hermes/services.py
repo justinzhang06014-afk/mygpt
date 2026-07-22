@@ -105,6 +105,24 @@ async def set_phison_token(agent_id: str, token: str) -> None:
     await asyncio.to_thread(mcp_services.set_agent_mcp_credentials, agent_id, "phison-ainexus", {"PHISON_TOKEN": token})
 
 
+def _copy_bridge_script_to_agent(agent_dir: str):
+    """
+    複製 phison_mcp_bridge.py 到指定的 agent 目錄。
+    這是為了遠端模式需要上傳所有檔案到 Orchestrator。
+    """
+    source = os.path.join(os.path.dirname(os.path.abspath(__file__)), BRIDGE_SCRIPT_NAME)
+    if not os.path.exists(source):
+        logger.warning(f"⚠️ {BRIDGE_SCRIPT_NAME} 不存在: {source}")
+        return
+    
+    dest = os.path.join(agent_dir, BRIDGE_SCRIPT_NAME)
+    if os.path.exists(dest) and os.path.getmtime(dest) >= os.path.getmtime(source):
+        return  # 已經是最新版本
+    
+    shutil.copy2(source, dest)
+    logger.info(f"📦 複製 {BRIDGE_SCRIPT_NAME} -> {dest}")
+
+
 async def ensure_hermes_profile_exists(
     agent_id: str,
     system_prompt: str | None = None,
@@ -114,6 +132,7 @@ async def ensure_hermes_profile_exists(
     agent_dir = os.path.join(PROFILES_BASE_DIR, agent_id)
     os.makedirs(agent_dir, exist_ok=True)
     await asyncio.to_thread(_ensure_bridge_script_deployed)
+    await asyncio.to_thread(_copy_bridge_script_to_agent, agent_dir)
 
     def _write_isolated_config():
         agent_approvals = approval_settings.get_agent_approval_settings(agent_id)
@@ -160,12 +179,31 @@ async def ensure_hermes_profile_exists(
             "context": {"enabled": True},
         }
 
-        mcp_servers_block = mcp_services.build_hermes_mcp_servers_block(agent_id)
-        if mcp_servers_block:
-            config_data["mcp_servers"] = mcp_servers_block
+        # mcp_servers_block = mcp_services.build_hermes_mcp_servers_block(agent_id)
+        # if mcp_servers_block:
+        #     config_data["mcp_servers"] = mcp_servers_block
+
+        # with open(os.path.join(agent_dir, "config.yaml"), "w", encoding="utf-8") as f:
+        #     yaml.safe_dump(config_data, f, default_flow_style=False)
+        #0722修改
+        # 原本獲取動態區塊的程式碼保留
+        mcp_servers_block = mcp_services.build_hermes_mcp_servers_block(agent_id) or {}
+
+        # 🚀 根據 _env_var_name 的實作邏輯，精確對接變數名稱
+        mcp_servers_block["phison-ainexus-router"] = {
+            "command": "python3",
+            "args": ["/opt/data/phison_mcp_bridge.py"],
+            "enabled": True,
+            "env": {
+                "PHISON_TOKEN": "${MCP_PHISON_AINEXUS_PHISON_TOKEN}"
+            }
+        }
+
+        config_data["mcp_servers"] = mcp_servers_block
 
         with open(os.path.join(agent_dir, "config.yaml"), "w", encoding="utf-8") as f:
             yaml.safe_dump(config_data, f, default_flow_style=False)
+
 
     await asyncio.to_thread(_write_isolated_config)
 
@@ -183,10 +221,22 @@ async def ensure_hermes_profile_exists(
 1. 自主記憶捕捉：你在後台擁有全自動的長期記憶大腦（MEMORY.md）。安靜執行，不要向用戶宣告「我已經記下來了」。
 2. 記憶定期沉澱與濃縮：保持 MEMORY.md 內的事實條目不超過 15-20 條。一旦超過，刪除過期雜訊，只留下沉澱後的金字塔精華。
 3. 你每次開始對話前都會先讀取你自己的memory.md
+=====================================================================
+【🎯 Phison AINexus 專家流程最高核心條款】
 4. 【強制規則，不可跳過】只要使用者問題牽涉公司內部流程、系統操作、出勤、會議室等
-   內部資訊，你「必須」在回覆前先呼叫 query_phison_expert 工具（把使用者的原話當
-   query 傳進去），不准用反問時間範圍/系統名稱/帳密等細節取代呼叫工具，因為工具
-   本身就會處理這些細節。呼叫完看到工具回傳結果之後，才可以視情況再追問使用者。
+   內部資訊，你「必須」在回覆前先依照以下流程處理：
+   
+   步驟1：先呼叫 get_recommended_experts 工具（把使用者的原話當 query 傳進去）
+   - 如果回傳「No relevant experts found for this query」→ 表示沒有專家需求，直接回答使用者問題
+   - 如果回傳具體專家清單 → 繼續步驟2
+   
+   步驟2：根據步驟1回傳的專家清單，選擇最合適的專家 ID，呼叫 get_expert_response 工具
+   - 不准用反問時間範圍/系統名稱/帳密等細節取代呼叫工具，因為工具本身就會處理這些細節
+   - 呼叫完看到工具回傳結果之後，才可以視情況再追問使用者
+=====================================================================
+【🚫 其他限制】
+5. 不准跳過專家流程：不要嘗試猜測或主動回答牽涉公司內部資訊的問題，一定要先通過專家確認
+6. 工具回傳就是答案：專家回傳的結果可以直接呈現給使用者，不要過度修改或重寫
 =====================================================================
 """
     await asyncio.to_thread(lambda: Path(soul_path).write_text(extended_soul_prompt, encoding="utf-8"))

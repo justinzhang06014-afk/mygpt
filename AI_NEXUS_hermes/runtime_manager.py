@@ -93,7 +93,7 @@ def _get_published_host_port(container) -> Optional[int]:
     return int(bindings[0]["HostPort"])
 
 
-def ensure_user_runtime(user_id: str) -> dict:
+def ensure_user_runtime(user_id: str, agent_dir: str = None) -> dict:
     """
     確保 user_id 專屬的 AI_NEXUS_hermes 容器存在且正在運行，回傳其內部 base_url。
     這個 base_url 只給同一個 Docker network 裡的其他服務（對接的前後端）直接呼叫，
@@ -103,12 +103,19 @@ def ensure_user_runtime(user_id: str) -> dict:
     同事的服務負責實際建容器，這裡只負責轉發跟拿回位址。沒設定就照舊走下面
     docker.sock 那條路（本機測試/還沒接同事服務時用）。
 
+    #0722修正：當使用 orchestrator 時，會回傳 externalBaseUrl（如果啟用），
+    允許透過對方主機的 External Access Proxy 存取容器服務。
+
     🧪 PUBLISH_CHILD_PORTS=true（只建議測試用，只在走 docker.sock 這條路才有效）：
     額外把子容器的 8643 發布到一個隨機 host port，回傳的 swagger_url 可以直接拿去
     瀏覽器開——正式環境不要開這個，子容器應該只給同網路的其他服務內部呼叫。
+    
+    Args:
+        user_id: 使用者 ID
+        agent_dir: 本地 agent 目錄（僅遠端模式需要）
     """
     if orchestrator_client.is_enabled():
-        return orchestrator_client.ensure_user_runtime(user_id)
+        return orchestrator_client.ensure_user_runtime(user_id, agent_dir)
 
     container_name = f"{CONTAINER_PREFIX}-{user_id}"
     client = _get_docker_client()

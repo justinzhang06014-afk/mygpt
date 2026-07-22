@@ -1,0 +1,345 @@
+{
+  "mcpConfig": {
+    "mcpServers": {
+      "websearch": {
+        "type": "streamable-http",
+        "url": "http://192.168.41.133:1145/api/v1/Agent/mcp/4/MTIwOTA6MTc4NDYzMDg4NA.crwczrdFokAqjxdIy7K_2o-4xdZI6n2_jVTbBv6qraQ",
+        "headers": {},
+        "alwaysAllow": [],
+        "disabled": false
+      },
+      "email": {
+        "type": "sse",
+        "url": "http://192.168.41.133:1145/api/v1/Agent/mcp/12/MTIwOTA6MTc4NDYzMDg4NA.crwczrdFokAqjxdIy7K_2o-4xdZI6n2_jVTbBv6qraQ",
+        "headers": {
+          "USER": "justin_zhang@phison.com",
+          "PASSWORD": "Justin123456!"
+        },
+        "alwaysAllow": [],
+        "disabled": false
+      },
+      "image-generator": {
+        "type": "streamable-http",
+        "url": "http://192.168.41.133:1145/api/v1/Agent/mcp/254/MTIwOTA6MTc4NDYzMDg4NA.crwczrdFokAqjxdIy7K_2o-4xdZI6n2_jVTbBv6qraQ",
+        "headers": {},
+        "alwaysAllow": [],
+        "disabled": false
+      },
+      "everything-to-md-converter": {
+        "type": "streamable-http",
+        "url": "http://192.168.41.133:1145/api/v1/Agent/mcp/2295/MTIwOTA6MTc4NDYzMDg4NA.crwczrdFokAqjxdIy7K_2o-4xdZI6n2_jVTbBv6qraQ",
+        "headers": {},
+        "alwaysAllow": [],
+        "disabled": false
+      },
+      "call_tree_mcp": {
+        "type": "streamable-http",
+        "url": "http://192.168.41.133:1145/api/v1/Agent/mcp/2835/MTIwOTA6MTc4NDYzMDg4NA.crwczrdFokAqjxdIy7K_2o-4xdZI6n2_jVTbBv6qraQ",
+        "headers": {},
+        "alwaysAllow": [],
+        "disabled": false
+      },
+      "co-gitlab-mcp": {
+        "type": "streamable-http",
+        "url": "http://192.168.41.133:1145/api/v1/Agent/mcp/3949/MTIwOTA6MTc4NDYzMDg4NA.crwczrdFokAqjxdIy7K_2o-4xdZI6n2_jVTbBv6qraQ",
+        "headers": {},
+        "alwaysAllow": [],
+        "disabled": false
+      },
+      "fw-git2-gitlab-mcp": {
+        "type": "streamable-http",
+        "url": "http://192.168.41.133:1145/api/v1/Agent/mcp/3973/MTIwOTA6MTc4NDYzMDg4NA.crwczrdFokAqjxdIy7K_2o-4xdZI6n2_jVTbBv6qraQ",
+        "headers": {},
+        "alwaysAllow": [],
+        "disabled": false
+      },
+      "markdown_converter_via_sharefolder": {
+        "type": "streamable-http",
+        "url": "http://192.168.41.133:1145/api/v1/Agent/mcp/4252/MTIwOTA6MTc4NDYzMDg4NA.crwczrdFokAqjxdIy7K_2o-4xdZI6n2_jVTbBv6qraQ",
+        "headers": {},
+        "alwaysAllow": [],
+        "disabled": false
+      }
+    }
+  },
+  "workflows": [],
+  "workflowRun": {
+    "method": "POST",
+    "path": "/api/v1/hermes/ainexus/workflows/run",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "workflowId": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "parameters": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "工作流參數；有提供時必須符合該工作流的 parametersSchema"
+        },
+        "inputs": {
+          "type": "object",
+          "description": "Manual 類型工作流可使用的自訂 inputs"
+        }
+      },
+      "required": [
+        "workflowId"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "workflowStream": {
+    "method": "POST",
+    "path": "/api/v1/hermes/ainexus/workflows/stream",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "workflowId": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "parameters": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "工作流參數；有提供時必須符合該工作流的 parametersSchema"
+        },
+        "inputs": {
+          "type": "object",
+          "description": "Manual 類型工作流可使用的自訂 inputs"
+        }
+      },
+      "required": [
+        "workflowId"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "skills": [],
+  "skillDownload": {
+    "method": "POST",
+    "path": "/api/v1/hermes/ainexus/skills/download",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "skillId": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "skillId"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "tools": [
+    {
+      "name": "GetRecommendedExperts",
+      "description": "找出最適合處理使用者需求的專家。",
+      "method": "POST",
+      "path": "/api/v1/hermes/ainexus/tools/recommend-experts",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "專家的功能"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "GetExpertResponse",
+      "description": "呼叫指定專家回答問題。若使用者尚未加入該專家，系統會先自動新增。",
+      "method": "POST",
+      "path": "/api/v1/hermes/ainexus/tools/expert-response",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expertId": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "query": {
+            "type": "string"
+          },
+          "fileIds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "enableMemory": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "expertId",
+          "query"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "GetFilesContext",
+      "description": "依檔案 ID 讀取檔案內容（文字、文件、影像、音訊）供回覆使用。",
+      "method": "POST",
+      "path": "/api/v1/hermes/ainexus/tools/files-context",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "fileIds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 1,
+            "description": "要讀取的檔案 ID 清單"
+          }
+        },
+        "required": [
+          "fileIds"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "gen_ppt",
+      "description": "產生 PowerPoint。必填 topic、reference；theme 可選 dark/light，預設 dark。",
+      "method": "POST",
+      "path": "/api/v1/hermes/ainexus/tools/generate-ppt",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "topic": {
+            "type": "string"
+          },
+          "reference": {
+            "type": "string"
+          },
+          "section_length": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 15,
+            "default": 5
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "ja-JP",
+              "en-US",
+              "zh-TW",
+              "zh-CN"
+            ],
+            "default": "zh-TW"
+          },
+          "need_image": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ],
+            "default": 1
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "dark",
+              "light"
+            ],
+            "default": "dark"
+          }
+        },
+        "required": [
+          "topic",
+          "reference"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "gen_docx",
+      "description": "產生 Word。必填 topic；檔案內容透過 fileIds 帶入。",
+      "method": "POST",
+      "path": "/api/v1/hermes/ainexus/tools/generate-docx",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "topic": {
+            "type": "string"
+          },
+          "reference": {
+            "type": "string"
+          },
+          "fileIds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "section_length": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 15,
+            "default": 5
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "ja-JP",
+              "en-US",
+              "zh-TW"
+            ],
+            "default": "zh-TW"
+          },
+          "need_image": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ],
+            "default": 1
+          }
+        },
+        "required": [
+          "topic"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "query_km",
+      "description": "查詢使用者可用的 KM 知識庫，包含舊版與新版。",
+      "method": "POST",
+      "path": "/api/v1/hermes/ainexus/tools/query-km",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string"
+          },
+          "topk": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50,
+            "default": 5
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+
+===== [2026-07-22 10:38:31] starting MCP server 'phison-ainexus-router' =====
+[07/22/26 10:38:32] INFO     Processing request of type            server.py:720
+                             ListToolsRequest                                   
+[07/22/26 10:38:38] INFO     Processing request of type            server.py:720
+                             CallToolRequest                                    
+
+===== [2026-07-22 10:39:10] starting MCP server 'phison-ainexus-router' =====
+[07/22/26 10:39:11] INFO     Processing request of type            server.py:720
+                             ListToolsRequest                                   
+[07/22/26 10:39:15] INFO     Processing request of type            server.py:720
+                             ListResourcesRequest                               
+[07/22/26 10:39:16] INFO     Processing request of type            server.py:720
+                             ListPromptsRequest                                 
+
+===== [2026-07-22 10:40:42] starting MCP server 'phison-ainexus-router' =====
+[07/22/26 10:40:43] INFO     Processing request of type            server.py:720
+                             ListToolsRequest                                   
+[07/22/26 10:40:47] INFO     Processing request of type            server.py:720
+                             CallToolRequest                                    
+
+===== [2026-07-22 10:41:53] starting MCP server 'phison-ainexus-router' =====
+[07/22/26 10:41:54] INFO     Processing request of type            server.py:720
+                             ListToolsRequest                                   
+[07/22/26 10:42:00] INFO     Processing request of type            server.py:720
+                             CallToolRequest                                    
+[07/22/26 10:42:04] INFO     Processing request of type            server.py:720
+                             CallToolRequest                                    
