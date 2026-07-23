@@ -21,10 +21,11 @@ import os
 import json
 import asyncio
 
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI, HTTPException, Request, status
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 import requests
+import httpx
 import uvicorn
 
 from config import logger, ChatRequest, PROFILES_BASE_DIR
@@ -203,15 +204,14 @@ class EnsureSessionPayload(BaseModel):
                      "這個 token 會過期/浮動，之後每輪聊天也可以用 ChatRequest.phison_token 帶新的覆寫，不用只能在這裡設一次。",
     )
 
-    # 👇 修改測試範例為整數格式，方便遠端 orchestrator 測試
     model_config = {
         "json_schema_extra": {
             "examples": [
                 {
                     "user_id": "123",
                     "system_prompt": "你是一個得力的辦公助理",
-                    "model": "InferenceModel43",
-                    "llm_api_key": "sk-or-your-key-here",
+                    "model": "Qwen/Qwen3.6-35B-A3B-FP8",
+                    "llm_api_key": "AINX-your-phison-key-here",
                     "phison_token": "token_xyz"
                 }
             ]
@@ -219,17 +219,18 @@ class EnsureSessionPayload(BaseModel):
     }
 
 
-async def _ensure_session_impl(payload: EnsureSessionPayload) -> dict:
+async def _ensure_session_impl(payload: EnsureSessionPayload, request: Request | None = None) -> dict:
     """實際邏輯抽出來，讓 /api/session/ensure 和 /api/users（Create）共用同一套，不重複寫。
 
-    #0722修正：根據 orchestrator_client.py 的修改，確保能正確回傳容器建立狀態
-    - status: "created"（新建立）或 "existing"（已存在）
-    - 包含完整的容器資訊：id, name, baseUrl, externalBaseUrl（如果orchestrator啟用external access）
-
-    #0722完整流程修正：
-    1. 在本地準備資料（services.ensure_hermes_profile_exists）
-    2. 呼叫對方orchestrator建立容器（runtime_manager.enablement標誌處理後）
-    3. 透過對方容器API寫入資料，options：直接用本機資料給容器，密碼為X-Api-Key（需配置ExternalAccess）
+    遠端 orchestrator 模式 vs 本機 docker.sock 模式，容器建立後「怎麼把設定寫進容器」
+    是兩條完全不同的路（不是同一份程式碼各自需要的東西剛好一樣）：
+      - 本機模式：runtime_manager.py 建的容器跑的是我們自己這份 wrapper，容器有
+        /api/agent/prepare、/api/agent/{id}/mcp/* 這些端點，維持原本呼叫方式。
+      - 遠端模式：orchestrator 建的容器是原生 hermes-agent（沒有 main.py，見
+        orchestrator_client.py 開頭說明），根本沒有這些端點——config.yaml/mcp.json/.env
+        已經在 services.ensure_hermes_profile_exists() / set_phison_token() 寫好、
+        隨 orchestrator_client.ensure_user_runtime() 的檔案上傳流程帶到遠端了，
+        容器開機時直接讀，不用、也不能再打任何 HTTP 回去設定。
     """
     agent_id = f"user_{payload.user_id}"  # 容器內部 agent_id
 
@@ -239,8 +240,11 @@ async def _ensure_session_impl(payload: EnsureSessionPayload) -> dict:
     )
     logger.info(f"📝 [Session Ensure] 本地準備資料完成: {agent_dir}")
 
+    if payload.phison_token:
+        await services.set_phison_token(agent_id, payload.phison_token)
+
     try:
-        # 步驟2: 呼叫對方 orchestrator 建立容器（遠端模式會自動上傳檔案）
+        # 步驟2: 呼叫對方 orchestrator 建立容器（遠端模式會自動上傳檔案，含上面寫好的 .env）
         if orchestrator_client.is_enabled():
             # 遠端模式：直接呼叫 orchestrator_client，會自動上傳檔案到遠端
             runtime = await asyncio.to_thread(orchestrator_client.ensure_user_runtime, payload.user_id, agent_dir)
@@ -254,75 +258,80 @@ async def _ensure_session_impl(payload: EnsureSessionPayload) -> dict:
     base_url = runtime["base_url"]
     logger.info(f"🔗 [Session Ensure] 容器基礎URL: {base_url}")
 
-    # 步驟3: 透過容器API寫入資料，優先使用 externalBaseUrl（如有）
-    prepare_url = None
-    if "external_base_url" in runtime and runtime["external_base_url"]:
-        # 當ExternalAccess啟用時用proxy方式，避免內部網路限制
-        prepare_url = f"{runtime['external_base_url']}/api/agent/prepare"
-        logger.info(f"🌐 [Session Ensure] 使用對方ExternalProxy: {prepare_url}")
-    else:
-        # 使用內部網路的 baseUrl
-        prepare_url = f"{base_url}/api/agent/prepare"
-
-    try:
-        # 準備請求標頭（當使用 externalBaseUrl 時需要 API Key）
-        headers = {}
+    if not orchestrator_client.is_enabled():
+        # 步驟3+4：只有本機模式才需要——遠端原生 hermes-agent 容器沒有這些端點。
+        prepare_url = None
         if "external_base_url" in runtime and runtime["external_base_url"]:
-            api_key = os.getenv("ORCHESTRATOR_EXTERNAL_API_KEY", "change-me")
-            headers["X-Api-Key"] = api_key
-            logger.info(f"🔐 [Session Ensure] 使用 External Access API Key: {api_key[:8]}...")
+            # 當ExternalAccess啟用時用proxy方式，避免內部網路限制
+            prepare_url = f"{runtime['external_base_url']}/api/agent/prepare"
+            logger.info(f"🌐 [Session Ensure] 使用對方ExternalProxy: {prepare_url}")
+        else:
+            # 使用內部網路的 baseUrl
+            prepare_url = f"{base_url}/api/agent/prepare"
 
-        prep_resp = requests.post(
-            prepare_url,
-            json={
-                "agent_id": agent_id, "system_prompt": payload.system_prompt,
-                "model": payload.model, "llm_api_key": payload.llm_api_key,
-            },
-            headers=headers,
-            timeout=30,
-        )
-        prep_resp.raise_for_status()
-    except requests.exceptions.RequestException as e:
-        # 嘗試用 https://docs.docker.com/engine/api/v1.45/#tag/Exec/ExecCreate 手動寫入備案
-        logger.warning(f"⚠️  [Session Ensure] 容器API準備失敗，原因可能包含網絡訪問問題: {str(e)}")
-        # 提示：可以透過調用 /api/orchestrator/workers/:id/proxy 拿到本機資料後傳送
-        raise HTTPException(status_code=502, detail=f"容器已建立但設定檔寫入失敗: {str(e)}")
-
-    # 步驟4: 設置MCP（如果使用外部proxy）
-    mcp_setup_url = f"{runtime.get('external_base_url', base_url)}/api/agent/{agent_id}/mcp/phison-ainexus/selection"
-    creds_setup_url = f"{runtime.get('external_base_url', base_url)}/api/agent/{agent_id}/mcp/phison-ainexus/credentials"
-    logger.info(f"🌐 [Session Ensure] MCP設定基礎URL: {mcp_setup_url}")
-
-    try:
-        # 準備請求標頭（當使用 externalBaseUrl 時需要 API Key）
-        headers = {}
-        if "external_base_url" in runtime and runtime["external_base_url"]:
-            api_key = os.getenv("ORCHESTRATOR_EXTERNAL_API_KEY", "change-me")
-            headers["X-Api-Key"] = api_key
-
-        requests.post(
-            mcp_setup_url,
-            json={"selection": "resident"}, timeout=10,
-            headers=headers
-        )
-    except requests.exceptions.RequestException as e:
-        logger.warning(f"⚠️  [Session Ensure] MCP選擇失敗（不影響基本聊天）: {str(e)}")
-
-    try:
-        if payload.phison_token:
+        try:
             # 準備請求標頭（當使用 externalBaseUrl 時需要 API Key）
+            headers = {}
+            if "external_base_url" in runtime and runtime["external_base_url"]:
+                api_key = os.getenv("ORCHESTRATOR_EXTERNAL_API_KEY", "change-me")
+                headers["X-Api-Key"] = api_key
+                logger.info(f"🔐 [Session Ensure] 使用 External Access API Key: {api_key[:8]}...")
+
+            prep_resp = requests.post(
+                prepare_url,
+                json={
+                    "agent_id": agent_id, "system_prompt": payload.system_prompt,
+                    "model": payload.model, "llm_api_key": payload.llm_api_key,
+                },
+                headers=headers,
+                timeout=30,
+            )
+            prep_resp.raise_for_status()
+        except requests.exceptions.RequestException as e:
+            logger.warning(f"⚠️  [Session Ensure] 容器API準備失敗，原因可能包含網絡訪問問題: {str(e)}")
+            raise HTTPException(status_code=502, detail=f"容器已建立但設定檔寫入失敗: {str(e)}")
+
+        mcp_setup_url = f"{runtime.get('external_base_url', base_url)}/api/agent/{agent_id}/mcp/phison-ainexus/selection"
+        creds_setup_url = f"{runtime.get('external_base_url', base_url)}/api/agent/{agent_id}/mcp/phison-ainexus/credentials"
+        logger.info(f"🌐 [Session Ensure] MCP設定基礎URL: {mcp_setup_url}")
+
+        try:
             headers = {}
             if "external_base_url" in runtime and runtime["external_base_url"]:
                 api_key = os.getenv("ORCHESTRATOR_EXTERNAL_API_KEY", "change-me")
                 headers["X-Api-Key"] = api_key
 
             requests.post(
-                creds_setup_url,
-                json={"credentials": {"PHISON_TOKEN": payload.phison_token}}, timeout=10,
+                mcp_setup_url,
+                json={"selection": "resident"}, timeout=10,
                 headers=headers
             )
-    except requests.exceptions.RequestException as e:
-        logger.warning(f"⚠️  [Session Ensure] PHISON token設定失敗（不影響基本聊天）: {str(e)}")
+        except requests.exceptions.RequestException as e:
+            logger.warning(f"⚠️  [Session Ensure] MCP選擇失敗（不影響基本聊天）: {str(e)}")
+
+        try:
+            if payload.phison_token:
+                headers = {}
+                if "external_base_url" in runtime and runtime["external_base_url"]:
+                    api_key = os.getenv("ORCHESTRATOR_EXTERNAL_API_KEY", "change-me")
+                    headers["X-Api-Key"] = api_key
+
+                requests.post(
+                    creds_setup_url,
+                    json={"credentials": {"PHISON_TOKEN": payload.phison_token}}, timeout=10,
+                    headers=headers
+                )
+        except requests.exceptions.RequestException as e:
+            logger.warning(f"⚠️  [Session Ensure] PHISON token設定失敗（不影響基本聊天）: {str(e)}")
+
+    # chat_endpoint 遠端模式下不是 base_url（那是遠端容器自己的原生 gateway 位址，
+    # 需要 api_server_key 認證，使用者不該直接打）——是我們自己這支服務的
+    # /api/agent/chat/stream，由 main.py 內部負責確認容器/橋接聊天。
+    if orchestrator_client.is_enabled() and request is not None:
+        self_base = str(request.base_url).rstrip("/")
+        chat_endpoint = f"{self_base}/api/agent/chat/stream"
+    else:
+        chat_endpoint = f"{base_url}/api/agent/chat/stream"
 
     # #0722修正：回應格式包含更詳細的容器狀態資訊
     response = {
@@ -330,7 +339,7 @@ async def _ensure_session_impl(payload: EnsureSessionPayload) -> dict:
         "user_id": payload.user_id,
         "agent_id": agent_id,
         "base_url": base_url,
-        "chat_endpoint": f"{base_url}/api/agent/chat/stream",
+        "chat_endpoint": chat_endpoint,
         "message": "容器建立成功並準備完成" if runtime["status"] == "created" else "使用既有容器",
         # 當存在 externalBaseUrl 時顯示給呼叫端
         "external_base_url": runtime.get("external_base_url")
@@ -344,7 +353,7 @@ async def _ensure_session_impl(payload: EnsureSessionPayload) -> dict:
 
 
 @app.post("/api/session/ensure", tags=["① 建立/Ensure（入口角色，需要 docker.sock）"], summary="登入後呼叫一次：ensure 容器 + 提前寫好設定")
-async def ensure_session(payload: EnsureSessionPayload):
+async def ensure_session(payload: EnsureSessionPayload, request: Request):
     """
     使用者登入後、開始第一句對話前呼叫一次。做三件事：
       1. ensure 這個 user_id 專屬的容器存在（不存在就建立，冪等，重複呼叫不重建）
@@ -355,7 +364,7 @@ async def ensure_session(payload: EnsureSessionPayload):
     回傳的 base_url 是給對接後端之後直接打 /api/agent/chat/stream 用的，
     不用再回頭呼叫這支 ensure 端點。
     """
-    return await _ensure_session_impl(payload)
+    return await _ensure_session_impl(payload, request)
 
 
 # =====================================================================
@@ -378,8 +387,8 @@ async def get_user(user_id: str):
 
 
 @app.post("/api/users", tags=["④ 使用者管理 User CRUD（入口角色，需要 docker.sock）"], summary="建立使用者（Create，等同 /api/session/ensure）")
-async def create_user(payload: EnsureSessionPayload):
-    return await _ensure_session_impl(payload)
+async def create_user(payload: EnsureSessionPayload, request: Request):
+    return await _ensure_session_impl(payload, request)
 
 
 @app.delete("/api/users/{user_id}", tags=["④ 使用者管理 User CRUD（入口角色，需要 docker.sock）"], summary="刪除使用者（Delete，停止並移除容器）")
@@ -392,6 +401,76 @@ async def delete_user(user_id: str, wipe_data: bool = False):
     if not deleted:
         raise HTTPException(status_code=404, detail=f"找不到使用者 {user_id}")
     return {"status": "success", "user_id": user_id, "wiped_data": wipe_data}
+
+
+async def _orchestrator_chat_stream(runtime: dict, payload: ChatRequest, room_str: str):
+    """
+    遠端 orchestrator 模式：main.py 沒有被烤進對方 image，容器跑的是原生 hermes-agent
+    的 gateway（api_server 平台），只能用 HTTP 打 {base_url}/v1/chat/completions
+    （OpenAI Chat Completions 格式），不是本機 ACP 那條路。用 X-Hermes-Session-Id
+    帶 room_id 做 session 延續，SSE 逐段解析出 delta.content，轉成跟 ACP 那邊
+    一樣的純文字串流，呼叫端不用管這輪是走本機還是遠端。
+    """
+    base_url = runtime.get("external_base_url") or runtime.get("base_url")
+    api_server_key = runtime.get("api_server_key")
+    if not base_url or not api_server_key:
+        yield "\n⚠️ 遠端容器目前沒有可用的認證資訊（api_server_key 遺失），請先重新 ensure 一次。\n"
+        return
+
+    chat_payload = {
+        "model": payload.model or os.getenv("LLM_MODEL", "Qwen/Qwen3.6-35B-A3B-FP8"),
+        "messages": [
+            {"role": "system", "content": payload.system_prompt or "你是一位專業的 AI 助理，能夠協助使用者處理各種任務。"},
+            {"role": "user", "content": payload.message},
+        ],
+        "stream": True,
+    }
+    headers = {
+        "Authorization": f"Bearer {api_server_key}",
+        "X-Hermes-Session-Id": room_str,
+        "Content-Type": "application/json",
+    }
+
+    try:
+        async with httpx.AsyncClient(timeout=120.0) as client:
+            async with client.stream(
+                "POST", f"{base_url}/v1/chat/completions", json=chat_payload, headers=headers
+            ) as resp:
+                if resp.status_code != 200:
+                    error_text = await resp.aread()
+                    logger.error(f"❌ [Orchestrator Chat] 遠端容器回應 {resp.status_code}: {error_text[:300]!r}")
+                    yield f"\n⚠️ 遠端容器回應異常（HTTP {resp.status_code}），請稍後再試一次。\n"
+                    return
+
+                async for line in resp.aiter_lines():
+                    if not line.startswith("data:"):
+                        continue
+                    data_str = line[len("data:"):].strip()
+                    if data_str == "[DONE]":
+                        break
+                    try:
+                        chunk = json.loads(data_str)
+                    except json.JSONDecodeError:
+                        continue
+                    choices = chunk.get("choices") or []
+                    if not choices:
+                        continue
+                    content = choices[0].get("delta", {}).get("content")
+                    if content:
+                        yield content
+                        continue
+                    # 最後一個 chunk（delta 空）帶的是 finish_reason，"stop" 是正常結束、
+                    # 不用管；"length"/"error" 代表遠端這輪其實失敗/被截斷了，伺服器把
+                    # 原因放在 chunk["error"]["message"]——這裡不特別浮現的話，使用者只會
+                    # 看到回答莫名其妙斷掉，不知道是遠端出錯還是真的講完了。
+                    finish_reason = choices[0].get("finish_reason")
+                    if finish_reason not in (None, "stop"):
+                        err_msg = (chunk.get("error") or {}).get("message", finish_reason)
+                        logger.warning(f"⚠️ [Orchestrator Chat] 遠端 finish_reason={finish_reason}: {err_msg}")
+                        yield f"\n⚠️ 這輪回覆不完整（{finish_reason}）：{err_msg}\n"
+    except httpx.HTTPError as e:
+        logger.error(f"❌ [Orchestrator Chat] 轉發到遠端容器失敗: {str(e)}")
+        yield "\n⚠️ 系統暫時無法連線到遠端容器，請稍後再試一次。\n"
 
 
 @app.post("/api/agent/chat/stream", tags=["② 聊天 Chat"], summary="核心對話端點（實際跟 hermes 聊天）")
@@ -408,6 +487,25 @@ async def agent_chat_stream(payload: ChatRequest):
     agent_dir = await services.ensure_hermes_profile_exists(
         agent_id, payload.system_prompt, model=payload.model, llm_api_key=payload.llm_api_key
     )
+
+    room_str = str(payload.room_id).strip()
+
+    # 遠端 orchestrator 模式：main.py 不在對方容器裡，聊天不能走下面的本機 ACP，
+    # 要先確認容器在不在（不在就建立），拿到 base_url + api_server_key 之後改用
+    # HTTP 橋接到容器原生的 gateway（_orchestrator_chat_stream）。查詢/建立失敗，
+    # 或拿不到 api_server_key，才退回本機 ACP（至少本機這個 profile 還能回答）。
+    if orchestrator_client.is_enabled() and payload.user_id:
+        runtime = None
+        try:
+            runtime = await asyncio.to_thread(orchestrator_client.ensure_user_runtime_synced, payload.user_id, agent_dir)
+        except Exception as e:
+            logger.warning(f"⚠️ [Chat] 遠端容器確認/建立失敗（退回本機 ACP 回答）: {str(e)}")
+
+        if runtime and runtime.get("api_server_key") and (runtime.get("base_url") or runtime.get("external_base_url")):
+            return StreamingResponse(
+                _orchestrator_chat_stream(runtime, payload, room_str), media_type="text/plain"
+            )
+        logger.warning("⚠️ [Chat] 遠端容器沒有可用的 base_url/api_server_key，退回本機 ACP 回答")
 
     current_env = os.environ.copy()
     current_env.update({
@@ -428,7 +526,6 @@ async def agent_chat_stream(payload: ChatRequest):
         **({"ANTHROPIC_API_KEY": os.environ["ANTHROPIC_API_KEY"]} if os.getenv("ANTHROPIC_API_KEY") else {}),
     })
 
-    room_str = str(payload.room_id).strip()
     if room_str not in room_locks:
         room_locks[room_str] = asyncio.Lock()
 
