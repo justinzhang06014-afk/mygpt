@@ -1,0 +1,37 @@
+請你詳細閱讀AI_NEXUS_hermes/0722_night_promblem.md
+注意：我發現一個大問題凡是帶有5080port接不要用localhost，都使用http://192.168.41.173:5080，這是出錯
+1. 請問我現在流程能符合底下情境嗎，三個角色 別人的前端後端(用使用者代稱)、我的系統、docker orchestrator(docker管理端代稱)
+情境A：
+a. 使用者透過我的create api(/api/session/ensure)註冊hermes
+b. 我的系統(192.168.85.82)收到使用者的POST，經過我的hermes處理，準備轉發
+c. (orchestrator_client.py)我的系統會先傳遞檔案過去傳遞指令是curl那個curl -F "files=@<檔案名稱>;filename=<檔案名稱>" http://192.168.41.173:5080/api/v1/
+d. (orchestrator_client.py)確認得到他的回覆(請看0722_night_problem.md)
+e. (orchestrator_client.py)如果檔案沒問題 POST出去給docker管理端
+此時注意docker管理端存的檔案位址會是 http://192.168.41.173:5080/api/v1/users/<user_id>/(這個地方)，
+此時再注意 hermes docker /opt/data就直接掛載docker管理員的檔案
+f. 此時就等回復看能不能收到創立成功，請詳閱docker_README.md(裡面的localhost你就當作是192.168.41.173)
+g. 如果創立成功我這裡就設定接收到內容，然後幫我設計一個反過去傳給使用者(但我現在還沒使用者的IP跟port，可以預留)
+情境B：已經創立，準備聊天
+a. 使用者POST聊天chat給我(/api/agent/chat/stream)，準備聊天
+b. 先幫忙使用者確認docker管理端有沒有幫使用者建立這個docker，如果沒有就把新檔案隨著內容送出去 建立一個
+c. 如果已經有建立，就整理完檔案再一次把檔案更新給docker管理者，然後聊天。(我記得我原本系統是這樣設計的，每一次都會更新檔案，只是這一次分成三份我只負責一中一份不知道會不會影響)
+d. 他的回覆會是hermes標準的 /v1/complete，整包要給使用者(但我現在還沒使用者的IP跟port，可以預留)
+我今天測試了出了 一點問題我希望你幫我解決所以好好閱讀md檔案
+先不要改先告訴我你會改甚麼 你的規劃是甚麼 
+底下是我今天成功
+1. 我有修改phison_mcp_bridge.py，在本地測試已經可以了 他可以幫我去查
+2. 本地端測試都沒甚麼問題 swagger可能要請你多開一點讓我看到實驗成果
+3. 你可以調用claude_api.txt做測試跟在本地端模擬一下，請注意prompt不要超過30字元
+4. 因為你測是用都是claude_api.txt的金要跟內容，我今天看你做的也是claude等我們都測完沒問題 我最後會請你改回來
+5. 使用者傳遞的POST跟GET參閱一下swagger設計.txt
+
+
+
+a. 目前遠端那邊沒有main.py 我們先看你會傳那些檔案過去
+b. 沒有傳給docker管理者嗎 如果沒有需要船 請你參考之前的docker_README.md 這很嚴重
+c. 你的意思是如果每個image名稱都一樣會出錯對八，如果帶上user_id呢
+d. 遠端容器的 /opt/data 有沒有跟本機 PROFILES_BASE_DIR 同一套結構 對這個要確認
+e. 我再補充一個我現在變數只有<user_id> agent固定寫死每個仁都先分配到預設agent這我們理解是一樣的對八
+
+a. 如果是這樣main.py就不會過去到docker管理端 所以我們要確保使用者聊天先到我們系統再送給docker管理端 聽你這樣說不用改a嗎
+b. 問題就在這 如果使用者過來我的系統我的系統橋接成http 發送給docker是不是可以只是url要怎麼呼叫的問題對八
