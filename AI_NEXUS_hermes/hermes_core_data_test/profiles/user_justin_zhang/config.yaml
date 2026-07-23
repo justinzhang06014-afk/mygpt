@@ -1,0 +1,44 @@
+api_server:
+  api_key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqdXN0aW5femhhbmciLCJqdGkiOiIyNjlmZTY2MS05Mzk1LTQ1ZDYtOGMxMC01YzRiZTkxNzc1MjgiLCJpZCI6IjEyMDkwIiwiZXhwIjoxNzg0Nzk4OTgzLCJpc3MiOiJ5b3VyX2lzc3VlciIsImF1ZCI6InlvdXJfaXNzdWVyIn0.auPGqWzdJzSS0EXMNL9CV4ZlGzgdgxvGaaS5fDpH0uk
+  enabled: true
+  host: 0.0.0.0
+  port: 8642
+approvals:
+  mode: manual
+context:
+  enabled: true
+mcp_servers:
+  phison-ainexus-router:
+    args:
+    - /opt/data/phison_mcp_bridge.py
+    command: python3
+    enabled: true
+    env:
+      PHISON_TOKEN: ${MCP_PHISON_AINEXUS_PHISON_TOKEN}
+memory:
+  memory_enabled: true
+  nudge_interval: 10
+  provider: ''
+  user_profile_enabled: true
+  write_approval: false
+model:
+  api_key: AINX-F78D2FCD53915EE37BD0871392FFBFFAF648C53C388950FC6A1F2ED8C534B249
+  base_url: https://ainexus.phison.com/api/external/v1
+  default: Qwen/Qwen3.6-35B-A3B-FP8
+  provider: custom
+skills:
+  write_approval: false
+terminal:
+  backend: local
+  cwd: /workspace
+  persistent_shell: true
+  timeout: 180
+tools:
+  enabled:
+  - file_read
+  - file_write
+  - file_edit
+  - patch_code_file
+  - view_code_item
+  - grep_search
+  - bash

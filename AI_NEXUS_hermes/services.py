@@ -154,6 +154,12 @@ async def ensure_hermes_profile_exists(
             }
 
         config_data = {
+            "api_server": {
+                "enabled": True,
+                "host": "0.0.0.0",
+                "port": 8642,
+                "api_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqdXN0aW5femhhbmciLCJqdGkiOiIyNjlmZTY2MS05Mzk1LTQ1ZDYtOGMxMC01YzRiZTkxNzc1MjgiLCJpZCI6IjEyMDkwIiwiZXhwIjoxNzg0Nzk4OTgzLCJpc3MiOiJ5b3VyX2lzc3VlciIsImF1ZCI6InlvdXJfaXNzdWVyIn0.auPGqWzdJzSS0EXMNL9CV4ZlGzgdgxvGaaS5fDpH0uk",
+            },
             "model": model_config,
             "memory": {
                 "memory_enabled": True,

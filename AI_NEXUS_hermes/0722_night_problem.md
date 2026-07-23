@@ -23,14 +23,18 @@
 
 ## 2. 現在 POST 檔案的格式
 
-**端點：** `POST http://localhost:5080/api/v1/users/<user_id>/files`
+**端點：** `POST http://localhost:5080/api/v1/users/<user_id_int>`
 
-**檔案儲存位置：** `/home/phison/ainexus/agent-data/<user_id>`
+**檔案儲存位置：** `/home/phison/ainexus/agent-data/<user_id_int>`
 
 **Curl 指令：**
 ```bash
-curl -F "files=@<檔案名稱>;filename=<檔案名稱>" http://localhost:5080/api/v1/users/<user_id>
+curl -F "files=@<檔案名稱>;filename=<檔案名稱>" http://localhost:5080/api/v1/users/<user_id_int>
 ```
+
+**重要說明**：`<user_id_int>` 需要是整數格式，不是字串格式。例如：
+- ✅ 正確：`POST /api/v1/users/2`
+- ❌ 錯誤：`POST /api/v1/users/"2"`
 
 **成功/失敗回應格式：**
 ```json

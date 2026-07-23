@@ -1,0 +1,8 @@
+
+===== [2026-07-23 07:00:31] starting MCP server 'phison-ainexus-router' =====
+[07/23/26 07:00:31] INFO     Processing request of type            server.py:720
+                             ListToolsRequest                                   
+
+===== [2026-07-23 07:00:47] starting MCP server 'phison-ainexus-router' =====
+[07/23/26 07:00:48] INFO     Processing request of type            server.py:720
+                             ListToolsRequest                                   

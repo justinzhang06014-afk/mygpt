@@ -12,22 +12,21 @@
 
 設計成「開關式」：設定 ORCHESTRATOR_URL 環境變數才會啟用這條路；沒設定就照舊用
 runtime_manager.py 自己的 docker.sock 邏輯（本機測試/沒有同事服務時還能用）。
-main.py 只需要知道 base_url/external_base_url/api_server_key 這幾個欄位，不用管
+main.py 只需要知道 base_url/external_base_url 這幾個欄位，不用管
 底層是走 ACP 還是 Gateway HTTP。
 
-#0722修正：根據 docker_README.md 的真實 API 規格修改，
-- userId 改為接受字串（原本期望數字）
-- 統一使用 "baseUrl" 欄位（回應中的確切欄位名稱）
-- payload 對照 API 文件的真實範例格式
-- 處理 409 Conflict 錯誤（使用者已有容器時的處理邏輯）
-- 支援 externalBaseUrl（當 ExternalAccess 啟用時優先使用）
-- 預設 orchestrator URL 設為 192.168.41.173:5080（對方固定主機）
+修正：根據客戶需求調整的資料類型和格式規格，
+- userId 直接使用整數格式（使用者傳入 "2" -> userId: 2）
+- 簡化 user_id 轉換邏輯，移除 CRC32 哈希，直接採用 int(str) 轉換
+- API_SERVER_KEY 改用空字串，與需求範例保持一致
+- volumes 路徑使用原始 user_id: /home/phison/ainexus/agent-data/{user_id}
+- 移除複雜的密鑰存儲和驗證邏輯
+- 預設 orchestrator URL 為 http://192.168.41.173:5080
 
 ⚠️ 重要注意事項：
-- 遠端主機 (192.168.41.173) 的 {HERMES_DATA_ROOT}/users/{user_id} 路徑需要預先準備好
+- 遠端主機 (192.168.41.173) 的 /home/phison/ainexus/agent-data/{user_id} 路徑需要預先準備好
 - 檔案包含：config.yaml, SOUL.md, mcp.json, phison_mcp_bridge.py
-- 可透過共享儲存、SSH/SCP、或其他檔案同步機制準備到遠端主機
-- 确保 orchestrator 的 AllowedBindPrefixes 配置允許掛載 HERMES_DATA_ROOT 路徑
+- 确保 orchestrator 的 AllowedBindPrefixes 配置允許掛載 /home/phison/ainexus/agent-data 路徑
 """
 import os
 import json
@@ -56,18 +55,17 @@ HERMES_IMAGE = os.getenv("HERMES_IMAGE", "nousresearch/hermes-agent:latest")
 
 
 def _convert_user_id(user_id: str) -> int:
-    """將字串 user_id 轉換為整數，用於 Orchestrator API 的 userId 欄位。
+    """將字串 user_id 直接轉換為整數，用於 Orchestrator API 的 userId 欄位。
     
-    使用穩定的 CRC32 雜湊確保同一字串總是轉換為相同整數：
-    - input: "demo001"  → output: 123456789
-    - input: "user_001" → output: 987654321
-    - input: "test_user"→ output: 556677889
-    
-    注意：雜湊值可能為負數，取絕對值確保為正整數。
+    直接轉換為整數，不進行哈希或其他處理：
+    - input: "1"  → output: 1
+    - input: "2"  → output: 2
+    - input: "100" → output: 100
     """
-    import zlib
-    hash_value = zlib.crc32(user_id.encode('utf-8'))
-    return abs(hash_value) | 1  # 確保正整數（避免0，某些系統可能不接受0作為ID）
+    try:
+        return int(user_id)
+    except ValueError:
+        raise ValueError(f"無法將 user_id '{user_id}' 轉換為整數")
 
 
 def is_enabled() -> bool:
@@ -78,50 +76,61 @@ def is_enabled() -> bool:
     return bool(ORCHESTRATOR_URL)
 
 
-def _upload_files_to_orchestrator(user_id_int: int, agent_dir: str, required_files: List[str]) -> bool:
+def _upload_files_to_orchestrator(user_id: str, agent_dir: str, required_files: List[str]) -> bool:
     """
     上傳 hermes 所需的檔案到遠端 Orchestrator 主機。
     
     使用 multipart/form-data 格式傳送檔案：
-    - endpoint: POST /api/v1/users/{user_id}/files
-    - files: config.yaml, SOUL.md, mcp.json, phison_mcp_bridge.py
-    
-    Args:
-        user_id_int: 轉換後的整數 user ID
-        agent_dir: 本機的 agent 目錄路徑
-        required_files: 需要上傳的檔案列表
-        
-    Returns:
-        bool: 是否上傳成功
+    - endpoint: POST /api/v1/users/{user_id_int}/files
+    - files: 表單欄位固定為 "files"，支援多檔案上傳
     """
+    user_id_int = _convert_user_id(user_id)
+    
+    # 🎯 關鍵修正 1：補上符合規格的 /files 後綴
     upload_url = f"{ORCHESTRATOR_URL}/api/v1/users/{user_id_int}/files"
     
-    # 準備要上傳的檔案
     files_to_upload = []
-    for filename in required_files:
-        file_path = Path(agent_dir) / filename
-        if not file_path.exists():
-            logger.error(f"❌ [Orchestrator] 檔案不存在: {file_path}")
-            return False
-        
-        files_to_upload.append((filename, (filename, open(file_path, "rb"), "application/octet-stream")))
+    opened_files = []  # 用來追蹤手動開啟的檔案物件，以便在 finally 區塊安全關閉
     
     try:
+        for filename in required_files:
+            file_path = Path(agent_dir) / filename
+            if not file_path.exists():
+                logger.error(f"❌ [Orchestrator] 檔案不存在: {file_path}")
+                return False
+            
+            # 開啟檔案並記錄到清單
+            f = open(file_path, "rb")
+            opened_files.append(f)
+            
+            # 🎯 關鍵修正 2：第一個參數改為固定字串 "files"，對應後端的多檔案接收欄位
+            files_to_upload.append(("files", (filename, f, "application/octet-stream")))
+        
         logger.info(f"📤 [Orchestrator] 開始上傳檔案到: {upload_url}")
+        logger.info(f"📤 [Orchestrator] 準備上傳的檔案: {required_files}")
+        logger.info(f"📤 [Orchestrator] agent_dir 實際路徑: {agent_dir}")
+        
         upload_resp = requests.post(
             upload_url,
             files=files_to_upload,
             timeout=ORCHESTRATOR_TIMEOUT_SECONDS,
         )
+        
+        # 記錄詳細回應
+        logger.info(f"📤 [Orchestrator] 回應狀態碼: {upload_resp.status_code}")
+        logger.info(f"📤 [Orchestrator] 回應內容: {upload_resp.text}") 
+        
         upload_resp.raise_for_status()
         
         upload_data = upload_resp.json()
         logger.info(f"✅ [Orchestrator] 檔案上傳成功: {json.dumps(upload_data, indent=2, ensure_ascii=False)}")
 
-        # 檢查上傳結果：實際 API 回應（見 0722_night_problem.md 第2點）沒有 writtenCount
-        # 欄位，只有 files[].status，用 status 逐筆判斷才是真的對得上規格。
+        # 🎯 關鍵修正 3：對照你提供的 API 回傳規格，逐筆驗證 files 陣列中的 status
         files_result = upload_data.get("files", [])
+        
+        # 後端常見的成功狀態為 written 或 success，若有其他成功字串可自行加入比對
         failed_files = [f for f in files_result if f.get("status") not in ("written", "success")]
+        
         if failed_files:
             for file_result in failed_files:
                 logger.error(f"❌ [Orchestrator] 檔案上傳失敗: {file_result.get('path')} - {file_result.get('error')}")
@@ -132,10 +141,14 @@ def _upload_files_to_orchestrator(user_id_int: int, agent_dir: str, required_fil
     except requests.exceptions.RequestException as e:
         logger.error(f"❌ [Orchestrator] 檔案上傳失敗: {str(e)}")
         return False
+        
     finally:
-        # 關閉所有開啟的檔案（每個元素是 (fieldname, (filename, file_obj, mimetype))）
-        for _, file_tuple in files_to_upload:
-            file_tuple[1].close()
+        # 🎯 關鍵修正 4：安全關閉所有開啟的檔案，絕不引發額外的 TypeError
+        for f in opened_files:
+            try:
+                f.close()
+            except Exception:
+                pass
 
 
 def _extract_base_url(data: dict):
@@ -171,10 +184,16 @@ def _extract_base_url(data: dict):
     if isinstance(base_url, (list, tuple)) and len(base_url) > 0:
         logger.warning(f"⚠️ [Debug] base_url 是陣列，取第一個元素: {base_url[0]}")
         base_url = base_url[0]
+    else:
+        # 確保 base_url 是字串或 None
+        base_url = str(base_url) if base_url is not None else None
     
     if isinstance(external_base_url, (list, tuple)) and len(external_base_url) > 0:
         logger.warning(f"⚠️ [Debug] external_base_url 是陣列，取第一個元素: {external_base_url[0]}")
         external_base_url = external_base_url[0]
+    else:
+        # 確保 external_base_url 是字串或 None
+        external_base_url = str(external_base_url) if external_base_url is not None else None
 
     # 如果都没有，返回 None, None
     if not base_url and not external_base_url:
@@ -185,33 +204,15 @@ def _extract_base_url(data: dict):
     return base_url, external_base_url
 
 
-def _api_key_path(agent_dir: str) -> Path:
-    return Path(agent_dir) / ".api_server_key"
-
-
-def _store_api_key(agent_dir: str, key: str) -> None:
-    """
-    容器的 API_SERVER_KEY 只有建立當下這一次機會拿到——orchestrator 的
-    GET /api/v1/workers(/{id}) 不會把 environment 內容吐回來，之後要轉發聊天
-    只能靠我們自己存的這份。純本地檔案，不用上傳給遠端（遠端已經在建立時
-    透過 environment 拿到同一把 key 了）。
-    """
-    _api_key_path(agent_dir).write_text(key, encoding="utf-8")
-
-
 def get_stored_api_key(agent_dir: str) -> str | None:
-    """讀回 _store_api_key() 存的那把 key，找不到就回傳 None（呼叫端要自己決定要不要重建容器）。"""
-    p = _api_key_path(agent_dir)
-    if not p.exists():
-        return None
-    key = p.read_text(encoding="utf-8").strip()
-    return key or None
+    """API_SERVER_KEY 使用空字串，不需要存儲，直接返回空字串"""
+    return ""
 
 
 def find_user_worker(user_id: str) -> dict | None:
     """
     查詢遠端 Orchestrator 上這個 user_id 是否已經有 worker（不篩狀態，有紀錄就回傳）。
-    用於每輪聊天前的「容器還在不在」檢查（0722 報告第10點），避免每輪都重打
+    用於每輪聊天前的「容器還在不在」檢查，避免每輪都重打
     POST /api/v1/workers 觸發 409 才知道已存在。
 
     Returns:
@@ -240,8 +241,7 @@ def sync_env_token(user_id: str, agent_dir: str) -> bool:
     """
     只重傳 .env（裝 PHISON_TOKEN 的檔案），不動 config.yaml/SOUL.md/mcp.json。
 
-    根據 hermes-agent 原生 gateway 的實作（gateway/run.py 的
-    _reload_runtime_env_preserving_config_authority）：長駐的 gateway process 每一輪
+    根據 hermes-agent 原生 gateway 的實作：長駐的 gateway process 每一輪
     對話都會重新讀一次 HERMES_HOME/.env 撿最新憑證，config.yaml 的 mcp_servers.env
     用 ${MCP_PHISON_AINEXUS_PHISON_TOKEN} 引用它——所以不用重建/重啟容器，
     只要把新的 .env 覆蓋到遠端掛載的目錄，下一輪對話 gateway 自己就會撿到新 token。
@@ -256,14 +256,19 @@ def sync_env_token(user_id: str, agent_dir: str) -> bool:
         return False
 
     user_id_int = _convert_user_id(user_id)
-    upload_url = f"{ORCHESTRATOR_URL}/api/v1/users/{user_id_int}/files"
+    upload_url = f"{ORCHESTRATOR_URL}/api/v1/users/{user_id_int}"
     try:
+        logger.info(f"🔄 [Orchestrator] 開始同步 .env 到: {upload_url}")
         with open(env_path, "rb") as f:
             resp = requests.post(
                 upload_url,
                 files=[(".env", (".env", f, "application/octet-stream"))],
                 timeout=ORCHESTRATOR_TIMEOUT_SECONDS,
             )
+        
+        logger.info(f"🔄 [Orchestrator] .env 同步回應狀態碼: {resp.status_code}")
+        logger.info(f"🔄 [Orchestrator] .env 同步回應內容: {resp.text}")
+        
         resp.raise_for_status()
         logger.info(f"🔄 [Orchestrator] 已同步最新 .env（token）給使用者 {user_id} 的容器")
         return True
@@ -289,25 +294,31 @@ def ensure_user_runtime_synced(user_id: str, agent_dir: str) -> dict | None:
         sync_env_token(user_id, agent_dir)
         # 統一輸出格式跟 ensure_user_runtime() 一致（base_url/worker_id 這種
         # snake_case 命名），呼叫端不用管這輪是「新建」還是「既有」兩種不同欄位長相。
-        base_url, external_base_url = _extract_base_url(existing)
+        extract_result = _extract_base_url(existing)
+        
+        base_url = None
+        external_base_url = None
+        
+        if isinstance(extract_result, (list, tuple)) and len(extract_result) >= 2:
+            base_url, external_base_url = extract_result[0], extract_result[1]
+        elif isinstance(extract_result, (list, tuple)) and len(extract_result) == 1:
+            base_url = extract_result[0]
+            external_base_url = None
+        elif isinstance(extract_result, (list, tuple)) and len(extract_result) == 0:
+            base_url = None
+            external_base_url = None
+        
         normalized = {
             "status": existing.get("status", "running"),
             "base_url": base_url or external_base_url,
             "user_id": user_id,
             "user_id_int": _convert_user_id(user_id),
+            "api_server_key": "",  # 使用空字串
         }
         if existing.get("id"):
             normalized["worker_id"] = existing["id"]
         if external_base_url:
             normalized["external_base_url"] = external_base_url
-        stored_key = get_stored_api_key(agent_dir)
-        if stored_key:
-            normalized["api_server_key"] = stored_key
-        else:
-            logger.warning(
-                f"⚠️ [Orchestrator] 使用者 {user_id} 的容器已存在，但本地找不到存好的 API_SERVER_KEY"
-                f"（可能是換了機器/清過本地檔案），轉發聊天會拿不到認證 key。"
-            )
         return normalized
 
     try:
@@ -336,10 +347,10 @@ def ensure_user_runtime(user_id: str, agent_dir: str) -> dict:
     if not is_enabled():
         raise RuntimeError("ORCHESTRATOR_URL 未設定，不應該呼叫這個函式（main.py 應該先檢查 is_enabled()）")
 
-    # userId 必須是整數：使用 CRC32 雜湊將字串轉換為穩定的整數
+    # userId 直接轉為整數
     user_id_int = _convert_user_id(user_id)
     
-    # 遠端主機路徑：/home/phison/ainexus/agent-data/{user_id_int}
+    # 遠端主機路徑：使用整數格式的 user_id
     remote_host_path = f"/home/phison/ainexus/agent-data/{user_id_int}"
     required_files = ["config.yaml", "SOUL.md", "mcp.json", "phison_mcp_bridge.py"]
     
@@ -357,7 +368,7 @@ def ensure_user_runtime(user_id: str, agent_dir: str) -> dict:
     logger.info(f"✅ [Orchestrator] 本地檔案檢查通過")
 
     # 步驟2: 上傳檔案到遠端 Orchestrator
-    upload_success = _upload_files_to_orchestrator(user_id_int, agent_dir, required_files)
+    upload_success = _upload_files_to_orchestrator(user_id, agent_dir, required_files)
     if not upload_success:
         raise RuntimeError(f"檔案上傳到遠端 Orchestrator 失敗，停止容器建立流程")
 
@@ -370,41 +381,32 @@ def ensure_user_runtime(user_id: str, agent_dir: str) -> dict:
         sync_env_token(user_id, agent_dir)
     
     # 步驟3: 組裝建立容器的 payload
-    # API_SERVER_KEY 是這個容器唯一的認證密鑰：main.py 留在我們自己這邊、不會被烤進
-    # docker 管理端的 image，所以聊天只能靠 HTTP 打回這個容器原生的 gateway（api_server
-    # 平台），而 gateway/platforms/api_server.py 沒有這把 key 甚至不會啟動 HTTP server。
-    # 生成之後立刻存到本地（_store_api_key），因為 orchestrator 之後查容器狀態不會
-    # 把 environment 內容吐回來，這是唯一能拿到這把 key 的時機。
-    api_server_key = os.urandom(16).hex()
+    # API_SERVER_KEY 使用空字串，與需求範例保持一致
+    api_server_key = ""
     payload = {
         "userId": user_id_int,
         "image": HERMES_IMAGE,
+        "name": f"agent-worker-{user_id_int}", 
         "environment": {
             "PHISON_API_KEY": os.getenv("PHISON_API_KEY", PHISON_LLM_KEY),
-            # 正式規格：跟本機 config.py 的預設值同一套（Phison AINexus 正式端點），
-            # 不是先前暫時指向測試推論機的 InferenceModel43。
-            "LLM_PROVIDER": "custom",
+            "LLM_PROVIDER": os.getenv("LLM_PROVIDER", "custom"),
             "LLM_BASE_URL": os.getenv("LLM_BASE_URL", TARGET_BASE_URL),
             "LLM_MODEL": os.getenv("LLM_MODEL", TARGET_MODEL),
             "LLM_API_KEY": os.getenv("LLM_API_KEY", ""),
-            # API Server 設定：main.py 用 HTTP 橋接聊天到這個容器的原生 gateway，需要這組
             "API_SERVER_ENABLED": "true",
             "API_SERVER_HOST": "0.0.0.0",
-            "API_SERVER_KEY": api_server_key,
+            "API_SERVER_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqdXN0aW5femhhbmciLCJqdGkiOiIyNjlmZTY2MS05Mzk1LTQ1ZDYtOGMxMC01YzRiZTkxNzc1MjgiLCJpZCI6IjEyMDkwIiwiZXhwIjoxNzg0Nzk4OTgzLCJpc3MiOiJ5b3VyX2lzc3VlciIsImF1ZCI6InlvdXJfaXNzdWVyIn0.auPGqWzdJzSS0EXMNL9CV4ZlGzgdgxvGaaS5fDpH0uk",
             "API_SERVER_CORS_ORIGINS": "*",
         },
         "volumes": {
-            # 掛載遠端主機的檔案目錄到容器 /opt/data
-            # 遠端主機路徑：/home/phison/ainexus/agent-data/{user_id_int} (剛上傳的檔案位置)
-            # 容器路徑：/opt/data (hermes 程式會從這裡讀取設定檔)
             remote_host_path: "/opt/data",
         },
     }
 
-    # 🔍 詳細日誌：輸出實際發送的 payload 和 URL
+    # 如此顯示的做事：輸出實際發送的 payload 和 URL
     api_url = f"{ORCHESTRATOR_URL}/api/v1/workers"
     logger.info(f"📤 [Orchestrator] 發送的 Request URL: {api_url}")
-    logger.info(f"📤 [Orchestrator] 原始 user_id: {user_id} -> 轉換為 userId: {user_id_int}")
+    logger.info(f"📤 [Orchestrator] 使用者 user_id: {user_id} -> userId: {user_id_int}")
     logger.info(f"📤 [Orchestrator] 發送的 Payload: {json.dumps(payload, indent=2, ensure_ascii=False)}")
     logger.info(f"📤 [Orchestrator] HERMES_IMAGE 環境變數值: {HERMES_IMAGE}")
     logger.info(f"📤 [Orchestrator] HERMES_DATA_ROOT 環境變數值: {HERMES_DATA_ROOT}")
@@ -416,9 +418,7 @@ def ensure_user_runtime(user_id: str, agent_dir: str) -> dict:
             timeout=ORCHESTRATOR_TIMEOUT_SECONDS,
         )
 
-        # 409 代表打到既有容器，那個容器實際用的 key 是「上一次」生成的那把，不是這次
-        # 這次的 api_server_key（存本地時要認這個旗標，不能看 data["status"]——對方
-        # 回應的 status 是容器運行狀態如 "running"，不是「created/existing」語意）。
+        # 409 代表打到既有容器
         was_freshly_created = resp.status_code != 409
 
         # #0722修正：處理 409 Conflict 狀態，表示使用者已有容器存在
@@ -488,7 +488,6 @@ def ensure_user_runtime(user_id: str, agent_dir: str) -> dict:
 
     try:
         extract_result = _extract_base_url(data)
-        logger.info(f"🔍 [Debug] _extract_base_url 返回結果: {extract_result}, 類型: {type(extract_result)}")
         
         base_url = None
         external_base_url = None
@@ -513,31 +512,17 @@ def ensure_user_runtime(user_id: str, agent_dir: str) -> dict:
     if not base_url and not external_base_url:
         raise RuntimeError(f"Orchestrator 回應沒有可辨識的位址欄位（baseUrl 或 externalBaseUrl）: {data}")
 
-    # #0722修正：從回應中提取更多詳細資訊，供 main.py 回傳給使用者
+    # 從回應中提取詳細資訊，供 main.py 回傳給使用者
     worker_id = data.get("id")
     worker_name = data.get("name")
     status = data.get("status", "created")
 
-    # 只有「這次真的新建」才存這次生成的 key；409 撞到既有容器時，容器實際用的是
-    # 上一次呼叫生成的 key，本地應該已經有那份檔案，這裡不能覆寫成這次沒被用到的新值
-    # （否則本地存的 key 會跟容器實際認證用的 key 對不上）。
-    if was_freshly_created:
-        _store_api_key(agent_dir, api_server_key)
-        logger.info(f"🔑 [Orchestrator] 已存本地 API_SERVER_KEY（使用者 {user_id}）")
-    elif not get_stored_api_key(agent_dir):
-        # 撞到既有容器但本地又找不到舊 key（例如換過機器）——沒有更好的辦法，只能
-        # 先存這次的新值，之後轉發聊天大概率會 401，需要使用者自己刪容器重建。
-        logger.warning(
-            f"⚠️ [Orchestrator] 使用者 {user_id} 撞到既有容器，但本地沒有存過 key，"
-            f"無法得知容器實際的 API_SERVER_KEY，轉發聊天可能會認證失敗。"
-        )
-
     result = {
         "status": status,
-        "base_url": base_url or external_base_url,  # 優先使用 baseUrl，沒有就用 externalBaseUrl
-        "user_id": user_id,  # 回傳原始字串 user_id 給呼叫端
-        "user_id_int": user_id_int,  # 新增：轉換後的整數 ID，供偵錯使用
-        "api_server_key": get_stored_api_key(agent_dir) or api_server_key,
+        "base_url": base_url or external_base_url,
+        "user_id": user_id,
+        "user_id_int": user_id_int,
+        "api_server_key": "",  # 使用空字串
     }
 
     # 如果有 worker_id，加入回應（locally created 或 existing 都有 id）
